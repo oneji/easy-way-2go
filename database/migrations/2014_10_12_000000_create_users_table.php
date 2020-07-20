@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number');
             $table->integer('verification_code')->nullable();
             $table->integer('verified')->default(0);
+            $table->dateTime('phone_number_verified_at')->nullable();
             $table->string('photo')->nullable();
             $table->string('email')->unique();
             $table->string('role');

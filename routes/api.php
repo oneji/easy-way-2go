@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Auth
+Route::as('api.')->namespace('API')->group(function() {
+    // Client authentication
+    Route::post('auth/clients/register', 'ClientAuthController@register')->name('registerClient');
+    Route::get('auth/verify/{code}', 'ClientAuthController@verify')->name('verifyClient');
 });

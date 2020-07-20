@@ -24,8 +24,8 @@ class ClientAuthController extends Controller
     /**
      * Store a newly created user in the db.
      * 
-     * @param   \App\Http\Requests\StoreUserRequest
-     * @return  \Illuminate\Http\Response
+     * @param   \App\Http\Requests\StoreUserRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function register(StoreUserRequest $request)
     {
@@ -38,11 +38,23 @@ class ClientAuthController extends Controller
      * Verify user by verification code.
      * 
      * @param   int $verificationCode
-     * @return  \Illuminate\Http\Response
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function verify($verificationCode)
     {
         $response = $this->clientAuthService->verify($verificationCode);
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login()
+    {
+        $response = $this->clientAuthService->login(request([ 'email', 'password' ]));
 
         return response()->json($response);
     }

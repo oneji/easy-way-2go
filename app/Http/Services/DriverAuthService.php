@@ -7,9 +7,9 @@ use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\User;
 use JWTAuth;
-use App\ClientData;
+use App\DriverData;
 
-class ClientAuthService
+class DriverAuthService
 {
     use UploadImageTrait;
 
@@ -23,7 +23,7 @@ class ClientAuthService
     {
         $user = new User($request->except('password'));
         $user->verification_code = mt_rand(100000, 999999);
-        $user->role = User::ROLE_CLIENT;
+        $user->role = User::ROLE_DRIVER;
         $user->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {
@@ -33,45 +33,22 @@ class ClientAuthService
         $user->save();
 
         // Save additional data
-        $user->client_data()->save(new ClientData([
-            'id_card' => $request->id_card,
-            'passport_number' => $request->passport_number,
-            'passport_expires_at' => $request->passport_expires_at
+        $user->driver_data()->save(new DriverData([
+            'country_id' => $request->country_id,
+            'city' => $request->city,
+            'dl_issue_place' => $request->dl_issue_place,
+            'dl_issued_at' => $request->dl_issued_at,
+            'dl_expires_at' => $request->dl_expires_at,
+            'driving_experience' => $request->driving_experience,
+            'was_kept_drunk' => $request->was_kept_drunk,
+            'grades' => $request->grades,
+            'grades_expire_at' => $request->grades_expire_at,
         ]));
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
             'ok' => true,
             'verification_code' => $user->verification_code,
-        ];
-    }
-
-    /**
-     * Verify user by verification code.
-     * 
-     * @param   int $verificationCode
-     * @return  array
-     */
-    public function verify($verificationCode)
-    {
-        $user = User::where('verification_code', $verificationCode)->first();
-        
-        if(!$user) {
-            return [
-                'ok' => false,
-                'message' => 'Ввведен неверный код подтверждения.'
-            ];   
-        }
-
-        $user->verified = 1;
-        $user->verification_code = null;
-        $user->phone_number_verified_at = Carbon::now();
-        $user->save();
-
-        return [
-            'ok' => true,
-            'message' => 'Номер телефона успешно подтвержден.',
-            'user' => $user
         ];
     }
 

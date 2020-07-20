@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Services\ClientAuthService;
 
 class ClientAuthController extends Controller
@@ -50,11 +51,12 @@ class ClientAuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param   \App\Http\Requests\LoginUserRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(LoginUserRequest $request)
     {
-        $response = $this->clientAuthService->login(request([ 'email', 'password' ]));
+        $response = $this->clientAuthService->login($request);
 
         return response()->json($response);
     }

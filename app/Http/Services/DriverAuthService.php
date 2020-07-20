@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\User;
@@ -54,10 +55,33 @@ class DriverAuthService
 
     /**
      * Authenticate the user and return jwt token.
+     * 
+     * @param   \App\Http\Requests\LoginUserRequest $request
+     * @return  array
      */
-    public function login($credentials)
+    public function login(LoginUserRequest $request)
     {
-        if (!$token = JWTAuth::attempt($credentials)) {
+        $credentials = $request->only('email', 'password');
+        
+        $user = User::where('email', $request->email)
+            ->where('role', User::ROLE_DRIVER)
+            ->first();
+
+        if(!$user) {
+            return [
+                'ok' => false,
+                'message' => 'Пользователь с таким email адресом не найдено.'
+            ];
+        }
+
+        if(!$user->verified) {
+            return [
+                'ok' => false,
+                'message' => 'Перед тем как войти, подтвердите ваш номер телефона.'
+            ];
+        }
+        
+        if (!$token = auth('driver')->attempt($credentials)) {
             return [
                 'ok' => false,
                 'message' => 'Неверный логин или пароль.'
@@ -67,7 +91,7 @@ class DriverAuthService
         return [
             'ok' => true,
             'token' => $token,
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('driver')->factory()->getTTL() * 60
         ];
     }
 }

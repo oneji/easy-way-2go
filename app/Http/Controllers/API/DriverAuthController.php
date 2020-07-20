@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Services\DriverAuthService;
 
 class DriverAuthController extends Controller
@@ -37,11 +38,12 @@ class DriverAuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param   \App\Http\Requests\LoginUserRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(LoginUserRequest $request)
     {
-        $response = $this->driverAuthService->login(request([ 'email', 'password' ]));
+        $response = $this->driverAuthService->login($request);
 
         return response()->json($response);
     }

@@ -16,6 +16,8 @@ class DriverService
 
     /**
      * Get all the drivers
+     * 
+     * @return collection
      */
     public function all()
     {
@@ -39,7 +41,7 @@ class DriverService
     }
 
     /**
-     * Store a newly created user in the db.
+     * Store a newly created driver in the db.
      * 
      * @param   \App\Http\Requests\StoreUserRequest $request
      * @return  array
@@ -108,7 +110,7 @@ class DriverService
 
         $driver->save();
 
-        // Update driver additional data
+        // Update driver's additional data
         $driver->driver_data()->update([
             'country_id' => $request->country_id,
             'city' => $request->city,

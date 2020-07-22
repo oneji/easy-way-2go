@@ -17,4 +17,5 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::as('admin.')->middleware('auth')->group(function() {
     Route::resource('drivers', 'DriverController');
+    Route::resource('clients', 'ClientController');
 });

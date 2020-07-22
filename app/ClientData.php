@@ -19,6 +19,9 @@ class ClientData extends Model
      * @var array
      */
     protected $fillable = [
-        'id_card', 'passport_number', 'passport_expires_at',
+        'id_card',
+        'id_card_expires_at',
+        'passport_number',
+        'passport_expires_at',
     ];
 }

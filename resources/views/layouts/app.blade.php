@@ -198,6 +198,7 @@
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.drivers.index') }}">Водители</a></li>
+                                <li><a href="{{ route('admin.clients.index') }}">Клиенты</a></li>
                             </ul>
                         </li>
                     </ul>

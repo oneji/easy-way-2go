@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Services\DriverService;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\User;
-use App\Country;
+use App\Http\Services\ClientService;
 
-class DriverController extends Controller
+class ClientController extends Controller
 {
-    private $driverService;
+    private $clientService;
 
     /**
-     * DriverController constructor.
+     * ClientController constructor
      * 
-     * @param \App\Http\Services\DriverService $driverService
+     * @param \App\Http\Services\ClientService $clientService
      */
-    public function __construct(DriverService $driverService)
+    public function __construct(ClientService $clientService)
     {
-        $this->driverService = $driverService;
+        $this->clientService = $clientService;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -30,10 +28,10 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = $this->driverService->all();
+        $clients = $this->clientService->all();
 
-        return view('drivers.index', [ 
-            'drivers' => $drivers
+        return view('clients.index', [
+            'clients' => $clients
         ]);
     }
 
@@ -44,11 +42,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        $countries = Country::all();
-
-        return view('drivers.create', [
-            'countries' => $countries
-        ]);
+        return view('clients.create');
     }
 
     /**
@@ -59,11 +53,11 @@ class DriverController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->driverService->store($request);
+        $this->clientService->store($request);
 
-        $request->session()->flash('success', 'Водитель успешно создан!');
+        $request->session()->flash('success', 'Клиент успешно создан!');
 
-        return redirect()->route('admin.drivers.index');
+        return redirect()->route('admin.clients.index');
     }
 
     /**
@@ -85,14 +79,12 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        $countries = Country::all();
-        $driver = $this->driverService->getById($id);
+        $client = $this->clientService->getById($id);
 
-        if(!$driver) abort(404);        
+        if(!$client) abort(404);
 
-        return view('drivers.edit', [
-            'driver' => $driver,
-            'countries' => $countries
+        return view('clients.edit', [
+            'client' => $client
         ]);
     }
 
@@ -105,11 +97,11 @@ class DriverController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->driverService->update($request, $id);
+        $this->clientService->update($request, $id);
 
         $request->session()->flash('success', 'Информация успешно обновлена!');
 
-        return back();
+        return redirect()->route('admin.clients.index');
     }
 
     /**

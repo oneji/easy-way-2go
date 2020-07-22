@@ -41,7 +41,10 @@ class DriverAuthService
             'dl_issued_at' => $request->dl_issued_at,
             'dl_expires_at' => $request->dl_expires_at,
             'driving_experience' => $request->driving_experience,
-            'was_kept_drunk' => $request->was_kept_drunk,
+            'conviction' => isset($request->conviction) ? 1 : null,
+            'comment' => $request->comment,
+            'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : null,
+            'dtp' => isset($request->dtp) ? 1 : null,
             'grades' => $request->grades,
             'grades_expire_at' => $request->grades_expire_at,
         ]));

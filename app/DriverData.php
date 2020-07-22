@@ -25,8 +25,22 @@ class DriverData extends Model
         'dl_issued_at',
         'dl_expires_at',
         'driving_experience',
+        'conviction',
+        'comment',
         'was_kept_drunk',
+        'dtp',
         'grades',
         'grades_expire_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'conviction' => 'boolean',
+        'was_kept_drunk' => 'boolean',
+        'dtp' => 'boolean'
     ];
 }

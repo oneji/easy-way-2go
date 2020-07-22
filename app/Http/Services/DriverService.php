@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
+use App\Http\Traits\UploadDocsTrait;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\User;
@@ -11,7 +12,7 @@ use Carbon\Carbon;
 
 class DriverService
 {
-    use UploadImageTrait;
+    use UploadImageTrait, UploadDocsTrait;
 
     /**
      * Get all the drivers
@@ -58,6 +59,16 @@ class DriverService
         
         $driver->save();
 
+        // Upload driver's documents
+        $docs = [];
+        if($request->hasFile('passport')) {
+            $docs['passport'] = $this->uploadDocs($request->passport, 'user_docs');
+        }
+
+        if($request->hasFile('d_license')) {
+            $docs['d_license'] = $this->uploadDocs($request->d_license, 'user_docs');
+        }
+
         // Save additional data
         $driver->driver_data()->save(new DriverData([
             'country_id' => $request->country_id,
@@ -65,13 +76,14 @@ class DriverService
             'dl_issue_place' => $request->dl_issue_place,
             'dl_issued_at' => Carbon::parse($request->dl_issued_at),
             'dl_expires_at' => Carbon::parse($request->dl_expires_at),
+            'docs' => json_encode($docs),
             'driving_experience' => $request->driving_experience,
             'conviction' => isset($request->conviction) ? 1 : 0,
             'comment' => $request->comment,
             'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : 0,
             'dtp' => isset($request->dtp) ? 1 : 0,
             'grades' => $request->grades,
-            'grades_expire_at' => Carbon::parse($request->grades_expire_at),
+            'grades_expire_at' => Carbon::parse($request->grades_expire_at)
         ]));
     }
 

@@ -24,6 +24,7 @@ class DriverData extends Model
         'dl_issue_place',
         'dl_issued_at',
         'dl_expires_at',
+        'docs',
         'driving_experience',
         'conviction',
         'comment',
@@ -41,6 +42,7 @@ class DriverData extends Model
     protected $casts = [
         'conviction' => 'boolean',
         'was_kept_drunk' => 'boolean',
-        'dtp' => 'boolean'
+        'dtp' => 'boolean',
+        'docs' => 'array'
     ];
 }

@@ -93,10 +93,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">Место проживания</label>
-                                    <select name="country_id" class="form-control select2" required>
+                                    <select name="country_id" class="form-control" required>
                                         <option value="" selected>Выберите страну</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="city">Город, адрес, индекс</label>
                                     <input id="city" name="city" type="text" class="form-control" placeholder="Город, адрес, индекс">
@@ -123,10 +123,10 @@
                         <p class="card-title-desc"></p>
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">Где выданы вод. права?</label>
-                                    <select name="dl_issue_place" class="form-control select2">
+                                    <select name="dl_issue_place" class="form-control">
                                         <option value="" selected>Выберите страну</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Водительский опыт</label>
                                     <input data-toggle="touchspin" value="0" min="0" max="100" name="driving_experience" type="number" data-step="1" data-bts-postfix="лет">
@@ -167,14 +167,9 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <div class="custom-control custom-switch mt-2 mb-2" dir="ltr">
+                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction">
                                     <label class="custom-control-label" for="convictionSwitch">Судимость</label>
-                                </div>
-
-                                <div class="custom-control custom-switch mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp">
-                                    <label class="custom-control-label" for="dtpSwitch">Были ли в ДТП в течение 5 лет?</label>
                                 </div>
                             </div>
 
@@ -185,21 +180,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
-                                <div class="custom-control custom-switch mt-2 mb-2" dir="ltr">
+                            <div class="col-sm-3">
+                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="drunkSwitch" name="was_kept_drunk">
                                     <label class="custom-control-label" for="drunkSwitch">Были ли задержаны пьяными?</label>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label">Баллы</label>
                                     <input type="number" class="form-control" name="grades" value="0" placeholder="Не указано" min="0">
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Срок действия баллов</label>
                                     <div class="input-group">
@@ -208,6 +203,33 @@
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
                                     </div><!-- input-group -->
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
+                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp">
+                                    <label class="custom-control-label" for="dtpSwitch">Были ли в ДТП в течение 5 лет?</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Фото водительского удостоверения (2 стороны)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="photo" name="d_license[]" multiple>
+                                        <label class="custom-file-label" for="photo">Выберите файл</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Паспорт или ИД (2 стороны)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="photo" name="passport[]" multiple>
+                                        <label class="custom-file-label" for="photo">Выберите файл</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

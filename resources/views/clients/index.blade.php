@@ -1,4 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Клиенты',
+        'items' => [
+            [ 'name' => 'Клиенты', 'link' => null ],
+        ]
+    ]
+])
 
 @section('content')
 <div class="row">
@@ -40,14 +47,10 @@
                                     <td>
                                         @if ($client->photo !== null)
                                             <div>
-                                                <img class="rounded-circle avatar-xs" src="{{ asset('storage/'.$client->photo) }}" alt="Driver avatar">
+                                                <img class="rounded-circle avatar-sm" src="{{ asset('storage/'.$client->photo) }}" alt="Driver avatar">
                                             </div>
                                         @else
-                                            <div class="avatar-xs">
-                                                <span class="avatar-title rounded-circle">
-                                                    D
-                                                </span>
-                                            </div>
+                                            <img class="rounded-circle avatar-sm" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $client->first_name .' '. $client->last_name }}">
                                         @endif
                                     </td>
                                     <td>

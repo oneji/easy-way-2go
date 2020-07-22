@@ -101,7 +101,7 @@ class ClientController extends Controller
 
         $request->session()->flash('success', 'Информация успешно обновлена!');
 
-        return redirect()->route('admin.clients.index');
+        return back();
     }
 
     /**

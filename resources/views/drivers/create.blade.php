@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Добавить водителя',
+        'items' => [
+            [ 'name' => 'Водители', 'link' => route('admin.drivers.index') ],
+            [ 'name' => 'Добавить водителя', 'link' => null ],
+        ]
+    ]
+])
 
 @section('head')
     @parent

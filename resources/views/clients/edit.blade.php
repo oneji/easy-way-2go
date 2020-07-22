@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Изменить клиента',
+        'items' => [
+            [ 'name' => 'Клиенты', 'link' => route('admin.clients.index') ],
+            [ 'name' => 'Изменить клиента', 'link' => null ],
+        ]
+    ]
+])
 
 @section('head')
     @parent
@@ -18,6 +26,13 @@
         </div>
     @endif
 
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-all mr-2"></i>
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('admin.clients.update', [ $client->id ]) }}" method="POST" class="form-horizontal custom-validation" novalidate method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -34,11 +49,7 @@
                                 @if ($client->photo !== null)
                                     <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('storage/'.$client->photo) }}" alt="{{ $client->first_name .' '. $client->last_name }}">
                                 @else
-                                    <div class="avatar-xl mb-3" style="display:block; margin: 0 auto">
-                                        <span class="avatar-title rounded-circle">
-                                            D
-                                        </span>
-                                    </div>
+                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $client->first_name .' '. $client->last_name }}">
                                 @endif
                             </div>
                         </div>

@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Добавить клиента',
+        'items' => [
+            [ 'name' => 'Клиенты', 'link' => route('admin.clients.index') ],
+            [ 'name' => 'Добавить клиента', 'link' => null ],
+        ]
+    ]
+])
 
 @section('head')
     @parent

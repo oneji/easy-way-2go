@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Главная'
+    ]
+])
 
 @section('content')
 <div class="container">

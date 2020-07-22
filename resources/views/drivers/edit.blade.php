@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+    'breadcrumbs' => [
+        'title' => 'Изменить водителя',
+        'items' => [
+            [ 'name' => 'Водители', 'link' => route('admin.drivers.index') ],
+            [ 'name' => 'Изменить водителя', 'link' => null ],
+        ]
+    ]
+])
 
 @section('head')
     @parent
@@ -41,11 +49,7 @@
                                 @if ($driver->photo !== null)
                                     <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('storage/'.$driver->photo) }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @else
-                                    <div class="avatar-xl mb-3" style="display:block; margin: 0 auto">
-                                        <span class="avatar-title rounded-circle">
-                                            D
-                                        </span>
-                                    </div>
+                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @endif
                             </div>
                         </div>

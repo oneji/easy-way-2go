@@ -54,7 +54,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $casts = [
-        'verified' => 'boolean',
+        'verified' => 'boolean'
     ];
 
     /**

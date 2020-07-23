@@ -42,7 +42,7 @@ class DriverService
                 $query->join('countries as c', 'c.id', '=', 'driver_data.country_id')
                     ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
                     ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*');
-            }
+            },
         ])
         ->where('role', User::ROLE_DRIVER)->where('users.id', $id)->first();
     }
@@ -85,7 +85,7 @@ class DriverService
             'dl_issue_place' => $request->dl_issue_place,
             'dl_issued_at' => Carbon::parse($request->dl_issued_at),
             'dl_expires_at' => Carbon::parse($request->dl_expires_at),
-            'docs' => json_encode($docs),
+            'docs' => count($docs) > 0 ? json_encode($docs) : null,
             'driving_experience' => $request->driving_experience,
             'conviction' => isset($request->conviction) ? 1 : 0,
             'comment' => $request->comment,

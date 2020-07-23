@@ -37,20 +37,29 @@
                         <p class="card-title-desc"></p>
                         
                         <div class="row">
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMister" value="0" checked>
-                                    <label class="form-check-label" for="genderMister">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0" checked>
+                                    <label class="form-check-label" for="genderMale">
                                         Мистер
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMissis" value="1">
-                                    <label class="form-check-label" for="genderMissis">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
+                                    <label class="form-check-label" for="genderFemale">
                                         Миссис
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderOther" value="2">
+                                    <label class="form-check-label" for="genderOther">
+                                        Не определился
                                     </label>
                                 </div>
                             </div>
@@ -82,7 +91,7 @@
                                 <div class="form-group">
                                     <label for="email">Фото</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="photo" name="photo">
+                                        <input type="file" class="custom-file-input" name="photo">
                                         <label class="custom-file-label" for="photo">Выберите фото</label>
                                     </div>
                                 </div>
@@ -257,8 +266,8 @@
                                 <div class="form-group">
                                     <label for="email">Фото водительского удостоверения (2 стороны)</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="photo" name="d_license[]" multiple>
-                                        <label class="custom-file-label" for="photo">Выберите файл</label>
+                                        <input type="file" class="custom-file-input" name="d_license[]" multiple>
+                                        <label class="custom-file-label" for="d_license[]">Выберите файл</label>
                                     </div>
                                 </div>
                             </div>
@@ -267,8 +276,8 @@
                                 <div class="form-group">
                                     <label for="email">Паспорт или ИД (2 стороны)</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="photo" name="passport[]" multiple>
-                                        <label class="custom-file-label" for="photo">Выберите файл</label>
+                                        <input type="file" class="custom-file-input" name="passport[]" multiple>
+                                        <label class="custom-file-label" for="passport[]">Выберите файл</label>
                                     </div>
                                 </div>
                             </div>

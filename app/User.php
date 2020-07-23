@@ -17,12 +17,14 @@ class User extends Authenticatable implements JWTSubject
     const ROLE_ADMIN = 'admin';
     const ROLE_CLIENT = 'client';
     const ROLE_DRIVER = 'driver';
+    const ROLE_BRIGADIR = 'brigadir';
 
     /**
      * User genders
      */
     const GENDER_MALE = 0;
     const GENDER_FEMALE = 1;
+    const GENDER_OTHER = 2;
 
     /**
      * The attributes that are mass assignable.

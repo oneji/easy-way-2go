@@ -15,6 +15,12 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="home-btn d-none d-sm-block">
@@ -52,7 +58,7 @@
                             <div class="p-2">
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
-                                        <ul>
+                                        <ul class="mb-0">
                                             @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
@@ -63,7 +69,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="email">Email адрес</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Введите email адрес" required parsley-type="email">
+                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Введите email адрес" required parsley-type="email">
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>

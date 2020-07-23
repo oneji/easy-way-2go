@@ -53,11 +53,19 @@ class LoginController extends Controller
         if(!$user) {
             return back()->withErrors([
                 'email' => 'Пользольвателя с таким email адресом не найдено.'
+            ])->withInput([
+                'email' => $request->email
             ]);
         }
 
         if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->route('home');
+        } else {
+            return back()->withErrors([
+                'password' => 'Введен неверный пароль.'
+            ])->withInput([
+                'email' => $request->email
+            ]);
         }
     }
 }

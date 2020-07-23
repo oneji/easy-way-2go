@@ -75,8 +75,10 @@ class ClientService
         $client->first_name = $request->first_name;
         $client->last_name = $request->last_name;
         $client->birthday = Carbon::parse($request->birthday);
+        $client->nationality = $request->nationality;
         $client->phone_number = $request->phone_number;
         $client->email = $request->email;
+        $client->gender = $request->gender;
         
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');

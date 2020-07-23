@@ -74,7 +74,11 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        //
+        $driver = $this->driverService->getById($id);
+
+        return view('drivers.show', [
+            'driver' => $driver
+        ]);
     }
 
     /**
@@ -110,16 +114,5 @@ class DriverController extends Controller
         $request->session()->flash('success', 'Информация успешно обновлена!');
 
         return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

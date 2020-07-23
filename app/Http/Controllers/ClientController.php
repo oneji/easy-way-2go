@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Services\ClientService;
+use App\Country;
 
 class ClientController extends Controller
 {
@@ -42,7 +43,11 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        $countries = Country::all();
+
+        return view('clients.create', [
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -68,7 +73,11 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = $this->clientService->getById($id);
+
+        return view('clients.show', [
+            'client' => $client
+        ]);
     }
 
     /**
@@ -80,11 +89,13 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = $this->clientService->getById($id);
+        $countries = Country::all();
 
         if(!$client) abort(404);
 
         return view('clients.edit', [
-            'client' => $client
+            'client' => $client,
+            'countries' => $countries
         ]);
     }
 
@@ -102,16 +113,5 @@ class ClientController extends Controller
         $request->session()->flash('success', 'Информация успешно обновлена!');
 
         return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

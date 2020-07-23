@@ -27,7 +27,7 @@ class DriverService
                     ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
                     ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*');
             }
-        ])->where('role', User::ROLE_DRIVER)->paginate(10);    
+        ])->where('role', User::ROLE_DRIVER)->paginate(10);
     }
 
     /**
@@ -37,7 +37,14 @@ class DriverService
      */
     public function getById($id)
     {
-        return User::with('driver_data')->where('id', $id)->first();
+        return User::with([
+            'driver_data' => function($query) {
+                $query->join('countries as c', 'c.id', '=', 'driver_data.country_id')
+                    ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
+                    ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*');
+            }
+        ])
+        ->where('role', User::ROLE_DRIVER)->where('users.id', $id)->first();
     }
 
     /**
@@ -101,8 +108,10 @@ class DriverService
         $driver->first_name = $request->first_name;
         $driver->last_name = $request->last_name;
         $driver->birthday = Carbon::parse($request->birthday);
+        $driver->nationality = $request->nationality;
         $driver->phone_number = $request->phone_number;
         $driver->email = $request->email;
+        $driver->gender = $request->gender;
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');

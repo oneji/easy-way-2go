@@ -19,6 +19,12 @@ class User extends Authenticatable implements JWTSubject
     const ROLE_DRIVER = 'driver';
 
     /**
+     * User genders
+     */
+    const GENDER_MALE = 0;
+    const GENDER_FEMALE = 1;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,6 +35,8 @@ class User extends Authenticatable implements JWTSubject
         'phone_number',
         'email',
         'password',
+        'nationality',
+        'gender'
     ];
 
     /**

@@ -37,6 +37,26 @@
                         <p class="card-title-desc"></p>
                         
                         <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderMister" value="0" checked>
+                                    <label class="form-check-label" for="genderMister">
+                                        Мистер
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderMissis" value="1">
+                                    <label class="form-check-label" for="genderMissis">
+                                        Миссис
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="first_name">Имя</label>
@@ -91,6 +111,18 @@
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
                                     </div><!-- input-group -->
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="last_name" class="control-label">Национальность</label>
+                                    <select name="nationality" class="form-control" required>
+                                        <option value="" selected>Выберите страну</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

@@ -68,7 +68,7 @@
                                                 <a href="{{ route('admin.clients.edit', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
                                             </li>
                                             <li class="list-inline-item px-2">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Просмотреть" class="view-user-btn"><i class="bx bx-user-circle"></i></a>
+                                                <a href="{{ route('admin.clients.show', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -86,18 +86,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-    @parent
-
-    <script>
-        $(document).ready(function() {
-            $('.view-user-btn').click(function(e) {
-                e.preventDefault();
-
-                console.log('...')
-            });
-        });
-    </script>
 @endsection

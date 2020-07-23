@@ -68,7 +68,7 @@
                             @if (Auth::user()->photo !== null)
                                 <img class="rounded-circle header-profile-user" src="{{ asset('storage/'.Auth::user()->photo) }}" alt="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}">
                             @else
-                                <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/users/default_user.png') }}" alt="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}">
+                                <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}">
                             @endif
                             <span class="d-none d-xl-inline-block ml-1">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>

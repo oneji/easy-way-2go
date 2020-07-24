@@ -90,4 +90,12 @@ class BrigadirService
             'inn' => $request->inn
         ]);
     }
+
+    /**
+     * Get brigadir's count
+     */
+    public function count()
+    {
+        return User::where('role', User::ROLE_BRIGADIR)->get()->count();
+    }
 }

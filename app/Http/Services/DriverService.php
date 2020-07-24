@@ -135,4 +135,12 @@ class DriverService
             'grades_expire_at' => Carbon::parse($request->grades_expire_at),
         ]);
     }
+
+    /**
+     * Get driver's count
+     */
+    public function count()
+    {
+        return User::where('role', User::ROLE_DRIVER)->get()->count();
+    }
 }

@@ -94,4 +94,12 @@ class ClientService
             'passport_expires_at' => Carbon::parse($request->passport_expires_at)
         ]);
     }
+
+    /**
+     * Get client's count
+     */
+    public function count()
+    {
+        return User::where('role', User::ROLE_CLIENT)->get()->count();
+    }
 }

@@ -16,6 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::as('admin.')->middleware('auth')->group(function() {
+    Route::resource('brigadirs', 'BrigadirController')->except([ 'destroy' ]);
     Route::resource('drivers', 'DriverController')->except([ 'destroy' ]);
     Route::resource('clients', 'ClientController')->except([ 'destroy' ]);
 });

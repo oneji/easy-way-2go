@@ -3,24 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Services\DriverService;
+use App\Http\Services\BrigadirService;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\User;
 use App\Country;
 
-class DriverController extends Controller
+class BrigadirController extends Controller
 {
-    private $driverService;
+    private $brigadirService;
 
     /**
-     * DriverController constructor.
+     * BrigadirController constructor
      * 
-     * @param \App\Http\Services\DriverService $driverService
+     * @param \App\Http\Services\BrigadirService $brigadirService
      */
-    public function __construct(DriverService $driverService)
+    public function __construct(BrigadirService $brigadirService)
     {
-        $this->driverService = $driverService;
+        $this->brigadirService = $brigadirService;
     }
 
     /**
@@ -30,10 +29,10 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = $this->driverService->all();
+        $brigadirs = $this->brigadirService->all();
 
-        return view('drivers.index', [ 
-            'drivers' => $drivers
+        return view('brigadirs.index', [
+            'brigadirs' => $brigadirs
         ]);
     }
 
@@ -46,7 +45,7 @@ class DriverController extends Controller
     {
         $countries = Country::all();
 
-        return view('drivers.create', [
+        return view('brigadirs.create', [
             'countries' => $countries
         ]);
     }
@@ -54,16 +53,14 @@ class DriverController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest $request
+     * @param  \App\Http\Requests\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
-        $response = $this->driverService->store($request);
+        $this->brigadirService->store($request);
 
-        $request->session()->flash('success', 'Водитель успешно создан!');
-
-        return redirect()->route('admin.drivers.index');
+        return redirect()->route('admin.brigadirs.index');
     }
 
     /**
@@ -74,12 +71,12 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        $driver = $this->driverService->getById($id);
+        $brigadir = $this->brigadirService->getById($id);
 
-        // return $driver;
-        
-        return view('drivers.show', [
-            'driver' => $driver
+        $request->session()->flash('success', 'Бригадир успешно создан.');
+
+        return view('brigadirs.show', [
+            'brigadir' => $brigadir
         ]);
     }
 
@@ -91,13 +88,14 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
+        $brigadir = $this->brigadirService->getById($id);
+
+        if(!$brigadir) abort(404);
+        
         $countries = Country::all();
-        $driver = $this->driverService->getById($id);
 
-        if(!$driver) abort(404);        
-
-        return view('drivers.edit', [
-            'driver' => $driver,
+        return view('brigadirs.edit', [
+            'brigadir' => $brigadir,
             'countries' => $countries
         ]);
     }
@@ -105,15 +103,15 @@ class DriverController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserRequest $request
+     * @param  \App\Http\Requests\UpdateUserRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->driverService->update($request, $id);
+        $this->brigadirService->update($request, $id);
 
-        $request->session()->flash('success', 'Информация успешно обновлена!');
+        $request->session()->flash('success', 'Информация успешно обновлена.');
 
         return back();
     }

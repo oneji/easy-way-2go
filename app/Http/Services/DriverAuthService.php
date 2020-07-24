@@ -73,7 +73,7 @@ class DriverAuthService
         if(!$user) {
             return [
                 'ok' => false,
-                'message' => 'Пользователь с таким email адресом не найдено.'
+                'message' => 'Пользователя с таким email адресом не найдено.'
             ];
         }
 

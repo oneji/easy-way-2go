@@ -94,4 +94,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\DriverData');
     }
+
+    /**
+     * Get the brigadir data associated with the user.
+     */
+    public function brigadir_data()
+    {
+        return $this->hasOne('App\BrigadirData');
+    }
 }

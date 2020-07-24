@@ -2,8 +2,8 @@
     'breadcrumbs' => [
         'title' => 'Профиль пользователя',
         'items' => [
-            [ 'name' => 'Водители', 'link' => route('admin.drivers.index') ],
-            [ 'name' => $driver->first_name .' '. $driver->last_name, 'link' => null ]
+            [ 'name' => 'Бригадиры', 'link' => route('admin.brigadirs.index') ],
+            [ 'name' => $brigadir->first_name .' '. $brigadir->last_name, 'link' => null ]
         ]
     ]
 ])
@@ -29,14 +29,14 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="avatar-md profile-user-wid mb-4">
-                                @if ($driver->photo !== null)
-                                    <img src="{{ asset('storage/'.$driver->photo) }}" alt="" class="img-thumbnail rounded-circle">
+                                @if ($brigadir->photo !== null)
+                                    <img src="{{ asset('storage/'.$brigadir->photo) }}" alt="" class="img-thumbnail rounded-circle">
                                 @else
                                     <img src="{{ asset('assets/images/users/no-photo.png') }}" alt="" class="img-thumbnail rounded-circle">
                                 @endif
                             </div>
-                            <h5 class="font-size-15 text-truncate">{{ $driver->first_name .' '. $driver->last_name }}</h5>
-                            <p class="text-muted mb-0 text-truncate">{{ $driver->email }}</p>
+                            <h5 class="font-size-15 text-truncate">{{ $brigadir->first_name .' '. $brigadir->last_name }}</h5>
+                            <p class="text-muted mb-0 text-truncate">{{ $brigadir->email }}</p>
                         </div>
 
                         <div class="col-sm-8">
@@ -67,79 +67,23 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">День рождения:</th>
-                                    <td>{{ $driver->birthday }}</td>
+                                    <td>{{ $brigadir->birthday }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Номер телефона:</th>
-                                    <td>{{ $driver->phone_number }}</td>
+                                    <td>{{ $brigadir->phone_number }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">E-mail:</th>
-                                    <td>{{ $driver->email }}</td>
+                                    <td>{{ $brigadir->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Место проживания:</th>
-                                    <td>{{ $driver->driver_data->country_name .', '. $driver->driver_data->city }}</td>
+                                    <th scope="row">Фирма:</th>
+                                    <td>{{ $brigadir->brigadir_data->company_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Где выданы вод. права?:</th>
-                                    <td>{{ $driver->driver_data->dl_issue_place_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Действуют с:</th>
-                                    <td>{{ $driver->driver_data->dl_issued_at }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Действуют до:</th>
-                                    <td>{{ $driver->driver_data->dl_expires_at }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Водительский опыт:</th>
-                                    <td><span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driver_data->driving_experience }}</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Судимость:</th>
-                                    <td>
-                                        @if ($driver->driver_data->conviction)
-                                            <span class="badge badge-danger font-size-12"> Да</span>
-                                        @else
-                                            <span class="badge badge-success font-size-12"> Нет</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Были ли задержаны пьяными?</th>
-                                    <td>
-                                        @if ($driver->driver_data->was_kept_drunk)
-                                            <span class="badge badge-danger font-size-12"> Да</span>
-                                        @else
-                                            <span class="badge badge-success font-size-12"> Нет</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Баллы:</th>
-                                    <td>{{ $driver->driver_data->grades }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Срок действия баллов:</th>
-                                    <td>{{ $driver->driver_data->grades_expire_at }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Были ли в ДТП в течение 5 лет?</th>
-                                    <td>
-                                        @if ($driver->driver_data->dpt)
-                                            <span class="badge badge-danger font-size-12"> Да</span>
-                                        @else
-                                            <span class="badge badge-success font-size-12"> Нет</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Изображение водительских прав</th>
-                                    <td>
-                                        {{ $driver->driver_data->docs }}
-                                    </td>
+                                    <th scope="row">ИНН или ID:</th>
+                                    <td>{{ $brigadir->brigadir_data->inn }}</td>
                                 </tr>
                             </tbody>
                         </table>

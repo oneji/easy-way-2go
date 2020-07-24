@@ -75,6 +75,8 @@ class ClientController extends Controller
     {
         $client = $this->clientService->getById($id);
 
+        if(!$client) abort(404);
+
         return view('clients.show', [
             'client' => $client
         ]);

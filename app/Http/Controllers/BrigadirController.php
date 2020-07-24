@@ -60,6 +60,8 @@ class BrigadirController extends Controller
     {
         $this->brigadirService->store($request);
 
+        $request->session()->flash('success', 'Бригадир успешно создан.');
+
         return redirect()->route('admin.brigadirs.index');
     }
 
@@ -73,7 +75,7 @@ class BrigadirController extends Controller
     {
         $brigadir = $this->brigadirService->getById($id);
 
-        $request->session()->flash('success', 'Бригадир успешно создан.');
+        if(!$brigadir) abort(404);
 
         return view('brigadirs.show', [
             'brigadir' => $brigadir
@@ -88,11 +90,10 @@ class BrigadirController extends Controller
      */
     public function edit($id)
     {
+        $countries = Country::all();
         $brigadir = $this->brigadirService->getById($id);
 
-        if(!$brigadir) abort(404);
-        
-        $countries = Country::all();
+        if(!$brigadir) abort(404);        
 
         return view('brigadirs.edit', [
             'brigadir' => $brigadir,

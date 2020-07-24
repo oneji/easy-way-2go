@@ -76,6 +76,8 @@ class DriverController extends Controller
     {
         $driver = $this->driverService->getById($id);
 
+        if(!$driver) abort(404);
+
         // return $driver;
         
         return view('drivers.show', [

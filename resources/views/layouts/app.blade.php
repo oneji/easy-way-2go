@@ -110,6 +110,15 @@
 
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-book-open"></i>
+                                <span>Справочники</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.de.index') }}">Водительский опыт</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="bx bx-user-circle"></i>
                                 <span>Пользователи</span>
                             </a>
@@ -138,7 +147,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0 font-size-18">{{ $breadcrumbs['title'] }}</h4>
+                                @if (isset($breadcrumbs['title']))
+                                    <h4 class="mb-0 font-size-18">{{ $breadcrumbs['title'] }}</h4>         
+                                @endif
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">

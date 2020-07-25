@@ -54,7 +54,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <h5 class="font-size-14 mb-1"><a href="#" class="text-dark">{{ $client->first_name . ' ' . $client->last_name }}</a></h5>
+                                        <h5 class="font-size-14 mb-1"><a href="{{ route('admin.clients.show', [ $client->id ]) }}" class="text-dark">{{ $client->first_name . ' ' . $client->last_name }}</a></h5>
                                         <p class="text-muted mb-0">{{ $client->email }}</p>
                                     </td>
                                     <td>{{ $client->phone_number }}</td>

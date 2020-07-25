@@ -93,9 +93,22 @@ class BrigadirService
 
     /**
      * Get brigadir's count
+     * 
+     * @return collection
      */
     public function count()
     {
         return User::where('role', User::ROLE_BRIGADIR)->get()->count();
+    }
+
+    /**
+     * Get brigadir's all drivers
+     * 
+     * @param   int $brigadirId
+     * @return  collection
+     */
+    public function getDrivers($brigadirId)
+    {
+        return User::where('role', User::ROLE_DRIVER)->where('brigadir_id', $brigadirId)->get();
     }
 }

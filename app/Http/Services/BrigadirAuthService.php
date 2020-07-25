@@ -8,9 +8,9 @@ use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\User;
 use JWTAuth;
-use App\ClientData;
+use App\BrigadirData;
 
-class ClientAuthService
+class BrigadirAuthService
 {
     use UploadImageTrait;
 
@@ -34,7 +34,7 @@ class ClientAuthService
         $user->save();
 
         // Save additional data
-        $user->client_data()->save(new ClientData([
+        $user->brigadir_data()->save(new ClientData([
             'id_card' => $request->id_card,
             'passport_number' => $request->passport_number,
             'passport_expires_at' => $request->passport_expires_at
@@ -87,7 +87,7 @@ class ClientAuthService
         $credentials = $request->only('email', 'password');
 
         $user = User::where('email', $request->email)
-            ->where('role', User::ROLE_CLIENT)
+            ->where('role', User::ROLE_BRIGADIR)
             ->first();
 
         if(!$user) {
@@ -106,7 +106,7 @@ class ClientAuthService
         }
 
         // Authenticate the user
-        if (!$token = auth('client')->attempt($credentials)) {
+        if (!$token = auth('brigadir')->attempt($credentials)) {
             return [
                 'ok' => false,
                 'message' => 'Неверный логин или пароль.'
@@ -116,7 +116,7 @@ class ClientAuthService
         return [
             'ok' => true,
             'token' => $token,
-            'expires_in' => auth('client')->factory()->getTTL() * 60
+            'expires_in' => auth('brigadir')->factory()->getTTL() * 60
         ];
     }
 }

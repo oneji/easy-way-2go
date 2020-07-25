@@ -58,6 +58,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'brigadir' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*

@@ -135,12 +135,6 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">Изображение водительских прав</th>
-                                    <td>
-                                        {{ $driver->driver_data->docs }}
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -113,6 +113,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card mini-stats-wid">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p class="text-muted font-weight-medium">Транспорт</p>
+                                    <h4 class="mb-0">{{ $transportsCount }}</h4>
+                                </div>
+
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bx bx-car font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- end row -->
         </div>

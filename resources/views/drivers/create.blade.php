@@ -12,7 +12,6 @@
     @parent
     
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -31,7 +30,7 @@
         
         <div class="row">
             <div class="col-6">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Данные водителя</h4>
                         <p class="card-title-desc"></p>
@@ -166,7 +165,7 @@
             </div>
 
             <div class="col-6">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Документы</h4>
                         <p class="card-title-desc"></p>
@@ -211,7 +210,11 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Водительский опыт</label>
-                                    <input data-toggle="touchspin" value="0" min="0" max="100" name="driving_experience" type="number" data-step="1" data-bts-postfix="лет">
+                                    <select name="driving_experience" class="form-control">
+                                        @foreach ($deList as $idx => $de)
+                                            <option value="{{ $de->id }}" {{ $idx === 0 ? 'selected' : null }}>{{ $de->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -287,7 +290,7 @@
             </div>
 
             <div class="col-12">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">Добавить водителя</button>
                     </div>
@@ -303,14 +306,12 @@
 
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2();
-            $('[data-toggle=touchspin]').TouchSpin();
         });
     </script>
 @endsection

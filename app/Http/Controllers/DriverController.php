@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Services\DriverService;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\DrivingExperience;
 use App\User;
 use App\Country;
 
@@ -33,7 +34,7 @@ class DriverController extends Controller
         $drivers = $this->driverService->all();
 
         return view('drivers.index', [ 
-            'drivers' => $drivers
+            'drivers' => $drivers,
         ]);
     }
 
@@ -45,9 +46,11 @@ class DriverController extends Controller
     public function create()
     {
         $countries = Country::all();
+        $deList = DrivingExperience::all();
 
         return view('drivers.create', [
-            'countries' => $countries
+            'countries' => $countries,
+            'deList' => $deList
         ]);
     }
 

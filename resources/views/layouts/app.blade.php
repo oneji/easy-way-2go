@@ -128,6 +128,12 @@
                                 <li><a href="{{ route('admin.clients.index') }}">Клиенты</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.transport.index') }}" class="waves-effect" aria-expanded="false">
+                                <i class="bx bx-car"></i>
+                                <span>Транспорт</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->

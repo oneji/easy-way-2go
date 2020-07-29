@@ -25,7 +25,8 @@ class DriverService
             'driver_data' => function($query) {
                 $query->join('countries as c', 'c.id', '=', 'driver_data.country_id')
                     ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
-                    ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*');
+                    ->join('driving_experiences as de', 'de.id', '=', 'driver_data.driving_experience')
+                    ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*', 'de.name as driving_experience_name');
             }
         ])->where('role', User::ROLE_DRIVER)->paginate(10);
     }

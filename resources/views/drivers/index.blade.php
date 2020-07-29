@@ -62,7 +62,7 @@
                                     <td>{{ $driver->driver_data->country_name }}</td>
                                     <td>{{ $driver->driver_data->city }}</td>
                                     <td>
-                                        <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driver_data->driving_experience }}</span>
+                                        <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driver_data->driving_experience_name }}</span>
                                     </td>
                                     <td>
                                         <ul class="list-inline font-size-20 contact-links mb-0">

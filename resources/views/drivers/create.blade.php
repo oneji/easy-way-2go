@@ -118,7 +118,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -191,7 +191,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -203,7 +203,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -218,35 +218,38 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction">
-                                    <label class="custom-control-label" for="convictionSwitch">Судимость</label>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-9">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Комментарий</label>
                                     <textarea name="comment" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="Не указано"></textarea>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
+                            <div class="col-sm-12">
+                                <div class="custom-control custom-switch mb-2" dir="ltr">
+                                    <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction">
+                                    <label class="custom-control-label" for="convictionSwitch">Судимость</label>
+                                </div>
+
+                                <div class="custom-control custom-switch mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="drunkSwitch" name="was_kept_drunk">
                                     <label class="custom-control-label" for="drunkSwitch">Были ли задержаны пьяными?</label>
                                 </div>
+
+                                <div class="custom-control custom-switch mb-2" dir="ltr">
+                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp">
+                                    <label class="custom-control-label" for="dtpSwitch">Были ли в ДТП в течение 5 лет?</label>
+                                </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Баллы</label>
                                     <input type="number" class="form-control" name="grades" value="0" placeholder="Не указано" min="0">
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Срок действия баллов</label>
                                     <div class="input-group">
@@ -254,14 +257,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="custom-control custom-switch mt-4 mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp">
-                                    <label class="custom-control-label" for="dtpSwitch">Были ли в ДТП в течение 5 лет?</label>
+                                    </div>
                                 </div>
                             </div>
 

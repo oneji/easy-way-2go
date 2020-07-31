@@ -69,7 +69,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="email">Email адрес</label>
-                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Введите email адрес" required parsley-type="email">
+                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Введите email адрес" required parsley-type="email" autofocus>
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>

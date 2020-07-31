@@ -39,7 +39,7 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Данные клиента</h4>
                         <p class="card-title-desc"></p>
@@ -180,7 +180,7 @@
             </div>
 
             <div class="col-12">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">Сохранить</button>
                     </div>

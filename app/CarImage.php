@@ -33,12 +33,12 @@ class CarImage extends Model
      * @var array
      */
     protected $casts = [
-        'car_passport' => 'array',
-        'teh_osmort' => 'array',
-        'insurance' => 'array',
-        'people_license' => 'array',
-        'car_photos' => 'array',
-        'trailer_photos' => 'array'
+        'car_passport' => 'object',
+        'teh_osmotr' => 'object',
+        'insurance' => 'object',
+        'people_license' => 'object',
+        'car_photos' => 'object',
+        'trailer_photos' => 'object'
     ];
 
     /**

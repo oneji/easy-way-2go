@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Services\DriverService;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -32,6 +33,8 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = $this->driverService->all();
+
+        // return $drivers;
 
         return view('drivers.index', [ 
             'drivers' => $drivers,
@@ -80,8 +83,6 @@ class DriverController extends Controller
         $driver = $this->driverService->getById($id);
 
         if(!$driver) abort(404);
-
-        // return $driver;
         
         return view('drivers.show', [
             'driver' => $driver
@@ -96,14 +97,18 @@ class DriverController extends Controller
      */
     public function edit($id)
     {
-        $countries = Country::all();
         $driver = $this->driverService->getById($id);
+        $countries = Country::all();
+        $deList = DrivingExperience::all();
+
+        // return $driver;
 
         if(!$driver) abort(404);        
 
         return view('drivers.edit', [
             'driver' => $driver,
-            'countries' => $countries
+            'countries' => $countries,
+            'deList' => $deList
         ]);
     }
 
@@ -121,5 +126,22 @@ class DriverController extends Controller
         $request->session()->flash('success', 'Информация успешно обновлена!');
 
         return back();
+    }
+
+    /**
+     * Delete driver's document
+     * 
+     * @param   int $driverId
+     * @param   int $docId
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyDoc($driverId, $docId)
+    {
+        $this->driverService->destroyDoc($driverId, $docId);
+
+        Session::flash('success', 'Документ успешно удалён.');
+
+        return redirect()->back();
     }
 }

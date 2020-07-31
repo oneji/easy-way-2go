@@ -12,7 +12,52 @@
     @parent
     
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet" />
+    <!-- Lightbox css -->
+    <link href="{{ asset('assets/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .radio-btn-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .car-image-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .car-image-wrapper > .car-image-delete-btn {
+            font-size: 18px;
+            color: #ddd;
+            transition: .3s all ease;
+            position: absolute;
+            top: 0;
+            right: 5px;
+            opacity: 0;
+        }
+
+        .car-image-wrapper > .car-image-delete-btn:hover {
+            color: #f46a6a;
+        }
+
+        .car-image {
+            width: 100px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            transition: .3s all ease;
+        }
+
+        .car-image:hover {
+            border: 1px solid #34c38f;
+        }
+
+        .car-image-wrapper:hover .car-image-delete-btn {
+            opacity: 1;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -39,7 +84,7 @@
         
         <div class="row">
             <div class="col-6">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Данные водителя</h4>
                         <p class="card-title-desc"></p>
@@ -123,7 +168,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -170,7 +215,7 @@
             </div>
 
             <div class="col-6">
-                <div class="card border border-success">
+                <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Документы</h4>
                         <p class="card-title-desc"></p>
@@ -196,7 +241,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -208,19 +253,30 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label">Водительский опыт</label>
-                                    <input data-toggle="touchspin" value="{{ $driver->driver_data->driving_experience }}" min="0" max="100" name="driving_experience" type="number" data-step="1" data-bts-postfix="лет">
+                                    <label class="control-label">Водительский опыт </label>
+                                    <select name="driving_experience" class="form-control">
+                                        @foreach ($deList as $idx => $de)
+                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="custom-control custom-switch mt-2 mb-2" dir="ltr">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Комментарий</label>
+                                    <textarea name="comment" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="Не указано">{{ $driver->driver_data->comment }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="custom-control custom-switch mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction" {{ $driver->driver_data->conviction ? 'checked' : null }}>
                                     <label class="custom-control-label" for="convictionSwitch">Судимость</label>
                                 </div>
@@ -231,15 +287,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-9">
-                                <div class="form-group">
-                                    <label class="control-label">Комментарий</label>
-                                    <textarea name="comment" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="Не указано">{{ $driver->driver_data->comment }}</textarea>
-                                </div>
-                            </div>
-
                             <div class="col-sm-12">
-                                <div class="custom-control custom-switch mt-2 mb-2" dir="ltr">
+                                <div class="custom-control custom-switch mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="drunkSwitch" name="was_kept_drunk" {{ $driver->driver_data->was_kept_drunk ? 'checked' : null }}>
                                     <label class="custom-control-label" for="drunkSwitch">Были ли задержаны пьяными?</label>
                                 </div>
@@ -260,7 +309,27 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Фото водительского удостоверения (2 стороны)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="d_license[]" multiple>
+                                        <label class="custom-file-label" for="d_license[]">Выберите файл</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Паспорт или ИД (2 стороны)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="passport[]" multiple>
+                                        <label class="custom-file-label" for="passport[]">Выберите файл</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +338,33 @@
             </div>
 
             <div class="col-12">
-                <div class="card border border-success">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Добавленные документы</h4>
+                        <p class="card-title-desc"></p>
+                        @if ($driver->driver_data->docs !== null)
+                            @foreach ($driver->driver_data->docs as $item)
+                                <div class="car-image-wrapper">
+                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="{{ $item->type === 'passport' ? 'Паспорт или ИД' : 'Фото водительского удостоверения' }}">
+                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
+                                    </a>
+                                    <a href="{{ route('admin.drivers.destroyDoc', [ 'driverId' => $driver->id, 'docId' => $item->id ]) }}" class="car-image-delete-btn">
+                                        <i class="bx bx-trash-alt"></i>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="alert alert-info">
+                                <i class="mdi mdi-information mr-2"></i>
+                                На данный момент документов не найдено.
+                            </div>        
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">Сохранить</button>
                     </div>
@@ -285,14 +380,29 @@
 
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
+    <!-- Magnific Popup-->
+    <script src="{{ asset('assets/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.select2').select2();
-            $('[data-toggle=touchspin]').TouchSpin();
+            
+            $('.image-popup-no-margins').magnificPopup({
+                type: "image",
+                closeOnContentClick: !0,
+                closeBtnInside: !1,
+                fixedContentPos: !0,
+                mainClass: "mfp-no-margins mfp-with-zoom",
+                image: {
+                    verticalFit: !0
+                },
+                zoom: {
+                    enabled: !0,
+                    duration: 300
+                }
+            })
         });
     </script>
 @endsection

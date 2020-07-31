@@ -10,11 +10,22 @@ trait UploadDocsTrait
      * @param array $docs
      * @param array $folder
      */
-    public function uploadDocs($files, $folder)
+    public function uploadDocs($files, $folder, $docType = null)
     {
         $docs = [];
         foreach ($files as $file) {
-            $docs[] = $file->store($folder, ['disk' => 'public']);
+            if($docType !== null) {
+                $docs[] = [
+                    'id' => uniqid(),
+                    'file' => $file->store($folder, ['disk' => 'public']),
+                    'type' => $docType
+                ];
+            } else {
+                $docs[] = [
+                    'id' => uniqid(),
+                    'file' => $file->store($folder, ['disk' => 'public']),
+                ];
+            }
         }
 
         return $docs;

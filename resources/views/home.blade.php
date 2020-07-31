@@ -70,7 +70,7 @@
 
                                 <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
                                     <span class="avatar-title">
-                                        <i class="bx bx bx-user-pin font-size-24"></i>
+                                        <i class="bx bx-user-pin font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx bx-user-circle font-size-24"></i>
+                                        <i class="bx bx-user-circle font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx bx-user font-size-24"></i>
+                                        <i class="bx bx-user font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
 
                                 <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx bx-car font-size-24"></i>
+                                        <i class="bx bx-car font-size-24"></i>
                                     </span>
                                 </div>
                             </div>

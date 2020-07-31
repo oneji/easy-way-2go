@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Traits\UploadDocsTrait;
 use App\Http\Requests\StoreUserRequest;
@@ -70,14 +71,17 @@ class DriverService
         $driver->save();
 
         // Upload driver's documents
-        $docs = [];
+        $passportDocs = [];
+        $dLicenseDocs = [];
         if($request->hasFile('passport')) {
-            $docs['passport'] = $this->uploadDocs($request->passport, 'user_docs');
+            $passportDocs = $this->uploadDocs($request->passport, 'user_docs', 'passport');
         }
 
         if($request->hasFile('d_license')) {
-            $docs['d_license'] = $this->uploadDocs($request->d_license, 'user_docs');
+            $dLicenseDocs = $this->uploadDocs($request->d_license, 'user_docs', 'd_license');
         }
+
+        $mergedDocs = array_merge($passportDocs, $dLicenseDocs);
 
         // Save additional data
         $driver->driver_data()->save(new DriverData([
@@ -86,7 +90,7 @@ class DriverService
             'dl_issue_place' => $request->dl_issue_place,
             'dl_issued_at' => Carbon::parse($request->dl_issued_at),
             'dl_expires_at' => Carbon::parse($request->dl_expires_at),
-            'docs' => count($docs) > 0 ? json_encode($docs) : null,
+            'docs' => count($mergedDocs) > 0 ? $mergedDocs : null,
             'driving_experience' => $request->driving_experience,
             'conviction' => isset($request->conviction) ? 1 : 0,
             'comment' => $request->comment,
@@ -117,7 +121,7 @@ class DriverService
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
         }
-
+        
         $driver->save();
 
         // Update driver's additional data
@@ -143,5 +147,32 @@ class DriverService
     public function count()
     {
         return User::where('role', User::ROLE_DRIVER)->get()->count();
+    }
+
+    /**
+     * Delete driver's document
+     * 
+     * @param   int $driverId
+     * @param   int $docId
+     */
+    public function destroyDoc($driverId, $docId)
+    {
+        $driverData = DriverData::where('user_id', $driverId)->first();
+
+        // Update the db
+        $filteredDocs = [];
+        foreach ($driverData->docs as $doc) {
+            if($doc->id !== $docId) {
+                $filteredDocs[] = $doc;
+            } else {
+                // Delete the file from the storage
+                Storage::disk('public')->delete($doc->file);
+            }
+        }
+
+        $driverData->docs = count($filteredDocs) > 0 ? $filteredDocs : null;
+        $driverData->save();
+
+        return $filteredDocs;
     }
 }

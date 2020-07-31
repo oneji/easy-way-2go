@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\TransportService;
 use App\Http\Requests\StoreTransportRequest;
+use App\Http\Requests\UpdateTransportRequest;
 use App\Country;
 use App\CarBrand;
 use App\CarModel;
@@ -61,10 +62,9 @@ class TransportController extends Controller
      * @param  \App\Http\Requests\StoreTransportRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTransportRequest $request)
     {
-        // return $request;
-        $docs = $this->transportService->store($request);
+        $this->transportService->store($request);
         
         $request->session()->flash('success', 'Транспортное средство успешно добавлено.');
 
@@ -90,29 +90,34 @@ class TransportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tranport = $this->transportService->getById($id);
+        $countries = Country::all();
+        $carBrands = CarBrand::all();
+        $carModels = CarModel::all();
+
+        // return $tranport;
+
+        return view('transport.edit', [
+            'transport' => $tranport,
+            'countries' => $countries,
+            'carBrands' => $carBrands,
+            'carModels' => $carModels
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateTransportRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTransportRequest $request, $id)
     {
-        //
-    }
+        $this->transportService->update($request, $id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $request->session()->flash('success', 'Транспортное средство успешно обновлено.');
+
+        return redirect()->route('admin.transport.index');
     }
 }

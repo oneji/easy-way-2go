@@ -21,6 +21,9 @@ Route::as('admin.')->middleware('auth')->group(function() {
     Route::resource('clients', 'ClientController')->except([ 'destroy' ]);
     Route::resource('transport', 'TransportController')->except([ 'destroy' ]);
 
+    // Drivers
+    Route::get('drivers/{driverId}/destroyDoc/{docId}', 'DriverController@destroyDoc')->name('drivers.destroyDoc');
+
     // Driving experience
     Route::get('driving-experience', 'DrivingExperienceController@index')->name('de.index');
     Route::post('driving-experience', 'DrivingExperienceController@store')->name('de.store');

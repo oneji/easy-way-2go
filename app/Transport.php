@@ -24,6 +24,7 @@ class Transport extends Model
         'car_number',
         'car_brand_id',
         'car_model_id',
+        'year',
         'has_cmr',
         'passengers_seats',
         'cubo_metres_available',
@@ -51,7 +52,8 @@ class Transport extends Model
         'disabled_people_seats' => 'boolean',
         'pallet_transportation' => 'boolean',
         'can_pull_trailer' => 'boolean',
-        'ok_for_move' => 'boolean'
+        'ok_for_move' => 'boolean',
+        'has_trailer' => 'boolean'
     ];
 
     /**

@@ -43,6 +43,6 @@ class DriverData extends Model
         'conviction' => 'boolean',
         'was_kept_drunk' => 'boolean',
         'dtp' => 'boolean',
-        'docs' => 'array'
+        'docs' => 'object'
     ];
 }

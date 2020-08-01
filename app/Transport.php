@@ -11,6 +11,16 @@ class Transport extends Model
      */
     const REGISTERED_ON_COMPANY = 0;
     const REGISTERED_ON_INDIVIDUAL = 1;
+    
+    /**
+     * Transport doc type constants
+     */
+    const DOC_TYPE_PASSPORT = 'passport';
+    const DOC_TYPE_TEH_OSMOTR = 'teh_osmort';
+    const DOC_TYPE_INSURANCE = 'insurance';
+    const DOC_TYPE_PEOPLE_LICENSE = 'people_license';
+    const DOC_TYPE_CAR_PHOTOS = 'car_photos';
+    const DOC_TYPE_TRAILER_PHOTOS = 'trailer_photos';
 
     /**
      * The attributes that are mass assignable.
@@ -57,10 +67,10 @@ class Transport extends Model
     ];
 
     /**
-     * Get the car images for the car.
+     * Get the car docs for the car.
      */
-    public function car_images()
+    public function car_docs()
     {
-        return $this->hasMany('App\CarImage');
+        return $this->hasMany('App\CarDoc');
     }
 }

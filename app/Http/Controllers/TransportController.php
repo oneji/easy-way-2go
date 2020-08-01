@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Services\TransportService;
 use App\Http\Requests\StoreTransportRequest;
 use App\Http\Requests\UpdateTransportRequest;
@@ -118,6 +119,24 @@ class TransportController extends Controller
 
         $request->session()->flash('success', 'Транспортное средство успешно обновлено.');
 
-        return redirect()->route('admin.transport.index');
+        return redirect()->back();
     }
+
+    /**
+     * Destroy transport's doc
+     * 
+     * @param   int $tranportId
+     * @param   int $docId
+     * @param   string $docType
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyDoc($id)
+    {
+        $this->transportService->destroyDoc($id);
+
+        Session::flash('success', 'Документ успешно удален.');
+
+        return redirect()->back();
+    }
+    
 }

@@ -62,13 +62,13 @@
 
 @section('content')
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form action="{{ route('admin.transport.update', [ $transport->id ]) }}" method="POST" enctype="multipart/form-data" class="form-horizontal custom-validation" novalidate>
@@ -485,73 +485,23 @@
                         <h4 class="card-title">Добавленные документы</h4>
                         <p class="card-title-desc"></p>
 
-                        @foreach ($transport->car_images as $image)
-                            @foreach ($image->car_passport as $item)
+                        @if ($transport->car_docs->count() > 0)
+                            @foreach ($transport->car_docs as $doc)
                                 <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Паспорт автомобиля">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
+                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$doc->file_path) }}" title="{{ $doc->doc_type }}">
+                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$doc->file_path) }}">
                                     </a>
-                                    <a href="#" class="car-image-delete-btn">
+                                    <a href="{{ route('admin.transport.destroyDoc', [ 'id' => $doc->id ]) }}" class="car-image-delete-btn">
                                         <i class="bx bx-trash-alt"></i>
                                     </a>
                                 </div>
                             @endforeach
-
-                            @foreach ($image->teh_osmotr as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Техобслуживание">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="#" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-
-                            @foreach ($image->insurance as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Страховка">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="#" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-
-                            @foreach ($image->people_license as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Лицензия на перевозку людей">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="#" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-
-                            @foreach ($image->car_photos as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Фото автомобиля">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="#" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-
-                            @foreach ($image->trailer_photos as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Фото трейлера">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="#" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-                        @endforeach
+                        @else
+                            <div class="alert alert-info">
+                                <i class="mdi mdi-information mr-2"></i>
+                                На данный момент документов не найдено.
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

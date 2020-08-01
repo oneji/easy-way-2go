@@ -57,6 +57,10 @@
         .car-image-wrapper:hover .car-image-delete-btn {
             opacity: 1;
         }
+
+        .custom-file-input:lang(en)~.custom-file-label::after {
+            content: "Выбрать";
+        }
     </style>
 @endsection
 
@@ -164,7 +168,7 @@
                                 <div class="form-group">
                                     <label>День рождения</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="dd.mm.yyyy" value="{{ $driver->birthday }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="Выберите дату" value="{{ $driver->birthday }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -221,7 +225,18 @@
                         <p class="card-title-desc"></p>
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Водительский опыт </label>
+                                    <select name="driving_experience" class="form-control">
+                                        @foreach ($deList as $idx => $de)
+                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">Где выданы вод. права?</label>
                                     <select name="dl_issue_place" class="form-control">
@@ -237,7 +252,7 @@
                                 <div class="form-group">
                                     <label>Действует с</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="dd.mm.yyyy" value="{{ $driver->driver_data->dl_issued_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="Выберите дату" value="{{ $driver->driver_data->dl_issued_at }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -249,22 +264,11 @@
                                 <div class="form-group">
                                     <label>Действует до</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="dd.mm.yyyy" value="{{ $driver->driver_data->dl_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="Выберите дату" value="{{ $driver->driver_data->dl_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Водительский опыт </label>
-                                    <select name="driving_experience" class="form-control">
-                                        @foreach ($deList as $idx => $de)
-                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -305,7 +309,7 @@
                                 <div class="form-group">
                                     <label>Срок действия баллов</label>
                                     <div class="input-group">
-                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="dd.mm.yyyy" value="{{ $driver->driver_data->grades_expire_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="Выберите дату" value="{{ $driver->driver_data->grades_expire_at }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -317,8 +321,8 @@
                                 <div class="form-group">
                                     <label for="email">Фото водительского удостоверения (2 стороны)</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="d_license[]" multiple>
-                                        <label class="custom-file-label" for="d_license[]">Выберите файл</label>
+                                        <input type="file" class="custom-file-input" name="d_license[]" multiple id="d_licenseDoc" aria-describedby="d_licenseDocAddon">
+                                        <label class="custom-file-label" for="d_licenseDoc">Выберите файл</label>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +361,7 @@
                             <div class="alert alert-info">
                                 <i class="mdi mdi-information mr-2"></i>
                                 На данный момент документов не найдено.
-                            </div>        
+                            </div>
                         @endif
                     </div>
                 </div>

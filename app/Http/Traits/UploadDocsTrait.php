@@ -9,6 +9,7 @@ trait UploadDocsTrait
      * 
      * @param array $docs
      * @param array $folder
+     * @param string $docType
      */
     public function uploadDocs($files, $folder, $docType = null)
     {

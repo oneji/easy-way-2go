@@ -23,6 +23,9 @@ Route::as('admin.')->middleware('auth')->group(function() {
 
     // Drivers
     Route::get('drivers/{driverId}/destroyDoc/{docId}', 'DriverController@destroyDoc')->name('drivers.destroyDoc');
+    
+    // Transport
+    Route::get('transport/destroyDoc/{id}', 'TransportController@destroyDoc')->name('transport.destroyDoc');
 
     // Driving experience
     Route::get('driving-experience', 'DrivingExperienceController@index')->name('de.index');

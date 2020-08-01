@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <label>День рождения</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="dd.mm.yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="Выберите дату" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -173,6 +173,17 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label class="control-label">Водительский опыт</label>
+                                    <select name="driving_experience" class="form-control">
+                                        @foreach ($deList as $idx => $de)
+                                            <option value="{{ $de->id }}" {{ $idx === 0 ? 'selected' : null }}>{{ $de->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                     <label for="last_name" class="control-label">Где выданы вод. права?</label>
                                     <select name="dl_issue_place" class="form-control">
                                         <option value="" selected>Выберите страну</option>
@@ -187,7 +198,7 @@
                                 <div class="form-group">
                                     <label>Действует с</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="dd.mm.yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="Выберите дату" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -199,22 +210,11 @@
                                 <div class="form-group">
                                     <label>Действует до</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="dd.mm.yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="Выберите дату" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Водительский опыт</label>
-                                    <select name="driving_experience" class="form-control">
-                                        @foreach ($deList as $idx => $de)
-                                            <option value="{{ $de->id }}" {{ $idx === 0 ? 'selected' : null }}>{{ $de->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -253,7 +253,7 @@
                                 <div class="form-group">
                                     <label>Срок действия баллов</label>
                                     <div class="input-group">
-                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="dd.mm.yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="Выберите дату" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Http\Services;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreTransportRequest;
 use App\Http\Requests\UpdateTransportRequest;
-use App\Http\Traits\UploadDocsTrait;
+use App\Http\Traits\UploadCarDocsTrait;
 use App\Transport;
-use App\CarImage;
+use App\CarDoc;
 use Carbon\Carbon;
 
 class TransportService
 {
-    use UploadDocsTrait;
+    use UploadCarDocsTrait;
 
     /**
      * Show a listing of transportation
@@ -20,7 +22,7 @@ class TransportService
      */
     public function all()
     {
-        return Transport::with('car_images')
+        return Transport::with('car_docs')
             ->join('countries', 'countries.id', '=', 'transports.register_country')
             ->join('car_brands', 'car_brands.id', '=', 'transports.car_brand_id')
             ->join('car_models', 'car_models.id', '=', 'transports.car_model_id')
@@ -83,7 +85,7 @@ class TransportService
         $transport->disabled_people_seats = $request->disabled_people_seats;
         $transport->save();
 
-        // $this->storeDocs($transport, $request);
+        $this->storeDocs($transport, $request);
     }
 
     /**
@@ -94,7 +96,7 @@ class TransportService
      */
     public function getById($id)
     {
-        return Transport::with('car_images')->where('id', $id)->first();
+        return Transport::with('car_docs')->where('id', $id)->first();
     }
 
     /**
@@ -103,44 +105,48 @@ class TransportService
      */
     private function storeDocs(Transport $transport, Request $request)
     {
-        $car_passport = null;
-        $teh_osmotr = null;
-        $insurance = null;
-        $people_license = null;
-        $car_photos = null;
-        $trailer_photos = null;
-
+        $docs = [];
         if($request->hasFile('car_passport')) {
-            $car_passport = $this->uploadDocs($request->car_passport, 'car_docs/passport');
+            $docs = array_merge($docs, $this->uploadDocs($request->car_passport, 'car_docs/passport', Transport::DOC_TYPE_PASSPORT));
         }
         
         if($request->hasFile('teh_osmotr')) {
-            $teh_osmotr = $this->uploadDocs($request->teh_osmotr, 'car_docs/teh_osmotr');
+            $docs = array_merge($docs, $this->uploadDocs($request->teh_osmotr, 'car_docs/teh_osmotr', Transport::DOC_TYPE_TEH_OSMOTR));
         }
 
         if($request->hasFile('insurance')) {
-            $insurance = $this->uploadDocs($request->insurance, 'car_docs/insurance');
+            $docs = array_merge($docs, $this->uploadDocs($request->insurance, 'car_docs/insurance', Transport::DOC_TYPE_INSURANCE));
         }
 
         if($request->hasFile('people_license')) {
-            $people_license = $this->uploadDocs($request->people_license, 'car_docs/people_license');
+            $docs = array_merge($docs, $this->uploadDocs($request->people_license, 'car_docs/people_license', Transport::DOC_TYPE_PEOPLE_LICENSE));
         }
 
         if($request->hasFile('car_photos')) {
-            $car_photos = $this->uploadDocs($request->car_photos, 'car_docs/car_photos');
+            $docs = array_merge($docs, $this->uploadDocs($request->car_photos, 'car_docs/car_photos', Transport::DOC_TYPE_CAR_PHOTOS));
         }
 
         if($request->hasFile('trailer_photos')) {
-            $trailer_photos = $this->uploadDocs($request->trailer_photos, 'car_docs/trailer_photos');
+            $docs = array_merge($docs, $this->uploadDocs($request->trailer_photos, 'car_docs/trailer_photos', Transport::DOC_TYPE_TRAILER_PHOTOS));
         }
 
-        $transport->car_images()->save(new CarImage([
-            'car_passport' => $car_passport,
-            'teh_osmotr' => $teh_osmotr,
-            'insurance' => $insurance,
-            'people_license' => $people_license,
-            'car_photos' => $car_photos,
-            'trailer_photos' => $trailer_photos,
-        ]));
+        $transport->car_docs()->saveMany($docs);
+    }
+
+    /**
+     * Destroy transport's doc
+     * 
+     * @param   int $id
+     */
+    public function destroyDoc($id)
+    {
+        $doc = CarDoc::find($id);
+
+        if($doc) {
+            // Delete the doc from the storage
+            Storage::disk('public')->delete($doc->file_path);
+            // Delete the doc from the db
+            $doc->delete();
+        }
     }
 }

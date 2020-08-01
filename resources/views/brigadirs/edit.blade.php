@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label>День рождения</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="dd.mm.yyyy" data-provide="datepicker" value="{{ $brigadir->birthday }}" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="Выберите дату" data-provide="datepicker" value="{{ $brigadir->birthday }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

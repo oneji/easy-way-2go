@@ -124,6 +124,26 @@ class DriverService
         
         $driver->save();
 
+        // Upload driver's documents
+        $passportDocs = [];
+        $dLicenseDocs = [];
+        $mergedDocs = [];
+
+        if($request->hasFile('passport')) {
+            $passportDocs = $this->uploadDocs($request->passport, 'user_docs', 'passport');
+        }
+
+        if($request->hasFile('d_license')) {
+            $dLicenseDocs = $this->uploadDocs($request->d_license, 'user_docs', 'd_license');
+        }
+
+        if($driver->driver_data->docs !== null) {
+            $mergedDocs = array_merge($driver->driver_data->docs, $dLicenseDocs, $passportDocs);
+        } else {
+            $mergedDocs = array_merge($passportDocs, $dLicenseDocs);
+        }
+
+        
         // Update driver's additional data
         $driver->driver_data()->update([
             'country_id' => $request->country_id,
@@ -131,6 +151,7 @@ class DriverService
             'dl_issue_place' => $request->dl_issue_place,
             'dl_issued_at' => Carbon::parse($request->dl_issued_at),
             'dl_expires_at' => Carbon::parse($request->dl_expires_at),
+            'docs' => count($mergedDocs) > 0 ? json_encode($mergedDocs) : null,
             'driving_experience' => $request->driving_experience,
             'conviction' => isset($request->conviction) ? 1 : 0,
             'comment' => $request->comment,

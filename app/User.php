@@ -102,4 +102,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne('App\BrigadirData');
     }
+
+    /**
+     * The transport that belong to the user.
+     */
+    public function transports()
+    {
+        return $this->belongsToMany('App\Transport');
+    }
 }

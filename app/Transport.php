@@ -23,6 +23,11 @@ class Transport extends Model
     const DOC_TYPE_TRAILER_PHOTOS = 'trailer_photos';
 
     /**
+     * Maximum drivers can be bound to the transport
+     */
+    const DRIVER_MAX_COUNT = 2;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -72,5 +77,13 @@ class Transport extends Model
     public function car_docs()
     {
         return $this->hasMany('App\CarDoc');
+    }
+
+    /**
+     * The drivers that belong to the role.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
     }
 }

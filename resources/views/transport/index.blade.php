@@ -13,7 +13,7 @@
             <a href="{{ route('admin.transport.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-3 ml-3" style="float: right">
                 <i class="bx bx-plus mr-1"></i> Добавить машину
             </a>
-            <a href="#" class="btn btn-primary btn-rounded waves-effect waves-light mb-3" style="float: right">
+            <a href="#" class="btn btn-primary btn-rounded waves-effect waves-light mb-3" style="float: right" data-toggle="modal" data-target=".bind-driver-modal">
                 <i class="bx bx-user-plus mr-1"></i> Привязать водителя
             </a>
         </div>
@@ -48,10 +48,16 @@
                             <h5 class="font-size-15"><a href="#" class="text-dark">{{ $car->car_brand_name .' '. $car->car_model_name }}</a></h5>
                             <p class="text-muted">{{ $car->car_number }}</p>
 
-                            <div>
-                                <a href="#" class="badge badge-primary font-size-11 m-1">Photoshop</a>
-                                <a href="#" class="badge badge-primary font-size-11 m-1">illustrator</a>
-                            </div>
+                            @if (count($car->users) > 0)
+                                <div>
+                                    @foreach ($car->users as $driver)
+                                        <a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" class="badge badge-primary font-size-11 m-1">
+                                            <i class="bx bx-user mr-1"></i>
+                                            {{ $driver->first_name .' '. $driver->last_name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                         <div class="card-footer bg-transparent border-top">
                             <div class="contact-links d-flex font-size-20">
@@ -78,4 +84,9 @@
             {{ $transport->links() }}
         </div>
     </div>
+
+    @include('transport.partials._bind-driver-modal', [
+        'transport' => $transport,
+        'drivers' => $drivers
+    ])
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreTransportRequest;
 use App\Http\Requests\UpdateTransportRequest;
+use App\Http\Requests\BindDriverRequest;
 use App\Http\Traits\UploadCarDocsTrait;
 use App\Transport;
 use App\CarDoc;
@@ -22,7 +23,7 @@ class TransportService
      */
     public function all()
     {
-        return Transport::with('car_docs')
+        return Transport::with(['car_docs', 'users'])
             ->join('countries', 'countries.id', '=', 'transports.register_country')
             ->join('car_brands', 'car_brands.id', '=', 'transports.car_brand_id')
             ->join('car_models', 'car_models.id', '=', 'transports.car_model_id')
@@ -147,6 +148,20 @@ class TransportService
             Storage::disk('public')->delete($doc->file_path);
             // Delete the doc from the db
             $doc->delete();
+        }
+    }
+
+    /**
+     * Bind the driver to the transport
+     * 
+     * @param \App\Http\Requests\BindDriverRequest $request
+     */
+    public function bindDriver(BindDriverRequest $request)
+    {
+        $transport = Transport::find($request->transport_id);
+        
+        if(count($transport->users) < Transport::DRIVER_MAX_COUNT) {
+            $transport->users()->attach($request->driver_id);
         }
     }
 }

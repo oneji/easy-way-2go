@@ -57,6 +57,11 @@
                                         </a>
                                     @endforeach
                                 </div>
+                            @else
+                                <span class="badge badge-success font-size-11 m-1">
+                                    <i class="bx bx-user mr-1"></i> 
+                                    Водителей не привязано
+                                </span>
                             @endif
                         </div>
                         <div class="card-footer bg-transparent border-top">

@@ -160,8 +160,12 @@ class TransportService
     {
         $transport = Transport::find($request->transport_id);
         
-        if(count($transport->users) < Transport::DRIVER_MAX_COUNT) {
-            $transport->users()->attach($request->driver_id);
+        // Check if the drivers is already bound to the transport
+        if(!$transport->users->contains($request->driver_id)) {
+            // Check if the transport has less than available drivers bound
+            if(count($transport->users) < Transport::DRIVER_MAX_COUNT) {
+                $transport->users()->attach($request->driver_id);
+            }
         }
     }
 }

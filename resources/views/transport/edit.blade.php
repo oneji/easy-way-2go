@@ -71,6 +71,13 @@
         </div>
     @endif
 
+    @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-all mr-2"></i>
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('admin.transport.update', [ $transport->id ]) }}" method="POST" enctype="multipart/form-data" class="form-horizontal custom-validation" novalidate>
         @csrf
         @method('PUT')

@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <form action="{{ route('admin.transport.bindDriver') }}" method="POST" class="form-horizontal custom-validation" novalidate>
                     @csrf
-                    
+
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
@@ -18,7 +18,9 @@
                                 <select name="transport_id" class="form-control" required>
                                     <option value="" selected disabled>Выберите авто</option>
                                     @foreach ($transport as $car)
-                                        <option value="{{ $car->id }}">{{ $car->car_number }}</option>
+                                        <option value="{{ $car->id }}">
+                                            {{ $car->car_brand_name .' '. $car->car_model_name }} &middot; {{ $car->car_number }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

@@ -128,8 +128,8 @@
                                 <li><a href="{{ route('admin.clients.index') }}">Клиенты</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.transport.index') }}" class="waves-effect" aria-expanded="false">
+                        <li class="{{ Request::segment(1) === 'transport' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.transport.index') }}" class="waves-effect {{ Request::segment(1) === 'transport' ? 'active' : null }}" aria-expanded="false">
                                 <i class="bx bx-car"></i>
                                 <span>Транспорт</span>
                             </a>

@@ -15,34 +15,50 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="transport_id">Транспортное средство</label>
-                                <select name="transport_id" class="form-control" required>
-                                    <option value="" selected disabled>Выберите авто</option>
-                                    @foreach ($transport as $car)
-                                        <option value="{{ $car->id }}">
-                                            {{ $car->car_brand_name .' '. $car->car_model_name }} &middot; {{ $car->car_number }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @if ($transport->count() === 0)
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-check-all mr-2"></i>
+                                    Сначала добавьте транспортное средство.
+                                    </div>
+                                @else
+                                    <select name="transport_id" class="form-control" required>
+                                        <option value="" selected disabled>Выберите авто</option>
+                                        @foreach ($transport as $car)
+                                            <option value="{{ $car->id }}">
+                                                {{ $car->car_brand_name .' '. $car->car_model_name }} &middot; {{ $car->car_number }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                         </div>
 
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="driver_id">Водители</label>
-                                <select name="driver_id" class="form-control" required>
-                                    <option value="" selected disabled>Выберите водителя</option>
-                                    @foreach ($drivers as $driver)
-                                        <option value="{{ $driver->id }}">{{ $driver->first_name .' '. $driver->last_name }}</option>
-                                    @endforeach
-                                </select>
+                                @if ($drivers->count() === 0)
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-check-all mr-2"></i>
+                                        Сначала добавьте водителя.
+                                    </div>
+                                @else
+                                    <select name="driver_id" class="form-control" required>
+                                        <option value="" selected disabled>Выберите водителя</option>
+                                        @foreach ($drivers as $driver)
+                                            <option value="{{ $driver->id }}">{{ $driver->first_name .' '. $driver->last_name }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-block waves-effect waves-light">Привязать</button>
+                        @if ($drivers->count() > 0 && $transport->count() > 0)
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light">Привязать</button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </form>
             </div>

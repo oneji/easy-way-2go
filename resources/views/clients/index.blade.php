@@ -29,54 +29,62 @@
                     </div><!-- end col-->
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-centered table-nowrap">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col" style="width: 70px;">#</th>
-                                <th scope="col">ФИО</th>
-                                <th scope="col">Номер телефона</th>
-                                <th scope="col">Номер ID карты</th>
-                                <th scope="col">Номер паспорта</th>
-                                <th scope="col">Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($clients as $client)
+                @if ($clients->count() === 0)
+                    <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+                        <i class="mdi mdi-information mr-2"></i>
+                        На данный момент записей о клиентах не найдено.
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td>
-                                        @if ($client->photo !== null)
-                                            <div>
-                                                <img class="rounded-circle avatar-sm" src="{{ asset('storage/'.$client->photo) }}" alt="Driver avatar">
-                                            </div>
-                                        @else
-                                            <img class="rounded-circle avatar-sm" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $client->first_name .' '. $client->last_name }}">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <h5 class="font-size-14 mb-1"><a href="{{ route('admin.clients.show', [ $client->id ]) }}" class="text-dark">{{ $client->first_name . ' ' . $client->last_name }}</a></h5>
-                                        <p class="text-muted mb-0">{{ $client->email }}</p>
-                                    </td>
-                                    <td>{{ $client->phone_number }}</td>
-                                    <td>{{ $client->client_data->id_card }}</td>
-                                    <td>
-                                        <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->client_data->passport_number }}</span>
-                                    </td>
-                                    <td>
-                                        <ul class="list-inline font-size-20 contact-links mb-0">
-                                            <li class="list-inline-item px-2">
-                                                <a href="{{ route('admin.clients.edit', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
-                                            </li>
-                                            <li class="list-inline-item px-2">
-                                                <a href="{{ route('admin.clients.show', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
-                                            </li>
-                                        </ul>
-                                    </td>
+                                    <th scope="col" style="width: 70px;">#</th>
+                                    <th scope="col">ФИО</th>
+                                    <th scope="col">Номер телефона</th>
+                                    <th scope="col">Номер ID карты</th>
+                                    <th scope="col">Номер паспорта</th>
+                                    <th scope="col">Действия</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($clients as $client)
+                                    <tr>
+                                        <td>
+                                            @if ($client->photo !== null)
+                                                <div>
+                                                    <img class="rounded-circle avatar-sm" src="{{ asset('storage/'.$client->photo) }}" alt="Driver avatar">
+                                                </div>
+                                            @else
+                                                <img class="rounded-circle avatar-sm" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $client->first_name .' '. $client->last_name }}">
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <h5 class="font-size-14 mb-1"><a href="{{ route('admin.clients.show', [ $client->id ]) }}" class="text-dark">{{ $client->first_name . ' ' . $client->last_name }}</a></h5>
+                                            <p class="text-muted mb-0">{{ $client->email }}</p>
+                                        </td>
+                                        <td>{{ $client->phone_number }}</td>
+                                        <td>{{ $client->client_data->id_card }}</td>
+                                        <td>
+                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->client_data->passport_number }}</span>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline font-size-20 contact-links mb-0">
+                                                <li class="list-inline-item px-2">
+                                                    <a href="{{ route('admin.clients.edit', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                </li>
+                                                <li class="list-inline-item px-2">
+                                                    <a href="{{ route('admin.clients.show', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+
                 <div class="row">
                     <div class="col-lg-12">
                         {{ $clients->links() }}

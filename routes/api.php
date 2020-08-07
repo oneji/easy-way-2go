@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 
 // Auth
 Route::as('api.')->namespace('API')->group(function() {
-    
     Route::prefix('auth')->group(function() {
         // Client authentication
         Route::post('clients/login', 'ClientAuthController@login')->name('loginClient');

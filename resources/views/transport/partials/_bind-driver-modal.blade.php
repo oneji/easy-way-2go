@@ -39,7 +39,7 @@
                                 @if ($drivers->count() === 0)
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <i class="mdi mdi-check-all mr-2"></i>
-                                        Сначала добавьте водителя.
+                                        Сначала добавьте водителя <a href="{{ route('admin.drivers.create') }}">здесь</a>.
                                     </div>
                                 @else
                                     <select name="driver_id" class="form-control" required>

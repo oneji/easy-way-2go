@@ -1,0 +1,129 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "EuroWay2Go API documentation",
+        "contact": {
+            "email": "timich1995@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://e2way.ru/api",
+            "description": "EuroWay2Go API server"
+        }
+    ],
+    "paths": {
+        "/api/auth/clients/register": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Store a newly created user in the db",
+                "operationId": "clientsRegister",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "test@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Регистрация успешно завершена.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ok": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "verification_code": {
+                                            "type": "integer",
+                                            "example": 515789
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/clients/verify/code": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Verify a user by verification code.",
+                "operationId": "verifyUser",
+                "parameters": [
+                    {
+                        "name": "verificationCode",
+                        "in": "path",
+                        "description": "Verification code sent to the user via sms",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Номер телефона успешно подтвержден.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "ok": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Номер телефона успешно подтвержден."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ввведен неверный код подтверждения."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Bearer",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Clients",
+            "description": "Clients auth endpoints"
+        }
+    ]
+}

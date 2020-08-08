@@ -65,7 +65,7 @@
                 }
             }
         },
-        "/api/auth/clients/verify/code": {
+        "/api/auth/clients/verify/{code}": {
             "get": {
                 "tags": [
                     "Users"

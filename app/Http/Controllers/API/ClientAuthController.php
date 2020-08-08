@@ -34,30 +34,4 @@ class ClientAuthController extends Controller
 
         return response()->json($response);
     }
-
-    /**
-     * Verify user by verification code.
-     * 
-     * @param   int $verificationCode
-     * @return  \Illuminate\Http\JsonResponse
-     */
-    public function verify($verificationCode)
-    {
-        $response = $this->clientAuthService->verify($verificationCode);
-
-        return response()->json($response);
-    }
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @param   \App\Http\Requests\LoginUserRequest $request
-     * @return  \Illuminate\Http\JsonResponse
-     */
-    public function login(LoginUserRequest $request)
-    {
-        $response = $this->clientAuthService->login($request);
-
-        return response()->json($response);
-    }
 }

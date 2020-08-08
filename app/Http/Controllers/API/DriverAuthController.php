@@ -34,17 +34,4 @@ class DriverAuthController extends Controller
 
         return response()->json($response);
     }
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @param   \App\Http\Requests\LoginUserRequest $request
-     * @return  \Illuminate\Http\JsonResponse
-     */
-    public function login(LoginUserRequest $request)
-    {
-        $response = $this->driverAuthService->login($request);
-
-        return response()->json($response);
-    }
 }

@@ -55,46 +55,4 @@ class DriverAuthService
             'verification_code' => $user->verification_code,
         ];
     }
-
-    /**
-     * Authenticate the user and return jwt token.
-     * 
-     * @param   \App\Http\Requests\LoginUserRequest $request
-     * @return  array
-     */
-    public function login(LoginUserRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
-        
-        $user = User::where('email', $request->email)
-            ->where('role', User::ROLE_DRIVER)
-            ->first();
-
-        if(!$user) {
-            return [
-                'ok' => false,
-                'message' => 'Пользователя с таким email адресом не найдено.'
-            ];
-        }
-
-        if(!$user->verified) {
-            return [
-                'ok' => false,
-                'message' => 'Перед тем как войти, подтвердите ваш номер телефона.'
-            ];
-        }
-        
-        if (!$token = auth('driver')->attempt($credentials)) {
-            return [
-                'ok' => false,
-                'message' => 'Неверный логин или пароль.'
-            ];
-        }
-
-        return [
-            'ok' => true,
-            'token' => $token,
-            'expires_in' => auth('driver')->factory()->getTTL() * 60
-        ];
-    }
 }

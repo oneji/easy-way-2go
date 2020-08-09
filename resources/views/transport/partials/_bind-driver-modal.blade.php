@@ -16,9 +16,9 @@
                             <div class="form-group">
                                 <label for="transport_id">Транспортное средство</label>
                                 @if ($transport->count() === 0)
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <i class="mdi mdi-check-all mr-2"></i>
-                                    Сначала добавьте транспортное средство.
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-information mr-2"></i>
+                                        Сначала добавьте транспортное средство.
                                     </div>
                                 @else
                                     <select name="transport_id" class="form-control" required>
@@ -37,8 +37,8 @@
                             <div class="form-group">
                                 <label for="driver_id">Водители</label>
                                 @if ($drivers->count() === 0)
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <i class="mdi mdi-check-all mr-2"></i>
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-information mr-2"></i>
                                         Сначала добавьте водителя <a href="{{ route('admin.drivers.create') }}">здесь</a>.
                                     </div>
                                 @else

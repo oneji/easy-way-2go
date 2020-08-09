@@ -115,6 +115,7 @@
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.de.index') }}">Водительский опыт</a></li>
+                                <li><a href="{{ route('admin.carBrands.index') }}">Марки транспорта</a></li>
                             </ul>
                         </li>
                         <li>

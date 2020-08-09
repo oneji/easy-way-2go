@@ -39,7 +39,7 @@ class CarBrandService
         $carBrand->name = $request->name;
         $carBrand->save();
 
-        $request->session()->flash('success', 'Модель траспорта успешно добавлена.');
+        $request->session()->flash('success', 'Марка траспорта успешно добавлена.');
     }
 
     /**
@@ -54,6 +54,6 @@ class CarBrandService
         $carBrand->name = $request->name;
         $carBrand->save();
 
-        $request->session()->flash('success', 'Модель транспорта успешно обновлена.');
+        $request->session()->flash('success', 'Марка транспорта успешно обновлена.');
     }
 }

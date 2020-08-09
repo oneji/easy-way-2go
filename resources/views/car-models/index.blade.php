@@ -15,17 +15,17 @@
                 <div class="row mb-2">
                     <div class="col-sm-8 offset-sm-4">
                         <div class="text-sm-right">
-                            <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2" data-toggle="modal" data-target=".car-brand-modal">
-                                <i class="mdi mdi-plus mr-1"></i> Добавить марку
+                            <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2" data-toggle="modal" data-target=".car-model-modal">
+                                <i class="mdi mdi-plus mr-1"></i> Добавить модель
                             </a>
                         </div>
                     </div>
                 </div>
 
-                @if ($carBrands->count() === 0)
+                @if ($carModels->count() === 0)
                     <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                         <i class="mdi mdi-information mr-2"></i>
-                        На данный момент записей о марках траспорта не найдено.
+                        На данный момент записей о моделях траспорта не найдено.
                     </div>
                 @else
                     <div class="table-responsive">
@@ -33,19 +33,19 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
-                                    <th scope="col">Марка</th>
+                                    <th scope="col">Модель</th>
                                     <th scope="col">Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($carBrands as $idx => $brand)
+                                @foreach ($carModels as $idx => $model)
                                     <tr>
                                         <td>{{ $idx + 1 }}</td>
-                                        <td>{{ $brand->name }}</td>
+                                        <td>{{ $model->name }}</td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="#" data-id="{{ $brand->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                    <a href="#" data-id="{{ $model->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -58,7 +58,7 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        {{ $carBrands->links() }}
+                        {{ $carModels->links() }}
                     </div>
                 </div>
             </div>
@@ -66,8 +66,8 @@
     </div>
 </div>
 
-@include('car-brands.partials._car-brand-modal')
-@include('car-brands.partials._edit-car-brand-modal')
+@include('car-models.partials._car-model-modal', [ 'carBrands' => $carBrands ])
+@include('car-models.partials._edit-car-model-modal', [ 'carBrands' => $carBrands ])
 @endsection
 
 
@@ -76,27 +76,27 @@
 
     <script>
         $(document).ready(function() {
-            var editBrandModal = $('.edit-car-brand-modal');
+            var editModelModal = $('.edit-car-model-modal');
             var editLoading = $('.loading-block');
-            var brandId = null;
+            var modelId = null;
 
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
-                brandId = $(this).data('id');
+                modelId = $(this).data('id');
                 // Show the modal
-                editBrandModal.modal('show');
+                editModelModal.modal('show');
             });
 
-            editBrandModal.on('shown.bs.modal', function() {
+            editModelModal.on('shown.bs.modal', function() {
                 editLoading.css('display', 'flex');
 
                 // Make the AJAX request
                 $.ajax({
-                    url: '/car-brands/getById/' + brandId,
+                    url: '/car-models/getById/' + modelId,
                     type: 'GET',
                     success: function(data) {
-                        editBrandModal.find('form').attr('action', `/car-brands/${brandId}`);
-                        editBrandModal.find('form').find('input[name=name]').val(data.carBrand.name)
+                        editModelModal.find('form').attr('action', `/car-models/${modelId}`);
+                        editModelModal.find('form').find('input[name=name]').val(data.carModel.name)
                     },
                     error: function(err) {
                         console.log('err', err);

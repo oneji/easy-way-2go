@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>Авторизация &middot; {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta content="Перевозки EuroWay2GO" name="description" />
+    <meta content="EuroWay2GO" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
@@ -77,7 +77,7 @@
             
                                     <div class="form-group">
                                         <label for="password">Пароль</label>
-                                        <input type="password" class="form-control" name="password" placeholder="Введите пароль" required data-parsley-minlength="8">
+                                        <input type="password" class="form-control" placeholder="Введите пароль">
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>

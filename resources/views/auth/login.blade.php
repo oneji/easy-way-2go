@@ -77,7 +77,7 @@
             
                                     <div class="form-group">
                                         <label for="password">Пароль</label>
-                                        <input type="password" class="form-control" placeholder="Введите пароль">
+                                        <input type="password" class="form-control" name="password" placeholder="Введите пароль" required data-parsley-minlength="8">
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>

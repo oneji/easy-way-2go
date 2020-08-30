@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Services;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\LoginUserRequest;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\User;
@@ -17,10 +17,10 @@ class DriverAuthService
     /**
      * Store a newly created user in the db.
      * 
-     * @param   \App\Http\Requests\StoreUserRequest $request
+     * @param   \Illuminate\Http\Request $request
      * @return  array
      */
-    public function register(StoreUserRequest $request)
+    public function register(Request $request)
     {
         $user = new User($request->except('password'));
         $user->verification_code = mt_rand(100000, 999999);

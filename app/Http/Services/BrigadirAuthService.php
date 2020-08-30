@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Services;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\LoginUserRequest;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\User;
@@ -17,14 +17,14 @@ class BrigadirAuthService
     /**
      * Store a newly created user in the db.
      * 
-     * @param   \App\Http\Requests\StoreUserRequest $request
+     * @param   \Illuminate\Http\Request $request
      * @return  array
      */
-    public function register(StoreUserRequest $request)
+    public function register(Request $request)
     {
         $user = new User($request->except('password'));
         $user->verification_code = mt_rand(100000, 999999);
-        $user->role = User::ROLE_CLIENT;
+        $user->role = User::ROLE_BRIGADIR;
         $user->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {
@@ -34,10 +34,9 @@ class BrigadirAuthService
         $user->save();
 
         // Save additional data
-        $user->brigadir_data()->save(new ClientData([
-            'id_card' => $request->id_card,
-            'passport_number' => $request->passport_number,
-            'passport_expires_at' => $request->passport_expires_at
+        $user->brigadir_data()->save(new BrigadirData([
+            'company_name' => $request->company_name,
+            'inn' => $request->inn
         ]));
 
         // TODO: Connect sms endpoint and the verification code via sms.

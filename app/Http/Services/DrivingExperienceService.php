@@ -7,24 +7,48 @@ use App\Http\Requests\StoreDrivingExperienceRequest;
 class DrivingExperienceService
 {
     /**
-     * Show a listing of item
+     * Show a listing of driving experience.
      * 
      * @return collection
      */
     public function all()
     {
-        return DrivingExperience::all();
+        return DrivingExperience::paginate(10);
     }
 
     /**
-     * Store a newly created item
+     * Get a specific driving experience item by id.
      * 
-     * @param   \App\Htt\Requests\StoreDrivingExperienceRequest $request
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        return DrivingExperience::find($id);
+        
+    }
+
+    /**
+     * Store a newly created item.
+     * 
+     * @param   \App\Http\Requests\StoreDrivingExperienceRequest $request
      * @return  void
      */
     public function store(StoreDrivingExperienceRequest $request)
     {
         $deItem = new DrivingExperience();
+        $deItem->name = $request->name;
+        $deItem->save();
+    }
+
+    /**
+     * Update an existing driving experience item.
+     * 
+     * @param \App\Http\Requests\StoreDrivingExperienceRequest $request
+     * @return void
+     */
+    public function update(StoreDrivingExperienceRequest $request, $id)
+    {
+        $deItem = DrivingExperience::find($id);
         $deItem->name = $request->name;
         $deItem->save();
     }

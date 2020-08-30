@@ -35,6 +35,21 @@ class DrivingExperienceController extends Controller
     }
 
     /**
+     * Get a specific driving experience item by id.
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        $deItem = $this->deService->getById($id);
+
+        return response()->json([
+            'ok' => true,
+            'deItem' => $deItem
+        ]);
+    }
+
+    /**
      * Store a newly created item
      * 
      * @param   \App\Htt\Requests\StoreDrivingExperienceRequest $request
@@ -45,6 +60,19 @@ class DrivingExperienceController extends Controller
         $this->deService->store($request);
 
         $request->session()->flash('success', 'Водительский опыт успешно добавлен.');
+
+        return redirect()->back();
+    }
+
+    /**
+     * Update an existing driving experience item.
+     * 
+     * @param \App\Http\Requests\StoreDrivingExperienceRequest $request
+     * @return void
+     */
+    public function update(StoreDrivingExperienceRequest $request, $id)
+    {
+        $this->deService->update($request, $id);
 
         return redirect()->back();
     }

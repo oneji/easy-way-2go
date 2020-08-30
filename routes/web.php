@@ -30,7 +30,9 @@ Route::as('admin.')->middleware('auth')->group(function() {
 
     // Driving experience
     Route::get('driving-experience', 'DrivingExperienceController@index')->name('de.index');
+    Route::get('driving-experience/getById/{id}', 'DrivingExperienceController@getById')->name('de.getById');
     Route::post('driving-experience', 'DrivingExperienceController@store')->name('de.store');
+    Route::put('driving-experience/{id}', 'DrivingExperienceController@update')->name('de.update');
 
     // Car brands
     Route::get('car-brands', 'CarBrandController@index')->name('carBrands.index');

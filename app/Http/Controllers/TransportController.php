@@ -103,8 +103,6 @@ class TransportController extends Controller
         $carBrands = CarBrand::all();
         $carModels = CarModel::all();
 
-        // return $tranport;
-
         return view('transport.edit', [
             'transport' => $tranport,
             'countries' => $countries,

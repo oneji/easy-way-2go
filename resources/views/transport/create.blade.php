@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <label for="register_country">Страна регистрации</label>
                                 <select name="register_country" class="form-control" required>
                                     <option value="" selected disabled>Выберите страну</option>
@@ -70,21 +70,21 @@
                                 </select>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="register_city">Город, адрес, индекс регистрации транспорта</label>
                                     <input id="register_city" name="register_city" type="text" class="form-control" placeholder="Город, адрес, индекс" required>
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="car_number">Номер автомобиля</label>
                                     <input id="car_number" name="car_number" type="text" class="form-control" placeholder="Не указан" required>
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="car_brand_id">Марка</label>
                                     <select name="car_brand_id" class="form-control" required>
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="car_model_id">Модель</label>
                                     <select name="car_model_id" class="form-control" required>
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="car_number">Год выпуска</label>
                                     <select name="year" class="form-control" id="yearpicker" required></select>
@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>Тех осмотр</label>
                                     <div class="input-group">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>...</label>
                                     <div class="input-group">
@@ -139,7 +139,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>Страхование</label>
                                     <div class="input-group">
@@ -151,7 +151,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>...</label>
                                     <div class="input-group">
@@ -183,21 +183,21 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="passengers_seats">Кол-во пассажирских мест</label>
                                     <input required id="passengers_seats" name="passengers_seats" type="number" class="form-control" placeholder="Не указан" required>
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="cubo_metres_available">Сколько кубометров можете вести?</label>
                                     <input required id="cubo_metres_available" name="cubo_metres_available" type="number" class="form-control" placeholder="Не указан" required>
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="kilos_available">Сколько киллограмм можете вести?</label>
                                     <input required id="kilos_available" name="kilos_available" type="number" class="form-control" placeholder="Не указан" required>

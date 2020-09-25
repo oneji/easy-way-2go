@@ -41,7 +41,9 @@ class LoginController extends Controller
     }
 
     /**
+     * Login user via credentials
      * 
+     * @param \App\Http\Requests\LoginUserRequest $request
      */
     public function login(LoginUserRequest $request)
     {

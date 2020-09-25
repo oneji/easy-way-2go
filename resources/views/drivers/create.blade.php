@@ -12,6 +12,12 @@
     @parent
     
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .radio-btn-group {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -36,30 +42,20 @@
                         <p class="card-title-desc"></p>
                         
                         <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="0" checked>
-                                    <label class="form-check-label" for="genderMale">
-                                        Мистер
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="1">
-                                    <label class="form-check-label" for="genderFemale">
-                                        Миссис
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderOther" value="2">
-                                    <label class="form-check-label" for="genderOther">
-                                        Не определился
-                                    </label>
+                            <div class="col-12">
+                                <div class="radio-btn-group">
+                                    <div class="custom-control custom-radio mb-3 mr-4">
+                                        <input type="radio" id="genderFemale" name="gender" value="1" class="custom-control-input" checked>
+                                        <label class="custom-control-label" for="genderFemale">Мистер</label>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-3 mr-4">
+                                        <input type="radio" id="genderMale" name="gender" value="0" class="custom-control-input">
+                                        <label class="custom-control-label" for="genderMale">Миссис</label>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-3">
+                                        <input type="radio" id="genderOther" name="gender" value="2" class="custom-control-input">
+                                        <label class="custom-control-label" for="genderOther">Не определился</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

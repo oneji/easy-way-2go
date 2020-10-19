@@ -23,9 +23,6 @@
     </style>
 </head>
 <body>
-    <div class="home-btn d-none d-sm-block">
-        <a href="{{ route('home') }}" class="text-dark"><i class="fas fa-home h2"></i></a>
-    </div>
     <div class="account-pages my-5 pt-sm-5">
         <div class="container">
             <div class="row justify-content-center">
@@ -35,8 +32,7 @@
                             <div class="row">
                                 <div class="col-7">
                                     <div class="text-primary p-4">
-                                        <h5 class="text-primary">Авторизация</h5>
-                                        <p>Войдите</p>
+                                        <h5 class="text-primary">{{ __('auth.auth') }}</h5>
                                     </div>
                                 </div>
                                 <div class="col-5 align-self-end">
@@ -68,16 +64,16 @@
                                 <form class="form-horizontal custom-validation" novalidate action="{{ route('login') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="email">Email адрес</label>
-                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="Введите email адрес" required parsley-type="email" autofocus>
+                                        <label for="email">{{ __('auth.email') }}</label>
+                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" placeholder="{{ __('auth.emailPlaceholder') }}" required parsley-type="email" autofocus>
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>
                                     </div>
             
                                     <div class="form-group">
-                                        <label for="password">Пароль</label>
-                                        <input type="password" class="form-control" name="password" placeholder="Введите пароль" required data-parsley-minlength="8">
+                                        <label for="password">{{ __('auth.password') }}</label>
+                                        <input type="password" class="form-control" name="password" placeholder="{{ __('auth.passwordPlaceholder') }}" required data-parsley-minlength="8">
                                         <div class="invalid-feedback">
                                             * Обязательное поле.
                                         </div>
@@ -85,11 +81,11 @@
             
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customControlInline">
-                                        <label class="custom-control-label" for="customControlInline">Запомнить меня</label>
+                                        <label class="custom-control-label" for="customControlInline">{{ __('auth.remember') }}</label>
                                     </div>
                                     
                                     <div class="mt-3">
-                                        <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Войти</button>
+                                        <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">{{ __('auth.loginBtn') }}</button>
                                     </div>
                                 </form>
                             </div>

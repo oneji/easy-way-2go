@@ -1,6 +1,6 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Главная'
+        'title' => __('pages.home.label')
     ]
 ])
 

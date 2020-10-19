@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Марки транспорта',
+        'title' => __('pages.carBrands.label'),
         'items' => [
-            [ 'name' => 'Марки транспорта', 'link' => null ],
+            [ 'name' => __('pages.carBrands.label'), 'link' => null ],
         ]
     ]
 ])
@@ -23,7 +23,7 @@
                         <div class="col-sm-8 offset-sm-4">
                             <div class="text-sm-right">
                                 <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2" data-toggle="modal" data-target=".car-brand-modal">
-                                    <i class="mdi mdi-plus mr-1"></i> Добавить марку
+                                    <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
                                 </a>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                     @if ($carBrands->count() === 0)
                         <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                             <i class="mdi mdi-information mr-2"></i>
-                            На данный момент записей о марках траспорта не найдено.
+                            {{ __('pages.carBrands.emptySet') }}
                         </div>
                     @else
                         <div class="table-responsive">
@@ -40,8 +40,8 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col" style="width: 70px;">#</th>
-                                        <th scope="col">Марка</th>
-                                        <th scope="col">Действия</th>
+                                        <th scope="col">{{ trans_choice('pages.carBrands.brandsLabel', 2) }}</th>
+                                        <th scope="col">{{ __('pages.carBrands.actionsLabel') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +52,7 @@
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $brand->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $brand->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>

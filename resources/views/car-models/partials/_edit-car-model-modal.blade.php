@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0">Изменить модель траспорта</h5>
+                <h5 class="modal-title mt-0">{{ __('pages.carModels.editModalLabel') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -15,14 +15,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="name">Название модели</label>
-                                <input name="name" type="text" class="form-control" placeholder="Введите название" required>
+                                <label for="name">{{ __('form.labels.name') }}</label>
+                                <input name="name" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                             </div>
                         </div>
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="name">Модель</label>
+                                <label for="name">{{ trans_choice('pages.carBrands.brandsLabel', 1) }}</label>
                                 <select name="car_brand_id" class="form-control">
                                     @foreach ($carBrands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -33,7 +33,7 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-block waves-effect waves-light">Сохранить</button>
+                                <button type="submit" class="btn btn-success btn-block waves-effect waves-light">{{ __('form.buttons.save') }}</button>
                             </div>
                         </div>
                     </div>

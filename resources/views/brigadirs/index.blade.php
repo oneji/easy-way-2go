@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Бригадиры',
+        'title' => __('pages.brigadirs.label'),
         'items' => [
-            [ 'name' => 'Бригадиры', 'link' => null ],
+            [ 'name' => __('pages.brigadirs.label'), 'link' => null ],
         ]
     ]
 ])
@@ -23,7 +23,7 @@
                     <div class="col-sm-8 offset-sm-4">
                         <div class="text-sm-right">
                             <a href="{{ route('admin.brigadirs.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2">
-                                <i class="mdi mdi-plus mr-1"></i> Добавить бригадира
+                                <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
                             </a>
                         </div>
                     </div><!-- end col-->
@@ -32,7 +32,7 @@
                 @if ($brigadirs->count() === 0)
                     <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                         <i class="mdi mdi-information mr-2"></i>
-                        На данный момент записей о бригадирах не найдено.
+                        {{ __('pages.brigadirs.emptySet') }}
                     </div>
                 @else
                     <div class="table-responsive">
@@ -40,11 +40,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
-                                    <th scope="col">ФИО</th>
-                                    <th scope="col">Номер телефона</th>
-                                    <th scope="col">Фирма</th>
-                                    <th scope="col">ИНН или ID</th>
-                                    <th scope="col">Действия</th>
+                                    <th scope="col">{{ __('pages.brigadirs.datatable.fullName') }}</th>
+                                    <th scope="col">{{ __('pages.brigadirs.datatable.phoneNumber') }}</th>
+                                    <th scope="col">{{ __('pages.brigadirs.datatable.company') }}</th>
+                                    <th scope="col">{{ __('pages.brigadirs.datatable.inn') }}</th>
+                                    <th scope="col">{{ __('pages.brigadirs.datatable.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,10 +71,10 @@
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.brigadirs.edit', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                    <a href="{{ route('admin.brigadirs.edit', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                 </li>
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.brigadirs.show', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
+                                                    <a href="{{ route('admin.brigadirs.show', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>

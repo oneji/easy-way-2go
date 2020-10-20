@@ -251,6 +251,68 @@ return [
             'bindDriverBtn' => 'Привязать',
             'firstAddTransportLabel' => 'Сначала добавьте транспортное средство',
             'firstAddDriverLabel' => 'Сначала добавьте водителя'
+        ],
+        'form' => [
+            'addFormLabel' => 'Добавить транспортное средство',
+            'editFormLabel' => 'Изменить траспортное средство',
+            'documentsLabel' => 'Документы',
+            'uploadedDocumentsLabel' => 'Добавленные документы',
+            'noDocumentsLabel' => 'На данный момент документов не найдено',
+            'labels' => [
+                'transportRegistered' => 'Автомобиль зарегистрирован?',
+                'company' => 'Фирма',
+                'individual' => 'Физ. лицо',
+                'country' => 'Страна регистрации',
+                'city' => 'Город, адрес, индекс регистрации транспорта',
+                'carNumber' => 'Номер автомобиля',
+                'brand' => 'Марка',
+                'model' => 'Модель',
+                'year' => 'Год выпуска',
+                'inspectionFrom' => 'Тех осмотр с',
+                'inspectionTo' => 'Тех осмотр до',
+                'insuranceFrom' => 'Страхование с',
+                'insuranceTo' => 'Страхование до',
+                'hasCmr' => 'Есть  CMR?',
+                'yes' => 'Да',
+                'no' => 'Нет',
+                'passengerSeats' => 'Кол-во пассажирских мест',
+                'cuboMetres' => 'Сколько кубометров можете вести?',
+                'kilos' => 'Сколько киллограмм можете вести?',
+                'okForMove' => 'Транспорт подходит для переезда?',
+                'canPullTrailer' => 'Можете ли тянуть прицеп?',
+                'hasTrailer' => 'Есть ли трейлер?',
+                'palletTransportation' => 'Перевозка паллетов?',
+                'conditioner' => 'Кондиционер',
+                'wifi' => 'Wi-Fi',
+                'tvVideo' => 'Tv-Video',
+                'disabledPeopleSeats' => 'Места для инвалидов',
+                // Documents side
+                'passportPhoto' => 'Фото паспорта (2 стороны)',
+                'tehOsmotrPhoto' => 'Тех осмотр (2 стороны)',
+                'insurancePhoto' => 'Страховка (2 стороны)',
+                'peopleLicensePhoto' => 'Лицензия на перевозку людей (2 стороны)',
+                'carPhoto' => 'Фото автомобиля',
+                'trailerPhoto' => 'Фото трейлера'
+            ],
+            'placeholders' => [
+                'country' => 'Выберите страну',
+                'city' => 'Город, адрес, индекс',
+                'carNumber' => 'Не указано',
+                'inspectionFrom' => 'Тех осмотр с',
+                'inspectionTo' => 'Тех осмотр до',
+                'insuranceFrom' => 'Страхование с',
+                'insuranceTo' => 'Страхование до',
+                'passengerSeats' => 'Не указано',
+                'cuboMetres' => 'Не указано',
+                'kilos' => 'Не указано',
+                // Documents side
+                'passportPhoto' => 'Выберите файл',
+                'tehOsmotrPhoto' => 'Выберите файл',
+                'insurancePhoto' => 'Выберите файл)',
+                'peopleLicensePhoto' => 'Выберите файл',
+                'carPhoto' => 'Выберите файл',
+                'trailerPhoto' => 'Выберите файл'
+            ]
         ]
     ]
 

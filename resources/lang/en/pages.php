@@ -251,6 +251,68 @@ return [
             'bindDriverBtn' => 'Bind',
             'firstAddTransportLabel' => 'First add transport',
             'firstAddDriverLabel' => 'First add driver'
+        ],
+        'form' => [
+            'addFormLabel' => 'Add transport',
+            'editFormLabel' => 'Edit transport',
+            'documentsLabel' => 'Documents',
+            'uploadedDocumentsLabel' => 'Uploaded documents',
+            'noDocumentsLabel' => 'For now, we could not find any items',
+            'labels' => [
+                'transportRegistered' => 'Is transport registered?',
+                'company' => 'Company',
+                'individual' => 'Individual',
+                'country' => 'Country of registration',
+                'city' => 'City, address, postal code of registration',
+                'carNumber' => 'Car number',
+                'brand' => 'Brand',
+                'model' => 'Model',
+                'year' => 'Year',
+                'inspectionFrom' => 'Inspection from',
+                'inspectionTo' => 'Inspection to',
+                'insuranceFrom' => 'Insurance from',
+                'insuranceTo' => 'Insurance to',
+                'hasCmr' => 'Has CMR?',
+                'yes' => 'Yes',
+                'no' => 'No',
+                'passengerSeats' => 'Number of passenger seats',
+                'cuboMetres' => 'How many cubic meters can you carry?',
+                'kilos' => 'How many kilograms can you carry?',
+                'okForMove' => 'Is the transport suitable for moving?',
+                'canPullTrailer' => 'Can you pull a trailer?',
+                'hasTrailer' => 'Has trailer?',
+                'palletTransportation' => 'Pallet transportation',
+                'conditioner' => 'Has conditioner?',
+                'wifi' => 'Has Wi-Fi?',
+                'tvVideo' => 'Has Tv-Video?',
+                'disabledPeopleSeats' => 'Has disabled people seats?',
+                // Documents side
+                'passportPhoto' => 'Car passport (2 sides)',
+                'tehOsmotrPhoto' => 'Inspection (2 sides)',
+                'insurancePhoto' => 'Insurance (2 sides)',
+                'peopleLicensePhoto' => 'Personnel transport license (2 sides)',
+                'carPhoto' => 'Car photos',
+                'trailerPhoto' => 'Trailer photos'
+            ],
+            'placeholders' => [
+                'country' => 'Choose country',
+                'city' => 'City, address, postal code',
+                'carNumber' => 'Not set',
+                'inspectionFrom' => 'Inspection from',
+                'inspectionTo' => 'Inspection to',
+                'insuranceFrom' => 'Insurance from',
+                'insuranceTo' => 'Insurance to',
+                'passengerSeats' => 'Not set',
+                'cuboMetres' => 'Not set',
+                'kilos' => 'Not set',
+                // Documents side
+                'passportPhoto' => 'Choose file',
+                'tehOsmotrPhoto' => 'Choose file',
+                'insurancePhoto' => 'Choose file)',
+                'peopleLicensePhoto' => 'Choose file',
+                'carPhoto' => 'Choose file',
+                'trailerPhoto' => 'Choose file'
+            ]
         ]
     ]
 ];

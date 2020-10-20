@@ -1,9 +1,9 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Изменить клиента',
+        'title' => __('pages.editClient.label'),
         'items' => [
-            [ 'name' => 'Клиенты', 'link' => route('admin.clients.index') ],
-            [ 'name' => 'Изменить клиента', 'link' => null ],
+            [ 'name' => __('pages.clients.label'), 'link' => route('admin.clients.index') ],
+            [ 'name' => __('pages.editClient.label'), 'link' => null ],
         ]
     ]
 ])
@@ -47,7 +47,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Данные клиента</h4>
+                        <h4 class="card-title">{{ __('pages.clients.clientInfoLabel') }}</h4>
                         <p class="card-title-desc"></p>
 
                         <div class="row">
@@ -65,15 +65,15 @@
                                 <div class="radio-btn-group">
                                     <div class="custom-control custom-radio mb-3 mr-4">
                                         <input type="radio" id="genderFemale" name="gender" value="1" class="custom-control-input" {{ $client->gender === 1 ? 'checked' : null }}>
-                                        <label class="custom-control-label" for="genderFemale">Мистер</label>
+                                        <label class="custom-control-label" for="genderFemale">{{ __('pages.clients.addForm.labels.mr') }}</label>
                                     </div>
                                     <div class="custom-control custom-radio mb-3 mr-4">
                                         <input type="radio" id="genderMale" name="gender" value="0" class="custom-control-input" {{ $client->gender === 0 ? 'checked' : null }}>
-                                        <label class="custom-control-label" for="genderMale">Миссис</label>
+                                        <label class="custom-control-label" for="genderMale">{{ __('pages.clients.addForm.labels.ms') }}</label>
                                     </div>
                                     <div class="custom-control custom-radio mb-3">
                                         <input type="radio" id="genderOther" name="gender" value="2" class="custom-control-input" {{ $client->gender === 2 ? 'checked' : null }}>
-                                        <label class="custom-control-label" for="genderOther">Не определился</label>
+                                        <label class="custom-control-label" for="genderOther">{{ __('pages.clients.addForm.labels.notSure') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -82,40 +82,40 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="first_name">Имя</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="Введите имя" value="{{ $client->first_name }}" required>
+                                    <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}</label>
+                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" value="{{ $client->first_name }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="last_name">Фамилия</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="Введите фамилию" value="{{ $client->last_name }}" required>
+                                    <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}</label>
+                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" value="{{ $client->last_name }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="Введите email" parsley-type="email" value="{{ $client->email }}" required>
+                                    <label for="email">{{ __('pages.clients.addForm.labels.email') }}</label>
+                                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.email') }}" parsley-type="email" value="{{ $client->email }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="email">Фото</label>
+                                    <label for="photo">{{ __('pages.clients.addForm.labels.photo') }}</label></label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="photo" name="photo">
-                                        <label class="custom-file-label" for="photo">Выберите фото</label>
+                                        <label class="custom-file-label" for="photo">{{ __('pages.clients.addForm.placeholders.photo') }}</label>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>День рождения</label>
+                                    <label>{{ __('pages.clients.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="Выберите дату" data-provide="datepicker" value="{{ $client->birthday }}" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ $client->birthday }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -125,9 +125,9 @@
 
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="last_name" class="control-label">Национальность</label>
+                                    <label for="last_name" class="control-label">{{ __('pages.clients.addForm.labels.nationality') }}</label>
                                     <select name="nationality" class="form-control" required>
-                                        <option value="" selected>Выберите национальность</option>
+                                        <option value="" selected>{{ __('pages.clients.addForm.placeholders.nationality') }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}" {{ $client->nationality === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
                                         @endforeach
@@ -137,23 +137,23 @@
 
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="phone_number">Номер телефона</label>
-                                    <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="Введите номер телефона" value="{{ $client->phone_number }}" required>
+                                    <label for="phone_number">{{ __('pages.clients.addForm.labels.phone') }}</label>
+                                    <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.phone') }}" value="{{ $client->phone_number }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="id_card">Номер ID карты</label>
-                                    <input id="id_card" name="id_card" type="text" class="form-control" placeholder="Введите номер ID карты" value="{{ $client->client_data->id_card }}" required>
+                                    <label for="id_card">{{ __('pages.clients.addForm.labels.idCard') }}</label>
+                                    <input id="id_card" name="id_card" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCard') }}" value="{{ $client->client_data->id_card }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Действителен до</label>
+                                    <label>{{ __('pages.clients.addForm.labels.idCardExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="id_card_expires_at" class="form-control" placeholder="Выберите дату" data-provide="datepicker" value="{{ $client->client_data->id_card_expires_at }}" data-date-autoclose="true">
+                                        <input type="text" name="id_card_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCardExpiresAt') }}" data-provide="datepicker" value="{{ $client->client_data->id_card_expires_at }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -163,16 +163,16 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="passport_number">Номер паспорта</label>
-                                    <input id="passport_number" name="passport_number" type="text" class="form-control" placeholder="Введите номер паспорта" value="{{ $client->client_data->passport_number }}" required>
+                                    <label for="passport_number">{{ __('pages.clients.addForm.labels.passport') }}</label>
+                                    <input id="passport_number" name="passport_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passport') }}" value="{{ $client->client_data->passport_number }}" required>
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Действителен до</label>
+                                    <label>{{ __('pages.clients.addForm.labels.passportExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="passport_expires_at" class="form-control" placeholder="Выберите дату" value="{{ $client->client_data->passport_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="passport_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passportExpiresAt') }}" value="{{ $client->client_data->passport_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -187,7 +187,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">Сохранить</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.save') }}</button>
                     </div>
                 </div>
             </div>

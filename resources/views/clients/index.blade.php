@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Клиенты',
+        'title' => __('pages.clients.label'),
         'items' => [
-            [ 'name' => 'Клиенты', 'link' => null ],
+            [ 'name' => __('pages.clients.label'), 'link' => null ],
         ]
     ]
 ])
@@ -23,7 +23,7 @@
                     <div class="col-sm-8 offset-sm-4">
                         <div class="text-sm-right">
                             <a href="{{ route('admin.clients.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2">
-                                <i class="mdi mdi-plus mr-1"></i> Добавить клиента
+                                <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
                             </a>
                         </div>
                     </div><!-- end col-->
@@ -32,7 +32,7 @@
                 @if ($clients->count() === 0)
                     <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                         <i class="mdi mdi-information mr-2"></i>
-                        На данный момент записей о клиентах не найдено.
+                        {{ __('pages.clients.emptySet') }}
                     </div>
                 @else
                     <div class="table-responsive">
@@ -40,11 +40,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
-                                    <th scope="col">ФИО</th>
-                                    <th scope="col">Номер телефона</th>
-                                    <th scope="col">Номер ID карты</th>
-                                    <th scope="col">Номер паспорта</th>
-                                    <th scope="col">Действия</th>
+                                    <th scope="col">{{ __('pages.clients.datatable.fullName') }}</th>
+                                    <th scope="col">{{ __('pages.clients.datatable.phoneNumber') }}</th>
+                                    <th scope="col">{{ __('pages.clients.datatable.idCard') }}</th>
+                                    <th scope="col">{{ __('pages.clients.datatable.passport') }}</th>
+                                    <th scope="col">{{ __('pages.clients.datatable.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,10 +71,10 @@
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.clients.edit', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                    <a href="{{ route('admin.clients.edit', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                 </li>
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.clients.show', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
+                                                    <a href="{{ route('admin.clients.show', [ $client->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>

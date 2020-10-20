@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Водители',
+        'title' => __('pages.drivers.label'),
         'items' => [
-            [ 'name' => 'Водители', 'link' => null ],
+            [ 'name' => __('pages.drivers.label'), 'link' => null ],
         ]
     ]
 ])
@@ -23,7 +23,7 @@
                     <div class="col-sm-8 offset-sm-4">
                         <div class="text-sm-right">
                             <a href="{{ route('admin.drivers.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2">
-                                <i class="mdi mdi-plus mr-1"></i> Добавить водителя
+                                <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
                             </a>
                         </div>
                     </div><!-- end col-->
@@ -32,7 +32,7 @@
                 @if ($drivers->count() === 0)
                     <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                         <i class="mdi mdi-information mr-2"></i>
-                        На данный момент записей о водителях не найдено.
+                        {{ __('pages.drivers.emptySet') }}
                     </div>
                 @else
                     <div class="table-responsive">
@@ -40,12 +40,12 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
-                                    <th scope="col">ФИО</th>
-                                    <th scope="col">Номер телефона</th>
-                                    <th scope="col">Страна проживания</th>
-                                    <th scope="col">Город</th>
-                                    <th scope="col">Опыт вождения</th>
-                                    <th scope="col">Действия</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.fullName') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.phone') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.country') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.city') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.drivingExperience') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,10 +73,10 @@
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.drivers.edit', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                                    <a href="{{ route('admin.drivers.edit', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                 </li>
                                                 <li class="list-inline-item px-2">
-                                                    <a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-user-circle"></i></a>
+                                                    <a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>

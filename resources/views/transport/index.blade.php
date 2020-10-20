@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Транспорт',
+        'title' => __('pages.transport.label'),
         'items' => [
-            [ 'name' => 'Транспорт', 'link' => null ]
+            [ 'name' => __('pages.transport.label'), 'link' => null ]
         ]
     ]
 ])
@@ -11,10 +11,10 @@
     <div class="row">
         <div class="col-12">
             <a href="{{ route('admin.transport.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-3 ml-3" style="float: right">
-                <i class="bx bx-plus mr-1"></i> Добавить машину
+                <i class="bx bx-plus mr-1"></i> {{ __('form.buttons.add') }}
             </a>
             <a href="#" class="btn btn-primary btn-rounded waves-effect waves-light mb-3" style="float: right" data-toggle="modal" data-target=".bind-driver-modal">
-                <i class="bx bx-user-plus mr-1"></i> Привязать водителя
+                <i class="bx bx-user-plus mr-1"></i> {{ __('pages.transport.bindDriverBtn') }}
             </a>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <div class="col-12">
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                     <i class="mdi mdi-information mr-2"></i>
-                    На данный момент транспортных средств в базе не найдено.
+                    {{ __('pages.transport.emptySet') }}
                 </div>
             </div>
         @else
@@ -60,20 +60,17 @@
                             @else
                                 <span class="badge badge-success font-size-11 m-1">
                                     <i class="bx bx-user mr-1"></i> 
-                                    Водителей не привязано
+                                    {{ __('pages.transport.noDriversBound') }}
                                 </span>
                             @endif
                         </div>
                         <div class="card-footer bg-transparent border-top">
                             <div class="contact-links d-flex font-size-20">
                                 <div class="flex-fill">
-                                    <a href="{{ route('admin.transport.edit', [ $car->id ]) }}" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="bx bx-pencil"></i></a>
+                                    <a href="{{ route('admin.transport.edit', [ $car->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                 </div>
                                 <div class="flex-fill">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
-                                </div>
-                                <div class="flex-fill">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Просмотреть"><i class="bx bx-car"></i></a>
+                                    <a href="#" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-car"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +87,7 @@
         </div>
     </div>
 
-    @include('transport.partials._bind-driver-modal', [
+    @include('transport.modals.bind-driver', [
         'transport' => $transport,
         'drivers' => $drivers
     ])

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="{{ App::getLocale() }}">
 <head>        
     <meta charset="utf-8" />
     <title>Авторизация &middot; {{ config('app.name') }}</title>

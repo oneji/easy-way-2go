@@ -8,6 +8,7 @@ return [
     'transport'         => 'Транспорт',
     'drivingExperience' => 'Водительский опыт',
     'languages'         => 'Языки',
+    'countries'         => 'Страны',
     'carBrands'         => 'Марки транспорта',
     'carModels'         => 'Модели транспорта',
     'brigadirs'         => 'Бригадиры',

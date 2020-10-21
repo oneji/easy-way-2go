@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => __('pages.languages.label'),
+        'title' => __('pages.countries.label'),
         'items' => [
-            [ 'name' => __('pages.languages.label'), 'link' => null ]
+            [ 'name' => __('pages.countries.label'), 'link' => null ]
         ]
     ]
 ])
@@ -24,17 +24,17 @@
                     <div class="row mb-2">
                         <div class="col-sm-8 offset-sm-4">
                             <div class="text-sm-right">
-                                <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2" data-toggle="modal" data-target=".create-language-modal">
+                                <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2" data-toggle="modal" data-target=".car-de-modal">
                                     <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
                                 </a>
                             </div>
                         </div>
                     </div>
         
-                    @if ($langs->count() === 0)
+                    @if ($countries->count() === 0)
                         <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                             <i class="mdi mdi-information mr-2"></i>
-                            {{ __('pages.languages.emptySet') }}
+                            {{ __('pages.countries.emptySet') }}
                         </div>
                     @else
                         <div class="table-responsive">
@@ -42,21 +42,21 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col" style="width: 70px;">#</th>
-                                        <th scope="col">{{ __('pages.languages.label') }}</th>
-                                        <th scope="col">{{ __('pages.languages.codeLabel') }}</th>
-                                        <th scope="col">{{ __('pages.languages.actionsLabel') }}</th>
+                                        <th scope="col">{{ __('pages.countries.label') }}</th>
+                                        <th scope="col">{{ __('pages.countries.codeLabel') }}</th>
+                                        <th scope="col">{{ __('pages.countries.actionsLabel') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($langs as $idx => $lang)
+                                    @foreach ($countries as $idx => $country)
                                         <tr>
                                             <td>{{ $idx + 1 }}</td>
-                                            <td>{{ $lang->name }}</td>
-                                            <td>{{ $lang->code }}</td>
+                                            <td>{{ $country->name }}</td>
+                                            <td>{{ $country->code }}</td>
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $lang->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $country->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -69,7 +69,7 @@
         
                     <div class="row">
                         <div class="col-lg-12">
-                            {{ $langs->links() }}
+                            {{ $countries->links() }}
                         </div>
                     </div>
                 </div>
@@ -78,8 +78,8 @@
     </div>
 
 
-    @include('languages.modals.create')
-    @include('languages.modals.edit')
+    @include('countries.modals.create')
+    @include('countries.modals.edit')
 @endsection
 
 @section('scripts')
@@ -87,29 +87,29 @@
 
     <script>
         $(document).ready(function() {
-            var editLangModal = $('.edit-lang-modal');
-            var langId = null;
+            var editCountryModal = $('.edit-country-modal');
+            var countryId = null;
 
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
                 let editBtn = $(this);
-                langId = editBtn.data('id');
+                countryId = editBtn.data('id');
                 let loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
                 let pencilIcon = '<i class="bx bx-pencil"></i>';
 
                 editBtn.html(loadingIcon);
 
                 $.ajax({
-                    url: '/languages/getById/' + langId,
+                    url: '/countries/getById/' + countryId,
                     type: 'GET',
-                    success: function(lang) {
-                        editLangModal.find('form').attr('action', `languages/${langId}`);
-                        editLangModal.find('form').find('input#nameRu').val(lang.name.ru);
-                        editLangModal.find('form').find('input#nameEn').val(lang.name.en);
-                        editLangModal.find('form').find('input#code').val(lang.code);
+                    success: function(country) {
+                        editCountryModal.find('form').attr('action', `countries/${countryId}`);
+                        editCountryModal.find('form').find('input#nameRu').val(country.name.ru);
+                        editCountryModal.find('form').find('input#nameEn').val(country.name.en);
+                        editCountryModal.find('form').find('input#code').val(country.code);
 
                         // Show the modal
-                        editLangModal.modal('show');
+                        editCountryModal.modal('show');
                         
                         editBtn.html(pencilIcon);
                     },

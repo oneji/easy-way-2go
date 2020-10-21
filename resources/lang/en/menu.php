@@ -8,6 +8,7 @@ return [
     'transport'         => 'Transport',
     'drivingExperience' => 'Driving experience',
     'languages'         => 'Languages',
+    'countries'         => 'Countries',
     'carBrands'         => 'Car brands',
     'carModels'         => 'Car models',
     'brigadirs'         => 'Foreman',

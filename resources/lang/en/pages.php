@@ -26,6 +26,17 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit'
     ],
+    
+    'languages' => [
+        'label' => 'Countries',
+        'codeLabel' => 'Code',
+        'actionsLabel' => 'Actions',
+        'successAddedAlert' => 'Item successfully added.',
+        'successEditedAlert' => 'Item successfully added.',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit'
+    ],
 
     'carBrands' => [
         'label' => 'Car brands',

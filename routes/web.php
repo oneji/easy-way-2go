@@ -46,6 +46,12 @@ Route::group([
         Route::get('languages/getById/{id}', 'LanguageController@getById')->name('languages.getById');
         Route::post('languages', 'LanguageController@store')->name('languages.store');
         Route::put('languages/{id}', 'LanguageController@update')->name('languages.update');
+
+        // Languages
+        Route::get('countries', 'CountryController@index')->name('countries.index');
+        Route::get('countries/getById/{id}', 'CountryController@getById')->name('countries.getById');
+        Route::post('countries', 'CountryController@store')->name('countries.store');
+        Route::put('countries/{id}', 'CountryController@update')->name('countries.update');
     
         // Car brands
         Route::get('car-brands', 'CarBrandController@index')->name('carBrands.index');

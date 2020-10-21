@@ -26,6 +26,17 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
     ],
+
+    'countries' => [
+        'label' => 'Страны',
+        'codeLabel' => 'Код',
+        'actionsLabel' => 'Действия',
+        'successAddedAlert' => 'Страна успешно добавлена',
+        'successEditedAlert' => 'Страна успешно обновлена',
+        'emptySet' => 'На данный момент записей о языках не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить'
+    ],
     
     'carBrands' => [
         'label' => 'Марки автомобиля',

@@ -16,7 +16,7 @@
                         <div class="col-12">
                             @foreach ($langs as $lang)
                                 <div class="form-group">
-                                    <label for="name">{{ __('form.labels.name') }}</label>
+                                    <label for="name">{{ __('form.labels.name') }}: {{ $lang->name }}</label>
                                     <input name="translations[{{ $lang->code }}][name]" data-lang="{{ $lang->code }}" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                                 </div>
                             @endforeach

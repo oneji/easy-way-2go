@@ -1,8 +1,8 @@
-<div class="modal fade edit-lang-modal" tabindex="-1" role="dialog" aria-labelledby="editlangModalLabel" aria-hidden="true">
+<div class="modal fade edit-country-modal" tabindex="-1" role="dialog" aria-labelledby="editCountryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0">{{ __('pages.languages.editModalLabel') }}</h5>
+                <h5 class="modal-title mt-0">{{ __('pages.countries.editModalLabel') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

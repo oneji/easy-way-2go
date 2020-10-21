@@ -1,4 +1,4 @@
-<div class="modal fade car-de-modal" tabindex="-1" role="dialog" aria-labelledby="carDeModalLabel" aria-hidden="true">
+<div class="modal fade create-language-modal" tabindex="-1" role="dialog" aria-labelledby="carLanguageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

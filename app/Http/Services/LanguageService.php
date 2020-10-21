@@ -45,7 +45,7 @@ class LanguageService
         $lang->code = $request->code;
         $lang->save();
 
-        $request->session()->flash('success', 'Язык успешно добавлен.');
+        $request->session()->flash('success', trans('pages.languages.successAddedAlert'));
     }
 
     /**
@@ -64,6 +64,6 @@ class LanguageService
         $lang->code = $request->code;
         $lang->save();
 
-        $request->session()->flash('success', 'Язык успешно обновлен.');
+        $request->session()->flash('success', trans('pages.languages.successEditedAlert'));
     }
 }

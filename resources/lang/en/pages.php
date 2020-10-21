@@ -9,6 +9,8 @@ return [
     'drivingExperience' => [
         'label' => 'Driving experience',
         'actionsLabel' => 'Actions',
+        'successAddedAlert' => 'Item successfully added.',
+        'successEditedAlert' => 'Item successfully added.',
         'emptySet' => 'For now, we could not find any items.',
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit'
@@ -18,6 +20,8 @@ return [
         'label' => 'Languages',
         'codeLabel' => 'Code',
         'actionsLabel' => 'Actions',
+        'successAddedAlert' => 'Item successfully added.',
+        'successEditedAlert' => 'Item successfully added.',
         'emptySet' => 'For now, we could not find any items.',
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit'

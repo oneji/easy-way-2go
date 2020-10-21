@@ -67,7 +67,6 @@ class LanguageController extends Controller
      */
     public function update(StoreLanguageRequest $request, $id)
     {
-        return $request;
         $this->langService->update($request, $id);
 
         return redirect()->back();

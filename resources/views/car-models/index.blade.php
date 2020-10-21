@@ -52,7 +52,7 @@
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $model->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $model->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -73,8 +73,8 @@
         </div>
     </div>
 
-    @include('car-models.partials._car-model-modal', [ 'carBrands' => $carBrands ])
-    @include('car-models.partials._edit-car-model-modal', [ 'carBrands' => $carBrands ])
+    @include('car-models.modals.create', [ 'carBrands' => $carBrands ])
+    @include('car-models.modals.edit', [ 'carBrands' => $carBrands ])
 @endsection
 
 
@@ -83,32 +83,37 @@
 
     <script>
         $(document).ready(function() {
-            var editModelModal = $('.edit-car-model-modal');
-            var editLoading = $('.loading-block');
-            var modelId = null;
-
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
-                modelId = $(this).data('id');
-                // Show the modal
-                editModelModal.modal('show');
-            });
+                
+                const editBtn = $(this);
+                const editModelModal = $('.edit-car-model-modal');
+                const modelId = editBtn.data('id');
 
-            editModelModal.on('shown.bs.modal', function() {
-                editLoading.css('display', 'flex');
+                const loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
+                const pencilIcon = '<i class="bx bx-pencil"></i>';
+
+                editBtn.html(loadingIcon);
 
                 // Make the AJAX request
                 $.ajax({
                     url: '/car-models/getById/' + modelId,
                     type: 'GET',
-                    success: function(data) {
-                        editModelModal.find('form').attr('action', `/car-models/${modelId}`);
-                        editModelModal.find('form').find('input[name=name]').val(data.carModel.name)
+                    success: function(model) {
+                        for (const langCode in model.name) {
+                            editModelModal.find('form').find(`input[data-lang=${langCode}]`).val(model.name[langCode]);
+                        }
+
+                        editModelModal.find('form').attr('action', `car-models/${modelId}`);
+
+                        // Show the modal
+                        editModelModal.modal('show');
+                        editBtn.html(pencilIcon);
                     },
                     error: function(err) {
                         console.log('err', err);
                     }
-                }); 
+                });
             });
         });
     </script>

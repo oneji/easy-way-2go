@@ -52,7 +52,7 @@
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $brand->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $brand->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -73,8 +73,8 @@
         </div>
     </div>
 
-    @include('car-brands.partials._car-brand-modal')
-    @include('car-brands.partials._edit-car-brand-modal')
+    @include('car-brands.modals.create')
+    @include('car-brands.modals.edit')
 @endsection
 
 
@@ -83,32 +83,38 @@
 
     <script>
         $(document).ready(function() {
-            var editBrandModal = $('.edit-car-brand-modal');
-            var editLoading = $('.loading-block');
-            var brandId = null;
-
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
-                brandId = $(this).data('id');
-                // Show the modal
-                editBrandModal.modal('show');
-            });
+                const editBtn = $(this);
+                const editBrandModal = $('.edit-car-brand-modal');
+                const brandId = editBtn.data('id');
 
-            editBrandModal.on('shown.bs.modal', function() {
-                editLoading.css('display', 'flex');
+                const loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
+                const pencilIcon = '<i class="bx bx-pencil"></i>';
+                
+                editBtn.html(loadingIcon);
 
                 // Make the AJAX request
                 $.ajax({
                     url: '/car-brands/getById/' + brandId,
                     type: 'GET',
-                    success: function(data) {
-                        editBrandModal.find('form').attr('action', `/car-brands/${brandId}`);
-                        editBrandModal.find('form').find('input[name=name]').val(data.carBrand.name)
+                    success: function(brand) {
+                        for (const langCode in brand.name) {
+                            editBrandModal.find('form').find(`input[data-lang=${langCode}]`).val(brand.name[langCode]);
+                        }
+
+                        editBrandModal.find('form').attr('action', `car-brands/${brandId}`);
+
+                        // Show the modal
+                        editBrandModal.modal('show');
+                        editBtn.html(pencilIcon);
                     },
                     error: function(err) {
                         console.log('err', err);
                     }
-                }); 
+                });
+                
+                
             });
         });
     </script>

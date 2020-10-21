@@ -54,7 +54,7 @@
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $item->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $item->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -85,32 +85,37 @@
 
     <script>
         $(document).ready(function() {
-            var editDeModal = $('.edit-de-modal');
-            var editLoading = $('.loading-block');
-            var deId = null;
-
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
-                deId = $(this).data('id');
-                // Show the modal
-                editDeModal.modal('show');
-            });
+                const editBtn = $(this);
+                const editDeModal = $('.edit-de-modal');
+                const deId = editBtn.data('id');
+                const loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
+                const pencilIcon = '<i class="bx bx-pencil"></i>';
 
-            editDeModal.on('shown.bs.modal', function() {
-                editLoading.css('display', 'flex');
+                editBtn.html(loadingIcon);
 
                 // Make the AJAX request
                 $.ajax({
                     url: '/driving-experience/getById/' + deId,
                     type: 'GET',
-                    success: function(data) {
-                        editDeModal.find('form').attr('action', `/driving-experience/${deId}`);
-                        editDeModal.find('form').find('input[name=name]').val(data.deItem.name)
+                    success: function(deItem) {
+                        for (const langCode in deItem.name) {
+                            editDeModal.find('form').find(`input[data-lang=${langCode}]`).val(deItem.name[langCode]);
+                        }
+
+                        editDeModal.find('form').attr('action', `driving-experience/${deId}`);
+
+                        // Show the modal
+                        editDeModal.modal('show');
+                        editBtn.html(pencilIcon);
                     },
                     error: function(err) {
                         console.log('err', err);
                     }
-                }); 
+                });
+
+                
             });
         });
     </script>

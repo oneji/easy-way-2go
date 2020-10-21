@@ -9,6 +9,8 @@ return [
     'drivingExperience' => [
         'label' => 'Водительский опыт',
         'actionsLabel' => 'Действия',
+        'successAddedAlert' => 'Опыт успешно добавлен.',
+        'successEditedAlert' => 'Опыт успешно обновлен.',
         'emptySet' => 'На данный момент записей о водительском опыте не найдено.',
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
@@ -18,6 +20,8 @@ return [
         'label' => 'Языки',
         'codeLabel' => 'Код',
         'actionsLabel' => 'Действия',
+        'successAddedAlert' => 'Язык успешно добавлен',
+        'successEditedAlert' => 'Язык успешно обновлен',
         'emptySet' => 'На данный момент записей о языках не найдено.',
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'

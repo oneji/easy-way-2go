@@ -24,8 +24,8 @@ class StoreCarModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'car_brand_id' => ['required', 'exists:car_brands,id']
+            'translations' => 'required',
+            'car_brand_id' => 'required|exists:car_brands,id'
         ];
     }
 }

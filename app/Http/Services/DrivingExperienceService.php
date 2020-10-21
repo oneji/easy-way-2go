@@ -36,8 +36,14 @@ class DrivingExperienceService
     public function store(StoreDrivingExperienceRequest $request)
     {
         $deItem = new DrivingExperience();
-        $deItem->name = $request->name;
+        
+        foreach ($request->translations as $code => $value) {
+            $deItem->setTranslation('name', $code, $value['name']);
+        }
+
         $deItem->save();
+        
+        $request->session()->flash('success', trans('pages.drivingExperience.successAddedAlert'));
     }
 
     /**
@@ -49,7 +55,13 @@ class DrivingExperienceService
     public function update(StoreDrivingExperienceRequest $request, $id)
     {
         $deItem = DrivingExperience::find($id);
-        $deItem->name = $request->name;
+
+        foreach ($request->translations as $code => $value) {
+            $deItem->setTranslation('name', $code, $value['name']);
+        }
+        
         $deItem->save();
+        
+        $request->session()->flash('success', trans('pages.drivingExperience.successEditedAlert'));
     }
 }

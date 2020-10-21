@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\DrivingExperienceService;
 use App\Http\Requests\StoreDrivingExperienceRequest;
-use LaravelLocalization;
+use App\Language;
 
 class DrivingExperienceController extends Controller
 {
@@ -29,7 +29,7 @@ class DrivingExperienceController extends Controller
     public function index()
     {
         $deList = $this->deService->all();
-        $langs = LaravelLocalization::getSupportedLocales();
+        $langs = Language::all();
 
         return view('driving-experience.index', [
             'deList' => $deList,
@@ -46,10 +46,7 @@ class DrivingExperienceController extends Controller
     {
         $deItem = $this->deService->getById($id);
 
-        return response()->json([
-            'ok' => true,
-            'deItem' => $deItem
-        ]);
+        return response()->json($deItem);
     }
 
     /**

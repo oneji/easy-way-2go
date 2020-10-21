@@ -36,7 +36,11 @@ class CarModelService
     public function store(StoreCarModelRequest $request)
     {
         $carModel = new CarModel();
-        $carModel->name = $request->name;
+        
+        foreach ($request->translations as $code => $value) {
+            $carModel->setTranslation('name', $code, $value['name']);
+        }
+
         $carModel->car_brand_id = $request->car_brand_id;
         $carModel->save();
 
@@ -52,7 +56,11 @@ class CarModelService
     public function update(StoreCarModelRequest $request, $id)
     {
         $carModel = CarModel::find($id);
-        $carModel->name = $request->name;
+        
+        foreach ($request->translations as $code => $value) {
+            $carModel->setTranslation('name', $code, $value['name']);
+        }
+
         $carModel->car_brand_id = $request->car_brand_id;
         $carModel->save();
 

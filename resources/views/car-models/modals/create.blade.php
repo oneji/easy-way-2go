@@ -13,10 +13,12 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-group">
-                                <label for="name">{{ __('form.labels.name') }}</label>
-                                <input name="name" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
-                            </div>
+                            @foreach ($langs as $lang)
+                                <div class="form-group">
+                                    <label for="name">{{ __('form.labels.name') }}</label>
+                                    <input name="translations[{{ $lang->code }}][name]" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
+                                </div>
+                            @endforeach
                         </div>
                         
                         <div class="col-12">

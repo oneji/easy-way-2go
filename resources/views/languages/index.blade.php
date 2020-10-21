@@ -56,7 +56,7 @@
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $lang->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $lang->id }}" class="edit-btn" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -103,7 +103,7 @@
                     url: '/languages/getById/' + langId,
                     type: 'GET',
                     success: function(lang) {
-                        editLangModal.find('form').attr('action', `/languages/${langId}`);
+                        editLangModal.find('form').attr('action', `languages/${langId}`);
                         editLangModal.find('form').find('input#nameRu').val(lang.name.ru);
                         editLangModal.find('form').find('input#nameEn').val(lang.name.en);
                         editLangModal.find('form').find('input#code').val(lang.code);

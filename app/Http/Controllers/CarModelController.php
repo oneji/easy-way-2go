@@ -43,10 +43,7 @@ class CarModelController extends Controller
     {
         $carModel = $this->carModelService->getById($id);
 
-        return response()->json([
-            'ok' => true,
-            'carModel' => $carModel
-        ]);
+        return response()->json($carModel);
     }
 
     /**

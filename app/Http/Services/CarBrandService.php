@@ -36,7 +36,11 @@ class CarBrandService
     public function store(StoreCarBrandRequest $request)
     {
         $carBrand = new CarBrand();
-        $carBrand->name = $request->name;
+        
+        foreach ($request->translations as $code => $value) {
+            $carBrand->setTranslation('name', $code, $value['name']);
+        }
+        
         $carBrand->save();
 
         $request->session()->flash('success', 'Марка траспорта успешно добавлена.');
@@ -51,7 +55,11 @@ class CarBrandService
     public function update(StoreCarBrandRequest $request, $id)
     {
         $carBrand = CarBrand::find($id);
-        $carBrand->name = $request->name;
+        
+        foreach ($request->translations as $code => $value) {
+            $carBrand->setTranslation('name', $code, $value['name']);
+        }
+        
         $carBrand->save();
 
         $request->session()->flash('success', 'Марка транспорта успешно обновлена.');

@@ -40,10 +40,7 @@ class CarBrandController extends Controller
     {
         $carBrand = $this->carBrandService->getById($id);
 
-        return response()->json([
-            'ok' => true,
-            'carBrand' => $carBrand
-        ]);
+        return response()->json($carBrand);
     }
 
     /**

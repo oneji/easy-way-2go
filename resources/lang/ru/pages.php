@@ -5,6 +5,7 @@ return [
     'home' => [
         'label' => 'Главная'
     ],
+
     'drivingExperience' => [
         'label' => 'Водительский опыт',
         'actionsLabel' => 'Действия',
@@ -12,6 +13,16 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
     ],
+
+    'languages' => [
+        'label' => 'Языки',
+        'codeLabel' => 'Код',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о языках не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить'
+    ],
+    
     'carBrands' => [
         'label' => 'Марки автомобиля',
         'brandsLabel' => 'Марки',
@@ -20,6 +31,7 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
     ],
+
     'carModels' => [
         'label' => 'Модели автомобиля',
         'modelsLabel' => 'Модели',
@@ -28,6 +40,7 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
     ],
+
     'brigadirs' => [
         'label' => 'Бригадиры',
         'datatable' => [
@@ -39,6 +52,7 @@ return [
         ],
         'emptySet' => 'На данный момент записей о бригадирах не найдено.',
     ],
+
     'createBrigadir' => [
         'label' => 'Добавить бригадира',
         'addForm' => [
@@ -74,6 +88,7 @@ return [
             ]
         ]
     ],
+
     'editBrigadir' => [
         'label' => 'Изменить бригадира',
         'addForm' => [
@@ -109,6 +124,7 @@ return [
             ]
         ]
     ],
+
     'drivers' => [
         'label' => 'Водителя',
         'driverInfoLabel' => 'Информация о водителе',
@@ -178,12 +194,15 @@ return [
             ]
         ]
     ],
+
     'createDriver' => [
         'label' => 'Добавить водителя'
     ],
+
     'editDriver' => [
         'label' => 'Изменить водителя'
     ],
+
     'clients' => [
         'label' => 'Клиенты',
         'clientInfoLabel' => 'Информация о клиенте',
@@ -231,12 +250,15 @@ return [
             ]
         ]
     ],
+
     'createClient' => [
         'label' => 'Добавить водителя'
     ],
+
     'editClient' => [
         'label' => 'Изменить водителя'
     ],
+
     'transport' => [
         'label' => 'Транспорт',
         'bindDriverBtn' => 'Привязать водителя',

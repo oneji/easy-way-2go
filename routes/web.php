@@ -40,6 +40,12 @@ Route::group([
         Route::get('driving-experience/getById/{id}', 'DrivingExperienceController@getById')->name('de.getById');
         Route::post('driving-experience', 'DrivingExperienceController@store')->name('de.store');
         Route::put('driving-experience/{id}', 'DrivingExperienceController@update')->name('de.update');
+        
+        // Languages
+        Route::get('languages', 'LanguageController@index')->name('languages.index');
+        Route::get('languages/getById/{id}', 'LanguageController@getById')->name('languages.getById');
+        Route::post('languages', 'LanguageController@store')->name('languages.store');
+        Route::put('languages/{id}', 'LanguageController@update')->name('languages.update');
     
         // Car brands
         Route::get('car-brands', 'CarBrandController@index')->name('carBrands.index');

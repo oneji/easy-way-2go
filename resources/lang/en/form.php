@@ -12,10 +12,12 @@ return [
     // Labels
     'labels' => [
         'name' => 'Item name',
+        'code' => 'Code'
     ],
     // Placeholders
     'placeholders' => [
-        'name' => 'Enter name'
+        'name' => 'Enter name',
+        'code' => 'Enter code'
     ]
 
 ];

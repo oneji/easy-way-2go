@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => __('pages.drivingExperience.label'),
+        'title' => __('pages.languages.label'),
         'items' => [
-            [ 'name' => __('pages.drivingExperience.label'), 'link' => null ]
+            [ 'name' => __('pages.languages.label'), 'link' => null ]
         ]
     ]
 ])
@@ -31,10 +31,10 @@
                         </div>
                     </div>
         
-                    @if ($deList->count() === 0)
+                    @if ($langs->count() === 0)
                         <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                             <i class="mdi mdi-information mr-2"></i>
-                            {{ __('pages.drivingExperience.emptySet') }}
+                            {{ __('pages.languages.emptySet') }}
                         </div>
                     @else
                         <div class="table-responsive">
@@ -42,19 +42,21 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col" style="width: 70px;">#</th>
-                                        <th scope="col">{{ __('pages.drivingExperience.label') }}</th>
-                                        <th scope="col">{{ __('pages.drivingExperience.actionsLabel') }}</th>
+                                        <th scope="col">{{ __('pages.languages.label') }}</th>
+                                        <th scope="col">{{ __('pages.languages.codeLabel') }}</th>
+                                        <th scope="col">{{ __('pages.languages.actionsLabel') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($deList as $idx => $item)
+                                    @foreach ($langs as $idx => $lang)
                                         <tr>
                                             <td>{{ $idx + 1 }}</td>
-                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $lang->name }}</td>
+                                            <td>{{ $lang->code }}</td>
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
-                                                        <a href="#" data-id="{{ $item->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                                                        <a href="#" data-id="{{ $lang->id }}" class="edit-btn" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -67,7 +69,7 @@
         
                     <div class="row">
                         <div class="col-lg-12">
-                            {{ $deList->links() }}
+                            {{ $langs->links() }}
                         </div>
                     </div>
                 </div>
@@ -76,8 +78,8 @@
     </div>
 
 
-    @include('driving-experience.modals.create', [ 'langs' => $langs ])
-    @include('driving-experience.modals.edit', [ 'langs' => $langs ])
+    @include('languages.modals.create')
+    @include('languages.modals.edit')
 @endsection
 
 @section('scripts')
@@ -85,32 +87,36 @@
 
     <script>
         $(document).ready(function() {
-            var editDeModal = $('.edit-de-modal');
-            var editLoading = $('.loading-block');
-            var deId = null;
+            var editLangModal = $('.edit-lang-modal');
+            var langId = null;
 
             $('.edit-btn').click(function(e) {
                 e.preventDefault();
-                deId = $(this).data('id');
-                // Show the modal
-                editDeModal.modal('show');
-            });
+                let editBtn = $(this);
+                langId = editBtn.data('id');
+                let loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
+                let pencilIcon = '<i class="bx bx-pencil"></i>';
 
-            editDeModal.on('shown.bs.modal', function() {
-                editLoading.css('display', 'flex');
+                editBtn.html(loadingIcon);
 
-                // Make the AJAX request
                 $.ajax({
-                    url: '/driving-experience/getById/' + deId,
+                    url: '/languages/getById/' + langId,
                     type: 'GET',
-                    success: function(data) {
-                        editDeModal.find('form').attr('action', `/driving-experience/${deId}`);
-                        editDeModal.find('form').find('input[name=name]').val(data.deItem.name)
+                    success: function(lang) {
+                        editLangModal.find('form').attr('action', `/languages/${langId}`);
+                        editLangModal.find('form').find('input#nameRu').val(lang.name.ru);
+                        editLangModal.find('form').find('input#nameEn').val(lang.name.en);
+                        editLangModal.find('form').find('input#code').val(lang.code);
+
+                        // Show the modal
+                        editLangModal.modal('show');
+                        
+                        editBtn.html(pencilIcon);
                     },
                     error: function(err) {
                         console.log('err', err);
                     }
-                }); 
+                });
             });
         });
     </script>

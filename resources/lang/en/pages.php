@@ -5,6 +5,7 @@ return [
     'home' => [
         'label' => 'Home'
     ],
+
     'drivingExperience' => [
         'label' => 'Driving experience',
         'actionsLabel' => 'Actions',
@@ -12,6 +13,16 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit'
     ],
+
+    'languages' => [
+        'label' => 'Languages',
+        'codeLabel' => 'Code',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit'
+    ],
+
     'carBrands' => [
         'label' => 'Car brands',
         'brandsLabel' => 'Brand|Brands',
@@ -20,6 +31,7 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+
     'carModels' => [
         'label' => 'Car models',
         'modelsLabel' => 'Models',
@@ -28,6 +40,7 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+
     'brigadirs' => [
         'label' => 'Formen',
         'datatable' => [
@@ -39,6 +52,7 @@ return [
         ],
         'emptySet' => 'For now, we could not find any items.',
     ],
+
     'createBrigadir' => [
         'label' => 'Add new foreman',
         'addForm' => [
@@ -74,6 +88,7 @@ return [
             ]
         ]
     ],
+    
     'editBrigadir' => [
         'label' => 'Edit foreman',
         'addForm' => [
@@ -109,6 +124,7 @@ return [
             ]
         ]
     ],
+
     'drivers' => [
         'label' => 'Drivers',
         'driverInfoLabel' => 'Driver information',
@@ -178,12 +194,15 @@ return [
             ]
         ]
     ],
+
     'createDriver' => [
         'label' => 'Add new driver'
     ],
+
     'editDriver' => [
         'label' => 'Edit driver'
     ],
+
     'clients' => [
         'label' => 'Clients',
         'clientInfoLabel' => 'Client information',
@@ -231,12 +250,15 @@ return [
             ]
         ]
     ],
+
     'createClient' => [
         'label' => 'Add new client'
     ],
+
     'editClient' => [
         'label' => 'Edit client'
     ],
+    
     'transport' => [
         'label' => 'Transport',
         'bindDriverBtn' => 'Bind driver',

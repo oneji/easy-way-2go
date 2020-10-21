@@ -7,6 +7,7 @@ return [
     'users'             => 'Пользователи',
     'transport'         => 'Транспорт',
     'drivingExperience' => 'Водительский опыт',
+    'languages'         => 'Языки',
     'carBrands'         => 'Марки транспорта',
     'carModels'         => 'Модели транспорта',
     'brigadirs'         => 'Бригадиры',

@@ -131,6 +131,7 @@
                                 <span>{{ __('menu.catalog') }}</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.languages.index') }}">{{ __('menu.languages') }}</a></li>
                                 <li><a href="{{ route('admin.de.index') }}">{{ __('menu.drivingExperience') }}</a></li>
                                 <li><a href="{{ route('admin.carBrands.index') }}">{{ __('menu.carBrands') }}</a></li>
                                 <li><a href="{{ route('admin.carModels.index') }}">{{ __('menu.carModels') }}</a></li>

@@ -61,19 +61,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="first_name">{{ __('pages.createBrigadir.addForm.labels.firstName') }}</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ __('pages.createBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="last_name">{{ __('pages.createBrigadir.addForm.labels.lastName') }}</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ __('pages.createBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-3">
                                 <div class="form-group">
@@ -92,14 +96,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="password">{{ __('pages.createBrigadir.addForm.labels.password') }}</label>
                                     <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.password') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="password_confirmation">{{ __('pages.createBrigadir.addForm.labels.confirmPassword') }}</label>
                                     <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.confirmPassword') }}"/>
@@ -118,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">{{ __('pages.createBrigadir.addForm.labels.nationality') }}</label>
                                     <select name="nationality" class="form-control" required>
@@ -130,21 +134,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="phone_number">{{ __('pages.createBrigadir.addForm.labels.phone') }}</label>
                                     <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.phone') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="company_name">{{ __('pages.createBrigadir.addForm.labels.company') }}</label>
                                     <input id="company_name" name="company_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="inn">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
                                     <input id="inn" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>

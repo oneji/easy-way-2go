@@ -15,7 +15,7 @@ class CreateCarModelsTable extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->text('name');
             $table->unsignedBigInteger('car_brand_id');
 
             $table->foreign('car_brand_id')->references('id')->on('car_brands');

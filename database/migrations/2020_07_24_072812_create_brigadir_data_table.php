@@ -16,7 +16,7 @@ class CreateBrigadirDataTable extends Migration
         Schema::create('brigadir_data', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('company_name');
+            $table->text('company_name');
             $table->string('inn');
 
             $table->foreign('user_id')->references('id')->on('users');

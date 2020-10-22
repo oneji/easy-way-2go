@@ -17,7 +17,7 @@ class CreateTransportsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('registered_on');
             $table->unsignedBigInteger('register_country');
-            $table->string('register_city');
+            $table->text('register_city');
             $table->string('car_number');
             $table->date('year');
             $table->date('teh_osmotr_date_from');

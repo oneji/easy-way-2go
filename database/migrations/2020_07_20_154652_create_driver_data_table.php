@@ -17,7 +17,7 @@ class CreateDriverDataTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('country_id');
-            $table->string('city')->nullable();
+            $table->text('city')->nullable();
             $table->unsignedBigInteger('dl_issue_place')->nullable();
             $table->date('dl_issued_at')->nullable();
             $table->date('dl_expires_at')->nullable();

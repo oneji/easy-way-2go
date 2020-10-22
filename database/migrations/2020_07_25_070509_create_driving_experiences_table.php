@@ -15,7 +15,7 @@ class CreateDrivingExperiencesTable extends Migration
     {
         Schema::create('driving_experiences', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->text('name');
         });
     }
 

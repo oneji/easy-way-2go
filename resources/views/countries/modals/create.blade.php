@@ -19,11 +19,6 @@
                                     <input name="translations[{{ $lang->code }}][name]" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                                 </div>
                             @endforeach
-                            
-                            <div class="form-group">
-                                <label for="name">{{ __('form.labels.code') }}</label>
-                                <input name="code" type="text" class="form-control" placeholder="{{ __('form.placeholders.code') }}" required>
-                            </div>
                         </div>
 
                         <div class="col-12">

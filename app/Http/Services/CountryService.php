@@ -22,7 +22,7 @@ class CountryService
      */
     public function getPaginated()
     {
-        return Country::paginate(10);
+        return Country::orderBy('name')->paginate(10);
     }
 
     /**
@@ -44,14 +44,13 @@ class CountryService
      */
     public function store(StoreCountryRequest $request)
     {
-        $lang = new Country();
+        $country = new Country();
         
         foreach ($request->translations as $code => $item) {
-            $lang->setTranslation('name', $code, $item['name']);
+            $country->setTranslation('name', $code, $item['name']);
         }
 
-        $lang->code = $request->code;
-        $lang->save();
+        $country->save();
 
         $request->session()->flash('success', trans('pages.countries.successAddedAlert'));
     }
@@ -64,13 +63,13 @@ class CountryService
      */
     public function update(StoreCountryRequest $request, $id)
     {
-        $lang = Country::find($id);
+        $country = Country::find($id);
         
         foreach ($request->translations as $code => $item) {
-            $lang->setTranslation('name', $code, $item['name']);
+            $country->setTranslation('name', $code, $item['name']);
         }
-        $lang->code = $request->code;
-        $lang->save();
+
+        $country->save();
 
         $request->session()->flash('success', trans('pages.countries.successEditedAlert'));
     }

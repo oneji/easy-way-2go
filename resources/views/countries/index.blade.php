@@ -43,7 +43,6 @@
                                     <tr>
                                         <th scope="col" style="width: 70px;">#</th>
                                         <th scope="col">{{ __('pages.countries.label') }}</th>
-                                        <th scope="col">{{ __('pages.countries.codeLabel') }}</th>
                                         <th scope="col">{{ __('pages.countries.actionsLabel') }}</th>
                                     </tr>
                                 </thead>
@@ -52,7 +51,6 @@
                                         <tr>
                                             <td>{{ $idx + 1 }}</td>
                                             <td>{{ $country->name }}</td>
-                                            <td>{{ $country->code }}</td>
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
@@ -106,7 +104,6 @@
                         editCountryModal.find('form').attr('action', `countries/${countryId}`);
                         editCountryModal.find('form').find('input#nameRu').val(country.name.ru);
                         editCountryModal.find('form').find('input#nameEn').val(country.name.en);
-                        editCountryModal.find('form').find('input#code').val(country.code);
 
                         // Show the modal
                         editCountryModal.modal('show');

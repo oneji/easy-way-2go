@@ -22,10 +22,6 @@
                                 <label for="name">{{ __('form.labels.name') }}</label>
                                 <input name="translations[en][name]" id="nameEn" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                             </div>
-                            <div class="form-group">
-                                <label for="name">{{ __('form.labels.code') }}</label>
-                                <input name="code" id="code" type="text" class="form-control" placeholder="{{ __('form.placeholders.code') }}" required>
-                            </div>
                         </div>
 
                         <div class="col-12">

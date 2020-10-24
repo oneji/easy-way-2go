@@ -80,19 +80,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="first_name">{{ __('pages.editBrigadir.addForm.labels.firstName') }}</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.firstName') }}" value="{{ $brigadir->first_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ __('pages.editBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.firstName') }}" value="{{ $brigadir->getTranslation('first_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="last_name">{{ __('pages.editBrigadir.addForm.labels.lastName') }}</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.lastName') }}" value="{{ $brigadir->last_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ __('pages.editBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.lastName') }}" value="{{ $brigadir->getTranslation('last_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-3">
                                 <div class="form-group">
@@ -111,7 +115,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>{{ __('pages.editBrigadir.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
@@ -123,7 +127,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">{{ __('pages.editBrigadir.addForm.labels.nationality') }}</label>
                                     <select name="nationality" class="form-control" required>
@@ -135,21 +139,23 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="phone_number">{{ __('pages.editBrigadir.addForm.labels.phone') }}</label>
                                     <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.phone') }}" value="{{ $brigadir->phone_number }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="company_name">{{ __('pages.editBrigadir.addForm.labels.company') }}</label>
-                                    <input id="company_name" name="company_name" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.company') }}" value="{{ $brigadir->brigadir_data->company_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="company_name">{{ __('pages.editBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.company') }}" value="{{ $brigadir->brigadir_data->getTranslation('company_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="inn">{{ __('pages.editBrigadir.addForm.labels.inn') }}</label>
                                     <input id="inn" name="inn" type="text" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.inn') }}" value="{{ $brigadir->brigadir_data->inn }}" required>

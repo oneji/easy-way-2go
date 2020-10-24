@@ -3,9 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class BrigadirData extends Model
 {
+    use HasTranslations;
+    
+    public $translatable = [
+        'company_name'
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *

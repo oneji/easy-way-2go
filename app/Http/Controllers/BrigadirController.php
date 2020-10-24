@@ -31,6 +31,8 @@ class BrigadirController extends Controller
     {
         $brigadirs = $this->brigadirService->all();
 
+        // return $brigadirs;
+
         return view('brigadirs.index', [
             'brigadirs' => $brigadirs
         ]);

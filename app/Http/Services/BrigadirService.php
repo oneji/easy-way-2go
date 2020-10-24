@@ -47,6 +47,11 @@ class BrigadirService
         $brigadir->phone_number_verified_at = Carbon::now();
         $brigadir->role = User::ROLE_BRIGADIR;
         $brigadir->password = Hash::make($request->password);
+
+        foreach ($request->translations as $code => $value) {
+            $brigadir->setTranslation('first_name', $code, $value['first_name']);
+            $brigadir->setTranslation('last_name', $code, $value['last_name']);
+        }
         
         if($request->hasFile('photo')) {
             $brigadir->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -54,11 +59,13 @@ class BrigadirService
         
         $brigadir->save();
 
-        // Save additional data
-        $brigadir->brigadir_data()->save(new BrigadirData([
-            'company_name' => $request->company_name,
-            'inn' => $request->inn
-        ]));
+        $brigadirData = new BrigadirData();
+        $brigadirData->inn = $request->inn;
+        $brigadirData->user_id = $brigadir->id;
+        foreach ($request->translations as $code => $value) {
+            $brigadirData->setTranslation('company_name', $code, $value['company_name']);
+        }
+        $brigadirData->save();
     }
 
     /**
@@ -70,8 +77,10 @@ class BrigadirService
     public function update(UpdateUserRequest $request, $id)
     {
         $brigadir = User::find($id);
-        $brigadir->first_name = $request->first_name;
-        $brigadir->last_name = $request->last_name;
+        foreach ($request->translations as $code => $value) {
+            $brigadir->setTranslation('first_name', $code, $value['first_name']);
+            $brigadir->setTranslation('last_name', $code, $value['last_name']);
+        }
         $brigadir->birthday = Carbon::parse($request->birthday);
         $brigadir->nationality = $request->nationality;
         $brigadir->phone_number = $request->phone_number;
@@ -85,10 +94,12 @@ class BrigadirService
         $brigadir->save();
 
         // Update brigadir's additional data
-        $brigadir->brigadir_data()->update([
-            'company_name' => $request->company_name,
-            'inn' => $request->inn
-        ]);
+        $brigadirData = BrigadirData::where('user_id', $brigadir->id)->first();
+        $brigadirData->inn = $request->inn;
+        foreach ($request->translations as $code => $value) {
+            $brigadirData->setTranslation('company_name', $code, $value['company_name']);
+        }
+        $brigadirData->save();
     }
 
     /**

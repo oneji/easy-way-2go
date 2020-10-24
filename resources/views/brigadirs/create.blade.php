@@ -110,7 +110,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>{{ __('pages.createBrigadir.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
@@ -141,12 +141,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="company_name">{{ __('pages.createBrigadir.addForm.labels.company') }}</label>
-                                    <input id="company_name" name="company_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="company_name">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-3">
                                 <div class="form-group">

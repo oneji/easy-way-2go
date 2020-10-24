@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.editBrigadir.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ $brigadir->birthday }}" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.editBrigadir.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ \Carbon\Carbon::parse($brigadir->birthday)->format('m/d/Y') }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

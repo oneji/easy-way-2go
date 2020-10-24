@@ -98,7 +98,7 @@
                                 @if ($driver->photo !== null)
                                     <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('storage/'.$driver->photo) }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @else
-                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
+                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/usersi/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @endif
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.birthday') }}" value="{{ $driver->birthday }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.birthday') }}" value="{{ \Carbon\Carbon::parse($driver->birthday)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -248,7 +248,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlIssuedAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlIssuedAt') }}" value="{{ $driver->driver_data->dl_issued_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlIssuedAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->dl_issued_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -260,7 +260,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlExpiresAt') }}" value="{{ $driver->driver_data->dl_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlExpiresAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->dl_expires_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -307,7 +307,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.gradesExpireAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.gradesExpireAt') }}" value="{{ $driver->driver_data->grades_expire_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.gradesExpireAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->grade_expire_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ $client->birthday }}" data-date-autoclose="true">
+                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ \Carbon\Carbon::parse($client->birthday)->format('m/d/Y') }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -157,7 +157,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.idCardExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="id_card_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCardExpiresAt') }}" data-provide="datepicker" value="{{ $client->client_data->id_card_expires_at }}" data-date-autoclose="true">
+                                        <input type="text" name="id_card_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCardExpiresAt') }}" data-provide="datepicker" value="{{ \Carbon\Carbon::parse($client->client_data->id_card_expires_at)->format('m/d/Y') }}" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -176,7 +176,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.passportExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="passport_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passportExpiresAt') }}" value="{{ $client->client_data->passport_expires_at }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="passport_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passportExpiresAt') }}" value="{{ \Carbon\Carbon::parse($client->client_data->passport_expires_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

@@ -3,9 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class DriverData extends Model
 {
+    use HasTranslations;
+    
+    public $translatable = [
+        'city',
+        'comment',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -20,14 +28,12 @@ class DriverData extends Model
      */
     protected $fillable = [
         'country_id',
-        'city',
         'dl_issue_place',
         'dl_issued_at',
         'dl_expires_at',
         'docs',
-        'driving_experience',
+        'driving_experience_id',
         'conviction',
-        'comment',
         'was_kept_drunk',
         'dtp',
         'grades',
@@ -45,4 +51,20 @@ class DriverData extends Model
         'dtp' => 'boolean',
         'docs' => 'object'
     ];
+
+    /**
+     * Get the country that owns the driver data.
+     */
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
+    }
+
+    /**
+     * Get the driving experience that owns the driver data.
+     */
+    public function driving_experience()
+    {
+        return $this->belongsTo('App\DrivingExperience');
+    }
 }

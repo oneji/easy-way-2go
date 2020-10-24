@@ -24,10 +24,9 @@ class DriverService
     {
         return User::with([
             'driver_data' => function($query) {
-                $query->join('countries as c', 'c.id', '=', 'driver_data.country_id')
+                $query->with([ 'country', 'driving_experience' ])
                     ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
-                    ->join('driving_experiences as de', 'de.id', '=', 'driver_data.driving_experience')
-                    ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*', 'de.name as driving_experience_name');
+                    ->select('cc.name as dl_issue_place_name', 'driver_data.*');
             }
         ])->where('role', User::ROLE_DRIVER)->paginate(10);
     }
@@ -41,9 +40,9 @@ class DriverService
     {
         return User::with([
             'driver_data' => function($query) {
-                $query->join('countries as c', 'c.id', '=', 'driver_data.country_id')
+                $query->with([ 'country', 'driving_experience' ])
                     ->join('countries as cc', 'cc.id', '=', 'driver_data.dl_issue_place')
-                    ->select('c.name as country_name', 'cc.name as dl_issue_place_name', 'driver_data.*');
+                    ->select('cc.name as dl_issue_place_name', 'driver_data.*');
             },
         ])
         ->where('role', User::ROLE_DRIVER)->where('users.id', $id)->first();
@@ -63,6 +62,11 @@ class DriverService
         $driver->phone_number_verified_at = Carbon::now();
         $driver->role = User::ROLE_DRIVER;
         $driver->password = Hash::make($request->password);
+
+        foreach ($request->translations as $code => $value) {
+            $driver->setTranslation('first_name', $code, $value['first_name']);
+            $driver->setTranslation('last_name', $code, $value['last_name']);
+        }
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -84,21 +88,24 @@ class DriverService
         $mergedDocs = array_merge($passportDocs, $dLicenseDocs);
 
         // Save additional data
-        $driver->driver_data()->save(new DriverData([
-            'country_id' => $request->country_id,
-            'city' => $request->city,
-            'dl_issue_place' => $request->dl_issue_place,
-            'dl_issued_at' => Carbon::parse($request->dl_issued_at),
-            'dl_expires_at' => Carbon::parse($request->dl_expires_at),
-            'docs' => count($mergedDocs) > 0 ? $mergedDocs : null,
-            'driving_experience' => $request->driving_experience,
-            'conviction' => isset($request->conviction) ? 1 : 0,
-            'comment' => $request->comment,
-            'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : 0,
-            'dtp' => isset($request->dtp) ? 1 : 0,
-            'grades' => $request->grades,
-            'grades_expire_at' => Carbon::parse($request->grades_expire_at)
-        ]));
+        $driverData = new DriverData(); 
+        $driverData->country_id = $request->country_id;
+        foreach ($request->translations as $code => $value) {
+            $driverData->setTranslation('city', $code, $value['city']);
+            $driverData->setTranslation('comment', $code, $value['comment']);
+        }
+        $driverData->dl_issue_place = $request->dl_issue_place;
+        $driverData->dl_issued_at = Carbon::parse($request->dl_issued_at);
+        $driverData->dl_expires_at = Carbon::parse($request->dl_expires_at);
+        $driverData->docs = count($mergedDocs) > 0 ? $mergedDocs : null;
+        $driverData->driving_experience_id = $request->driving_experience_id;
+        $driverData->conviction = isset($request->conviction) ? 1 : 0;
+        $driverData->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
+        $driverData->dtp = isset($request->dtp) ? 1 : 0;
+        $driverData->grades = $request->grades;
+        $driverData->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        $driverData->user_id = $driver->id;
+        $driverData->save();
     }
 
     /**
@@ -110,8 +117,10 @@ class DriverService
     public function update(UpdateUserRequest $request, $id)
     {
         $driver = User::find($id);
-        $driver->first_name = $request->first_name;
-        $driver->last_name = $request->last_name;
+        foreach ($request->translations as $code => $value) {
+            $driver->setTranslation('first_name', $code, $value['first_name']);
+            $driver->setTranslation('last_name', $code, $value['last_name']);
+        }
         $driver->birthday = Carbon::parse($request->birthday);
         $driver->nationality = $request->nationality;
         $driver->phone_number = $request->phone_number;
@@ -145,21 +154,24 @@ class DriverService
 
         
         // Update driver's additional data
-        $driver->driver_data()->update([
-            'country_id' => $request->country_id,
-            'city' => $request->city,
-            'dl_issue_place' => $request->dl_issue_place,
-            'dl_issued_at' => Carbon::parse($request->dl_issued_at),
-            'dl_expires_at' => Carbon::parse($request->dl_expires_at),
-            'docs' => count($mergedDocs) > 0 ? json_encode($mergedDocs) : null,
-            'driving_experience' => $request->driving_experience,
-            'conviction' => isset($request->conviction) ? 1 : 0,
-            'comment' => $request->comment,
-            'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : 0,
-            'dtp' => isset($request->dtp) ? 1 : 0,
-            'grades' => $request->grades,
-            'grades_expire_at' => Carbon::parse($request->grades_expire_at),
-        ]);
+        $driverData = DriverData::where('user_id', $driver->id)->first();
+        $driverData->country_id = $request->country_id;
+        foreach ($request->translations as $code => $value) {
+            $driverData->setTranslation('city', $code, $value['city']);
+            $driverData->setTranslation('comment', $code, $value['comment']);
+        }
+        $driverData->dl_issue_place = $request->dl_issue_place;
+        $driverData->dl_issued_at = Carbon::parse($request->dl_issued_at);
+        $driverData->dl_expires_at = Carbon::parse($request->dl_expires_at);
+        $driverData->docs = count($mergedDocs) > 0 ? $mergedDocs : null;
+        $driverData->driving_experience_id = $request->driving_experience_id;
+        $driverData->conviction = isset($request->conviction) ? 1 : 0;
+        $driverData->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
+        $driverData->dtp = isset($request->dtp) ? 1 : 0;
+        $driverData->grades = $request->grades;
+        $driverData->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        $driverData->user_id = $driver->id;
+        $driverData->save();
     }
 
     /**

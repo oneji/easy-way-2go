@@ -123,19 +123,23 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="first_name">{{ __('pages.drivers.addForm.labels.firstName') }}</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" value="{{ $driver->first_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ __('pages.drivers.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" value="{{ $driver->getTranslation('first_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="last_name">{{ __('pages.drivers.addForm.labels.lastName') }}</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" value="{{ $driver->last_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ __('pages.drivers.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" value="{{ $driver->getTranslation('last_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -197,12 +201,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="city">{{ __('pages.drivers.addForm.labels.city') }}</label>
-                                    <input id="city" name="city" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}" value="{{ $driver->driver_data->city }}">
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="city">{{ __('pages.drivers.addForm.labels.city') }}: {{ $lang->name }}</label>
+                                        <input id="city" name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}" value="{{ $driver->driver_data->getTranslation('city', $lang->code) }}">
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -218,9 +224,9 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">{{ __('pages.drivers.addForm.labels.drivingExperience') }}</label>
-                                    <select name="driving_experience" class="form-control">
+                                    <select name="driving_experience_id" class="form-control">
                                         @foreach ($deList as $idx => $de)
-                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
+                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience_id === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -262,12 +268,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}</label>
-                                    <textarea name="comment" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}">{{ $driver->driver_data->comment }}</textarea>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}: {{ $lang->name }}</label>
+                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}">{{ $driver->driver_data->getTranslation('comment', $lang->code) }}</textarea>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-12">
                                 <div class="custom-control custom-switch mb-2" dir="ltr">

@@ -80,19 +80,23 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" value="{{ $client->first_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" value="{{ $client->getTranslation('first_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" value="{{ $client->last_name }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" value="{{ $client->getTranslation('last_name', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-sm-6">
                                 <div class="form-group">

@@ -119,12 +119,14 @@
                                 </select>
                             </div>
 
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="register_city">{{ __('pages.transport.form.labels.city') }}</label>
-                                    <input id="register_city" name="register_city" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" value="{{ $transport->register_city }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="register_city">{{ __('pages.transport.form.labels.city') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][register_city]" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" value="{{ $transport->getTranslation('register_city', $lang->code) }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-3">
                                 <div class="form-group">
@@ -138,7 +140,7 @@
                                     <label for="car_brand_id">{{ __('pages.transport.form.labels.brand') }}</label>
                                     <select name="car_brand_id" class="form-control" required>
                                         @foreach ($carBrands as $brand)
-                                            <option value="{{ $brand->id }}" {{ $transport->car_rand_id === $brand->id ? 'selected' : null }}>{{ $brand->name }}</option>
+                                            <option value="{{ $brand->id }}" {{ $transport->car_brand_id === $brand->id ? 'selected' : null }}>{{ $brand->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -170,7 +172,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.inspectionFrom') }}</label>
                                     <div class="input-group">
-                                        <input value="{{ $transport->teh_osmotr_date_from }}" required type="text" name="teh_osmotr_date_from" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.inspectionFrom') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input value="{{ Carbon\Carbon::parse($transport->teh_osmotr_date_from)->format('m/d/Y') }}" required type="text" name="teh_osmotr_date_from" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.inspectionFrom') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -182,7 +184,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.inspectionTo') }}</label>
                                     <div class="input-group">
-                                        <input value="{{ $transport->teh_osmotr_date_to }}" required type="text" name="teh_osmotr_date_to" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.inspectionTo') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input value="{{ Carbon\Carbon::parse($transport->teh_osmotr_date_to)->format('m/d/Y') }}" required type="text" name="teh_osmotr_date_to" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.inspectionTo') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -194,7 +196,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.insuranceFrom') }}</label>
                                     <div class="input-group">
-                                        <input value="{{ $transport->insurance_date_from }}" required type="text" name="insurance_date_from" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.insuranceFrom') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input value="{{ Carbon\Carbon::parse($transport->insurance_date_from)->format('m/d/Y') }}" required type="text" name="insurance_date_from" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.insuranceFrom') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -206,7 +208,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.insuranceTo') }}</label>
                                     <div class="input-group">
-                                        <input value="{{ $transport->insurance_date_to }}" required type="text" name="insurance_date_to" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.insuranceTo') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input value="{{ Carbon\Carbon::parse($transport->insurance_date_to)->format('m/d/Y') }}" required type="text" name="insurance_date_to" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.insuranceTo') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>

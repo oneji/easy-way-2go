@@ -116,4 +116,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\Transport');
     }
+
+    /**
+     * Get user's full name
+     */
+    public function getFullName()
+    {
+        return $this->first_name .' '. $this->last_name;
+    }
 }

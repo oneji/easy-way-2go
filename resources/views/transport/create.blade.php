@@ -70,12 +70,14 @@
                                 </select>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="register_city">{{ __('pages.transport.form.labels.city') }}</label>
-                                    <input id="register_city" name="register_city" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="register_city">{{ __('pages.transport.form.labels.city') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][register_city]" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                 <div class="form-group">

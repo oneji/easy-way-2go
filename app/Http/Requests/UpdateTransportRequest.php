@@ -26,7 +26,7 @@ class UpdateTransportRequest extends FormRequest
         return [
             'registered_on' => [ 'required' ],
             'register_country' => [ 'required', 'exists:countries,id' ],
-            'register_city' => [ 'required', 'string', 'max:255' ],
+            'translations' => [ 'required' ],
             'car_number' => [ 'required', 'string', 'max:255' ],
             'car_brand_id' => [ 'required', 'numeric', 'exists:car_brands,id' ],
             'car_model_id' => [ 'required', 'numeric', 'exists:car_models,id' ],

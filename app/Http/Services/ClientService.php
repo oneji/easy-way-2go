@@ -42,6 +42,10 @@ class ClientService
     public function store(StoreUserRequest $request)
     {
         $client = new User($request->except('password'));
+        foreach ($request->translations as $code => $value) {
+            $client->setTranslation('first_name', $code, $value['first_name']);
+            $client->setTranslation('last_name', $code, $value['last_name']);
+        }
         $client->verified = 1;
         $client->birthday = Carbon::parse($request->birthday);
         $client->phone_number_verified_at = Carbon::now();
@@ -72,8 +76,10 @@ class ClientService
     public function update(UpdateUserRequest $request, $id)
     {
         $client = User::find($id);
-        $client->first_name = $request->first_name;
-        $client->last_name = $request->last_name;
+        foreach ($request->translations as $code => $value) {
+            $client->setTranslation('first_name', $code, $value['first_name']);
+            $client->setTranslation('last_name', $code, $value['last_name']);
+        }
         $client->birthday = Carbon::parse($request->birthday);
         $client->nationality = $request->nationality;
         $client->phone_number = $request->phone_number;

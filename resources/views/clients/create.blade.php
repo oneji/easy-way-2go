@@ -61,28 +61,32 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
 
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}</label>
-                                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
+                            @foreach ($langs as $lang)
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="col-sm-4">
+                            @endforeach
+                            
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="email">{{ __('pages.clients.addForm.labels.email') }}</label>
                                     <input id="email" name="email" type="email" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.email') }}" parsley-type="email" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="photo">{{ __('pages.clients.addForm.labels.photo') }}</label>
                                     <div class="custom-file">
@@ -92,21 +96,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="password">{{ __('pages.clients.addForm.labels.password') }}</label>
                                     <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.password') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="password_confirmation">{{ __('pages.clients.addForm.labels.confirmPassword') }}</label>
                                     <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.clients.addForm.placeholders.confirmPassword') }}"/>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.birthday') }}</label>
                                     <div class="input-group">
@@ -118,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">{{ __('pages.clients.addForm.labels.nationality') }}</label>
                                     <select name="nationality" class="form-control" required>
@@ -130,21 +134,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="phone_number">{{ __('pages.clients.addForm.labels.phone') }}</label>
                                     <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.phone') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="id_card">{{ __('pages.clients.addForm.labels.idCard') }}</label>
                                     <input id="id_card" name="id_card" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCard') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.idCardExpiresAt') }}</label>
                                     <div class="input-group">
@@ -156,14 +160,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="passport_number">{{ __('pages.clients.addForm.labels.passport') }}</label>
                                     <input id="passport_number" name="passport_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passport') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>{{ __('pages.clients.addForm.labels.passportExpiresAt') }}</label>
                                     <div class="input-group">

@@ -23,11 +23,9 @@ class TransportService
      */
     public function all()
     {
-        return Transport::with(['car_docs', 'users'])
+        return Transport::with(['car_docs', 'users', 'car_brand', 'car_model'])
             ->join('countries', 'countries.id', '=', 'transports.register_country')
-            ->join('car_brands', 'car_brands.id', '=', 'transports.car_brand_id')
-            ->join('car_models', 'car_models.id', '=', 'transports.car_model_id')
-            ->select('transports.*', 'countries.name as register_country_name', 'car_brands.name as car_brand_name', 'car_models.name as car_model_name')
+            ->select('transports.*', 'countries.name as register_country_name')
             ->paginate(8);
     }
 
@@ -40,6 +38,11 @@ class TransportService
     public function store(Request $request)
     {
         $transport = new Transport($request->all());
+        
+        foreach ($request->translations as $code => $value) {
+            $transport->setTranslation('register_city', $code, $value['register_city']);
+        }
+
         // Save parsed date fields
         $transport->teh_osmotr_date_from = Carbon::parse($request->teh_osmotr_date_from);
         $transport->teh_osmotr_date_to = Carbon::parse($request->teh_osmotr_date_to);
@@ -62,7 +65,11 @@ class TransportService
         $transport = Transport::find($id);
         $transport->registered_on = $request->registered_on;
         $transport->register_country = $request->register_country;
-        $transport->register_city = $request->register_city;
+        
+        foreach ($request->translations as $code => $value) {
+            $transport->setTranslation('register_city', $code, $value['register_city']);
+        }
+
         $transport->car_number = $request->car_number;
         $transport->car_brand_id = $request->car_brand_id;
         $transport->car_model_id = $request->car_model_id;

@@ -3,9 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Transport extends Model
 {
+    use HasTranslations;
+    
+    public $translatable = [
+        'register_city'
+    ];
+
     /**
      * Transport constants
      */
@@ -35,7 +42,6 @@ class Transport extends Model
     protected $fillable = [
         'registered_on',
         'register_country',
-        'register_city',
         'car_number',
         'car_brand_id',
         'car_model_id',
@@ -85,5 +91,21 @@ class Transport extends Model
     public function users()
     {
         return $this->belongsToMany('App\User');
+    }
+
+    /**
+     * Get the car brand that owns the transport.
+     */
+    public function car_brand()
+    {
+        return $this->belongsTo('App\CarBrand');
+    }
+
+    /**
+     * Get the car model that owns the transport.
+     */
+    public function car_model()
+    {
+        return $this->belongsTo('App\CarModel');
     }
 }

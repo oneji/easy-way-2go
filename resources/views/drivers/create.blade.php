@@ -36,7 +36,7 @@
         @csrf
         
         <div class="row">
-            <div class="col-6">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.drivers.driverInfoLabel') }}</h4>
@@ -61,120 +61,119 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="first_name">{{ __('pages.drivers.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="last_name">{{ __('pages.drivers.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">{{ __('pages.drivers.addForm.labels.email') }}</label>
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.email') }}" parsley-type="email" required>
+                        
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
                                 </div>
                             </div>
+                        @endforeach
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">{{ __('pages.drivers.addForm.labels.photo') }}</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="photo">
-                                        <label class="custom-file-label" for="photo">{{ __('pages.drivers.addForm.placeholders.photo') }}</label>
-                                    </div>
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
                                 </div>
                             </div>
+                        @endforeach
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="password">{{ __('pages.drivers.addForm.labels.password') }}</label>
-                                    <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.password') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.email') }}: {{ $lang->name }}</label>
+                            <div class="col-md-10">
+                                <input name="email" type="email" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.email') }}" parsley-type="email" required>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="password_confirmation">{{ __('pages.drivers.addForm.labels.confirmPassword') }}</label>
-                                    <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.drivers.addForm.placeholders.confirmPassword') }}"/>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>{{ __('pages.drivers.addForm.labels.birthday') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.birthday') }}" data-provide="datepicker" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">{{ __('pages.drivers.addForm.labels.nationality') }}</label>
-                                    <select name="nationality" class="form-control" required>
-                                        <option value="" selected>{{ __('pages.drivers.addForm.placeholders.nationality') }}</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="phone_number">{{ __('pages.drivers.addForm.labels.phone') }}</label>
-                                    <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.phone') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">{{ __('pages.drivers.addForm.labels.country') }}</label>
-                                    <select name="country_id" class="form-control" required>
-                                        <option value="" selected>{{ __('pages.drivers.addForm.placeholders.country') }}</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="city">{{ __('pages.drivers.addForm.labels.city') }}: {{ $lang->name }}</label>
-                                        <input id="city" name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.photo') }}</label>
+                            <div class="col-md-10">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photo">
+                                    <label class="custom-file-label" for="photo">{{ __('pages.drivers.addForm.placeholders.photo') }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.password') }}</label>
+                            <div class="col-md-10">
+                                <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.password') }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.confirmPassword') }}</label>
+                            <div class="col-md-10">
+                                <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.drivers.addForm.placeholders.confirmPassword') }}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.birthday') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.birthday') }}" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.nationality') }}</label>
+                            <div class="col-md-10">
+                                <select name="nationality" class="form-control" required>
+                                    <option value="" selected>{{ __('pages.drivers.addForm.placeholders.nationality') }}</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.phone') }}</label>
+                            <div class="col-md-10">
+                                <input name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.phone') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.country') }}</label>
+                            <div class="col-md-10">
+                                <select name="country_id" class="form-control" required>
+                                    <option value="" selected>{{ __('pages.drivers.addForm.placeholders.country') }}</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.city') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.drivers.documentsLabel') }}</h4>
                         <p class="card-title-desc"></p>
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">{{ __('pages.drivers.addForm.labels.drivingExperience') }}</label>
                                     <select name="driving_experience_id" class="form-control">
@@ -185,7 +184,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last_name" class="control-label">{{ __('pages.drivers.addForm.labels.dlIssuePlace') }}</label>
                                     <select name="dl_issue_place" class="form-control">
@@ -197,7 +196,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlIssuedAt') }}</label>
                                     <div class="input-group">
@@ -209,7 +208,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlExpiresAt') }}</label>
                                     <div class="input-group">
@@ -225,7 +224,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}: {{ $lang->name }}</label>
-                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}"></textarea>
+                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}"></textarea>
                                     </div>
                                 </div>
                             @endforeach
@@ -247,14 +246,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">{{ __('pages.drivers.addForm.labels.grades') }}</label>
                                     <input type="number" class="form-control" name="grades" value="0" placeholder="Не указано" min="0">
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.gradesExpireAt') }}</label>
                                     <div class="input-group">
@@ -266,7 +265,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlPhoto') }}</label>
                                     <div class="custom-file">
@@ -276,7 +275,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.passportPhoto') }}</label>
                                     <div class="custom-file">

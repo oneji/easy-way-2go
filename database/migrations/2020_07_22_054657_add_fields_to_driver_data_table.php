@@ -14,7 +14,7 @@ class AddFieldsToDriverDataTable extends Migration
     public function up()
     {
         Schema::table('driver_data', function (Blueprint $table) {
-            $table->integer('conviction')->default(0)->after('driving_experience');
+            $table->integer('conviction')->default(0)->after('dl_expires_at');
             $table->text('comment')->nullable()->after('conviction');
             $table->integer('dtp')->default(0)->after('was_kept_drunk');
         });

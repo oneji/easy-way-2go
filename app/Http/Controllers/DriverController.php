@@ -34,8 +34,6 @@ class DriverController extends Controller
     {
         $drivers = $this->driverService->all();
 
-        // return $drivers;
-
         return view('drivers.index', [ 
             'drivers' => $drivers,
         ]);

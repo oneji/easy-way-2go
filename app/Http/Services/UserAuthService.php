@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Services;
-use App\Http\Requests\LoginUserRequest;
+
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\User;
 
 class UserAuthService
@@ -9,10 +11,10 @@ class UserAuthService
     /**
      * Authenticate the user and return jwt token.
      * 
-     * @param   \App\Http\Requests\LoginUserRequest $request
+     * @param   \Illuminate\Http\Request $request
      * @return  array
      */
-    public function login(LoginUserRequest $request)
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -49,44 +51,7 @@ class UserAuthService
         ];
     }
 
-    /** 
-     * @OA\Get(
-     *      path="/api/auth/clients/verify/{code}",
-     *      operationId="verifyUser",
-     *      tags={"Users"},
-     *      summary="Verify a user by verification code.",
-     *      @OA\Response(
-     *          response="200", 
-     *          description="Номер телефона успешно подтвержден.",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(
-     *                  property="ok",
-     *                  type="boolean",
-     *                  example=true
-     *              ),
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="Номер телефона успешно подтвержден."
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response="401", 
-     *          description="Ввведен неверный код подтверждения."          
-     *      ),
-     *      @OA\Parameter(
-     *          name="verificationCode",
-     *          in="path",
-     *          description="Verification code sent to the user via sms",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      )
-     * )
-     * 
+    /**  
      * Verify user by verification code.
      * 
      * @param   int $verificationCode

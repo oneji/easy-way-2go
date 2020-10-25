@@ -36,7 +36,7 @@
         @csrf
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.transport.form.addFormLabel') }}</h4>
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="register_country">{{ __('pages.transport.form.labels.country') }}</label>
                                 <select name="register_country" class="form-control" required>
                                     <option value="" selected disabled>{{ __('pages.transport.form.placeholders.country') }}</option>
@@ -72,7 +72,7 @@
                             </div>
 
                             @foreach ($langs as $lang)
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label for="register_city">{{ __('pages.transport.form.labels.city') }}: {{ $lang->name }}</label>
                                         <input name="translations[{{ $lang->code }}][register_city]" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" required>
@@ -80,14 +80,14 @@
                                 </div>
                             @endforeach
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_number">{{ __('pages.transport.form.labels.carNumber') }}</label>
                                     <input id="car_number" name="car_number" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.carNumber') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_brand_id">{{ __('pages.transport.form.labels.brand') }}</label>
                                     <select name="car_brand_id" class="form-control" required>
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_model_id">{{ __('pages.transport.form.labels.model') }}</label>
                                     <select name="car_model_id" class="form-control" required>
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="year">{{ __('pages.transport.form.labels.year') }}</label>
                                     <select name="year" class="form-control" id="yearpicker" required></select>
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.inspectionFrom') }}</label>
                                     <div class="input-group">
@@ -130,7 +130,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.inspectionTo') }}</label>
                                     <div class="input-group">
@@ -142,7 +142,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.insuranceFrom') }}</label>
                                     <div class="input-group">
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>{{ __('pages.transport.form.labels.insuranceTo') }}</label>
                                     <div class="input-group">
@@ -168,7 +168,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.hasCmr') }}</h5>
                                     <div class="radio-btn-group">
@@ -186,21 +186,21 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="passengers_seats">{{ __('pages.transport.form.labels.passengerSeats') }}</label>
                                     <input required id="passengers_seats" name="passengers_seats" type="number" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.passengerSeats') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="cubo_metres_available">{{ __('pages.transport.form.labels.cuboMetres') }}</label>
                                     <input required id="cubo_metres_available" name="cubo_metres_available" type="number" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.cuboMetres') }}" required>
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="kilos_available">{{ __('pages.transport.form.labels.kilos') }}</label>
                                     <input required id="kilos_available" name="kilos_available" type="number" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.kilos') }}" required>
@@ -209,7 +209,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.okForMove') }}</h5>
                                     <div class="radio-btn-group">
@@ -225,7 +225,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.canPullTrailer') }}</h5>
                                     <div class="radio-btn-group">
@@ -241,7 +241,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.hasTrailer') }}</h5>
                                     <div class="radio-btn-group">
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.palletTransportation') }}</h5>
                                     <div class="radio-btn-group">
@@ -273,7 +273,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.conditioner') }}</h5>
                                     <div class="radio-btn-group">
@@ -289,7 +289,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.wifi') }}</h5>
                                     <div class="radio-btn-group">
@@ -305,7 +305,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.tvVideo') }}</h5>
                                     <div class="radio-btn-group">
@@ -321,7 +321,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.disabledPeopleSeats') }}</h5>
                                     <div class="radio-btn-group">
@@ -340,18 +340,15 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Car doc files --}}
-        <div class="row">
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.transport.form.documentsLabel') }}</h4>
                         <p class="card-title-desc"></p>
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="car_passport">{{ __('pages.transport.form.labels.passportPhoto') }}</label>
                                     <div class="custom-file">
@@ -361,7 +358,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="teh_osmotr">{{ __('pages.transport.form.labels.tehOsmotrPhoto') }}</label>
                                     <div class="custom-file">
@@ -371,7 +368,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="insurance">{{ __('pages.transport.form.labels.insurancePhoto') }}</label>
                                     <div class="custom-file">
@@ -381,7 +378,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="people_license">{{ __('pages.transport.form.labels.peopleLicensePhoto') }}</label>
                                     <div class="custom-file">
@@ -391,7 +388,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="car_photos">{{ __('pages.transport.form.labels.carPhoto') }}</label>
                                     <div class="custom-file">
@@ -401,7 +398,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="trailer_photos">{{ __('pages.transport.form.labels.trailerPhoto') }}</label>
                                     <div class="custom-file">

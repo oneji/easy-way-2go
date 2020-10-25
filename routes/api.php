@@ -17,16 +17,19 @@ use Illuminate\Http\Request;
 Route::as('api.')->namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
-        Route::post('clients/register', 'ClientAuthController@register')->name('registerClient');
+        Route::post('clients/register', 'ClientAuthController@register');
         
         // Driver authentication
-        Route::post('drivers/register', 'DriverAuthController@register')->name('registerDriver');
+        Route::post('drivers/register', 'DriverAuthController@register');
         
         // Brigadir authentication
-        Route::post('brigadirs/register', 'BrigadirAuthController@register')->name('registerBrigadir');
+        Route::post('brigadirs/register', 'BrigadirAuthController@register');
         
         // User authentication
-        Route::get('verify/{code}', 'UserController@verify')->name('verifyUser');
-        Route::post('login', 'UserController@login')->name('loginUser');
+        Route::get('verify/{code}', 'UserController@verify');
+        Route::post('login', 'UserController@login');
     });
+
+    // Driver routes
+    Route::post('routes', 'RouteController@store');
 });

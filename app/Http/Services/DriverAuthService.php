@@ -23,6 +23,8 @@ class DriverAuthService
     public function register(Request $request)
     {
         $user = new User($request->except('password'));
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->verification_code = mt_rand(100000, 999999);
         $user->role = User::ROLE_DRIVER;
         $user->password = Hash::make($request->password);
@@ -38,15 +40,15 @@ class DriverAuthService
             'country_id' => $request->country_id,
             'city' => $request->city,
             'dl_issue_place' => $request->dl_issue_place,
-            'dl_issued_at' => $request->dl_issued_at,
-            'dl_expires_at' => $request->dl_expires_at,
-            'driving_experience' => $request->driving_experience,
-            'conviction' => isset($request->conviction) ? 1 : null,
+            'dl_issued_at' => Carbon::parse($request->dl_issued_at),
+            'dl_expires_at' => Carbon::parse($request->dl_expires_at),
+            'driving_experience_id' => $request->driving_experience_id,
+            'conviction' => isset($request->conviction) ? 1 : 0,
             'comment' => $request->comment,
-            'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : null,
-            'dtp' => isset($request->dtp) ? 1 : null,
+            'was_kept_drunk' => isset($request->was_kept_drunk) ? 1 : 0,
+            'dtp' => isset($request->dtp) ? 1 : 0,
             'grades' => $request->grades,
-            'grades_expire_at' => $request->grades_expire_at,
+            'grades_expire_at' => Carbon::parse($request->grades_expire_at),
         ]));
 
         // TODO: Connect sms endpoint and the verification code via sms.

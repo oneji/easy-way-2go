@@ -44,7 +44,7 @@
         @method('PUT')
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.clients.clientInfoLabel') }}</h4>
@@ -79,107 +79,105 @@
                             </div>
                         </div>
                         
-                        <div class="row">
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" value="{{ $client->getTranslation('first_name', $lang->code) }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" value="{{ $client->getTranslation('last_name', $lang->code) }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">{{ __('pages.clients.addForm.labels.email') }}</label>
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.email') }}" parsley-type="email" value="{{ $client->email }}" required>
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input value="{{ $client->getTranslation('first_name', $lang->code) }}" name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
                                 </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="photo">{{ __('pages.clients.addForm.labels.photo') }}</label></label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="photo" name="photo">
-                                        <label class="custom-file-label" for="photo">{{ __('pages.clients.addForm.placeholders.photo') }}</label>
-                                    </div>
+                        @endforeach
+                        
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input value="{{ $client->getTranslation('last_name', $lang->code) }}" name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
                                 </div>
                             </div>
+                        @endforeach
 
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>{{ __('pages.clients.addForm.labels.birthday') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.birthday') }}" data-provide="datepicker" value="{{ \Carbon\Carbon::parse($client->birthday)->format('m/d/Y') }}" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
-                                    </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="email">{{ __('pages.clients.addForm.labels.email') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $client->email }}" name="email" type="email" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.email') }}" parsley-type="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="photo">{{ __('pages.clients.addForm.labels.photo') }}</label>
+                            <div class="col-md-10">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photo">
+                                    <label class="custom-file-label" for="photo">{{ __('pages.clients.addForm.placeholders.photo') }}</label>
                                 </div>
                             </div>
-
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="last_name" class="control-label">{{ __('pages.clients.addForm.labels.nationality') }}</label>
-                                    <select name="nationality" class="form-control" required>
-                                        <option value="" selected>{{ __('pages.clients.addForm.placeholders.nationality') }}</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}" {{ $client->nationality === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="phone_number">{{ __('pages.clients.addForm.labels.phone') }}</label>
-                                    <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.phone') }}" value="{{ $client->phone_number }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="id_card">{{ __('pages.clients.addForm.labels.idCard') }}</label>
-                                    <input id="id_card" name="id_card" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCard') }}" value="{{ $client->client_data->id_card }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>{{ __('pages.clients.addForm.labels.idCardExpiresAt') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" name="id_card_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCardExpiresAt') }}" data-provide="datepicker" value="{{ \Carbon\Carbon::parse($client->client_data->id_card_expires_at)->format('m/d/Y') }}" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="birthday">{{ __('pages.clients.addForm.labels.birthday') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input value="{{ \Carbon\Carbon::parse($client->birthday)->format('m/d/Y') }}" type="text" name="birthday" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.birthday') }}" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="passport_number">{{ __('pages.clients.addForm.labels.passport') }}</label>
-                                    <input id="passport_number" name="passport_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passport') }}" value="{{ $client->client_data->passport_number }}" required>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="last_name" class="control-label">{{ __('pages.clients.addForm.labels.nationality') }}</label>
+                            <div class="col-md-10">
+                                <select name="nationality" class="form-control" required>
+                                    <option value="" selected>{{ __('pages.clients.addForm.placeholders.nationality') }}</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}" {{ $client->nationality === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="phone_number">{{ __('pages.clients.addForm.labels.phone') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $client->phone_number }}" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.phone') }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="id_card">{{ __('pages.clients.addForm.labels.idCard') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $client->client_data->id_card }}" name="id_card" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCard') }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="id_card_expires_at">{{ __('pages.clients.addForm.labels.idCardExpiresAt') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input value="{{ \Carbon\Carbon::parse($client->client_data->id_card_expires_at)->format('m/d/Y') }}" type="text" name="id_card_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.idCardExpiresAt') }}" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>{{ __('pages.clients.addForm.labels.passportExpiresAt') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" name="passport_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passportExpiresAt') }}" value="{{ \Carbon\Carbon::parse($client->client_data->passport_expires_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="passport_number">{{ __('pages.clients.addForm.labels.passport') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $client->client_data->passport_number }}" id="passport_number" name="passport_number" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passport') }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">{{ __('pages.clients.addForm.labels.passportExpiresAt') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input value="{{ \Carbon\Carbon::parse($client->client_data->passport_expires_at)->format('m/d/Y') }}" type="text" name="passport_expires_at" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.passportExpiresAt') }}" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +186,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-8">
                 <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.save') }}</button>

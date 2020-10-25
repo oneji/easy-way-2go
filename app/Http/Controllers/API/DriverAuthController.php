@@ -36,7 +36,15 @@ class DriverAuthController extends Controller
             'phone_number' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'photo' => ['nullable']
+            'photo' => ['nullable'],
+            'country_id' => [ 'required', 'integer', 'exists:countries,id' ],
+            'city' => [ 'required', 'string' ],
+            'dl_issue_place' => [ 'required', 'integer', 'exists:countries,id' ],
+            'dl_issued_at' => [ 'required', 'date' ],
+            'dl_expires_at' => [ 'required', 'date' ],
+            'driving_experience_id' => [ 'required', 'integer', 'exists:driving_experiences,id' ],
+            'grades' => [ 'required', 'integer' ],
+            'grades_expire_at' => [ 'required', 'date' ],
         ]);
 
         if($validator->fails()) {

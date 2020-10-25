@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyDrivingExperienceInDriverDataTable extends Migration
+class AddDrivingExperienceIdToDriverDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class ModifyDrivingExperienceInDriverDataTable extends Migration
     public function up()
     {
         Schema::table('driver_data', function (Blueprint $table) {
-            $table->unsignedBigInteger('driving_experience')->nullable()->change();
-        
-            $table->foreign('driving_experience')->references('id')->on('driving_experiences');
+            $table->unsignedBigInteger('driving_experience_id');
+
+            $table->foreign('driving_experience_id')->references('id')->on('driving_experiences');
         });
     }
 
@@ -28,8 +28,8 @@ class ModifyDrivingExperienceInDriverDataTable extends Migration
     public function down()
     {
         Schema::table('driver_data', function (Blueprint $table) {
-            $table->dropForeign(['driving_experience']);
-            $table->integer('driving_experience')->change();
+            $table->dropForeign([ 'driving_experience_id' ]);
+            $table->dropColumn('driving_experience_id');
         });
     }
 }

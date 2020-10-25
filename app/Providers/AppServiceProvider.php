@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        View::share('langs', Language::all());
+        if(Schema::hasTable('languages')) {
+            View::share('langs', Language::all());
+        }
     }
 }

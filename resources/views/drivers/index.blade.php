@@ -41,7 +41,7 @@
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
                                     <th scope="col">{{ __('pages.drivers.datatable.fullName') }}</th>
-                                    <th scope="col">{{ __('pages.drivers.datatable.phone') }}</th>
+                                    <th scope="col">{{ __('pages.drivers.datatable.phoneNumber') }}</th>
                                     <th scope="col">{{ __('pages.drivers.datatable.country') }}</th>
                                     <th scope="col">{{ __('pages.drivers.datatable.city') }}</th>
                                     <th scope="col">{{ __('pages.drivers.datatable.drivingExperience') }}</th>

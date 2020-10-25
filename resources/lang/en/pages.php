@@ -27,7 +27,7 @@ return [
         'editModalLabel' => 'Edit'
     ],
     
-    'languages' => [
+    'countries' => [
         'label' => 'Countries',
         'codeLabel' => 'Code',
         'actionsLabel' => 'Actions',

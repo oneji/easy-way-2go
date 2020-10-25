@@ -99,7 +99,7 @@
                                 @if ($driver->photo !== null)
                                     <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('storage/'.$driver->photo) }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @else
-                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/usersi/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
+                                    <img class="rounded-circle avatar-xl mb-3" style="display:block; margin: 0 auto" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
                                 @endif
                             </div>
                         </div>

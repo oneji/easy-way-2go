@@ -11,7 +11,8 @@
 @section('head')
     @parent
     
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" />
     <style>
         .radio-btn-group {
             display: flex;
@@ -35,7 +36,7 @@
         @csrf
         
         <div class="row">
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.createBrigadir.addForm.label') }}</h4>
@@ -60,108 +61,106 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="first_name">{{ __('pages.createBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="first_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="last_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
+                                </div>
+                            </div>
+                        @endforeach
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.email') }}</label>
+                            <div class="col-md-10">
+                                <input name="email" type="email" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.email') }}" parsley-type="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="photo" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.photo') }}</label>
+                            <div class="col-md-10">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photo">
+                                    <label class="custom-file-label" for="photo">{{ __('pages.createBrigadir.addForm.placeholders.photo') }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="password" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.password') }}</label>
+                            <div class="col-md-10">
+                                <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.password') }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="password_confirmation" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.confirmPassword') }}</label>
+                            <div class="col-md-10">
+                                <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.confirmPassword') }}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="birthday" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.birthday') }}</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.birthday') }}" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
                                 </div>
-                            @endforeach
-
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="last_name">{{ __('pages.createBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="email">{{ __('pages.createBrigadir.addForm.labels.email') }}</label>
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.email') }}" parsley-type="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="nationality" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.nationality') }}</label>
+                            <div class="col-md-10">
+                                <select name="nationality" class="form-control" required>
+                                    <option value="" selected>{{ __('pages.createBrigadir.addForm.placeholders.nationality') }}</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="phone_number" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.phone') }}</label>
+                            <div class="col-md-10">
+                                <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.phone') }}" required>
+                            </div>
+                        </div>
+                        
+                        @foreach ($langs as $lang)
+                            <div class="form-group row">
+                                <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
+                                <div class="col-md-10">
+                                    <input name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
                                 </div>
                             </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="email">{{ __('pages.createBrigadir.addForm.labels.photo') }}</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="photo">
-                                        <label class="custom-file-label" for="photo">{{ __('pages.createBrigadir.addForm.placeholders.photo') }}</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="password">{{ __('pages.createBrigadir.addForm.labels.password') }}</label>
-                                    <input data-parsley-minlength="8" id="password" name="password" type="password" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.password') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="password_confirmation">{{ __('pages.createBrigadir.addForm.labels.confirmPassword') }}</label>
-                                    <input type="password" class="form-control" required name="password_confirmation" data-parsley-equalto="#password" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.confirmPassword') }}"/>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>{{ __('pages.createBrigadir.addForm.labels.birthday') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" name="birthday" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.birthday') }}" data-provide="datepicker" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
-                                    </div><!-- input-group -->
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="last_name" class="control-label">{{ __('pages.createBrigadir.addForm.labels.nationality') }}</label>
-                                    <select name="nationality" class="form-control" required>
-                                        <option value="" selected>{{ __('pages.createBrigadir.addForm.placeholders.nationality') }}</option>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="phone_number">{{ __('pages.createBrigadir.addForm.labels.phone') }}</label>
-                                    <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.phone') }}" required>
-                                </div>
-                            </div>
-
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <label for="company_name">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="inn">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
-                                    <input id="inn" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
-                                </div>
+                        @endforeach
+                        
+                        <div class="form-group row">
+                            <label for="inn" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
+                            <div class="col-md-10">
+                                <input id="inn" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.add') }}</button>

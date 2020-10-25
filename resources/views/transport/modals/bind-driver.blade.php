@@ -25,7 +25,7 @@
                                         <option value="" selected disabled>{{ __('pages.transport.bindDriverModal.chooseTransportLabel') }}</option>
                                         @foreach ($transport as $car)
                                             <option value="{{ $car->id }}">
-                                                {{ $car->car_brand_name .' '. $car->car_model_name }} &middot; {{ $car->car_number }}
+                                                {{ $car->car_brand->name .' '. $car->car_model->name }} &middot; {{ $car->car_number }}
                                             </option>
                                         @endforeach
                                     </select>

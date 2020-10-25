@@ -144,13 +144,19 @@
                                 <span>{{ __('menu.users') }}</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('admin.brigadirs.index') }}">{{ __('menu.brigadirs') }}</a></li>
-                                <li><a href="{{ route('admin.drivers.index') }}">{{ __('menu.drivers') }}</a></li>
-                                <li><a href="{{ route('admin.clients.index') }}">{{ __('menu.clients') }}</a></li>
+                                <li class="{{ Request::segment(2) === 'brigadirs' ? 'mm-active' : null }}">
+                                    <a class="{{ Request::segment(2) === 'brigadirs' ? 'active' : null }}" href="{{ route('admin.brigadirs.index') }}">{{ __('menu.brigadirs') }}</a>
+                                </li>
+                                <li class="{{ Request::segment(2) === 'drivers' ? 'mm-active' : null }}">
+                                    <a class="{{ Request::segment(2) === 'drivers' ? 'active' : null }}"href="{{ route('admin.drivers.index') }}">{{ __('menu.drivers') }}</a>
+                                </li>
+                                <li class="{{ Request::segment(2) === 'clients' ? 'mm-active' : null }}">
+                                    <a class="{{ Request::segment(2) === 'clients' ? 'active' : null }}" href="{{ route('admin.clients.index') }}">{{ __('menu.clients') }}</a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="{{ Request::segment(1) === 'transport' ? 'mm-active' : null }}">
-                            <a href="{{ route('admin.transport.index') }}" class="waves-effect {{ Request::segment(1) === 'transport' ? 'active' : null }}" aria-expanded="false">
+                        <li class="{{ Request::segment(2) === 'transport' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.transport.index') }}" class="waves-effect {{ Request::segment(2) === 'transport' ? 'active' : null }}" aria-expanded="false">
                                 <i class="bx bx-car"></i>
                                 <span>{{ __('menu.transport') }}</span>
                             </a>
@@ -192,7 +198,6 @@
                                         @endif
                                     </ol>
                                 </div>
-
                             </div>
                         </div>
                     </div>

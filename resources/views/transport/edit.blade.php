@@ -111,20 +111,22 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="register_country">{{ __('pages.transport.form.labels.country') }}</label>
-                                <select name="register_country" class="form-control" required>
-                                    <option value="" disabled>{{ __('pages.transport.form.placeholders.country') }}</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}" {{ $transport->register_country === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="form-group">
+                                    <label for="register_country">{{ __('pages.transport.form.labels.country') }}</label>
+                                    <select name="register_country" class="form-control" required>
+                                        <option value="" disabled>{{ __('pages.transport.form.placeholders.country') }}</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}" {{ $transport->register_country === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             @foreach ($langs as $lang)
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label for="register_city">{{ __('pages.transport.form.labels.city') }}: {{ $lang->name }}</label>
-                                        <input name="translations[{{ $lang->code }}][register_city]" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" value="{{ $transport->getTranslation('register_city', $lang->code) }}" required>
+                                        <input name="register_city[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.transport.form.placeholders.city') }}" value="{{ $transport->getTranslation('register_city', $lang->code) }}" required>
                                     </div>
                                 </div>
                             @endforeach

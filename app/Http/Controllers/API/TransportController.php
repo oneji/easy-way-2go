@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\JsonRequests\StoreTransportRequest;
+use App\Http\JsonRequests\UpdateTransportRequest;
+use App\Http\JsonRequests\BindDriverRequest;
 use App\Http\Services\TransportService;
 use App\Http\Services\DriverService;
 use App\Http\Controllers\Controller;
@@ -31,7 +33,7 @@ class TransportController extends Controller
      */
     public function store(StoreTransportRequest $request)
     {
-        $this->transportService->store($request);
+        $this->transportService->store($request->all());
 
         return response()->json([
             'ok' => true
@@ -44,9 +46,9 @@ class TransportController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      */
-    public function update(Request $request)
+    public function update(UpdateTransportRequest $request, $id)
     {
-        $this->transportService->update($request);
+        $this->transportService->update($request->all(), $id);
 
         return response()->json([
             'ok' => true
@@ -56,22 +58,14 @@ class TransportController extends Controller
     /**
      * Bind driver to the transport
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\JsonRequests\BindDriverRequest $request
      */
-    public function bindDriver(Request $request)
+    public function bindDriver(BindDriverRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'transport_id' => 'required|integer|exists:transports,id',
-            'driver_id' => 'required|integer|exists:users,id'
+        $this->transportService->bindDriver($request->transport_id, $request->driver_id);
+
+        return response()->json([
+            'ok' => true
         ]);
-
-        if($validator->fails()) {
-            return response()->json([
-                'ok' => false,
-                'errors' => $validator->errors()
-            ]);
-        }
-
-        $this->transportService->bindDriver($request);
     }
 }

@@ -120,6 +120,7 @@ class TransportController extends Controller
      */
     public function update(UpdateTransportRequest $request, $id)
     {
+        // return $request;
         $this->transportService->update($request, $id);
 
         $request->session()->flash('success', 'Транспортное средство успешно обновлено.');

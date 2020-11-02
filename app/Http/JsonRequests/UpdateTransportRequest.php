@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTransportRequest extends FormRequest
+class UpdateTransportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -45,7 +45,7 @@ class StoreTransportRequest extends FormRequest
             'car_number' => [ 'required', 'string', 'max:255' ],
             'car_brand_id' => [ 'required', 'numeric', 'exists:car_brands,id' ],
             'car_model_id' => [ 'required', 'numeric', 'exists:car_models,id' ],
-            'year' => [ 'required' ],
+            'year' => [ 'required', 'string' ],
             'teh_osmotr_date_from' => [ 'required' ],
             'teh_osmotr_date_to' => [ 'required' ],
             'insurance_date_from' => [ 'required' ],

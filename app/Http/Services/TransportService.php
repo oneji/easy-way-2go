@@ -32,64 +32,60 @@ class TransportService
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTransportRequest  $request
+     * @param  array $data
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($data)
     {
-        $transport = new Transport($request->all());
+        $transport = new Transport($data);
 
         // Save parsed date fields
-        $transport->teh_osmotr_date_from = Carbon::parse($request->teh_osmotr_date_from);
-        $transport->teh_osmotr_date_to = Carbon::parse($request->teh_osmotr_date_to);
-        $transport->insurance_date_from = Carbon::parse($request->insurance_date_from);
-        $transport->insurance_date_to = Carbon::parse($request->insurance_date_to);
+        $transport->teh_osmotr_date_from = Carbon::parse($data['teh_osmotr_date_from']);
+        $transport->teh_osmotr_date_to = Carbon::parse($data['teh_osmotr_date_to']);
+        $transport->insurance_date_from = Carbon::parse($data['insurance_date_from']);
+        $transport->insurance_date_to = Carbon::parse($data['insurance_date_to']);
         $transport->save();
 
         // Docs
-        $this->storeDocs($transport, $request);
+        $this->storeDocs($transport, $data);
     }
 
     /**
      * Update a specific transport.
      * 
-     * @param   \App\Http\Requests\UpdateTransportRequest $request
+     * @param   object $data
      * @param   int $id
      */
-    public function update(UpdateTransportRequest $request, $id)
+    public function update($data, $id)
     {
         $transport = Transport::find($id);
-        $transport->registered_on = $request->registered_on;
-        $transport->register_country = $request->register_country;
-        
-        foreach ($request->translations as $code => $value) {
-            $transport->setTranslation('register_city', $code, $value['register_city']);
-        }
-
-        $transport->car_number = $request->car_number;
-        $transport->car_brand_id = $request->car_brand_id;
-        $transport->car_model_id = $request->car_model_id;
+        $transport->registered_on = $data['registered_on'];
+        $transport->register_country = $data['register_country'];
+        $transport->register_city = $data['register_city'];
+        $transport->car_number = $data['car_number'];
+        $transport->car_brand_id = $data['car_brand_id'];
+        $transport->car_model_id = $data['car_model_id'];
          // Save parsed date fields
-        $transport->teh_osmotr_date_from = Carbon::parse($request->teh_osmotr_date_from);
-        $transport->teh_osmotr_date_to = Carbon::parse($request->teh_osmotr_date_to);
-        $transport->insurance_date_from = Carbon::parse($request->insurance_date_from);
-        $transport->insurance_date_to = Carbon::parse($request->insurance_date_to);
+        $transport->teh_osmotr_date_from = Carbon::parse($data['teh_osmotr_date_from']);
+        $transport->teh_osmotr_date_to = Carbon::parse($data['teh_osmotr_date_to']);
+        $transport->insurance_date_from = Carbon::parse($data['insurance_date_from']);
+        $transport->insurance_date_to = Carbon::parse($data['insurance_date_to']);
         // *** 
-        $transport->has_cmr = $request->has_cmr;
-        $transport->passengers_seats = $request->passengers_seats; 
-        $transport->cubo_metres_available = $request->cubo_metres_available; 
-        $transport->kilos_available = $request->kilos_available; 
-        $transport->ok_for_move = $request->ok_for_move; 
-        $transport->can_pull_trailer = $request->can_pull_trailer; 
-        $transport->has_trailer = $request->has_trailer; 
-        $transport->pallet_transportation = $request->pallet_transportation; 
-        $transport->air_conditioner = $request->air_conditioner; 
-        $transport->wifi = $request->wifi; 
-        $transport->tv_video = $request->tv_video; 
-        $transport->disabled_people_seats = $request->disabled_people_seats;
+        $transport->has_cmr = $data['has_cmr'];
+        $transport->passengers_seats = $data['passengers_seats']; 
+        $transport->cubo_metres_available = $data['cubo_metres_available']; 
+        $transport->kilos_available = $data['kilos_available']; 
+        $transport->ok_for_move = $data['ok_for_move']; 
+        $transport->can_pull_trailer = $data['can_pull_trailer']; 
+        $transport->has_trailer = $data['has_trailer']; 
+        $transport->pallet_transportation = $data['pallet_transportation']; 
+        $transport->air_conditioner = $data['air_conditioner']; 
+        $transport->wifi = $data['wifi']; 
+        $transport->tv_video = $data['tv_video']; 
+        $transport->disabled_people_seats = $data['disabled_people_seats'];
         $transport->save();
 
-        $this->storeDocs($transport, $request);
+        $this->storeDocs($transport, $data);
     }
 
     /**
@@ -107,31 +103,31 @@ class TransportService
      * Store transport's doc files
      * @param
      */
-    private function storeDocs(Transport $transport, Request $request)
+    private function storeDocs(Transport $transport, $data)
     {
         $docs = [];
-        if($request->hasFile('car_passport')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->car_passport, 'car_docs/passport', Transport::DOC_TYPE_PASSPORT));
+        if(isset($data['car_passport'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['car_passport'], 'car_docs/passport', Transport::DOC_TYPE_PASSPORT));
         }
         
-        if($request->hasFile('teh_osmotr')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->teh_osmotr, 'car_docs/teh_osmotr', Transport::DOC_TYPE_TEH_OSMOTR));
+        if(isset($data['teh_osmotr'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['teh_osmotr'], 'car_docs/teh_osmotr', Transport::DOC_TYPE_TEH_OSMOTR));
         }
 
-        if($request->hasFile('insurance')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->insurance, 'car_docs/insurance', Transport::DOC_TYPE_INSURANCE));
+        if(isset($data['insurance'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['insurance'], 'car_docs/insurance', Transport::DOC_TYPE_INSURANCE));
         }
 
-        if($request->hasFile('people_license')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->people_license, 'car_docs/people_license', Transport::DOC_TYPE_PEOPLE_LICENSE));
+        if(isset($data['people_license'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['people_license'], 'car_docs/people_license', Transport::DOC_TYPE_PEOPLE_LICENSE));
         }
 
-        if($request->hasFile('car_photos')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->car_photos, 'car_docs/car_photos', Transport::DOC_TYPE_CAR_PHOTOS));
+        if(isset($data['car_photos'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['car_photos'], 'car_docs/car_photos', Transport::DOC_TYPE_CAR_PHOTOS));
         }
 
-        if($request->hasFile('trailer_photos')) {
-            $docs = array_merge($docs, $this->uploadDocs($request->trailer_photos, 'car_docs/trailer_photos', Transport::DOC_TYPE_TRAILER_PHOTOS));
+        if(isset($data['trailer_photos'])) {
+            $docs = array_merge($docs, $this->uploadDocs($data['trailer_photos'], 'car_docs/trailer_photos', Transport::DOC_TYPE_TRAILER_PHOTOS));
         }
 
         $transport->car_docs()->saveMany($docs);
@@ -157,17 +153,18 @@ class TransportService
     /**
      * Bind the driver to the transport
      * 
-     * @param \App\Http\Requests\BindDriverRequest $request
+     * @param int $transportId
+     * @param int $driverId
      */
-    public function bindDriver(BindDriverRequest $request)
+    public function bindDriver($transportId, $driverId)
     {
-        $transport = Transport::find($request->transport_id);
+        $transport = Transport::find($transportId);
         
         // Check if the drivers is already bound to the transport
-        if(!$transport->users->contains($request->driver_id)) {
+        if(!$transport->users->contains($driverId)) {
             // Check if the transport has less than available drivers bound
             if(count($transport->users) < Transport::DRIVER_MAX_COUNT) {
-                $transport->users()->attach($request->driver_id);
+                $transport->users()->attach($driverId);
             }
         }
     }

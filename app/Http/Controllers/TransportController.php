@@ -72,7 +72,7 @@ class TransportController extends Controller
      */
     public function store(StoreTransportRequest $request)
     {
-        $this->transportService->store($request);
+        $this->transportService->store($request->all());
         
         $request->session()->flash('success', 'Транспортное средство успешно добавлено.');
 
@@ -120,7 +120,6 @@ class TransportController extends Controller
      */
     public function update(UpdateTransportRequest $request, $id)
     {
-        // return $request;
         $this->transportService->update($request, $id);
 
         $request->session()->flash('success', 'Транспортное средство успешно обновлено.');

@@ -23,7 +23,7 @@ class TransportService
      */
     public function all()
     {
-        return Transport::with(['car_docs', 'users', 'car_brand', 'car_model'])
+        return Transport::with(['car_docs', 'drivers', 'car_brand', 'car_model'])
             ->join('countries', 'countries.id', '=', 'transports.register_country')
             ->select('transports.*', 'countries.name as register_country_name')
             ->paginate(8);
@@ -161,10 +161,10 @@ class TransportService
         $transport = Transport::find($transportId);
         
         // Check if the drivers is already bound to the transport
-        if(!$transport->users->contains($driverId)) {
+        if(!$transport->drivers->contains($driverId)) {
             // Check if the transport has less than available drivers bound
-            if(count($transport->users) < Transport::DRIVER_MAX_COUNT) {
-                $transport->users()->attach($driverId);
+            if(count($transport->drivers) < Transport::DRIVER_MAX_COUNT) {
+                $transport->drivers()->attach($driverId);
             }
         }
     }

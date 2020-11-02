@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Driver;
 use App\Client;
+use App\Brigadir;
 
 class UserAuthService
 {
@@ -25,6 +26,8 @@ class UserAuthService
             $user = Driver::where('email', $request->email)->first();
         } else if($type === 'client') {
             $user = Client::where('email', $request->email)->first();
+        } else if($type === 'brigadir') {
+            $user = Brigadir::where('email', $request->email)->first();
         }
 
         if(!$user) {

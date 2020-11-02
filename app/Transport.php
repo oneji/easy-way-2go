@@ -89,9 +89,9 @@ class Transport extends Model
     /**
      * The drivers that belong to the role.
      */
-    public function users()
+    public function drivers()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\Driver');
     }
 
     /**

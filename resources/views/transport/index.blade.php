@@ -48,9 +48,9 @@
                             <h5 class="font-size-15"><a href="#" class="text-dark">{{ $car->car_brand->name .' '. $car->car_model->name }}</a></h5>
                             <p class="text-muted">{{ $car->car_number }}</p>
 
-                            @if (count($car->users) > 0)
+                            @if (count($car->drivers) > 0)
                                 <div>
-                                    @foreach ($car->users as $driver)
+                                    @foreach ($car->drivers as $driver)
                                         <a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" class="badge badge-primary font-size-11 m-1">
                                             <i class="bx bx-user mr-1"></i>
                                             {{ $driver->getFullName() }}

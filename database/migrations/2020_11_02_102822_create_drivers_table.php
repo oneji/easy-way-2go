@@ -40,6 +40,7 @@ class CreateDriversTable extends Migration
             $table->integer('grades')->nullable();
             $table->date('grades_expire_at')->nullable();
             $table->unsignedBigInteger('driving_experience_id');
+            $table->string('role')->default('driver');
             $table->rememberToken();
             $table->timestamps();
 

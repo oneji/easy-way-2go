@@ -58,6 +58,12 @@ return [
             'provider' => 'clients',
             'hash' => false,
         ],
+        
+        'brigadirs' => [
+            'driver' => 'jwt',
+            'provider' => 'brigadirs',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -91,6 +97,11 @@ return [
         'clients' => [
             'driver' => 'eloquent',
             'model' => App\Client::class,
+        ],
+        
+        'brigadirs' => [
+            'driver' => 'eloquent',
+            'model' => App\Brigadir::class,
         ],
 
         // 'users' => [

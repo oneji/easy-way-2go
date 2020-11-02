@@ -29,6 +29,7 @@ class CreateBrigadirsTable extends Migration
             $table->string('password');
             $table->text('company_name');
             $table->string('inn');
+            $table->string('role')->default('brigadir');
             $table->rememberToken();
             $table->timestamps();
 

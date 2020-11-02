@@ -31,6 +31,7 @@ class CreateClientsTable extends Migration
             $table->string('passport_number')->nullable();
             $table->date('passport_expires_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('client');
             $table->rememberToken();
             $table->timestamps();
 

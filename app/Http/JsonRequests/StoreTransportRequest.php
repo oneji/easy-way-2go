@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\JsonRequests;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransportRequest extends FormRequest
@@ -14,6 +16,19 @@ class StoreTransportRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * Failed validation disable redirect
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'ok' => false,
+            'errors' => $validator->errors()
+        ], 422));
     }
 
     /**
@@ -42,6 +57,7 @@ class StoreTransportRequest extends FormRequest
             'wifi' => [ 'required', 'boolean' ],
             'tv_video' => [ 'required', 'boolean' ],
             'disabled_people_seats' => [ 'required', 'boolean' ],
+            'year' => [ 'required' ]
         ];
     }
 }

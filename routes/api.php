@@ -32,4 +32,8 @@ Route::as('api.')->namespace('API')->group(function() {
 
     // Driver routes
     Route::post('routes', 'RouteController@store');
+
+    // Transport
+    Route::post('transport', 'TransportController@store');
+    Route::post('transport/bindDriver', 'TransportController@bindDriver');
 });

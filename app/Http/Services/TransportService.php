@@ -38,10 +38,6 @@ class TransportService
     public function store(Request $request)
     {
         $transport = new Transport($request->all());
-        
-        foreach ($request->translations as $code => $value) {
-            $transport->setTranslation('register_city', $code, $value['register_city']);
-        }
 
         // Save parsed date fields
         $transport->teh_osmotr_date_from = Carbon::parse($request->teh_osmotr_date_from);

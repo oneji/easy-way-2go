@@ -40,8 +40,6 @@ class TransportController extends Controller
         $tranport = $this->transportService->all();
         $drivers = $this->driverService->all();
 
-        // return $tranport;
-
         return view('transport.index', [
             'transport' => $tranport,
             'drivers' => $drivers

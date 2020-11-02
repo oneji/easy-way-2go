@@ -40,6 +40,7 @@ class Transport extends Model
      * @var array
      */
     protected $fillable = [
+        'register_city',
         'registered_on',
         'register_country',
         'car_number',

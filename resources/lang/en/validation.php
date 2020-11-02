@@ -145,6 +145,47 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name'                  => 'Name',
+        'username'              => 'Username',
+        'email'                 => 'E-Mail address',
+        'first_name'            => 'First name',
+        'last_name'             => 'Last name',
+        'password'              => 'Password',
+        'password_confirmation' => 'Password confirmation',
+        'city'                  => 'City',
+        'country'               => 'Country',
+        'country_id'            => 'Country',
+        'address'               => 'Address',
+        'phone'                 => 'Phone number',
+        'phone_number'          => 'Phone number',
+        'mobile'                => 'Mob. number',
+        'age'                   => 'Age',
+        'sex'                   => 'Sex',
+        'gender'                => 'Gender',
+        'day'                   => 'Day',
+        'month'                 => 'Month',
+        'year'                  => 'Year',
+        'hour'                  => 'Hour',
+        'minute'                => 'Minute',
+        'second'                => 'Second',
+        'title'                 => 'Title',
+        'content'               => 'Content',
+        'description'           => 'Description',
+        'excerpt'               => 'Выдержка',
+        'date'                  => 'Date',
+        'time'                  => 'Time',
+        'available'             => 'Available',
+        'size'                  => 'Size',
+
+        'dl_issue_place'        => 'Driving licence issue place',
+        'dl_issued_at'          => 'Driving licence issued at',
+        'dl_expires_at'         => 'Driving licence expires at',
+        'driving_experience_id' => 'Driving experience',
+        'grades'                => 'Grades',
+        'grades_expire_at'      => 'Grades expire at',
+        'transport_id'           => 'Transport',
+        'driver_id'             => 'Driver'
+    ],
 
 ];

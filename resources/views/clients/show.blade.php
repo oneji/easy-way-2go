@@ -3,7 +3,7 @@
         'title' => 'Профиль пользователя',
         'items' => [
             [ 'name' => 'Клиенты', 'link' => route('admin.clients.index') ],
-            [ 'name' => $client->first_name .' '. $client->last_name, 'link' => null ]
+            [ 'name' => $client->getFullName(), 'link' => null ]
         ]
     ]
 ])
@@ -35,7 +35,7 @@
                                     <img src="{{ asset('assets/images/users/no-photo.png') }}" alt="" class="img-thumbnail rounded-circle">
                                 @endif
                             </div>
-                            <h5 class="font-size-15 text-truncate">{{ $client->first_name .' '. $client->last_name }}</h5>
+                            <h5 class="font-size-15 text-truncate">{{ $client->getFullName() }}</h5>
                             <p class="text-muted mb-0 text-truncate">{{ $client->email }}</p>
                         </div>
 
@@ -79,21 +79,21 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Номер ID карты:</th>
-                                    <td>{{ $client->client_data->id_card }}</td>
+                                    <td>{{ $client->id_card }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">ID карта действительна до:</th>
-                                    <td>{{ $client->client_data->id_card_expires_at }}</td>
+                                    <td>{{ $client->id_card_expires_at }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Номер паспорта:</th>
                                     <td>
-                                        <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->client_data->passport_number }}</span>    
+                                        <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->passport_number }}</span>    
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Номер паспорта действителен до:</th>
-                                    <td>{{ $client->client_data->passport_expires_at }}</td>
+                                    <td>{{ $client->passport_expires_at }}</td>
                                 </tr>
                             </tbody>
                         </table>

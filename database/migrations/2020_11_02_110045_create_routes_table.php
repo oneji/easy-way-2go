@@ -15,7 +15,7 @@ class CreateRoutesTable extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('country_id');
             $table->string('address');
             $table->date('departure_date');
@@ -25,7 +25,7 @@ class CreateRoutesTable extends Migration
             $table->enum('type', [ 'forward', 'back' ]);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('driver_id')->references('id')->on('drivers');
         });
     }
 

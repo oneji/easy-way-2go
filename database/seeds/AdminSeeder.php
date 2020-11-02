@@ -15,13 +15,8 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'first_name' => 'Админ',
-            'last_name' => 'Админов',
-            'phone_number' => '+1 234567890',
-            'verified' => 1,
-            'phone_number_verified_at' => Carbon::now(),
+            'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'role' => User::ROLE_ADMIN,
             'password' => Hash::make('password'),
         ]);
     }

@@ -199,6 +199,11 @@ return [
         'grades'                => 'Былла',
         'grades_expire_at'      => 'Срок действия баллов',
         'trasport_id'           => 'Траспортное средство',
-        'driver_id'             => 'Водитель'
+        'driver_id'             => 'Водитель',
+        'departure_date'        => 'Departure date',
+        'departure_time'        => 'Departure time',
+        'arrival_date'          => 'Arrival date',
+        'arrival_time'          => 'Arrival time',
+        'type'                  => 'Type'
     ],
 ];

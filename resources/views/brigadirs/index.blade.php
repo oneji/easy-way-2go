@@ -64,9 +64,9 @@
                                             <p class="text-muted mb-0">{{ $brigadir->email }}</p>
                                         </td>
                                         <td>{{ $brigadir->phone_number }}</td>
-                                        <td>{{ $brigadir->brigadir_data->company_name }}</td>
+                                        <td>{{ $brigadir->company_name }}</td>
                                         <td>
-                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $brigadir->brigadir_data->inn }}</span>
+                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $brigadir->inn }}</span>
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">

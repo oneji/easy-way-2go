@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
-use App\User;
+use App\Brigadir;
 use JWTAuth;
 use App\BrigadirData;
 
@@ -22,9 +22,9 @@ class BrigadirAuthService
      */
     public function register(Request $request)
     {
-        $user = new User($request->except('password'));
+        $user = new Brigadir($request->except('password'));
         $user->verification_code = mt_rand(100000, 999999);
-        $user->role = User::ROLE_BRIGADIR;
+        $user->role = Brigadir::ROLE_BRIGADIR;
         $user->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {
@@ -32,12 +32,6 @@ class BrigadirAuthService
         }
         
         $user->save();
-
-        // Save additional data
-        $user->brigadir_data()->save(new BrigadirData([
-            'company_name' => $request->company_name,
-            'inn' => $request->inn
-        ]));
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 

@@ -5,6 +5,8 @@ namespace App\Http\Services;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
+use App\Driver;
+use App\Client;
 
 class UserAuthService
 {
@@ -17,8 +19,13 @@ class UserAuthService
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $type = $request->type;
 
-        $user = User::where('email', $request->email)->first();
+        if($type === 'driver') {
+            $user = Driver::where('email', $request->email)->first();
+        } else if($type === 'client') {
+            $user = Client::where('email', $request->email)->first();
+        }
 
         if(!$user) {
             return [
@@ -36,7 +43,7 @@ class UserAuthService
         }
 
         // Authenticate the user
-        if (!$token = auth('client')->attempt($credentials)) {
+        if (!$token = auth($type)->attempt($credentials)) {
             return [
                 'ok' => false,
                 'message' => 'Неверный логин или пароль.'
@@ -46,8 +53,7 @@ class UserAuthService
         return [
             'ok' => true,
             'token' => $token,
-            'user' => $user,
-            'expires_in' => auth('client')->factory()->getTTL() * 60
+            'expires_in' => auth($type)->factory()->getTTL() * 60
         ];
     }
 

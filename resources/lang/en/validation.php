@@ -184,8 +184,13 @@ return [
         'driving_experience_id' => 'Driving experience',
         'grades'                => 'Grades',
         'grades_expire_at'      => 'Grades expire at',
-        'transport_id'           => 'Transport',
-        'driver_id'             => 'Driver'
+        'transport_id'          => 'Transport',
+        'driver_id'             => 'Driver',
+        'departure_date'        => 'Departure date',
+        'departure_time'        => 'Departure time',
+        'arrival_date'          => 'Arrival date',
+        'arrival_time'          => 'Arrival time',
+        'type'                  => 'Type'
     ],
 
 ];

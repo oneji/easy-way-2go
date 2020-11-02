@@ -2,37 +2,19 @@
 
 namespace App;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Translatable\HasTranslations;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use Notifiable;
-
     use HasTranslations;
     
     public $translatable = [
-        'first_name',
-        'last_name'
+        'name'
     ];
-
-    /**
-     * User roles
-     */
-    const ROLE_ADMIN = 'admin';
-    const ROLE_CLIENT = 'client';
-    const ROLE_DRIVER = 'driver';
-    const ROLE_BRIGADIR = 'brigadir';
-
-    /**
-     * User genders
-     */
-    const GENDER_MALE = 0;
-    const GENDER_FEMALE = 1;
-    const GENDER_OTHER = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -40,13 +22,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone_number',
-        'email',
-        'password',
-        'nationality',
-        'gender'
+        'name',
+        'email'
     ];
 
     /**
@@ -57,73 +34,4 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'verified' => 'boolean'
-    ];
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    /**
-     * Get the client data associated with the user.
-     */
-    public function client_data()
-    {
-        return $this->hasOne('App\ClientData');
-    }
-
-    /**
-     * Get the driver data associated with the user.
-     */
-    public function driver_data()
-    {
-        return $this->hasOne('App\DriverData');
-    }
-
-    /**
-     * Get the brigadir data associated with the user.
-     */
-    public function brigadir_data()
-    {
-        return $this->hasOne('App\BrigadirData');
-    }
-
-    /**
-     * The transport that belong to the user.
-     */
-    public function transports()
-    {
-        return $this->belongsToMany('App\Transport');
-    }
-
-    /**
-     * Get user's full name
-     */
-    public function getFullName()
-    {
-        return $this->first_name .' '. $this->last_name;
-    }
 }

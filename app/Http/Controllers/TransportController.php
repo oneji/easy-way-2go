@@ -153,7 +153,7 @@ class TransportController extends Controller
      */
     public function bindDriver(BindDriverRequest $request)
     {
-        $this->transportService->bindDriver($request);
+        $this->transportService->bindDriver($request->transport_id, $request->driver_id);
 
         $request->session()->flash('success', 'Водитель успешно привязан.');
 

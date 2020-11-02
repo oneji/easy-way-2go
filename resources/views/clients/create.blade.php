@@ -65,7 +65,7 @@
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
+                                    <input name="first_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
                                 </div>
                             </div>
                         @endforeach
@@ -74,7 +74,7 @@
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
+                                    <input name="last_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
                                 </div>
                             </div>
                         @endforeach

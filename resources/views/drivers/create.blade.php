@@ -66,7 +66,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.firstName') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
+                                    <input name="first_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
                                 </div>
                             </div>
                         @endforeach
@@ -75,7 +75,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.lastName') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
+                                    <input name="last_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
                                 </div>
                             </div>
                         @endforeach

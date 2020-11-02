@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Services;
+
 use App\User;
+use App\Driver;
+use App\Client;
+use App\Brigadir;
 use App\Transport;
 
 class StatsService
@@ -14,9 +18,9 @@ class StatsService
     public function all()
     {
         return [
-            'driversCount' => User::where('role', User::ROLE_DRIVER)->get()->count(),
-            'clientsCount' => User::where('role', User::ROLE_CLIENT)->get()->count(),
-            'brigadirsCount' => User::where('role', User::ROLE_BRIGADIR)->get()->count(),
+            'driversCount' => Driver::all()->count(),
+            'clientsCount' => Client::all()->count(),
+            'brigadirsCount' => Brigadir::all()->count(),
             'transportsCount' => Transport::all()->count()
         ];
     }

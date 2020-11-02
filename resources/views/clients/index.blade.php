@@ -64,9 +64,9 @@
                                             <p class="text-muted mb-0">{{ $client->email }}</p>
                                         </td>
                                         <td>{{ $client->phone_number }}</td>
-                                        <td>{{ $client->client_data->id_card }}</td>
+                                        <td>{{ $client->id_card }}</td>
                                         <td>
-                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->client_data->passport_number }}</span>
+                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-passport mr-1"></i> {{ $client->passport_number }}</span>
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">

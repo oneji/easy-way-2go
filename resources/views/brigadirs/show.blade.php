@@ -79,11 +79,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Фирма:</th>
-                                    <td>{{ $brigadir->brigadir_data->company_name }}</td>
+                                    <td>{{ $brigadir->company_name }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">ИНН или ID:</th>
-                                    <td>{{ $brigadir->brigadir_data->inn }}</td>
+                                    <td>{{ $brigadir->inn }}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -195,7 +195,7 @@
                                 <select name="country_id" class="form-control" required>
                                     <option value="" selected>{{ __('pages.drivers.addForm.placeholders.country') }}</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}" {{ $driver->driver_data->country_id === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
+                                        <option value="{{ $country->id }}" {{ $driver->country_id === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -205,7 +205,7 @@
                             <div class="form-group row">
                                 <label for="city" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.city') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input value="{{ $driver->driver_data->getTranslation('city', $lang->code) }}" name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
+                                    <input value="{{ $driver->getTranslation('city', $lang->code) }}" name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
                                 </div>
                             </div>
                         @endforeach
@@ -225,7 +225,7 @@
                                     <label class="control-label">{{ __('pages.drivers.addForm.labels.drivingExperience') }}</label>
                                     <select name="driving_experience_id" class="form-control">
                                         @foreach ($deList as $idx => $de)
-                                            <option value="{{ $de->id }}" {{ $driver->driver_data->driving_experience_id === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
+                                            <option value="{{ $de->id }}" {{ $driver->driving_experience_id === $de->id ? 'selected' : null }}>{{ $de->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -237,7 +237,7 @@
                                     <select name="dl_issue_place" class="form-control">
                                         <option value="">{{ __('pages.drivers.addForm.placeholders.dlIssuePlace') }}</option>
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}" {{ $driver->driver_data->dl_issue_place === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
+                                            <option value="{{ $country->id }}" {{ $driver->dl_issue_place === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -247,7 +247,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlIssuedAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlIssuedAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->dl_issued_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_issued_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlIssuedAt') }}" value="{{ \Carbon\Carbon::parse($driver->dl_issued_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -259,7 +259,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlExpiresAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlExpiresAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->dl_expires_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="dl_expires_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.dlExpiresAt') }}" value="{{ \Carbon\Carbon::parse($driver->dl_expires_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -271,26 +271,26 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}: {{ $lang->name }}</label>
-                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}">{{ $driver->driver_data->getTranslation('comment', $lang->code) }}</textarea>
+                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" id="" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}">{{ $driver->getTranslation('comment', $lang->code) }}</textarea>
                                     </div>
                                 </div>
                             @endforeach
 
                             <div class="col-sm-12">
                                 <div class="custom-control custom-switch mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction" {{ $driver->driver_data->conviction ? 'checked' : null }}>
+                                    <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction" {{ $driver->conviction ? 'checked' : null }}>
                                     <label class="custom-control-label" for="convictionSwitch">{{ __('pages.drivers.addForm.labels.conviction') }}</label>
                                 </div>
 
                                 <div class="custom-control custom-switch mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp" {{ $driver->driver_data->dtp ? 'checked' : null }}>
+                                    <input type="checkbox" class="custom-control-input" id="dtpSwitch" name="dtp" {{ $driver->dtp ? 'checked' : null }}>
                                     <label class="custom-control-label" for="dtpSwitch">{{ __('pages.drivers.addForm.labels.keptDrunk') }}</label>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="custom-control custom-switch mb-2" dir="ltr">
-                                    <input type="checkbox" class="custom-control-input" id="drunkSwitch" name="was_kept_drunk" {{ $driver->driver_data->was_kept_drunk ? 'checked' : null }}>
+                                    <input type="checkbox" class="custom-control-input" id="drunkSwitch" name="was_kept_drunk" {{ $driver->was_kept_drunk ? 'checked' : null }}>
                                     <label class="custom-control-label" for="drunkSwitch">{{ __('pages.drivers.addForm.labels.dtp') }}</label>
                                 </div>
                             </div>
@@ -298,7 +298,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">{{ __('pages.drivers.addForm.labels.grades') }}</label>
-                                    <input type="number" class="form-control" name="grades" value="{{ $driver->driver_data->grades }}" placeholder="Не указано" min="0">
+                                    <input type="number" class="form-control" name="grades" value="{{ $driver->grades }}" placeholder="Не указано" min="0">
                                 </div>
                             </div>
 
@@ -306,7 +306,7 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.gradesExpireAt') }}</label>
                                     <div class="input-group">
-                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.gradesExpireAt') }}" value="{{ \Carbon\Carbon::parse($driver->driver_data->grade_expire_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" name="grade_expire_at" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.gradesExpireAt') }}" value="{{ \Carbon\Carbon::parse($driver->grade_expire_at)->format('m/d/Y') }}" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -343,8 +343,8 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.drivers.uploadedDocumentsLabel') }}</h4>
                         <p class="card-title-desc"></p>
-                        @if ($driver->driver_data->docs !== null)
-                            @foreach ($driver->driver_data->docs as $item)
+                        @if ($driver->docs !== null)
+                            @foreach ($driver->docs as $item)
                                 <div class="car-image-wrapper">
                                     <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="{{ $item->type === 'passport' ? 'Паспорт или ИД' : 'Фото водительского удостоверения' }}">
                                         <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">

@@ -149,7 +149,7 @@
                             <div class="form-group row">
                                 <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
                                 <div class="col-md-10">
-                                    <input value="{{ $brigadir->brigadir_data->getTranslation('company_name', $lang->code) }}" name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
+                                    <input value="{{ $brigadir->getTranslation('company_name', $lang->code) }}" name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
                                 </div>
                             </div>
                         @endforeach
@@ -157,7 +157,7 @@
                         <div class="form-group row">
                             <label for="inn" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
                             <div class="col-md-10">
-                                <input value="{{ $brigadir->brigadir_data->inn }}" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
+                                <input value="{{ $brigadir->inn }}" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
                             </div>
                         </div>
                     </div>

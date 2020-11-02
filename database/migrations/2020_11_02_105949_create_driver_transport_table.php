@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransportUserTable extends Migration
+class CreateDriverTransportTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTransportUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('transport_user', function (Blueprint $table) {
+        Schema::create('driver_transport', function (Blueprint $table) {
             $table->unsignedBigInteger('transport_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('driver_id');
 
             $table->foreign('transport_id')->references('id')->on('transports');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('driver_id')->references('id')->on('drivers');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateTransportUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transport_user');
+        Schema::dropIfExists('driver_transport');
     }
 }

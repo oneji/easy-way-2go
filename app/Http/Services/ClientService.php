@@ -6,8 +6,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
-use App\ClientData;
-use App\User;
+use App\Client;
 
 class ClientService
 {
@@ -20,7 +19,7 @@ class ClientService
      */
     public function all()
     {
-        return User::with('client_data')->where('role', User::ROLE_CLIENT)->paginate(10);
+        return Client::paginate(10);
     }
 
     /**
@@ -30,7 +29,7 @@ class ClientService
      */
     public function getById($id)
     {
-        return User::with('client_data')->where('id', $id)->first();
+        return Client::findOrFail($id);
     }
 
     /**
@@ -41,30 +40,19 @@ class ClientService
      */
     public function store(StoreUserRequest $request)
     {
-        $client = new User($request->except('password'));
-        foreach ($request->translations as $code => $value) {
-            $client->setTranslation('first_name', $code, $value['first_name']);
-            $client->setTranslation('last_name', $code, $value['last_name']);
-        }
+        $client = new Client($request->except('password'));
         $client->verified = 1;
         $client->birthday = Carbon::parse($request->birthday);
         $client->phone_number_verified_at = Carbon::now();
-        $client->role = User::ROLE_CLIENT;
         $client->password = Hash::make($request->password);
+        $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
+        $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
 
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');
         }
 
         $client->save();
-
-        // Save additional client data
-        $client->client_data()->save(new ClientData([
-            'id_card' => $request->id_card,
-            'id_card_expires_at' => Carbon::parse($request->id_card_expires_at),
-            'passport_number' => $request->passport_number,
-            'passport_expires_at' => Carbon::parse($request->passport_expires_at)
-        ]));
     }
 
     /**
@@ -75,7 +63,7 @@ class ClientService
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $client = User::find($id);
+        $client = Client::find($id);
         foreach ($request->translations as $code => $value) {
             $client->setTranslation('first_name', $code, $value['first_name']);
             $client->setTranslation('last_name', $code, $value['last_name']);
@@ -85,20 +73,16 @@ class ClientService
         $client->phone_number = $request->phone_number;
         $client->email = $request->email;
         $client->gender = $request->gender;
+        $client->id_card = $request->id_card;
+        $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
+        $client->passport_number = $request->passport_number;
+        $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
         
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');
         }
 
         $client->save();
-
-        // Update client's additional data
-        $client->client_data()->update([
-            'id_card' => $request->id_card,
-            'id_card_expires_at' => Carbon::parse($request->id_card_expires_at),
-            'passport_number' => $request->passport_number,
-            'passport_expires_at' => Carbon::parse($request->passport_expires_at)
-        ]);
     }
 
     /**
@@ -106,6 +90,6 @@ class ClientService
      */
     public function count()
     {
-        return User::where('role', User::ROLE_CLIENT)->get()->count();
+        return Client::get()->count();
     }
 }

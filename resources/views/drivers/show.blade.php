@@ -79,28 +79,28 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Место проживания:</th>
-                                    <td>{{ $driver->driver_data->country_name .', '. $driver->driver_data->city }}</td>
+                                    <td>{{ $driver->country->name .', '. $driver->city }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Где выданы вод. права?:</th>
-                                    <td>{{ $driver->driver_data->dl_issue_place_name }}</td>
+                                    <td>{{ $driver->dl_issue_place }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Действуют с:</th>
-                                    <td>{{ $driver->driver_data->dl_issued_at }}</td>
+                                    <td>{{ $driver->dl_issued_at }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Действуют до:</th>
-                                    <td>{{ $driver->driver_data->dl_expires_at }}</td>
+                                    <td>{{ $driver->dl_expires_at }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Водительский опыт:</th>
-                                    <td><span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driver_data->driving_experience }}</span></td>
+                                    <td><span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driving_experience->name }}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Судимость:</th>
                                     <td>
-                                        @if ($driver->driver_data->conviction)
+                                        @if ($driver->conviction)
                                             <span class="badge badge-danger font-size-12"> Да</span>
                                         @else
                                             <span class="badge badge-success font-size-12"> Нет</span>
@@ -110,7 +110,7 @@
                                 <tr>
                                     <th scope="row">Были ли задержаны пьяными?</th>
                                     <td>
-                                        @if ($driver->driver_data->was_kept_drunk)
+                                        @if ($driver->was_kept_drunk)
                                             <span class="badge badge-danger font-size-12"> Да</span>
                                         @else
                                             <span class="badge badge-success font-size-12"> Нет</span>
@@ -119,16 +119,16 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Баллы:</th>
-                                    <td>{{ $driver->driver_data->grades }}</td>
+                                    <td>{{ $driver->grades }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Срок действия баллов:</th>
-                                    <td>{{ $driver->driver_data->grades_expire_at }}</td>
+                                    <td>{{ $driver->grades_expire_at }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Были ли в ДТП в течение 5 лет?</th>
                                     <td>
-                                        @if ($driver->driver_data->dpt)
+                                        @if ($driver->dpt)
                                             <span class="badge badge-danger font-size-12"> Да</span>
                                         @else
                                             <span class="badge badge-success font-size-12"> Нет</span>

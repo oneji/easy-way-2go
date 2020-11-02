@@ -47,21 +47,15 @@ return [
             'hash' => false,
         ],
         
-        'client' => [
+        'driver' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'drivers',
             'hash' => false,
         ],
         
-        'driver' => [
+        'client' => [
             'driver' => 'jwt',
-            'provider' => 'users',
-            'hash' => false,
-        ],
-
-        'brigadir' => [
-            'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'clients',
             'hash' => false,
         ],
     ],
@@ -87,6 +81,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        
+        'drivers' => [
+            'driver' => 'eloquent',
+            'model' => App\Driver::class,
+        ],
+        
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Client::class,
         ],
 
         // 'users' => [

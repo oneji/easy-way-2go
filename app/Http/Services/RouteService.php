@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\RouteRepeat;
+use App\RouteAddress;
 use App\Route;
 
 class RouteService
@@ -15,10 +17,29 @@ class RouteService
      */
     public function store(Request $request)
     {
-        $route = new Route($request->all());
-        $route->departure_date = Carbon::parse($request->departure_date);
-        $route->arrival_date = Carbon::parse($request->arrival_date);
-        $route->user_id = auth('api')->user()->id;
+        $route = new Route();
+        $route->driver_id = auth('driver')->user()->id;
         $route->save();
+
+        // Save route addresses
+        foreach ($request->addresses as $address) {
+            $route->route_addresses()->save(new RouteAddress([
+                'country_id' => $address['country_id'],
+                'address' => $address['address'],
+                'departure_date' => Carbon::parse($address['departure_date']),
+                'departure_time' => $address['departure_time'],
+                'arrival_date' => Carbon::parse($address['arrival_date']),
+                'arrival_time' => $address['arrival_time'],
+                'type' => $address['type'],
+            ]));
+        }
+
+        // Save route repeats
+        foreach ($request->repeats as $repeat) {
+            $route->route_repeats()->save(new RouteRepeat([
+                'from' => Carbon::parse($repeat['from']),
+                'to' => Carbon::parse($repeat['to']),
+            ]));
+        }
     }
 }

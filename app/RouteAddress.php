@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RouteRepeat extends Model
+class RouteAddress extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -12,14 +12,19 @@ class RouteRepeat extends Model
      * @var bool
      */
     public $timestamps = false;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'from',
-        'to'
+        'country_id',
+        'address',
+        'departure_date',
+        'departure_time',
+        'arrival_date',
+        'arrival_time',
+        'type'
     ];
 }

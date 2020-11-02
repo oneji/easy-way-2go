@@ -56,6 +56,7 @@ class UserAuthService
         return [
             'ok' => true,
             'token' => $token,
+            'user' => $user,
             'expires_in' => auth($type)->factory()->getTTL() * 60
         ];
     }

@@ -13,15 +13,18 @@ class Route extends Model
     const TYPE_BACK = 'back';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Get the addresses for the route.
      */
-    protected $fillable = [
-        'country_id',
-        'address',
-        'departure_time',
-        'arrival_time',
-        'type'
-    ];
+    public function route_addresses()
+    {
+        return $this->hasMany('App\RouteAddress');
+    }
+    
+    /**
+     * Get the repeats for the route.
+     */
+    public function route_repeats()
+    {
+        return $this->hasMany('App\RouteRepeat');
+    }
 }

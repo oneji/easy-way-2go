@@ -48,9 +48,7 @@ class LoginController extends Controller
     public function login(LoginUserRequest $request)
     {
         $credentials = $request->only('email', 'password');
-        $user = User::where('email', $credentials['email'])
-            ->where('role', User::ROLE_ADMIN)
-            ->first();
+        $user = User::where('email', $credentials['email'])->first();
 
         if(!$user) {
             return back()->withErrors([

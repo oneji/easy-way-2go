@@ -31,7 +31,7 @@ Route::as('api.')->namespace('API')->group(function() {
     });
 
     // Driver routes
-    Route::post('routes', 'RouteController@store');
+    Route::post('routes', 'RouteController@store')->middleware('jwt.verify');
 
     // Transport
     Route::post('transport', 'TransportController@store');

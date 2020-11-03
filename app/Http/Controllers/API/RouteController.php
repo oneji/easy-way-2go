@@ -30,6 +30,8 @@ class RouteController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'addresses' => 'required',
+            'repeats' => 'required',
             'addresses.*.country_id' => [ 'required', 'exists:countries,id' ],
             'addresses.*.address' => [ 'required', 'string' ],
             'addresses.*.departure_date' => [ 'required', 'date' ],

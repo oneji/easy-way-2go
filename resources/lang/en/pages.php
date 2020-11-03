@@ -351,5 +351,17 @@ return [
                 'trailerPhoto' => 'Choose file'
             ]
         ]
-    ]
+    ],
+
+    'routes' => [
+        'label' => 'Routes',
+        'driverInfoLabel' => 'All routes',
+        'datatable' => [
+            'from' => 'From',
+            'to' => 'To',
+            'driver' => 'Driver',
+            'actions' => 'Actions'
+        ],
+        'emptySet' => 'For now, we could not find any items.',
+    ],
 ];

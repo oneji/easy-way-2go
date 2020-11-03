@@ -13,6 +13,7 @@ return [
     'carModels'         => 'Car models',
     'brigadirs'         => 'Foreman',
     'drivers'           => 'Drivers',
-    'clients'           => 'Clients'
+    'clients'           => 'Clients',
+    'routes'            => 'Routes'
 
 ];

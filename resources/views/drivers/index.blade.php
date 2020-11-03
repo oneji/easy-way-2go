@@ -57,11 +57,11 @@
                                                     <img class="rounded-circle avatar-sm" src="{{ asset('storage/'.$driver->photo) }}" alt="Driver avatar">
                                                 </div>
                                             @else
-                                                <img class="rounded-circle avatar-sm" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $driver->first_name .' '. $driver->last_name }}">
+                                                <img class="rounded-circle avatar-sm" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ $driver->getFullName() }}">
                                             @endif
                                         </td>
                                         <td>
-                                            <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" class="text-dark">{{ $driver->first_name . ' ' . $driver->last_name }}</a></h5>
+                                            <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" class="text-dark">{{ $driver->getFullName() }}</a></h5>
                                             <p class="text-muted mb-0">{{ $driver->email }}</p>
                                         </td>
                                         <td>{{ $driver->phone_number }}</td>

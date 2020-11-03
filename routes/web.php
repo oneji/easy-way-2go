@@ -59,11 +59,14 @@ Route::group([
         Route::post('car-brands', 'CarBrandController@store')->name('carBrands.store');
         Route::put('car-brands/{id}', 'CarBrandController@update')->name('carBrands.update');
         
-        // Car models`
+        // Car models
         Route::get('car-models', 'CarModelController@index')->name('carModels.index');
         Route::get('car-models/getById/{id}', 'CarModelController@getById')->name('carModels.getById');
         Route::post('car-models', 'CarModelController@store')->name('carModels.store');
         Route::put('car-models/{id}', 'CarModelController@update')->name('carModels.update');
+        
+        // Routes
+        Route::get('routes', 'RouteController@index')->name('routes.index');
     });
 });
 

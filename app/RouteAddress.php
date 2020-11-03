@@ -27,4 +27,12 @@ class RouteAddress extends Model
         'arrival_time',
         'type'
     ];
+
+    /**
+     * Get the country that owns the route address.
+     */
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
+    }
 }

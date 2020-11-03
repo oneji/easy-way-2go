@@ -11,6 +11,24 @@ use App\Route;
 class RouteService
 {
     /**
+     * Get all routes with address and repeats
+     * 
+     * @return collection
+     */
+    public function all()
+    {
+        return Route::with([ 'route_addresses', 'route_repeats' ])->get();
+    }
+
+    /**
+     * Get all routes with addresses and repeats paginated
+     */
+    public function getPaginated()
+    {
+        return Route::with([ 'route_addresses', 'route_repeats', 'driver' ])->paginate(10);
+    }
+
+    /**
      * Store a newly created route
      * 
      * @param \Illuminate\Http\Request $request

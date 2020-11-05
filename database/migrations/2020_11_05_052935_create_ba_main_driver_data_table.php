@@ -20,7 +20,7 @@ class CreateBaMainDriverDataTable extends Migration
             $table->date('birthday');
             $table->unsignedBigInteger('nationality');
             $table->string('phone_number');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->unsignedBigInteger('country_id');
             $table->text('city');
             $table->unsignedBigInteger('dl_issue_place');
@@ -33,14 +33,16 @@ class CreateBaMainDriverDataTable extends Migration
             $table->integer('grades');
             $table->date('grades_expire_at');
             $table->integer('dtp')->default(0);
-            $table->text('driving_licence_photos');
+            $table->text('driving_license_photos');
             $table->text('passport_photos');
+            $table->unsignedBigInteger('ba_request_id');
             $table->timestamps();
 
             $table->foreign('nationality')->references('id')->on('countries');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('dl_issue_place')->references('id')->on('countries');
             $table->foreign('driving_experience_id')->references('id')->on('driving_experiences');
+            $table->foreign('ba_request_id')->references('id')->on('ba_requests');
         });
     }
 

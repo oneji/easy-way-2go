@@ -26,10 +26,12 @@ class CreateBaFirmOwnerDataTable extends Migration
             $table->unsignedBigInteger('country_id');
             $table->text('city');
             $table->text('passport_photo');
+            $table->unsignedBigInteger('ba_request_id');
             $table->timestamps();
 
             $table->foreign('nationality')->references('id')->on('countries');
             $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('ba_request_id')->references('id')->on('ba_requests');
         });
     }
 

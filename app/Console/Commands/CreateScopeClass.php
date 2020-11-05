@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 
-class CreateJsonFormRequest extends Command
+class CreateScopeClass extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:json-request {name}';
+    protected $signature = 'make:scope {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command to create JSON form request class';
+    protected $description = 'Command to create scope class';
 
     /**
      * Filesystem instance
@@ -34,7 +34,7 @@ class CreateJsonFormRequest extends Command
      * 
      * @var string
      */
-    protected $folder = 'App\Http\JsonRequests';
+    protected $folder = 'App\Http\Scopes';
 
     /**
      * Create a new command instance.
@@ -63,21 +63,21 @@ class CreateJsonFormRequest extends Command
             File::makeDirectory($this->folder);
         }
 
-        // Check if the service class already created
-        if ($this->filesystem->exists(app_path("Http/JsonRequests/{$this->requestName}.php"))){
-            return $this->error('The given json form request class already exists!');
+        // Check if the scope class already created
+        if ($this->filesystem->exists(app_path("Scopes/{$this->requestName}.php"))){
+            return $this->error('The given scope class already exists!');
         }
 
         $this->createFile(
-            app_path('Console/Stubs/DummyJsonRequest.stub'),
-            app_path("Http/JsonRequests/{$this->requestName}.php")
+            app_path('Console/Stubs/DummyScope.stub'),
+            app_path("Scopes/{$this->requestName}.php")
         );
 
-        $this->info('JSON form request class ' . $this->requestName . ' created.');
+        $this->info('Scope class ' . $this->requestName . ' created.');
     }
 
     /**
-     * Create json form request class file
+     * Create scope file file
      * 
      * @param  string $dummySource
      * @param  string $destinationPath
@@ -85,10 +85,10 @@ class CreateJsonFormRequest extends Command
      */
     protected function createFile($dummySource, $destinationPath)
     {
-        $dummyJsonRequest = $this->filesystem->get($dummySource);
-        $jsonRequestContent = str_replace('DummyJsonRequest', $this->requestName, $dummyJsonRequest);
-        $this->filesystem->put($dummySource, $jsonRequestContent);
+        $dummyScope = $this->filesystem->get($dummySource);
+        $scopeContent = str_replace('DummyScope', $this->requestName, $dummyScope);
+        $this->filesystem->put($dummySource, $scopeContent);
         $this->filesystem->copy($dummySource, $destinationPath);
-        $this->filesystem->put($dummySource, $dummyJsonRequest);
+        $this->filesystem->put($dummySource, $dummyScope);
     }
 }

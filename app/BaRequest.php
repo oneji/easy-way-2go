@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BusinessAccountRequest extends Model
+class BaRequest extends Model
 {
-    //
+    
 }

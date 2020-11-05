@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBusinessAccountRequest extends FormRequest
+class StoreBaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,7 +39,7 @@ class StoreBusinessAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'type' => 'required'
         ];
     }
 }

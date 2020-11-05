@@ -16,9 +16,24 @@ class BaRequestController extends Controller
      * 
      * @param \App\Http\Services\BaRequestService $baService
      */
-    public function __construct(BaService $baService)
+    public function __construct(BaRequestService $baService)
     {
-        $this->baService = $this->baService;
+        $this->baService = $baService;
+    }
+
+    /**
+     * Get a specific bussiness account request by id
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        $baRequest = $this->baService->getById($id);
+
+        return response()->json([
+            'ok' => true,
+            'baRequest' => $baRequest
+        ]);
     }
 
     /**

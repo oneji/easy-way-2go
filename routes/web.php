@@ -67,6 +67,9 @@ Route::group([
         
         // Routes
         Route::get('routes', 'RouteController@index')->name('routes.index');
+
+        // Bussiness account requests
+        Route::get('bas', 'BaRequestController@index')->name('bas.index');
     });
 });
 

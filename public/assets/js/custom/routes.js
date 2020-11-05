@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     $('#routesCalendar').datepicker({});
     
     function initCalendar() {
@@ -47,7 +47,7 @@ $(document).ready(function() {
     }
     initCalendar();
     
-    $('.info-btn').click(function(e) {
+    $('.info-btn').on('click', function(e) {
         e.preventDefault();
 
         let infoBtn = $(this);

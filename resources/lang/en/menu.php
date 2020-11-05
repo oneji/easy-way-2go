@@ -14,6 +14,7 @@ return [
     'brigadirs'         => 'Foreman',
     'drivers'           => 'Drivers',
     'clients'           => 'Clients',
-    'routes'            => 'Routes'
+    'routes'            => 'Routes',
+    'bas'               => 'Bussiness account requests'
 
 ];

@@ -167,6 +167,12 @@
                                 <span>{{ __('menu.routes') }}</span>
                             </a>
                         </li>
+                        <li class="{{ Request::segment(2) === 'bas' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.bas.index') }}" class="waves-effect {{ Request::segment(2) === 'bas' ? 'active' : null }}" aria-expanded="false">
+                                <i class="bx bxs-user-pin"></i>
+                                <span>{{ __('menu.bas') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->

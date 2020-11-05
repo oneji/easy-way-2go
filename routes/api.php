@@ -40,4 +40,8 @@ Route::as('api.')->namespace('API')->group(function() {
 
     // Routes
     Route::get('routes/getById/{id}', 'RouteController@getById');
+
+    // Business account requests
+    Route::post('baRequests', 'BaRequestController@store');
+    Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 });

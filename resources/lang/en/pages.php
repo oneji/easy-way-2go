@@ -366,4 +366,15 @@ return [
         ],
         'emptySet' => 'For now, we could not find any items.',
     ],
+    
+    'bas' => [
+        'label' => 'Bussiness Account Requests',
+        'driverInfoLabel' => 'All requests',
+        'datatable' => [
+            'request' => 'Request',
+            'type' => 'Type',
+            'actions' => 'Actions'
+        ],
+        'emptySet' => 'For now, we could not find any items.',
+    ],
 ];

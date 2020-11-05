@@ -25,7 +25,7 @@ class Route extends Model
      */
     public function route_addresses()
     {
-        return $this->hasMany('App\RouteAddress');
+        return $this->hasMany('App\RouteAddress')->with('country');
     }
     
     /**
@@ -41,25 +41,13 @@ class Route extends Model
      * 
      * @return object
      */
-    public function getStartingPointWithTime()
+    public function getStartingCountryWithTime()
     {
-        $addresses = $this->route_addresses->where('type', 'forward');
-        $firstCity = null;
-        $lastCity = null;
-
-        foreach ($addresses as $idx => $item) {
-            if($idx === 0) {
-                $firstCity = $item;
-            }
-
-            if($idx === $addresses->count() - 1) {
-                $lastCity = $item;
-            }
-        }
+        $cities = $this->getCitiesByType('forward');
 
         return [
-            'country' => $firstCity->country->name .' - '. $lastCity->country->name,
-            'time' => $firstCity->departure_time .' - '. $lastCity->departure_time
+            'country' => $cities['first']->country->name .' - '. $cities['last']->country->name,
+            'time' => $cities['first']->departure_time .' - '. $cities['last']->departure_time,
         ];
     }
     
@@ -68,25 +56,30 @@ class Route extends Model
      * 
      * @return object
      */
-    public function getEndingPointWithTime()
+    public function getEndingCountryWithTime()
     {
-        $addresses = $this->route_addresses->where('type', 'back');
-        $firstCity = null;
-        $lastCity = null;
-
-        foreach ($addresses as $idx => $item) {
-            if($idx === 0) {
-                $firstCity = $item;
-            }
-
-            if($idx === $addresses->count() - 1) {
-                $lastCity = $item;
-            }
-        }
+        $cities = $this->getCitiesByType('back');
 
         return [
-            'country' => $firstCity,
-            'time' => $firstCity
+            'country' => $cities['first']->country->name .' - '. $cities['last']->country->name,
+            'time' => $cities['first']->departure_time .' - '. $cities['last']->departure_time,
+        ];
+    }
+
+    /**
+     * Get first and last cities by type
+     * 
+     * @param string $type
+     */
+    private function getCitiesByType($type)
+    {
+        $addresses = $this->route_addresses->where('type', $type);
+        $firstCity = $addresses->first();
+        $lastCity = $addresses[$addresses->keys()->last()];
+
+        return [
+            'first' => $firstCity,
+            'last' => $lastCity
         ];
     }
 }

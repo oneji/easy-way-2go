@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBusinessAccountRequestsTable extends Migration
+class CreateBaRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateBusinessAccountRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('business_account_requests', function (Blueprint $table) {
+        Schema::create('ba_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('type', [ 'firm_owner', 'head_driver' ]);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateBusinessAccountRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('business_account_requests');
+        Schema::dropIfExists('ba_requests');
     }
 }

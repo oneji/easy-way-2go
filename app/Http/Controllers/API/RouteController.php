@@ -22,6 +22,21 @@ class RouteController extends Controller
     }
 
     /**
+     * Get a specific route by id
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        $route = $this->routeService->getById($id);
+
+        return response()->json([
+            'ok' => true,
+            'route' => $route
+        ]);
+    }
+
+    /**
      * Store a newly created route
      * 
      * @param   \Illuminate\Http\Request $request

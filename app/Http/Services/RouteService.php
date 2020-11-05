@@ -29,6 +29,16 @@ class RouteService
     }
 
     /**
+     * Get a specific route by id
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        return Route::with([ 'route_addresses', 'route_repeats', 'driver' ])->where('id', $id)->first();
+    }
+
+    /**
      * Store a newly created route
      * 
      * @param \Illuminate\Http\Request $request

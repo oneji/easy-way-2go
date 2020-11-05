@@ -43,22 +43,44 @@ class Route extends Model
      */
     public function getStartingPoint()
     {
-        return $this->route_addresses()
-            ->where('type', 'forward')
-            ->orderBy('departure_date')
-            ->first();
+        return 
+            $this->route_addresses()->where('type', 'forward')->first()->country->name .' - '. 
+            $this->route_addresses()->where('type', 'forward')->orderBy('departure_date', 'desc')->first()->country->name;
     }
     
     /**
-     * Get route starting point
+     * Get route starting point time
+     * 
+     * @return object
+     */
+    public function getStartingPointTime()
+    {
+        return 
+            $this->route_addresses()->where('type', 'forward')->first()->departure_time .' - '.
+            $this->route_addresses()->where('type', 'forward')->orderBy('departure_date', 'desc')->first()->departure_time;
+    }
+    
+    /**
+     * Get route ending point
      * 
      * @return object
      */
     public function getEndingPoint()
     {
-        return $this->route_addresses()
-            ->where('type', 'back')
-            ->orderBy('departure_date', 'desc')
-            ->first();
+        return 
+            $this->route_addresses()->where('type', 'back')->first()->country->name .' - '. 
+            $this->route_addresses()->where('type', 'back')->orderBy('departure_date', 'desc')->first()->country->name;
+    }
+    
+    /**
+     * Get route ending point time
+     * 
+     * @return object
+     */
+    public function getEndingPointTime()
+    {
+        return 
+            $this->route_addresses()->where('type', 'back')->first()->departure_time .' - '.
+            $this->route_addresses()->where('type', 'back')->orderBy('departure_date', 'desc')->first()->departure_time;
     }
 }

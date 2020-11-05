@@ -80,7 +80,7 @@
                                     </div>
             
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                        <input type="checkbox" name="remember" class="custom-control-input" id="customControlInline">
                                         <label class="custom-control-label" for="customControlInline">{{ __('auth.remember') }}</label>
                                     </div>
                                     

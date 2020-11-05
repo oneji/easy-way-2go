@@ -163,7 +163,7 @@
                         </li>
                         <li class="{{ Request::segment(2) === 'routes' ? 'mm-active' : null }}">
                             <a href="{{ route('admin.routes.index') }}" class="waves-effect {{ Request::segment(2) === 'routes' ? 'active' : null }}" aria-expanded="false">
-                                <i class="bx bx-car"></i>
+                                <i class="bx bx-map-alt"></i>
                                 <span>{{ __('menu.routes') }}</span>
                             </a>
                         </li>

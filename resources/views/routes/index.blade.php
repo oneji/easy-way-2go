@@ -7,6 +7,13 @@
     ]
 ])
 
+@section('head')
+    @parent
+
+    <!--Bootstrap Datepicker-->
+    <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12">
@@ -41,12 +48,12 @@
                                     <tr>
                                         <th>{{ $idx + 1 }}</th>
                                         <td>
-                                            <h5 class="font-size-14 mb-1">{{ $route->getStartingPoint()->country->name }}</h5>
-                                            <p class="text-muted mb-0">{{ $route->getStartingPoint()->departure_time }}</p>
+                                            <h5 class="font-size-14 mb-1">{{ $route->getStartingPoint() }}</h5>
+                                            <p class="text-muted mb-0">{{ $route->getStartingPointTime() }}</p>
                                         </td>
                                         <td>
-                                            <h5 class="font-size-14 mb-1">{{ $route->getEndingPoint()->country->name }}</h5>
-                                            <p class="text-muted mb-0">{{ $route->getEndingPoint()->departure_time }}</p>
+                                            <h5 class="font-size-14 mb-1">{{ $route->getEndingPoint() }}</h5>
+                                            <p class="text-muted mb-0">{{ $route->getEndingPointTime() }}</p>
                                         </td>
                                         <td>
                                             <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $route->driver->id ]) }}" class="text-dark">{{ $route->driver->getFullName() }}</a></h5>
@@ -54,10 +61,7 @@
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
-                                                </li>
-                                                <li class="list-inline-item px-2">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
+                                                    <a href="#" class="info-btn" data-id="{{ $route->id }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-info-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -77,4 +81,13 @@
         </div>
     </div>
 </div>
+
+@include('routes.modals.info')
+@endsection
+
+@section('scripts')
+    @parent
+
+    <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/routes.js') }}"></script>
 @endsection

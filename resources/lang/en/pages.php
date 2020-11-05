@@ -356,6 +356,7 @@ return [
     'routes' => [
         'label' => 'Routes',
         'driverInfoLabel' => 'All routes',
+        'infoModalLabel' => 'Route',
         'datatable' => [
             'from' => 'From',
             'to' => 'To',

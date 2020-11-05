@@ -37,4 +37,7 @@ Route::as('api.')->namespace('API')->group(function() {
     Route::post('transport', 'TransportController@store');
     Route::put('transport/{id}', 'TransportController@update');
     Route::post('transport/bindDriver', 'TransportController@bindDriver');
+
+    // Routes
+    Route::get('routes/getById/{id}', 'RouteController@getById');
 });

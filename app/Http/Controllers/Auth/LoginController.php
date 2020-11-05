@@ -48,6 +48,7 @@ class LoginController extends Controller
     public function login(LoginUserRequest $request)
     {
         $credentials = $request->only('email', 'password');
+        $remember = $request->remember ? true : false;
         $user = User::where('email', $credentials['email'])->first();
 
         if(!$user) {
@@ -58,7 +59,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if (Auth::guard('web')->attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials, $remember)) {
             return redirect()->route('home');
         } else {
             return back()->withErrors([

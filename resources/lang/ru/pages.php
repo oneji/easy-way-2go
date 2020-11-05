@@ -356,6 +356,7 @@ return [
     'routes' => [
         'label' => 'Маршруты водителей',
         'driverInfoLabel' => 'Все маршруты',
+        'infoModalLabel' => 'Просмотр маршрута водителя',
         'datatable' => [
             'from' => 'Туда',
             'to' => 'Обратно',

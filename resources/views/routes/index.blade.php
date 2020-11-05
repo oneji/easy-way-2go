@@ -40,6 +40,7 @@
                                     <th scope="col">{{ __('pages.routes.datatable.to') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.from') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.driver') }}</th>
+                                    <th scope="col">{{ __('pages.routes.datatable.status') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.actions') }}</th>
                                 </tr>
                             </thead>
@@ -57,6 +58,13 @@
                                         </td>
                                         <td>
                                             <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $route->driver->id ]) }}" class="text-dark">{{ $route->driver->getFullName() }}</a></h5>
+                                        </td>
+                                        <td>
+                                            @if ($route->status === 'active')
+                                                <span class="badge badge-success font-size-12">Активный</span>
+                                            @else
+                                                <span class="badge badge-warning font-size-12">В архиве</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">

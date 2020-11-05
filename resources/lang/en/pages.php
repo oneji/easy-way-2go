@@ -361,6 +361,7 @@ return [
             'from' => 'From',
             'to' => 'To',
             'driver' => 'Driver',
+            'status' => 'Status',
             'actions' => 'Actions'
         ],
         'emptySet' => 'For now, we could not find any items.',

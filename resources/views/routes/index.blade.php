@@ -49,12 +49,12 @@
                                     <tr>
                                         <th>{{ $idx + 1 }}</th>
                                         <td>
-                                            <h5 class="font-size-14 mb-1">{{ $route->getStartingPoint() }}</h5>
-                                            <p class="text-muted mb-0">{{ $route->getStartingPointTime() }}</p>
+                                            <h5 class="font-size-14 mb-1">{{ $route->getStartingPointWithTime()['country'] }}</h5>
+                                            <p class="text-muted mb-0">{{ $route->getStartingPointWithTime()['time'] }}</p>
                                         </td>
                                         <td>
-                                            <h5 class="font-size-14 mb-1">{{ $route->getEndingPoint() }}</h5>
-                                            <p class="text-muted mb-0">{{ $route->getEndingPointTime() }}</p>
+                                            <h5 class="font-size-14 mb-1">{{ $route->getEndingPointWithTime()['country'] }}</h5>
+                                            <p class="text-muted mb-0">{{ $route->getEndingPointWithTime()['time'] }}</p>
                                         </td>
                                         <td>
                                             <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $route->driver->id ]) }}" class="text-dark">{{ $route->driver->getFullName() }}</a></h5>

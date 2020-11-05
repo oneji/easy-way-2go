@@ -25,7 +25,7 @@ class Route extends Model
      */
     public function route_addresses()
     {
-        return $this->hasMany('App\RouteAddress')->with('country');
+        return $this->hasMany('App\RouteAddress');
     }
     
     /**
@@ -41,23 +41,26 @@ class Route extends Model
      * 
      * @return object
      */
-    public function getStartingPoint()
+    public function getStartingPointWithTime()
     {
-        return 
-            $this->route_addresses()->where('type', 'forward')->first()->country->name .' - '. 
-            $this->route_addresses()->where('type', 'forward')->orderBy('departure_date', 'desc')->first()->country->name;
-    }
-    
-    /**
-     * Get route starting point time
-     * 
-     * @return object
-     */
-    public function getStartingPointTime()
-    {
-        return 
-            $this->route_addresses()->where('type', 'forward')->first()->departure_time .' - '.
-            $this->route_addresses()->where('type', 'forward')->orderBy('departure_date', 'desc')->first()->departure_time;
+        $addresses = $this->route_addresses->where('type', 'forward');
+        $firstCity = null;
+        $lastCity = null;
+
+        foreach ($addresses as $idx => $item) {
+            if($idx === 0) {
+                $firstCity = $item;
+            }
+
+            if($idx === $addresses->count() - 1) {
+                $lastCity = $item;
+            }
+        }
+
+        return [
+            'country' => $firstCity->country->name .' - '. $lastCity->country->name,
+            'time' => $firstCity->departure_time .' - '. $lastCity->departure_time
+        ];
     }
     
     /**
@@ -65,22 +68,25 @@ class Route extends Model
      * 
      * @return object
      */
-    public function getEndingPoint()
+    public function getEndingPointWithTime()
     {
-        return 
-            $this->route_addresses()->where('type', 'back')->first()->country->name .' - '. 
-            $this->route_addresses()->where('type', 'back')->orderBy('departure_date', 'desc')->first()->country->name;
-    }
-    
-    /**
-     * Get route ending point time
-     * 
-     * @return object
-     */
-    public function getEndingPointTime()
-    {
-        return 
-            $this->route_addresses()->where('type', 'back')->first()->departure_time .' - '.
-            $this->route_addresses()->where('type', 'back')->orderBy('departure_date', 'desc')->first()->departure_time;
+        $addresses = $this->route_addresses->where('type', 'back');
+        $firstCity = null;
+        $lastCity = null;
+
+        foreach ($addresses as $idx => $item) {
+            if($idx === 0) {
+                $firstCity = $item;
+            }
+
+            if($idx === $addresses->count() - 1) {
+                $lastCity = $item;
+            }
+        }
+
+        return [
+            'country' => $firstCity,
+            'time' => $firstCity
+        ];
     }
 }

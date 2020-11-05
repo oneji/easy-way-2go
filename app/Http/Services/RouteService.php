@@ -25,7 +25,7 @@ class RouteService
      */
     public function getPaginated()
     {
-        return Route::with([ 'driver' ])->paginate(10);
+        return Route::with('driver')->paginate(10);
     }
 
     /**

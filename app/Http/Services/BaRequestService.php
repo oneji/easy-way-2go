@@ -2,12 +2,15 @@
 
 namespace App\Http\Services;
 
+use Illuminate\Http\Request;
 use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\UploadFileService;
 use App\BaMainDriverData;
 use App\BaFirmOwnerData;
 use App\BaRequest;
+use App\Brigadir;
 use Carbon\Carbon;
+use Hash;
 
 class BaRequestService
 {
@@ -58,6 +61,7 @@ class BaRequestService
     {
         $baRequest = new BaRequest();
         $baRequest->type = $request->type;
+        $baRequest->status = 'pending';
         $baRequest->save();
 
         if($request->type === 'firm_owner') {
@@ -108,5 +112,58 @@ class BaRequestService
         }
 
         $mainDriverData->save();
+    }
+
+    /**
+     * Change business account request status
+     * 
+     * @param int $id
+     * @param string $status
+     */
+    public function decline($id)
+    {
+        $baRequest = BaRequest::findOrFail($id);
+        $baRequest->status = 'declined';
+        $baRequest->save();
+    }
+
+    /**
+     * Change business account request status
+     * 
+     * @param int $id
+     * @param string $status
+     */
+    public function approve(Request $request, $id)
+    {
+        $baRequest = BaRequest::findOrFail($id);
+        $baRequest->status = 'approved';
+        $baRequest->save();
+
+        $this->createBrigadirByBaRequestId($request->email, $request->password, $id);
+    }
+
+    /**
+     * Create a new brigadir from firm owner data
+     * 
+     * @param array $firmOwnerData
+     */
+    private function createBrigadirByBaRequestId($email, $password, $id)
+    {
+        $firmOwnerData = BaFirmOwnerData::where('ba_request_id', $id)->first();
+
+        $brigadir = new Brigadir();
+        $brigadir->first_name = $firmOwnerData->first_name;
+        $brigadir->last_name = $firmOwnerData->last_name;
+        $brigadir->birthday = Carbon::parse($firmOwnerData['birthday']);
+        $brigadir->nationality = $firmOwnerData->nationality;
+        $brigadir->phone_number = $firmOwnerData->phone_number;
+        $brigadir->verified = 1;
+        $brigadir->phone_number_verified_at = Carbon::now();
+        $brigadir->password = Hash::make($password);
+        $brigadir->email = $email;
+        $brigadir->company_name = $firmOwnerData->company_name;
+        $brigadir->inn = $firmOwnerData->inn;
+        
+        $brigadir->save();
     }
 }

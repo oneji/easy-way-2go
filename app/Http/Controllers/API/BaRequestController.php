@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\BaRequestService;
+use Validator;
 
 class BaRequestController extends Controller
 {

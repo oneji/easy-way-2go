@@ -32,4 +32,24 @@ class BaRequestController extends Controller
             'baRequests' => $baRequests
         ]);
     }
+
+    /**
+     * 
+     */
+    public function approve(Request $request, $id)
+    {
+        $this->baService->approve($request, $id);
+
+        return redirect()->back();
+    }
+    
+    /**
+     * 
+     */
+    public function decline($id)
+    {
+        $this->baService->decline($id);
+
+        return redirect()->back();
+    }
 }

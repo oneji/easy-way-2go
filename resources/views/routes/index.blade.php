@@ -26,6 +26,16 @@
         
         <div class="card">
             <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-8 offset-sm-4">
+                        <div class="text-sm-right">
+                            <a href="{{ route('admin.routes.create') }}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2">
+                                <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 @if ($routes->count() === 0)
                     <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
                         <i class="mdi mdi-information mr-2"></i>

@@ -75,14 +75,17 @@ $(function() {
                         routeForwardTimeline.append(`
                             <li class="event-list pb-3">
                                 <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle font-size-18"></i>
+                                    <i class="bx bx-right-arrow-circle"></i>
                                 </div>
                                 <div class="media">
                                     <div class="mr-3">
-                                        <h5 class="font-size-14">${address.departure_time} <i class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ml-2"></i></h5>
+                                        <i class="bx bx-map-alt h4 text-primary"></i>
                                     </div>
                                     <div class="media-body">
-                                        <div>${address.address}</div>
+                                        <div>
+                                            <h5 class="font-size-15"><a href="#" class="text-dark">${address.address}</a></h5>
+                                            <span class="text-primary">${address.departure_time}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -91,14 +94,17 @@ $(function() {
                         routeBackTimeline.append(`
                             <li class="event-list pb-3">
                                 <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle font-size-18"></i>
+                                    <i class="bx bx-right-arrow-circle"></i>
                                 </div>
                                 <div class="media">
                                     <div class="mr-3">
-                                        <h5 class="font-size-14">${address.departure_time} <i class="bx bx-right-arrow-alt font-size-16 text-primary align-middle ml-2"></i></h5>
+                                        <i class="bx bx-map-alt h4 text-primary"></i>
                                     </div>
                                     <div class="media-body">
-                                        <div>${address.address}</div>
+                                        <div>
+                                            <h5 class="font-size-15"><a href="#" class="text-dark">${address.address}</a></h5>
+                                            <span class="text-primary">${address.departure_time}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

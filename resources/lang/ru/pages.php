@@ -373,7 +373,39 @@ return [
         'datatable' => [
             'request' => 'Заявка',
             'type' => 'Тип',
-            'actions' => 'Действия'
+            'status' => 'Статус',
+            'actions' => 'Действия',
+            'statusApproved' => 'Принята',
+            'statusPending' => 'В обработке',
+            'statusDeclined' => 'Отклонена'
+        ],
+        'firmOwner' => [
+            'label' => 'Собственник фирмы',
+            'company_name' => 'Названик фирмы',
+            'name' => 'ФИО',
+            'email' => 'Email адрес',
+            'phoneNumber' => 'Номер телефона',
+            'inn' => 'ИНН или ID',
+            'nationality' => 'Национальность',
+            'country' => 'Страна проживания'
+        ],
+        'mainDriver' => [
+            'label' => 'Главный водитель',
+            'name' => 'ФИО',
+            'birthday' => 'День рождения',
+            'nationality' => 'Национальность',
+            'phoneNumber' => 'Номер телефона',
+            'email' => 'Email адрес',
+            'country' => 'Место проживания',
+            'dlIssuePlace' => 'Где были выданы водительские права?',
+            'dlExpiresAt' => 'Водительские права действуют с',
+            'drivingExperience' => 'Водительский опыт',
+            'conviction' => 'Судимость',
+            'comment' => 'Коммент',
+            'wasKeptDrunk' => 'Были ли задержаны пьяными?',
+            'grades' => 'Баллы',
+            'gradesExpireAt' => 'Срок действия баллов',
+            'dtp' => 'Были ли в ДТП в течение 5 лет?'
         ],
         'emptySet' => 'На данный момент заявок в базе не найдено.',
     ],

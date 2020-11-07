@@ -373,7 +373,39 @@ return [
         'datatable' => [
             'request' => 'Request',
             'type' => 'Type',
-            'actions' => 'Actions'
+            'status' => 'Status',
+            'actions' => 'Actions',
+            'statusApproved' => 'Approved',
+            'statusPending' => 'Pending',
+            'statusDeclined' => 'Declined'
+        ],
+        'firmOwner' => [
+            'label' => 'Firm owner',
+            'company_name' => 'Company name',
+            'name' => 'Full name',
+            'email' => 'Email address',
+            'phoneNumber' => 'Phone number',
+            'inn' => 'Inn or ID',
+            'nationality' => 'Nationality',
+            'country' => 'Place of residence'
+        ],
+        'mainDriver' => [
+            'label' => 'Main driver',
+            'name' => 'Full name',
+            'birthday' => 'Birthday',
+            'nationality' => 'Nationality',
+            'phoneNumber' => 'Phone number',
+            'email' => 'Email address',
+            'country' => 'Place of residence',
+            'dlIssuePlace' => 'Where was your driving licence issued?',
+            'dlExpiresAt' => 'Driving license expires at',
+            'drivingExperience' => 'Driving experience',
+            'conviction' => 'Conviction',
+            'comment' => 'Comment',
+            'wasKeptDrunk' => 'Was kept drunk?',
+            'grades' => 'Grades',
+            'gradesExpireAt' => 'Grades expire at',
+            'dtp' => 'Have you had an accident within 5 years?'
         ],
         'emptySet' => 'For now, we could not find any items.',
     ],

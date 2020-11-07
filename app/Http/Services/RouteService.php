@@ -25,7 +25,7 @@ class RouteService
      */
     public function getPaginated()
     {
-        return Route::with([ 'driver', 'route_addresses' ])->paginate(10);
+        return Route::with([ 'route_addresses', 'driver' ])->paginate(10);
     }
 
     /**
@@ -46,7 +46,7 @@ class RouteService
     public function store(Request $request)
     {
         $route = new Route();
-        $route->driver_id = auth('driver')->user()->id;
+        $route->driver_id = $request->driver_id;
         $route->save();
 
         // Save route addresses

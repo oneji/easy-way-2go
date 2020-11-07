@@ -67,9 +67,12 @@ Route::group([
         
         // Routes
         Route::get('routes', 'RouteController@index')->name('routes.index');
+        Route::get('routes/create', 'RouteController@create')->name('routes.create');
 
         // Bussiness account requests
         Route::get('bas', 'BaRequestController@index')->name('bas.index');
+        Route::post('bas/{id}/approve', 'BaRequestController@approve')->name('bas.approve');
+        Route::post('bas/{id}/decline', 'BaRequestController@decline')->name('bas.decline');
     });
 });
 

@@ -7,6 +7,55 @@
     ]
 ])
 
+@section('head')
+    @parent
+
+    <!-- Lightbox css -->
+    <link href="{{ asset('assets/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .car-image-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .car-image-wrapper > .car-image-delete-btn {
+            font-size: 18px;
+            color: #ddd;
+            transition: .3s all ease;
+            position: absolute;
+            top: 0;
+            right: 5px;
+            opacity: 0;
+        }
+
+        .car-image-wrapper > .car-image-delete-btn:hover {
+            color: #f46a6a;
+        }
+
+        .car-image {
+            width: 100px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 100%;
+            height: 100px;
+            transition: .3s all ease;
+        }
+
+        .car-image:hover {
+            border: 1px solid #34c38f;
+        }
+
+        .car-image-wrapper:hover .car-image-delete-btn {
+            opacity: 1;
+        }
+
+        .mfp-wrap {
+            z-index: 99999;
+        }
+    </style>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-lg-12">
@@ -32,6 +81,7 @@
                                     <th scope="col" style="width: 70px;">#</th>
                                     <th scope="col">{{ __('pages.bas.datatable.request') }}</th>
                                     <th scope="col">{{ __('pages.bas.datatable.type') }}</th>
+                                    <th scope="col">{{ __('pages.bas.datatable.status') }}</th>
                                     <th scope="col">{{ __('pages.bas.datatable.actions') }}</th>
                                 </tr>
                             </thead>
@@ -42,15 +92,25 @@
                                         <td>{{ __('pages.bas.datatable.request') .' №'. $baRequest->id }}</td>
                                         <td>
                                             @if ($baRequest->type === 'firm_owner')
-                                                <span class="badge badge-success font-size-12">Собственник фирмы</span>
+                                                <span class="badge badge-success font-size-12">{{ __('pages.bas.firmOwner.label') }}</span>
                                             @else
-                                                <span class="badge badge-primary font-size-12">Главный водитель</span>
+                                                <span class="badge badge-primary font-size-12">{{ __('pages.bas.mainDriver.label') }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($baRequest->status === 'approved')
+                                                <span class="badge badge-success font-size-12">{{ __('pages.bas.datatable.statusApproved') }}</span>
+                                            @elseif ($baRequest->status === 'pending')
+                                                <span class="badge badge-info font-size-12">{{ __('pages.bas.datatable.statusPending') }}</span>
+                                            @elseif ($baRequest->status === 'declined')
+                                                <span class="badge badge-danger font-size-12">{{ __('pages.bas.datatable.statusDeclined') }}</span>
+
                                             @endif
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="#" class="{{ $baRequest->type === 'firm_owner' ? 'firm-owner-info-btn' : 'main-driver-info-btn' }}" data-id="{{ $baRequest->id }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-info-circle"></i></a>
+                                                    <a href="#" class="{{ $baRequest->type === 'firm_owner' ? 'firm-owner-info-btn' : 'main-driver-info-btn' }}" data-id="{{ $baRequest->id }}"><i class="bx bx-info-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -79,4 +139,13 @@
     @parent
     
     <script src="{{ asset('assets/js/custom/bas.js') }}"></script>
+    <script src="{{ asset('assets/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
+    <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            
+        });
+    </script>
 @endsection

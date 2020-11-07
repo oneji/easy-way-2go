@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\RouteService;
+use App\Country;
+use App\Driver;
 
 class RouteController extends Controller
 {
@@ -28,10 +30,24 @@ class RouteController extends Controller
     {
         $routes = $this->routeService->getPaginated();
 
-        // return $routes;
-
         return view('routes.index', [
             'routes' => $routes
+        ]);
+    }
+
+    /**
+     * Show route create form
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $countries = Country::orderBy('name')->get();
+        $drivers = Driver::all();
+
+        return view('routes.create', [
+            'countries' => $countries,
+            'drivers' => $drivers
         ]);
     }
 }

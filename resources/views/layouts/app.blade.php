@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ App::getLocale() }}">
 
 <head>
     <meta charset="utf-8" />
@@ -222,7 +222,7 @@
             <!-- End Page-content -->
 
 
-            <footer class="footer">
+            {{-- <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
@@ -230,7 +230,7 @@
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> --}}
         </div>
         <!-- end main content-->
 

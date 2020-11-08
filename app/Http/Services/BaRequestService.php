@@ -31,7 +31,7 @@ class BaRequestService
      */
     public function getPaginated()
     {
-        return BaRequest::paginate(10);
+        return BaRequest::orderBy('id', 'desc')->paginate(10);
     }
 
     /**
@@ -139,13 +139,19 @@ class BaRequestService
         $baRequest->status = 'approved';
         $baRequest->save();
 
-        $this->createBrigadirByBaRequestId($request->email, $request->password, $id);
+        if($baRequest->type === 'firm_owner') {
+            $this->createBrigadirByBaRequestId($request->email, $request->password, $id);
+        } elseif($baRequest->type === 'head_driver') {
+            $this->createDriverByBaRequestId($request->email, $request->password, $id);
+        }
     }
 
     /**
      * Create a new brigadir from firm owner data
      * 
-     * @param array $firmOwnerData
+     * @param string $email
+     * @param string $password
+     * @param int $id
      */
     private function createBrigadirByBaRequestId($email, $password, $id)
     {
@@ -165,5 +171,19 @@ class BaRequestService
         $brigadir->inn = $firmOwnerData->inn;
         
         $brigadir->save();
+    }
+    
+    /**
+     * Create a new driver from firm owner data
+     * 
+     * @param string $email
+     * @param string $password
+     * @param int $id
+     */
+    private function createDriverByBaRequestId($email, $password, $id)
+    {
+        $headDriverData = BaHeadDriverData::where('ba_request_id', $id)->first();
+
+        $driver = new Driver();
     }
 }

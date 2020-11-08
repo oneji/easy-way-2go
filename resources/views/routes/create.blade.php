@@ -96,7 +96,7 @@
                                 <div class="form-group">
                                     <label for="">Дата отправления</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" required name="departure_date" placeholder="mm/dd/yyyy" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" class="form-control" required name="departure_date" placeholder="Выберите дату" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -105,13 +105,13 @@
     
                                 <div class="form-group">
                                     <label for="">Время отправления</label>
-                                    <input type="text" class="form-control input-mask" required name="departure_time" data-inputmask="'mask': '99:99'" placeholder="Введите время">
+                                    <input type="time" class="form-control" name="departure_time" placeholder="Введите время" value="00:00" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">Дата прибытия</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" required name="arrival_date" placeholder="mm/dd/yyyy" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" class="form-control" required name="arrival_date" placeholder="Выберите дату" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -120,7 +120,7 @@
 
                                 <div class="form-group">
                                     <label for="">Время прибытия</label>
-                                    <input type="text" class="form-control input-mask" required name="arrival_time" data-inputmask="'mask': '99:99'" placeholder="Введите время">
+                                    <input type="time" class="form-control" required name="arrival_time" value="00:00" placeholder="Введите время">
                                 </div>
 
                                 <div class="form-group">
@@ -209,7 +209,6 @@
                 $('.nav-tabs a[href="#' + data.type + '"]').tab('show');
 
                 addresses.push(data);
-                console.log(addresses)
                 idx++;
 
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
@@ -261,36 +260,54 @@
             }
 
             $('#saveRouteBtn').on('click', function() {
-                console.log('...')
+                let saveBtn = $(this);
+                let loadingIcon = '<i class="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>';
 
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/routes',
-                    data: {
-                        'addresses': addresses,
-                        'driver_id': $('#driverId').val(),
-                        'repeats': [
-                            {
-                                'from': '01/01/2021',
-                                'to': '02/01/2021'
-                            }
-                        ]
-                    },
-                    success: function(data) {
-                        console.log(data)
+                
+                if(addresses.length > 0) {
+                    saveBtn.html(loadingIcon);
+                    $.ajax({
+                        method: 'POST',
+                        url: '/api/routes',
+                        data: {
+                            'addresses': addresses,
+                            'driver_id': $('#driverId').val(),
+                            'repeats': [
+                                {
+                                    'from': '01/01/2021',
+                                    'to': '02/01/2021'
+                                }
+                            ]
+                        },
+                        success: function(data) {
+                            saveBtn.html('Сохранить')
+                            Swal.fire({
+                                title: 'Успешно!',
+                                text: 'Маршрут успешно добавлен!',
+                                type: 'success',
+                                showCancelButton: 0,
+                                confirmButtonColor: '#556ee6',
+                            });
 
-                        Swal.fire({
-                            title: 'Успешно!',
-                            text: 'Маршрут успешно добавлен!',
-                            type: 'success',
-                            showCancelButton: 0,
-                            confirmButtonColor: '#556ee6',
-                        })
-                    },
-                    error: function(err) {
-                        console.log(err);
-                    }
-                });
+                            $('#addresses-forward').html('');
+                            $('#addresses-back').html('');
+                            $('#addAddressForm').trigger('reset');
+                            addresses = [];
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Внимание!',
+                        text: 'Перед сохранением добавьте хотя бы один адрес!',
+                        type: 'info',
+                        showCancelButton: 0,
+                        confirmButtonColor: '#556ee6',
+                    });
+                }
+
             });
         });
         

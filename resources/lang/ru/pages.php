@@ -375,6 +375,7 @@ return [
             'type' => 'Тип',
             'status' => 'Статус',
             'actions' => 'Действия',
+            'date' => 'Дата',
             'statusApproved' => 'Принята',
             'statusPending' => 'В обработке',
             'statusDeclined' => 'Отклонена'

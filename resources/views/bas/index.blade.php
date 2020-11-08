@@ -33,12 +33,12 @@
         }
 
         .car-image {
-            width: 100px;
+            width: 70px;
             border: 1px solid #ddd;
-            padding: 5px;
+            padding: 3px;
             margin: 5px;
             border-radius: 100%;
-            height: 100px;
+            height: 70px;
             transition: .3s all ease;
         }
 
@@ -82,6 +82,7 @@
                                     <th scope="col">{{ __('pages.bas.datatable.request') }}</th>
                                     <th scope="col">{{ __('pages.bas.datatable.type') }}</th>
                                     <th scope="col">{{ __('pages.bas.datatable.status') }}</th>
+                                    <th scope="col">{{ __('pages.bas.datatable.date') }}</th>
                                     <th scope="col">{{ __('pages.bas.datatable.actions') }}</th>
                                 </tr>
                             </thead>
@@ -104,8 +105,9 @@
                                                 <span class="badge badge-info font-size-12">{{ __('pages.bas.datatable.statusPending') }}</span>
                                             @elseif ($baRequest->status === 'declined')
                                                 <span class="badge badge-danger font-size-12">{{ __('pages.bas.datatable.statusDeclined') }}</span>
-
                                             @endif
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($baRequest->created_at)->translatedFormat('F d, Y') }}
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
@@ -143,9 +145,4 @@
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            
-        });
-    </script>
 @endsection

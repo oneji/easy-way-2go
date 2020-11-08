@@ -24,7 +24,7 @@
                         <p class="text-muted mb-1"><strong>{{ __('pages.bas.firmOwner.inn') }}:</strong> <span id="firmOwnerInn"></span></p>
                     </div>
                 </div>
-                <div class="card-body border-bottom">
+                <div class="card-body border-bottom p-1">
                     <div class="row">
                         <div class="col-sm-12" id="firmOwnerDocs"></div>
                     </div>
@@ -43,7 +43,7 @@
                                     <label for="password">Придумайте пароль</label>
                                     <input type="password" data-parsley-minlength="8" id="password" required placeholder="Введите пароль" name="password" class="form-control">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-0">
                                     <label for="password_confirmation">Подтвердите пароль</label>
                                     <input type="password" data-parsley-equalto="#password" required placeholder="Подтвердите пароль" name="password_confirmation" class="form-control">
                                 </div>

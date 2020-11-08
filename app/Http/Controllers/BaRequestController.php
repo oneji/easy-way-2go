@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Services\BaRequestService;
+use App\Http\Requests\ApproveBaRequest;
 
 class BaRequestController extends Controller
 {
@@ -34,9 +35,13 @@ class BaRequestController extends Controller
     }
 
     /**
+     * Approve the business account request
      * 
+     * @param   \App\Http\ApproveBaRequest $request
+     * @param   int $id
+     * @return  \Illuminate\Http\Response
      */
-    public function approve(Request $request, $id)
+    public function approve(ApproveBaRequest $request, $id)
     {
         $this->baService->approve($request, $id);
 
@@ -44,7 +49,10 @@ class BaRequestController extends Controller
     }
     
     /**
+     * Decline the business account request
      * 
+     * @param   int $id
+     * @return  \Illuminate\Http\Response
      */
     public function decline($id)
     {

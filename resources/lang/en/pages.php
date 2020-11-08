@@ -374,6 +374,7 @@ return [
             'request' => 'Request',
             'type' => 'Type',
             'status' => 'Status',
+            'date' => 'Date',
             'actions' => 'Actions',
             'statusApproved' => 'Approved',
             'statusPending' => 'Pending',

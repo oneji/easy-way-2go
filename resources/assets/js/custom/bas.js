@@ -128,6 +128,10 @@ $(function() {
                     }
                 })
 
+                $('#mainDriverDeclineBaRequestForm').attr('action', `bas/${baRequest.id}/decline`);
+                $('#mainDriverApproveBaRequestForm').attr('action', `bas/${baRequest.id}/approve`);
+                $('#mainDriverApproveBaRequestForm').find('input[name=email]').val(baRequest.data.email);
+
                 infoBtn.html(infoIcon);
                 infoModal.modal(true);
             },

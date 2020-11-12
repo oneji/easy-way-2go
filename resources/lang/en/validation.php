@@ -190,7 +190,13 @@ return [
         'departure_time'        => 'Departure time',
         'arrival_date'          => 'Arrival date',
         'arrival_time'          => 'Arrival time',
-        'type'                  => 'Type'
+        'type'                  => 'Type',
+
+        'from_country'          => 'From',
+        'from_address'          => 'Address',
+        'to_country'            => 'To',
+        'to_address'            => 'Address',
+        'order_type'            => 'Order type'
     ],
 
 ];

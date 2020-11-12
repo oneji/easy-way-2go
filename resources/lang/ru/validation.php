@@ -204,6 +204,12 @@ return [
         'departure_time'        => 'Departure time',
         'arrival_date'          => 'Arrival date',
         'arrival_time'          => 'Arrival time',
-        'type'                  => 'Type'
+        'type'                  => 'Type',
+
+        'from_country'          => 'Откуда',
+        'from_address'          => 'Адрес',
+        'to_country'            => 'Куда',
+        'to_address'            => 'Адрес',
+        'order_type'            => 'Тип заказа'
     ],
 ];

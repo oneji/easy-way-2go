@@ -15,6 +15,13 @@ class Order extends Model
     ];
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * Get the passengers for the order.
      */
     public function passengers()

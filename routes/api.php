@@ -44,4 +44,7 @@ Route::as('api.')->namespace('API')->group(function() {
     // Business account requests
     Route::post('baRequests', 'BaRequestController@store');
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
+
+    // Orders
+    Route::post('orders', 'OrderController@store')->middleware('jwt.verify');
 });

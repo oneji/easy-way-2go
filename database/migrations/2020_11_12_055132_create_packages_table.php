@@ -19,10 +19,10 @@ class CreatePackagesTable extends Migration
             $table->double('length', 8, 2);
             $table->double('width', 8, 2);
             $table->double('height', 8, 2);
-            $table->text('photos');
+            $table->text('photos')->nullable();
             $table->unsignedBigInteger('order_id');
 
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

@@ -20,8 +20,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('to_country');
             $table->text('to_address');
             $table->date('date');
-            $table->string('buyer_phone_number');
-            $table->string('buyer_email');
+            $table->string('buyer_phone_number')->nullable();
+            $table->string('buyer_email')->nullable();
             $table->enum('order_type', [ 'passengers', 'packages', 'moving' ]);
             $table->unsignedBigInteger('client_id');
             $table->timestamps();

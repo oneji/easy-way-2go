@@ -25,7 +25,8 @@ class RouteAddress extends Model
         'departure_time',
         'arrival_date',
         'arrival_time',
-        'type'
+        'type',
+        'order'
     ];
 
     /**

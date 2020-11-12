@@ -169,6 +169,26 @@
                 e.preventDefault();
 
                 let addAddressForm = $(this);
+                let lastAddress = null;
+                let order = 0;
+                
+                if(addresses.length !== 0) {
+                    for (let i = addresses.length - 1; i >= 0; i--) {
+                        const address = addresses[i];
+                        
+                        if(address.type === addAddressForm.find('select[name=type]').val()) {
+                            lastAddress = address;
+                            break;
+                        }
+                    }
+
+                    console.log('lastAddress', lastAddress);
+
+                    if(lastAddress !== null && lastAddress !== undefined) {
+                        order = lastAddress.order + 1;
+                    }
+                }
+
                 let data = {
                     idx,
                     country_id: addAddressForm.find('select[name=country]').val(),
@@ -178,8 +198,11 @@
                     departure_time: addAddressForm.find('input[name=departure_time]').val(),
                     arrival_date: addAddressForm.find('input[name=arrival_date]').val(),
                     arrival_time: addAddressForm.find('input[name=arrival_time]').val(),
-                    type: addAddressForm.find('select[name=type]').val()
+                    type: addAddressForm.find('select[name=type]').val(),
+                    order: order
                 }
+
+                console.log('order', data.order);
                 
                 if(addresses.length === 0) {
                     $(`#addresses-${data.type}`).html('');

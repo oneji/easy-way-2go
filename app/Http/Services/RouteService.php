@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Http\Request;
+use App\Http\JsonRequests\SearchRouteRequest;
 use Carbon\Carbon;
 use App\RouteRepeat;
 use App\RouteAddress;
@@ -59,6 +60,7 @@ class RouteService
                 'arrival_date' => Carbon::parse($address['arrival_date']),
                 'arrival_time' => $address['arrival_time'],
                 'type' => $address['type'],
+                'order' => $address['order']
             ]));
         }
 
@@ -69,5 +71,65 @@ class RouteService
                 'to' => Carbon::parse($repeat['to']),
             ]));
         }
+    }
+
+    /**
+     * Searching for routes
+     * 
+     * @param \App\Http\JsonRequests\SearchRouteRequest $request
+     */
+    public function search(SearchRouteRequest $request)
+    {
+        $routes = Route::all();
+        
+        foreach ($routes as $route) {
+            $startings = RouteAddress::where('country_id', $request->from_country)
+                ->where('address', 'like', "%$request->from_address%")
+                ->where('departure_date', Carbon::parse($request->date))
+                ->whereRouteId($route->id)
+                ->get();
+
+            $endings = RouteAddress::where('country_id', $request->to_country)
+                ->where('address', 'like', "%$request->to_address%")
+                ->where('departure_date', Carbon::parse($request->date))
+                ->whereRouteId($route->id)
+                ->get();
+            
+            $starting = null;
+            $ending = null;
+            $intermediates = null;
+            foreach ($startings as $item) {
+                foreach ($endings as $endItem) {
+                    if($item->type === $endItem->type && $item->order < $endItem->order) {
+                        $starting = $item;
+                        $ending = $endItem;
+                    }
+                }
+            }
+
+            // return [
+            //     'starting' => $starting,
+            //     'ending' => $ending,
+            // ];
+
+            if($starting && $ending) {
+                $intermediates = RouteAddress::whereBetween('order', [ $starting->order, $ending->order ])
+                    ->whereNotIn('id', [$starting->id, $ending->id])
+                    ->whereRouteId($route->id)
+                    ->whereType($starting->type)
+                    ->orderBy('order')
+                    ->get();
+
+                    $route['addresses'] = $intermediates->prepend($starting)->push($ending);
+            }
+
+            // return [
+            //     'starting' => $starting,
+            //     'ending' => $ending,
+            //     'intermediates' => $intermediates
+            // ];
+        }
+
+        return $routes;
     }
 }

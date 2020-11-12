@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\JsonRequests\SearchRouteRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Services\RouteService;
@@ -69,5 +70,17 @@ class RouteController extends Controller
         return response()->json([
             'ok' => true
         ]);
+    }
+
+    /**
+     * Searching for routes
+     * 
+     * @param \App\Http\JsonRequests\SearchRouteRequest $request
+     */
+    public function search(SearchRouteRequest $request)
+    {
+        $routes = $this->routeService->search($request);
+
+        return response()->json($routes);
     }
 }

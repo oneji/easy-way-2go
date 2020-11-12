@@ -53,12 +53,12 @@
                                             <input type="text" placeholder="Введите пароль" name="email" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="password">Придумайте пароль</label>
-                                            <input type="password" data-parsley-minlength="8" id="mainDriverPassword" required placeholder="Введите пароль" name="password" class="form-control">
+                                            <label for="password">{{ __('pages.bas.firmOwner.password') }}</label>
+                                            <input type="password" data-parsley-minlength="8" id="mainDriverPassword" required placeholder="{{ __('pages.bas.firmOwner.password') }}" name="password" class="form-control">
                                         </div>
                                         <div class="form-group mb-0">
-                                            <label for="password_confirmation">Подтвердите пароль</label>
-                                            <input type="password" data-parsley-equalto="#mainDriverPassword" required placeholder="Подтвердите пароль" name="password_confirmation" class="form-control">
+                                            <label for="password_confirmation">{{ __('pages.bas.firmOwner.passwordConfirmation') }}</label>
+                                            <input type="password" data-parsley-equalto="#mainDriverPassword" required placeholder="{{ __('pages.bas.firmOwner.passwordConfirmation') }}" name="password_confirmation" class="form-control">
                                         </div>
                                     </form>
                                 </div>
@@ -74,7 +74,7 @@
                         class="btn btn-danger btn-block waves-effect waves-light"
                         onclick="event.preventDefault(); document.getElementById('mainDriverDeclineBaRequestForm').submit();"
                     >
-                        <i class="bx bx-x font-size-16 align-middle mr-2"></i> Отклонить
+                        <i class="bx bx-x font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
                     </a>
 
                     <form action="#" method="POST" id="mainDriverDeclineBaRequestForm">
@@ -87,7 +87,7 @@
                         class="btn btn-success btn-block waves-effect waves-light"
                         onclick="event.preventDefault(); document.getElementById('mainDriverApproveBaRequestForm').submit();"
                     >
-                        <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> Принять
+                        <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
                     </a>
                 </div>
             </div>

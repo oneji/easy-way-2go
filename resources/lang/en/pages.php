@@ -369,7 +369,9 @@ return [
     
     'bas' => [
         'label' => 'Bussiness Account Requests',
-        'driverInfoLabel' => 'All requests',
+        'baInfoLabel' => 'All requests',
+        'approveBtn' => 'Approve',
+        'declineBtn' => 'Decline',
         'datatable' => [
             'request' => 'Request',
             'type' => 'Type',
@@ -388,7 +390,9 @@ return [
             'phoneNumber' => 'Phone number',
             'inn' => 'Inn or ID',
             'nationality' => 'Nationality',
-            'country' => 'Place of residence'
+            'country' => 'Place of residence',
+            'password' => 'Enter password',
+            'passwordConfirmation' => 'Confirm password'
         ],
         'mainDriver' => [
             'label' => 'Main driver',

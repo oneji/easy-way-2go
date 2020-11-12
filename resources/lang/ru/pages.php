@@ -369,7 +369,9 @@ return [
 
     'bas' => [
         'label' => 'Заявки на Бизнес-аккаунт',
-        'driverInfoLabel' => 'Все заявки',
+        'baInfoLabel' => 'Все заявки',
+        'approveBtn' => 'Принять',
+        'declineBtn' => 'Отклонить',
         'datatable' => [
             'request' => 'Заявка',
             'type' => 'Тип',
@@ -388,7 +390,9 @@ return [
             'phoneNumber' => 'Номер телефона',
             'inn' => 'ИНН или ID',
             'nationality' => 'Национальность',
-            'country' => 'Страна проживания'
+            'country' => 'Страна проживания',
+            'password' => 'Придумайте пароль',
+            'passwordConfirmation' => 'Подтвердите пароль'
         ],
         'mainDriver' => [
             'label' => 'Главный водитель',

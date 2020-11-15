@@ -13,4 +13,20 @@ class BaRequest extends Model
     {
         return $this->hasOne('App\BaFirmOwnerData', 'ba_request_id', 'id');
     }
+
+    /**
+     * Get the drivers for the business account request.
+     */
+    public function drivers()
+    {
+        return $this->hasMany('App\BaDriver', 'ba_request_id', 'id');
+    }
+    
+    /**
+     * Get the transport for the business account request.
+     */
+    public function transport()
+    {
+        return $this->hasOne('App\BaTransport', 'ba_request_id', 'id');
+    }
 }

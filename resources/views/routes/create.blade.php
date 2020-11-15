@@ -4,7 +4,6 @@
     @parent 
     
     <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
-    <!-- Sweet Alert-->
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         #map {
@@ -77,8 +76,8 @@
                         <form id="addAddressForm" class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">Страна</label>
-                                    <select class="form-control" name="country" required>
+                                    <label class="control-label">Страна</label>
+                                    <select class="form-control select2" name="country" required>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
@@ -147,12 +146,12 @@
     @parent
 
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <!-- Sweet Alerts js -->
     <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         $(function() {
-            $('.input-mask').inputmask();
+            $('.select2').select2();
             let appLocale = $('html').attr('lang');
             let addresses = [];
             let idx = 0;

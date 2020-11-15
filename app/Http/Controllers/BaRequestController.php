@@ -35,6 +35,22 @@ class BaRequestController extends Controller
     }
 
     /**
+     * Show a specific business account request
+     * 
+     * @param int $id
+     */
+    public function show($id)
+    {
+        $baRequest = $this->baService->getById($id);
+
+        // return $baRequest;
+
+        return view('bas.show', [
+            'baRequest' => $baRequest
+        ]);
+    }
+
+    /**
      * Approve the business account request
      * 
      * @param   \App\Http\ApproveBaRequest $request

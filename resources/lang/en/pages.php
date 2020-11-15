@@ -372,6 +372,7 @@ return [
         'baInfoLabel' => 'All requests',
         'approveBtn' => 'Approve',
         'declineBtn' => 'Decline',
+        'generateRandomPassBtn' => 'Generate random password',
         'datatable' => [
             'request' => 'Request',
             'type' => 'Type',
@@ -384,7 +385,7 @@ return [
         ],
         'firmOwner' => [
             'label' => 'Firm owner',
-            'company_name' => 'Company name',
+            'companyName' => 'Company name',
             'name' => 'Full name',
             'email' => 'Email address',
             'phoneNumber' => 'Phone number',
@@ -403,6 +404,7 @@ return [
             'email' => 'Email address',
             'country' => 'Place of residence',
             'dlIssuePlace' => 'Where was your driving licence issued?',
+            'dlIssuedAt' => 'Driving license issued at',
             'dlExpiresAt' => 'Driving license expires at',
             'drivingExperience' => 'Driving experience',
             'conviction' => 'Conviction',

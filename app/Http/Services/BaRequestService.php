@@ -7,9 +7,11 @@ use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\UploadFileService;
 use App\BaMainDriverData;
 use App\BaFirmOwnerData;
-use App\BaRequest;
-use App\Brigadir;
 use Carbon\Carbon;
+use App\BaRequest;
+use App\BaTransport;
+use App\BaDriver;
+use App\Brigadir;
 use Hash;
 
 class BaRequestService
@@ -46,7 +48,7 @@ class BaRequestService
         if($baRequest->type === 'firm_owner') {
             $baRequest->data = BaFirmOwnerData::where('ba_request_id', $id)->first();
         } else {
-            $baRequest->data = BaMainDriverData::where('ba_request_id', $id)->first();
+            $baRequest->load([ 'drivers', 'transport' ]);
         }
 
         return $baRequest;
@@ -67,7 +69,8 @@ class BaRequestService
         if($request->type === 'firm_owner') {
             $this->storeFirmOwnerData($request->except('type'), $baRequest->id);
         } else if($request->type === 'head_driver') {
-            $this->storeHeadDriverData($request->except('type'), $baRequest->id);
+            $this->storeRequestDrivers($request->drivers, $baRequest->id);
+            $this->storeRequestTransport($request->transport, $baRequest->id);
         }
     }
 
@@ -90,28 +93,50 @@ class BaRequestService
     }
 
     /**
-     * Store head driver data
+     * Store request drivers
      * 
-     * @param array $mainDriverData
+     * @param array $data
+     * @param int $baRequestId
      */
-    private function storeHeadDriverData($data, $baRequestId)
+    private function storeRequestDrivers($drivers, $baRequestId)
     {
-        $mainDriverData = new BaMainDriverData($data);
-        $mainDriverData->birthday = Carbon::parse($data['birthday']);
-        $mainDriverData->dl_issued_at = Carbon::parse($data['dl_issued_at']);
-        $mainDriverData->dl_expires_at = Carbon::parse($data['dl_expires_at']);
-        $mainDriverData->grades_expire_at = Carbon::parse($data['grades_expire_at']);
-        $mainDriverData->ba_request_id = $baRequestId;
+        foreach ($drivers as $driverData) {
+            $driver = new BaDriver($driverData);
+            $driver->birthday = Carbon::parse($driverData['birthday']);
+            $driver->dl_issued_at = Carbon::parse($driverData['dl_issued_at']);
+            $driver->dl_expires_at = Carbon::parse($driverData['dl_expires_at']);
+            $driver->grades_expire_at = Carbon::parse($driverData['grades_expire_at']);
+            $driver->ba_request_id = $baRequestId;
+            
+            if(isset($data['driving_license_photos'])) {
+                $driver->driving_license_photos = UploadFileService::uploadMultiple($driverData['driving_license_photos'], 'ba_requests');
+            }
 
-        if(isset($data['driving_license_photos'])) {
-            $mainDriverData->driving_license_photos = UploadFileService::uploadMultiple($data['driving_license_photos'], 'ba_requests');
+            if(isset($data['passport_photos'])) {
+                $driver->passport_photos = UploadFileService::uploadMultiple($driverData['passport_photos'], 'ba_requests');
+            }
+
+            $driver->save();
         }
+    }
 
-        if(isset($data['passport_photos'])) {
-            $mainDriverData->passport_photos = UploadFileService::uploadMultiple($data['passport_photos'], 'ba_requests');
-        }
+    /**
+     * Store request transport
+     * 
+     * @param object $transportData
+     * @param int $baRequestId
+     */
+    public function storeRequestTransport($transportData, $baRequestId)
+    {
+        $transport = new BaTransport($transportData);
 
-        $mainDriverData->save();
+        // Save parsed date fields
+        $transport->teh_osmotr_date_from = Carbon::parse($transportData['teh_osmotr_date_from']);
+        $transport->teh_osmotr_date_to = Carbon::parse($transportData['teh_osmotr_date_to']);
+        $transport->insurance_date_from = Carbon::parse($transportData['insurance_date_from']);
+        $transport->insurance_date_to = Carbon::parse($transportData['insurance_date_to']);
+        $transport->ba_request_id = $baRequestId;
+        $transport->save();
     }
 
     /**

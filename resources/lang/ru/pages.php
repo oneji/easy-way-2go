@@ -372,6 +372,7 @@ return [
         'baInfoLabel' => 'Все заявки',
         'approveBtn' => 'Принять',
         'declineBtn' => 'Отклонить',
+        'generateRandomPassBtn' => 'Сгенерировать случайный пароль',
         'datatable' => [
             'request' => 'Заявка',
             'type' => 'Тип',
@@ -384,7 +385,7 @@ return [
         ],
         'firmOwner' => [
             'label' => 'Собственник фирмы',
-            'company_name' => 'Названик фирмы',
+            'companyName' => 'Названик фирмы',
             'name' => 'ФИО',
             'email' => 'Email адрес',
             'phoneNumber' => 'Номер телефона',
@@ -403,7 +404,8 @@ return [
             'email' => 'Email адрес',
             'country' => 'Место проживания',
             'dlIssuePlace' => 'Где были выданы водительские права?',
-            'dlExpiresAt' => 'Водительские права действуют с',
+            'dlIssuedAt' => 'Водительские права действуют с',
+            'dlExpiresAt' => 'Водительские права действуют до',
             'drivingExperience' => 'Водительский опыт',
             'conviction' => 'Судимость',
             'comment' => 'Коммент',

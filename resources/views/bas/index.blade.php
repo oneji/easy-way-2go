@@ -112,7 +112,7 @@
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
-                                                    <a href="#" class="{{ $baRequest->type === 'firm_owner' ? 'firm-owner-info-btn' : 'main-driver-info-btn' }}" data-id="{{ $baRequest->id }}"><i class="bx bx-info-circle"></i></a>
+                                                    <a href="{{ route('admin.bas.show', [$baRequest->id]) }}" data-id="{{ $baRequest->id }}"><i class="bx bx-info-circle"></i></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -142,7 +142,4 @@
     
     <script src="{{ asset('assets/js/custom/bas.js') }}"></script>
     <script src="{{ asset('assets/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
-    <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
 @endsection

@@ -71,6 +71,7 @@ Route::group([
 
         // Bussiness account requests
         Route::get('bas', 'BaRequestController@index')->name('bas.index');
+        Route::get('bas/{id}', 'BaRequestController@show')->name('bas.show');
         Route::post('bas/{id}/approve', 'BaRequestController@approve')->name('bas.approve');
         Route::post('bas/{id}/decline', 'BaRequestController@decline')->name('bas.decline');
     });

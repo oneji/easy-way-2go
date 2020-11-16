@@ -213,6 +213,7 @@ class BaRequestService
         
         foreach ($baDrivers as $driverData) {
             $rawPassword = uniqid();
+            
             $driver = new Driver();
             $driver->gender = 1;
             $driver->first_name = $driverData['first_name'];

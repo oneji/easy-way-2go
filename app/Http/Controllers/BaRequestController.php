@@ -43,6 +43,8 @@ class BaRequestController extends Controller
     {
         $baRequest = $this->baService->getById($id);
 
+        // return $baRequest;
+
         return view('bas.show', [
             'baRequest' => $baRequest
         ]);

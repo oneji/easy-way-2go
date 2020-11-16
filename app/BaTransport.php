@@ -104,8 +104,16 @@ class BaTransport extends Model
     /**
      * Get the car model that owns the transport.
      */
-    public function car_model()
+    public function model()
     {
         return $this->belongsTo('App\CarModel', 'car_model_id', 'id');
+    }
+    
+    /**
+     * Get the register country that owns the transport.
+     */
+    public function register()
+    {
+        return $this->belongsTo('App\Country', 'register_country', 'id');
     }
 }

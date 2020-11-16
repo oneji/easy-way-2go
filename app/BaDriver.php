@@ -58,6 +58,22 @@ class BaDriver extends Model
     {
         return $this->belongsTo('App\Country', 'nationality', 'id');
     }
+
+    /**
+     * Get the nationality that owns the driver data.
+     */
+    public function nationality_country()
+    {
+        return $this->belongsTo('App\Country', 'nationality', 'id');
+    }
+    
+    /**
+     * Get the nationality that owns the driver data.
+     */
+    public function driver_license_issue_place()
+    {
+        return $this->belongsTo('App\Country', 'dl_issue_place', 'id');
+    }
     
     /**
      * Get the nationality that owns the driver data.
@@ -77,7 +93,6 @@ class BaDriver extends Model
         parent::boot();
 
         static::addGlobalScope(new CountryScope);
-        static::addGlobalScope(new NationalityScope);
         static::addGlobalScope(new DrivingExperienceScope);
     }
 

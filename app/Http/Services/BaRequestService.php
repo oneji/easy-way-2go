@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\UploadFileService;
 use App\Http\Requests\ApproveBaRequest;
+use App\Jobs\SendEmailJob;
 use App\BaFirmOwnerData;
 use App\BaTransport;
 use Carbon\Carbon;
@@ -211,6 +212,7 @@ class BaRequestService
         $baDrivers = BaDriver::where('ba_request_id', $id)->get();
         
         foreach ($baDrivers as $driverData) {
+            $rawPassword = uniqid();
             $driver = new Driver();
             $driver->gender = 1;
             $driver->first_name = $driverData['first_name'];
@@ -230,10 +232,12 @@ class BaRequestService
             $driver->dtp = isset($driverData['dtp']) ? 1 : 0;
             $driver->grades = $driverData['grades'];
             $driver->grades_expire_at = Carbon::parse($driverData['grades_expire_at']);
-            $driver->password = Hash::make(uniqid());
+            $driver->password = Hash::make($rawPassword);
             $driver->driving_license_photos = $driverData['driving_license_photos'];
             $driver->passport_photos = $driverData['passport_photos'];
             $driver->save();
+
+            SendEmailJob::dispatch($driver->email, $rawPassword);
         }
     }
 }

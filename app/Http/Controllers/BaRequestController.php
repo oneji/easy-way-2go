@@ -43,8 +43,6 @@ class BaRequestController extends Controller
     {
         $baRequest = $this->baService->getById($id);
 
-        // return $baRequest;
-
         return view('bas.show', [
             'baRequest' => $baRequest
         ]);
@@ -53,7 +51,7 @@ class BaRequestController extends Controller
     /**
      * Approve the business account request
      * 
-     * @param   \App\Http\ApproveBaRequest $request
+     * @param   \App\Http\Requests\ApproveBaRequest $request
      * @param   int $id
      * @return  \Illuminate\Http\Response
      */
@@ -61,7 +59,7 @@ class BaRequestController extends Controller
     {
         $this->baService->approve($request, $id);
 
-        return redirect()->back();
+        return redirect()->route('admin.bas.index');
     }
     
     /**
@@ -74,6 +72,6 @@ class BaRequestController extends Controller
     {
         $this->baService->decline($id);
 
-        return redirect()->back();
+        return redirect()->route('admin.bas.index');
     }
 }

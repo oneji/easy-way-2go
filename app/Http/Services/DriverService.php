@@ -2,14 +2,15 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Support\Facades\Hash;
+use App\Http\Services\UploadFileService;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Traits\UploadDocsTrait;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Driver;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use App\Driver;
 
 class DriverService
 {
@@ -51,19 +52,6 @@ class DriverService
      */
     public function store(StoreUserRequest $request)
     {
-        // Upload driver's documents
-        $passportDocs = [];
-        $dLicenseDocs = [];
-        if($request->hasFile('passport')) {
-            $passportDocs = $this->uploadDocs($request->passport, 'user_docs', 'passport');
-        }
-
-        if($request->hasFile('d_license')) {
-            $dLicenseDocs = $this->uploadDocs($request->d_license, 'user_docs', 'd_license');
-        }
-
-        $mergedDocs = array_merge($passportDocs, $dLicenseDocs);
-
         $driver = new Driver($request->except('password'));
         $driver->verified = 1;
         $driver->birthday = Carbon::parse($request->birthday);
@@ -72,7 +60,6 @@ class DriverService
 
         $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
         $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
-        $driver->docs = count($mergedDocs) > 0 ? $mergedDocs : null;
         $driver->conviction = isset($request->conviction) ? 1 : 0;
         $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
         $driver->dtp = isset($request->dtp) ? 1 : 0;
@@ -80,6 +67,14 @@ class DriverService
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
+        }
+        
+        if($request->hasFile('driving_license_photos')) {
+            $driver->driving_license_photos = UploadFileService::uploadMultiple($request->driving_license_photos, 'driver_docs');
+        }
+        
+        if($request->hasFile('passport_photos')) {
+            $driver->passport_photos = UploadFileService::uploadMultiple($request->passport_photos, 'driver_docs');
         }
         
         $driver->save();
@@ -109,26 +104,29 @@ class DriverService
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
         }
-        
-        
 
         // Upload driver's documents
         $passportDocs = [];
         $dLicenseDocs = [];
-        $mergedDocs = [];
 
-        if($request->hasFile('passport')) {
-            $passportDocs = $this->uploadDocs($request->passport, 'user_docs', 'passport');
+        if($request->hasFile('passport_photos')) {
+            $passportDocs = UploadFileService::uploadMultiple($request->passport_photos, 'driver_docs');
         }
 
-        if($request->hasFile('d_license')) {
-            $dLicenseDocs = $this->uploadDocs($request->d_license, 'user_docs', 'd_license');
+        if($request->hasFile('driving_license_photos')) {
+            $dLicenseDocs = UploadFileService::uploadMultiple($request->driving_license_photos, 'driver_docs');
         }
 
-        if($driver->docs !== null) {
-            $mergedDocs = array_merge($driver->docs, $dLicenseDocs, $passportDocs);
+        if($driver->driving_license_photos !== null) {
+            $driver->driving_license_photos = array_merge($driver->driving_license_photos, $dLicenseDocs);
         } else {
-            $mergedDocs = array_merge($passportDocs, $dLicenseDocs);
+            $driver->driving_license_photos = $dLicenseDocs ? $dLicenseDocs : null;
+        }
+
+        if($driver->passport_photos !== null) {
+            $driver->passport_photos = array_merge($driver->passport_photos, $dLicenseDocs);
+        } else {
+            $driver->passport_photos = $passportDocs ? $passportDocs : null;
         }
 
         
@@ -137,7 +135,6 @@ class DriverService
         $driver->dl_issue_place = $request->dl_issue_place;
         $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
         $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
-        $driver->docs = count($mergedDocs) > 0 ? $mergedDocs : null;
         $driver->driving_experience_id = $request->driving_experience_id;
         $driver->conviction = isset($request->conviction) ? 1 : 0;
         $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ApproveBaRequest extends FormRequest
 {
@@ -24,8 +25,7 @@ class ApproveBaRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed'
+            
         ];
     }
 }

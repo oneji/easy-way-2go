@@ -318,8 +318,8 @@
                                 <div class="form-group">
                                     <label for="email">{{ __('pages.drivers.addForm.labels.dlPhoto') }}</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="d_license[]" multiple id="d_licenseDoc" aria-describedby="d_licenseDocAddon">
-                                        <label class="custom-file-label" for="d_licenseDoc">{{ __('pages.drivers.addForm.placeholders.dlPhoto') }}</label>
+                                        <input type="file" class="custom-file-input" name="driving_license_photos[]" multiple id="d_licenseDoc" aria-describedby="d_licenseDocAddon">
+                                        <label class="custom-file-label">{{ __('pages.drivers.addForm.placeholders.dlPhoto') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -328,8 +328,8 @@
                                 <div class="form-group">
                                     <label for="email">{{ __('pages.drivers.addForm.labels.passportPhoto') }}</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="passport[]" multiple>
-                                        <label class="custom-file-label" for="passport[]">{{ __('pages.drivers.addForm.placeholders.passportPhoto') }}</label>
+                                        <input type="file" class="custom-file-input" name="passport_photos[]" multiple>
+                                        <label class="custom-file-label">{{ __('pages.drivers.addForm.placeholders.passportPhoto') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -343,17 +343,32 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.drivers.uploadedDocumentsLabel') }}</h4>
                         <p class="card-title-desc"></p>
-                        @if ($driver->docs !== null)
-                            @foreach ($driver->docs as $item)
-                                <div class="car-image-wrapper">
-                                    <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="{{ $item->type === 'passport' ? 'Паспорт или ИД' : 'Фото водительского удостоверения' }}">
-                                        <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
-                                    </a>
-                                    <a href="{{ route('admin.drivers.destroyDoc', [ 'driverId' => $driver->id, 'docId' => $item->id ]) }}" class="car-image-delete-btn">
-                                        <i class="bx bx-trash-alt"></i>
-                                    </a>
-                                </div>
-                            @endforeach
+                        @if ($driver->driving_license_photos || $driver->passport_photos)
+                            @if ($driver->driving_license_photos)
+                                @foreach ($driver->driving_license_photos as $item)
+                                    <div class="car-image-wrapper">
+                                        <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Фото водительского удостоверения">
+                                            <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
+                                        </a>
+                                        <a href="{{ route('admin.drivers.destroyDoc', [ 'driverId' => $driver->id, 'docId' => $item->id ]) }}" class="car-image-delete-btn">
+                                            <i class="bx bx-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @endif
+
+                            @if ($driver->passport_photos)
+                                @foreach ($driver->passport_photos as $item)
+                                    <div class="car-image-wrapper">
+                                        <a class="image-popup-no-margins" href="{{ asset('storage/'.$item->file) }}" title="Фото паспорта">
+                                            <img class="img-fluid car-image" alt="" src="{{ asset('storage/'.$item->file) }}">
+                                        </a>
+                                        <a href="{{ route('admin.drivers.destroyDoc', [ 'driverId' => $driver->id, 'docId' => $item->id ]) }}" class="car-image-delete-btn">
+                                            <i class="bx bx-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @endif
                         @else
                             <div class="alert alert-info">
                                 <i class="mdi mdi-information mr-2"></i>

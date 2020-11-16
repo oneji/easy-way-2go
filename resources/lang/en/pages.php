@@ -372,7 +372,7 @@ return [
         'baInfoLabel' => 'All requests',
         'approveBtn' => 'Approve',
         'declineBtn' => 'Decline',
-        'generateRandomPassBtn' => 'Generate random password',
+        'generateRandomPassBtn' => 'Random password',
         'datatable' => [
             'request' => 'Request',
             'type' => 'Type',

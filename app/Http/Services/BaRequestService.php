@@ -5,13 +5,14 @@ namespace App\Http\Services;
 use Illuminate\Http\Request;
 use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\UploadFileService;
-use App\BaMainDriverData;
+use App\Http\Requests\ApproveBaRequest;
 use App\BaFirmOwnerData;
+use App\BaTransport;
 use Carbon\Carbon;
 use App\BaRequest;
-use App\BaTransport;
 use App\BaDriver;
 use App\Brigadir;
+use App\Driver;
 use Hash;
 
 class BaRequestService
@@ -158,7 +159,7 @@ class BaRequestService
      * @param int $id
      * @param string $status
      */
-    public function approve(Request $request, $id)
+    public function approve(ApproveBaRequest $request, $id)
     {
         $baRequest = BaRequest::findOrFail($id);
         $baRequest->status = 'approved';
@@ -167,7 +168,7 @@ class BaRequestService
         if($baRequest->type === 'firm_owner') {
             $this->createBrigadirByBaRequestId($request->email, $request->password, $id);
         } elseif($baRequest->type === 'head_driver') {
-            $this->createDriverByBaRequestId($request->email, $request->password, $id);
+            $this->createDriverByBaRequestId($id);
         }
     }
 
@@ -205,10 +206,34 @@ class BaRequestService
      * @param string $password
      * @param int $id
      */
-    private function createDriverByBaRequestId($email, $password, $id)
+    private function createDriverByBaRequestId($id)
     {
-        $headDriverData = BaHeadDriverData::where('ba_request_id', $id)->first();
-
-        $driver = new Driver();
+        $baDrivers = BaDriver::where('ba_request_id', $id)->get();
+        
+        foreach ($baDrivers as $driverData) {
+            $driver = new Driver();
+            $driver->gender = 1;
+            $driver->first_name = $driverData['first_name'];
+            $driver->last_name = $driverData['last_name'];
+            $driver->nationality = $driverData['nationality'];
+            $driver->phone_number = $driverData['phone_number'];
+            $driver->email = $driverData['email'];
+            $driver->birthday = $driverData['birthday'];
+            $driver->country_id = $driverData['country_id'];
+            $driver->dl_issue_place = $driverData['dl_issue_place'];
+            $driver->driving_experience_id = $driverData['driving_experience_id'];
+            $driver->dl_issued_at = Carbon::parse($driverData['dl_issued_at']);
+            $driver->dl_expires_at = Carbon::parse($driverData['dl_expires_at']);
+            $driver->driving_experience_id = $driverData['driving_experience_id'];
+            $driver->conviction = isset($driverData['conviction']) ? 1 : 0;
+            $driver->was_kept_drunk = isset($driverData['was_kept_drunk']) ? 1 : 0;
+            $driver->dtp = isset($driverData['dtp']) ? 1 : 0;
+            $driver->grades = $driverData['grades'];
+            $driver->grades_expire_at = Carbon::parse($driverData['grades_expire_at']);
+            $driver->password = Hash::make(uniqid());
+            $driver->driving_license_photos = $driverData['driving_license_photos'];
+            $driver->passport_photos = $driverData['passport_photos'];
+            $driver->save();
+        }
     }
 }

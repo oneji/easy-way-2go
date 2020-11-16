@@ -20,7 +20,7 @@ class CreateBaTransportDocsTable extends Migration
             $table->string('doc_type');
             $table->timestamps();
 
-            $table->foreign('ba_transport_id')->references('id')->on('ba_transports');
+            $table->foreign('ba_transport_id')->references('id')->on('ba_transports')->onDelete('cascade');
         });
     }
 

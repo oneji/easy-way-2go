@@ -72,7 +72,8 @@ class Driver extends Authenticatable implements JWTSubject
         'conviction' => 'boolean',
         'was_kept_drunk' => 'boolean',
         'dtp' => 'boolean',
-        'docs' => 'object'
+        'driving_license_photos' => 'object',
+        'passport_photos' => 'object',
     ];
 
     /**

@@ -41,7 +41,7 @@ class CreateBaDriversTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('dl_issue_place')->references('id')->on('countries');
             $table->foreign('driving_experience_id')->references('id')->on('driving_experiences');
-            $table->foreign('ba_request_id')->references('id')->on('ba_requests');
+            $table->foreign('ba_request_id')->references('id')->on('ba_requests')->onDelete('cascade');
         });
     }
 

@@ -132,9 +132,6 @@
         </div>
     </div>
 </div>
-
-@include('bas.modals.firm-owner-info')
-@include('bas.modals.main-driver-info')
 @endsection
 
 @section('scripts')

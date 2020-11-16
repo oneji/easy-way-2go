@@ -269,8 +269,8 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.dlPhoto') }}</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="d_license[]" multiple>
-                                        <label class="custom-file-label" for="d_license[]">{{ __('pages.drivers.addForm.placeholders.dlPhoto') }}</label>
+                                        <input type="file" class="custom-file-input" name="driving_license_photos[]" multiple>
+                                        <label class="custom-file-label" for="driving_license_photos[]">{{ __('pages.drivers.addForm.placeholders.dlPhoto') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -279,8 +279,8 @@
                                 <div class="form-group">
                                     <label>{{ __('pages.drivers.addForm.labels.passportPhoto') }}</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="passport[]" multiple>
-                                        <label class="custom-file-label" for="passport[]">{{ __('pages.drivers.addForm.placeholders.passportPhoto') }}</label>
+                                        <input type="file" class="custom-file-input" name="passport_photos[]" multiple>
+                                        <label class="custom-file-label" for="passport_photos[]">{{ __('pages.drivers.addForm.placeholders.passportPhoto') }}</label>
                                     </div>
                                 </div>
                             </div>

@@ -42,7 +42,7 @@ class CreateBaTransportsTable extends Migration
 
             $table->foreign('car_brand_id')->references('id')->on('car_brands');
             $table->foreign('car_model_id')->references('id')->on('car_models');
-            $table->foreign('ba_request_id')->references('id')->on('ba_requests');
+            $table->foreign('ba_request_id')->references('id')->on('ba_requests')->onDelete('cascade');
         });
     }
 

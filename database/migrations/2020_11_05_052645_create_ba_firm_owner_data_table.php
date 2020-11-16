@@ -31,7 +31,7 @@ class CreateBaFirmOwnerDataTable extends Migration
 
             $table->foreign('nationality')->references('id')->on('countries');
             $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('ba_request_id')->references('id')->on('ba_requests');
+            $table->foreign('ba_request_id')->references('id')->on('ba_requests')->onDelete('cascade');
         });
     }
 

@@ -3,10 +3,12 @@
 namespace App\Http\Services;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\JsonRequests\UpdateClientRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\Client;
+use Illuminate\Support\Facades\Storage;
 
 class ClientService
 {
@@ -64,10 +66,6 @@ class ClientService
     public function update(UpdateUserRequest $request, $id)
     {
         $client = Client::find($id);
-        foreach ($request->translations as $code => $value) {
-            $client->setTranslation('first_name', $code, $value['first_name']);
-            $client->setTranslation('last_name', $code, $value['last_name']);
-        }
         $client->birthday = Carbon::parse($request->birthday);
         $client->nationality = $request->nationality;
         $client->phone_number = $request->phone_number;
@@ -77,6 +75,11 @@ class ClientService
         $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
         $client->passport_number = $request->passport_number;
         $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
+
+        foreach ($request->translations as $code => $value) {
+            $client->setTranslation('first_name', $code, $value['first_name']);
+            $client->setTranslation('last_name', $code, $value['last_name']);
+        }
         
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -91,5 +94,34 @@ class ClientService
     public function count()
     {
         return Client::get()->count();
+    }
+
+    /**
+     * Update a specific client.
+     * 
+     * @param   \App\Http\JsonRequests\UpdateClientRequest $request
+     * @param   int $id
+     */
+    public function updateProfile(UpdateClientRequest $request, $id)
+    {
+        $client = Client::find($id);
+        $client->first_name = $request->first_name;
+        $client->last_name = $request->last_name;
+        $client->birthday = Carbon::parse($request->birthday);
+        $client->nationality = $request->nationality;
+        $client->phone_number = $request->phone_number;
+        $client->email = $request->email;
+        $client->gender = $request->gender;
+        $client->id_card = $request->id_card;
+        $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
+        $client->passport_number = $request->passport_number;
+        $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
+        
+        if($request->hasFile('photo')) {
+            Storage::disk('public')->delete($client->photo);
+            $client->photo = $this->uploadImage($request->photo, 'user_photos');
+        }
+
+        $client->save();
     }
 }

@@ -14,6 +14,18 @@ use App\Order;
 class OrderService
 {
     /**
+     * Get all orders
+     * 
+     * @return collection
+     */
+    public function all()
+    {
+        $client = auth('client')->user();
+
+        return Order::where('client_id', $client->id)->get();
+    }
+
+    /**
      * Store a newly created order
      * 
      * @param \App\Http\JsonRequests\StoreOrderRequest $request

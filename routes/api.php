@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 // Auth
-Route::as('api.')->namespace('API')->group(function() {
+Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
         Route::post('clients/register', 'ClientAuthController@register');
@@ -47,7 +47,11 @@ Route::as('api.')->namespace('API')->group(function() {
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 
     Route::middleware('jwt.verify')->group(function() {
+        // Clients
+        Route::put('clients/{id}', 'ClientController@update');
+
         // Orders
+        Route::get('orders', 'OrderController@all');
         Route::post('orders', 'OrderController@store');
         
         // Passengers

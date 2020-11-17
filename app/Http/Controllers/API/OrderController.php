@@ -22,6 +22,21 @@ class OrderController extends Controller
     }
 
     /**
+     * Get all orders
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function all()
+    {
+        $orders = $this->orderService->all();
+
+        return response()->json([
+            'ok' => true,
+            'orders' => $orders
+        ]);
+    }
+
+    /**
      * Store a newly created order
      * 
      * @param  \App\Http\JsonRequests\StoreOrderRequest $request

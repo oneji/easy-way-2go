@@ -18,5 +18,13 @@ class Passenger extends Model
      *
      * @var array
      */
-     protected $guarded = [];
+    protected $guarded = [];
+
+    /**
+     * Get the orders for the passenger.
+     */
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order');
+    }
 }

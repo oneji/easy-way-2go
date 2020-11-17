@@ -26,7 +26,7 @@ class Order extends Model
      */
     public function passengers()
     {
-        return $this->hasMany('App\Passenger');
+        return $this->belongsToMany('App\Passenger');
     }
 
     /**

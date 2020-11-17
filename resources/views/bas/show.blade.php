@@ -44,6 +44,51 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-3">Данные пользователя</h4>
+                        <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="custom-validation" novalidate id="approveForm">
+                            @csrf
+        
+                            <div class="form-group">
+                                <label for="email">{{ __('pages.bas.firmOwner.email') }}</label>
+                                <input type="email" name="email" placeholder="{{ __('pages.bas.firmOwner.email') }}" value="{{ $baRequest->data->email }}" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">{{ __('pages.bas.firmOwner.password') }}</label>
+                                <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.password') }}" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">{{ __('pages.bas.firmOwner.passwordConfirmation') }}</label>
+                                <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.passwordConfirmation') }}" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-info waves-effect waves-light" id="generateRandomPassBtn">
+                                    <i class="bx bxs-keyboard font-size-16 align-middle mr-2"></i> {{ __('pages.bas.generateRandomPassBtn') }}
+                                </button>
+                                <button type="submit" class="btn btn-success waves-effect waves-light">
+                                    <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
+                                </button>
+
+                                <a 
+                                    href="#"
+                                    class="btn btn-danger waves-effect waves-light" 
+                                    onclick="event.preventDefault(); document.getElementById('declineForm').submit();"
+                                >
+                                    <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
+                                </a>
+
+                                <form action="{{ route('admin.bas.decline', [$baRequest->id]) }}" method="POST" id="declineForm">
+                                    @csrf
+                                </form>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         @else
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -303,8 +348,8 @@
             $('#generateRandomPassBtn').on('click', function() {
                 let randomPassword = Math.random().toString(36).slice(-8);
                 
-                $('#approveBaRequestForm').find('input[name=password]').val(randomPassword)
-                $('#approveBaRequestForm').find('input[name=password_confirmation]').val(randomPassword)
+                $('#approveForm').find('input[name=password]').val(randomPassword)
+                $('#approveForm').find('input[name=password_confirmation]').val(randomPassword)
             });
         })
     </script>

@@ -198,6 +198,8 @@ class BaRequestService
         $brigadir->inn = $firmOwnerData->inn;
         
         $brigadir->save();
+
+        SendEmailJob::dispatch($email, $password);
     }
     
     /**

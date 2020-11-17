@@ -46,6 +46,13 @@ Route::as('api.')->namespace('API')->group(function() {
     Route::post('baRequests', 'BaRequestController@store');
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 
-    // Orders
-    Route::post('orders', 'OrderController@store')->middleware('jwt.verify');
+    Route::middleware('jwt.verify')->group(function() {
+        // Orders
+        Route::post('orders', 'OrderController@store');
+        
+        // Passengers
+        Route::get('passengers', 'PassengerController@all');
+        Route::post('passengers', 'PassengerController@store');
+        Route::put('passengers/{id}', 'PassengerController@update');
+    });
 });

@@ -54,5 +54,6 @@ Route::as('api.')->namespace('API')->group(function() {
         Route::get('passengers', 'PassengerController@all');
         Route::post('passengers', 'PassengerController@store');
         Route::put('passengers/{id}', 'PassengerController@update');
+        Route::delete('passengers/{id}', 'PassengerController@delete');
     });
 });

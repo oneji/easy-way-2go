@@ -47,15 +47,29 @@ class PassengerService
      */
     public function update(UpdatePassengerRequest $request, $id)
     {
-        $passenger = Passenger::findOrFail($id);
-        $passenger->gender = $request->gender;
-        $passenger->first_name = $request->first_name;
-        $passenger->last_name = $request->last_name;
-        $passenger->birthday = Carbon::parse($request->birthday);
-        $passenger->nationality = $request->nationality;
-        $passenger->id_card = $request->id_card;
-        $passenger->passport_number = $request->passport_number;
-        $passenger->passport_expires_at = Carbon::parse($request->passport_expires_at);
+        $passenger = Passenger::find($id);
+        if($passenger) {
+            $passenger->gender = $request->gender;
+            $passenger->first_name = $request->first_name;
+            $passenger->last_name = $request->last_name;
+            $passenger->birthday = Carbon::parse($request->birthday);
+            $passenger->nationality = $request->nationality;
+            $passenger->id_card = $request->id_card;
+            $passenger->passport_number = $request->passport_number;
+            $passenger->passport_expires_at = Carbon::parse($request->passport_expires_at);
+            $passenger->save();
+        }
+    }
+    
+    /**
+     * Delete passenger
+     * 
+     * @param int $id
+     */
+    public function delete($id)
+    {
+        $passenger = Passenger::find($id);
+        $passenger->deleted = 1;
         $passenger->save();
     }
 

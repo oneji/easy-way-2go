@@ -69,4 +69,18 @@ class PassengerController extends Controller
             'ok' => true
         ]);
     }
+
+    /**
+     * Delete passenger
+     * 
+     * @param int $id
+     */
+    public function delete($id)
+    {
+        $this->passengerService->delete($id);
+
+        return response()->json([
+            'ok' => true
+        ]);
+    }
 }

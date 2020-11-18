@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Services\ClientService;
@@ -31,6 +32,20 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, $id)
     {
         $this->clientService->updateProfile($request, $id);
+
+        return response()->json([
+            'ok' => true
+        ]);
+    }
+
+    /**
+     * Change password
+     * 
+     * @param \App\Http\JsonRequests\ChangePasswordRequest $request
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $this->clientService->changePassword($request);
 
         return response()->json([
             'ok' => true

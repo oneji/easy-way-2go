@@ -48,6 +48,7 @@ Route::namespace('API')->group(function() {
 
     Route::middleware('jwt.verify')->group(function() {
         // Clients
+        Route::put('clients/changePassword', 'ClientController@changePassword');
         Route::put('clients/{id}', 'ClientController@update');
 
         // Orders

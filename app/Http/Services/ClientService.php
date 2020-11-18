@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Services;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use App\Http\JsonRequests\ChangePasswordRequest;
+use App\Http\JsonRequests\UpdateClientRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\JsonRequests\UpdateClientRequest;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\Client;
-use Illuminate\Support\Facades\Storage;
 
 class ClientService
 {
@@ -123,5 +125,23 @@ class ClientService
         }
 
         $client->save();
+    }
+
+    /**
+     * Change password
+     * 
+     * @param \App\Http\JsonRequests\ChangePasswordRequest $request
+     * @param int $id
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $client = Client::find(auth('client')->user()->id);
+        $oldPassword = $request->old_password;
+        $newPassword = $request->password;
+
+        if(Hash::check($oldPassword, $client->password)) {
+            $client->password = Hash::make($newPassword);
+            $client->save();
+        }
     }
 }

@@ -49,7 +49,7 @@
                                     <th scope="col" style="width: 70px;">#</th>
                                     <th scope="col">{{ __('pages.routes.datatable.to') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.from') }}</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.driver') }}</th>
+                                    <th scope="col">{{ __('pages.routes.datatable.transport') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.status') }}</th>
                                     <th scope="col">{{ __('pages.routes.datatable.actions') }}</th>
                                 </tr>
@@ -67,7 +67,12 @@
                                             <p class="text-muted mb-0">{{ $route->getEndingCountryWithTime()['time'] }}</p>
                                         </td>
                                         <td>
-                                            <h5 class="font-size-14 mb-1"><a href="{{ route('admin.drivers.show', [ $route->driver->id ]) }}" class="text-dark">{{ $route->driver->getFullName() }}</a></h5>
+                                            <h5 class="font-size-14 mb-1">
+                                                <a href="#" class="text-dark">
+                                                    {{ $route->transport->car_number }} &middot; 
+                                                    {{ $route->transport->car_brand->name .' '. $route->transport->car_model->name }}
+                                                </a>
+                                            </h5>
                                         </td>
                                         <td>
                                             @if ($route->status === 'active')

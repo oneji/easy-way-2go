@@ -13,11 +13,11 @@ class Route extends Model
     const TYPE_BACK = 'back';
 
     /**
-     * Get the driver that owns the route.
+     * Get the transport that owns the route.
      */
-    public function driver()
+    public function transport()
     {
-        return $this->belongsTo('App\Driver');
+        return $this->belongsTo('App\Transport');
     }
 
     /**

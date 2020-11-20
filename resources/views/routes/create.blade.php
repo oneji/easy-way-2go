@@ -22,10 +22,12 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Адреса маршрута</h4>
                     <div class="form-group">
-                        <label for="driver_id">Водитель</label>
-                        <select name="driver_id" id="driverId" class="form-control">
-                            @foreach ($drivers as $driver)
-                                <option value="{{ $driver->id }}">{{ $driver->getFullName() }}</option>
+                        <label for="transport_id">Водитель</label>
+                        <select name="transport_id" id="transportId" class="form-control">
+                            @foreach ($transports as $transport)
+                                <option value="{{ $transport->id }}">
+                                    {{ $transport->car_number }} &middot; {{ $transport->car_brand->name . ' ' . $transport->car_model->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -293,7 +295,7 @@
                         url: '/api/routes',
                         data: {
                             'addresses': addresses,
-                            'driver_id': $('#driverId').val(),
+                            'transport_id': $('#transportId').val(),
                             'repeats': [
                                 {
                                     'from': '01/01/2021',

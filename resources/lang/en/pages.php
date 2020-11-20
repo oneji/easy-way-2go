@@ -356,11 +356,11 @@ return [
     'routes' => [
         'label' => 'Routes',
         'driverInfoLabel' => 'All routes',
-        'infoModalLabel' => 'Route',
+        'infoModalLabel' => 'View route',
         'datatable' => [
             'from' => 'From',
             'to' => 'To',
-            'driver' => 'Driver',
+            'transport' => 'Transport',
             'status' => 'Status',
             'actions' => 'Actions'
         ],

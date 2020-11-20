@@ -28,7 +28,7 @@ class OrderController extends Controller
      */
     public function all()
     {
-        $orders = $this->orderService->all();
+        $orders = $this->orderService->getClientOrders();
 
         return response()->json([
             'ok' => true,

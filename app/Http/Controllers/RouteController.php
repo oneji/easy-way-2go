@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\RouteService;
 use App\Country;
-use App\Driver;
+use App\Transport;
 
 class RouteController extends Controller
 {
@@ -43,11 +43,11 @@ class RouteController extends Controller
     public function create()
     {
         $countries = Country::orderBy('name')->get();
-        $drivers = Driver::all();
+        $transports = Transport::all();
 
         return view('routes.create', [
             'countries' => $countries,
-            'drivers' => $drivers
+            'transports' => $transports
         ]);
     }
 }

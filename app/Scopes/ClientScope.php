@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class Order\PassengerScope implements Scope
+class ClientScope implements Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -17,6 +17,6 @@ class Order\PassengerScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        //
+        $builder->with('client');
     }
 }

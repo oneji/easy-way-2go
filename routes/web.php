@@ -74,6 +74,10 @@ Route::group([
         Route::get('bas/{id}', 'BaRequestController@show')->name('bas.show');
         Route::post('bas/{id}/approve', 'BaRequestController@approve')->name('bas.approve');
         Route::post('bas/{id}/decline', 'BaRequestController@decline')->name('bas.decline');
+
+        // Orders
+        Route::get('orders', 'OrderController@index')->name('orders.index');
+        Route::get('orders/{id}', 'OrderController@show')->name('orders.show');
     });
 });
 

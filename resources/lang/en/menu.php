@@ -15,6 +15,7 @@ return [
     'drivers'           => 'Drivers',
     'clients'           => 'Clients',
     'routes'            => 'Routes',
-    'bas'               => 'Bussiness account requests'
+    'bas'               => 'Bussiness account requests',
+    'orders'            => 'Orders'
 
 ];

@@ -14,15 +14,35 @@ use App\Order;
 class OrderService
 {
     /**
+     * Get client's orders
+     */
+    public function getClientOrders()
+    {
+        $client = auth('client')->user();
+
+        return Order::where('client_id', $client->id)->get();
+    }
+
+    /**
      * Get all orders
      * 
      * @return collection
      */
     public function all()
     {
-        $client = auth('client')->user();
+        return Order::with([ 'country_from', 'country_to' ])->get();
+    }
 
-        return Order::where('client_id', $client->id)->get();
+    /**
+     * Get a specific order
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        return Order::with([ 'country_from', 'country_to' ])
+            ->whereId($id)
+            ->first();
     }
 
     /**

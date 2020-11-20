@@ -55,7 +55,7 @@ class RouteController extends Controller
             'addresses.*.arrival_date' => [ 'required', 'date' ],
             'addresses.*.arrival_time' => [ 'required', 'string' ],
             'addresses.*.type' => 'required',
-            'driver_id' => 'required'
+            'transport_id' => 'required'
         ]);
 
         if($validator->fails()) {

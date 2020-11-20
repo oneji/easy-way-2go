@@ -34,6 +34,14 @@ class Passenger extends Model
     protected $guarded = [];
 
     /**
+     * Get the nationality country for the passenger.
+     */
+    public function nationality_country()
+    {
+        return $this->belongsTo('App\Country', 'nationality', 'id');
+    }
+
+    /**
      * Get the orders for the passenger.
      */
     public function orders()

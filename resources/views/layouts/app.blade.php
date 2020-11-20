@@ -17,6 +17,12 @@
     </style>
 
     @section('head')
+        <!-- DataTables -->
+        <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- Responsive datatable examples -->
+        <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+        
         <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Css -->
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -174,6 +180,12 @@
                                 <span>{{ __('menu.bas') }}</span>
                             </a>
                         </li>
+                        <li class="{{ Request::segment(2) === 'orders' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.orders.index') }}" class="waves-effect {{ Request::segment(2) === 'orders' ? 'active' : null }}" aria-expanded="false">
+                                <i class="bx bx-transfer-alt"></i>
+                                <span>{{ __('menu.orders') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -250,6 +262,9 @@
         <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
 
         <script src="{{ asset('assets/js/app.js') }}"></script>
+        <!-- Required datatable js -->
+        <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     @show
 </body>
 </html>

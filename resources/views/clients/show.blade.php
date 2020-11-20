@@ -11,54 +11,6 @@
 @section('content')
     <div class="row">
         <div class="col-xl-4">
-            <div class="card overflow-hidden">
-                <div class="bg-soft-primary">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="text-primary p-3">
-                                <h5 class="text-primary">Добро пожаловать!</h5>
-                                <p>Здесь вы можете найти информацию о водителе</p>
-                            </div>
-                        </div>
-                        <div class="col-5 align-self-end">
-                            <img src="{{ asset('assets/images/profile-img.png') }}" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="avatar-md profile-user-wid mb-4">
-                                @if ($client->photo !== null)
-                                    <img src="{{ asset('storage/'.$client->photo) }}" alt="" class="img-thumbnail rounded-circle">
-                                @else
-                                    <img src="{{ asset('assets/images/users/no-photo.png') }}" alt="" class="img-thumbnail rounded-circle">
-                                @endif
-                            </div>
-                            <h5 class="font-size-15 text-truncate">{{ $client->getFullName() }}</h5>
-                            <p class="text-muted mb-0 text-truncate">{{ $client->email }}</p>
-                        </div>
-
-                        <div class="col-sm-8">
-                            <div class="pt-4">
-                            
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h5 class="font-size-15">125</h5>
-                                        <p class="text-muted mb-0">Projects</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <h5 class="font-size-15">$1245</h5>
-                                        <p class="text-muted mb-0">Revenue</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end card -->
-
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-3">Личные данные</h4>
@@ -100,68 +52,6 @@
                     </div>
                 </div>
             </div>
-            <!-- end card -->
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-5">Experience</h4>
-                    <div class="">
-                        <ul class="verti-timeline list-unstyled">
-                            <li class="event-list active">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle bx-fade-right"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-server h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">Back end Developer</a></h5>
-                                            <span class="text-primary">2016 - 19</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="event-list">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-code h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">Front end Developer</a></h5>
-                                            <span class="text-primary">2013 - 16</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="event-list">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-edit h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">UI /UX Designer</a></h5>
-                                            <span class="text-primary">2011 - 13</span>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>  
-            <!-- end card -->
         </div>         
         
         <div class="col-xl-8">

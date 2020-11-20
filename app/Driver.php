@@ -119,4 +119,12 @@ class Driver extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\DrivingExperience');
     }
+
+    /**
+     * Get the transport that bounded to the driver
+     */
+    public function transport()
+    {
+        return $this->belongsToMany('App\Transport');
+    }
 }

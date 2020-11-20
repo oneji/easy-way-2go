@@ -11,54 +11,6 @@
 @section('content')
     <div class="row">
         <div class="col-xl-4">
-            <div class="card overflow-hidden">
-                <div class="bg-soft-primary">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="text-primary p-3">
-                                <h5 class="text-primary">Добро пожаловать!</h5>
-                                <p>Здесь вы можете найти информацию о водителе</p>
-                            </div>
-                        </div>
-                        <div class="col-5 align-self-end">
-                            <img src="{{ asset('assets/images/profile-img.png') }}" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="avatar-md profile-user-wid mb-4">
-                                @if ($driver->photo !== null)
-                                    <img src="{{ asset('storage/'.$driver->photo) }}" alt="" class="img-thumbnail rounded-circle">
-                                @else
-                                    <img src="{{ asset('assets/images/users/no-photo.png') }}" alt="" class="img-thumbnail rounded-circle">
-                                @endif
-                            </div>
-                            <h5 class="font-size-15 text-truncate">{{ $driver->first_name .' '. $driver->last_name }}</h5>
-                            <p class="text-muted mb-0 text-truncate">{{ $driver->email }}</p>
-                        </div>
-
-                        <div class="col-sm-8">
-                            <div class="pt-4">
-                            
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h5 class="font-size-15">125</h5>
-                                        <p class="text-muted mb-0">Projects</p>
-                                    </div>
-                                    <div class="col-6">
-                                        <h5 class="font-size-15">$1245</h5>
-                                        <p class="text-muted mb-0">Revenue</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end card -->
-
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-3">Личные данные</h4>
@@ -67,7 +19,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">День рождения:</th>
-                                    <td>{{ $driver->birthday }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($driver->birthday)->translatedFormat('M d, Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Номер телефона:</th>
@@ -87,11 +39,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Действуют с:</th>
-                                    <td>{{ $driver->dl_issued_at }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($driver->dl_issued_at)->translatedFormat('M d, Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Действуют до:</th>
-                                    <td>{{ $driver->dl_expires_at }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($driver->dl_expires_at)->translatedFormat('M d, Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Водительский опыт:</th>
@@ -123,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Срок действия баллов:</th>
-                                    <td>{{ $driver->grades_expire_at }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($driver->grades_expire_at)->translatedFormat('M d, Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Были ли в ДТП в течение 5 лет?</th>
@@ -142,70 +94,36 @@
             </div>
             <!-- end card -->
 
-            <div class="card">
+            <div class="card text-center">
                 <div class="card-body">
-                    <h4 class="card-title mb-5">Experience</h4>
-                    <div class="">
-                        <ul class="verti-timeline list-unstyled">
-                            <li class="event-list active">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle bx-fade-right"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-server h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">Back end Developer</a></h5>
-                                            <span class="text-primary">2016 - 19</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="event-list">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-code h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">Front end Developer</a></h5>
-                                            <span class="text-primary">2013 - 16</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="event-list">
-                                <div class="event-timeline-dot">
-                                    <i class="bx bx-right-arrow-circle"></i>
-                                </div>
-                                <div class="media">
-                                    <div class="mr-3">
-                                        <i class="bx bx-edit h4 text-primary"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div>
-                                            <h5 class="font-size-15"><a href="#" class="text-dark">UI /UX Designer</a></h5>
-                                            <span class="text-primary">2011 - 13</span>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="avatar-sm mx-auto mb-4">
+                        <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
+                            D
+                        </span>
                     </div>
-
+                    <h5 class="font-size-15"><a href="#" class="text-dark">{{ $driver->transport->first()->car_brand->name .' '. $driver->transport->first()->car_model->name }}</a></h5>
+                    <p class="text-muted">{{ $driver->transport->first()->car_number }}</p>
+                    <div>
+                        <span class="badge badge-primary font-size-11 m-1">
+                            <i class="bx bx-car mr-1"></i>
+                            Транспортное средство
+                        </span>
+                    </div>
                 </div>
-            </div>  
-            <!-- end card -->
+                <div class="card-footer bg-transparent border-top">
+                    <div class="contact-links d-flex font-size-20">
+                        <div class="flex-fill">
+                            <a href="{{ route('admin.transport.edit', [ $driver->transport->first()->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
+                        </div>
+                        <div class="flex-fill">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-car"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>         
         
         <div class="col-xl-8">
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="card mini-stats-wid">
@@ -225,6 +143,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="card mini-stats-wid">
                         <div class="card-body">
@@ -243,6 +162,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="card mini-stats-wid">
                         <div class="card-body">
@@ -262,81 +182,11 @@
                     </div>
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-4">Revenue</h4>
                     <div id="revenue-chart" class="apex-charts"></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-4">My Projects</h4>
-                    <div class="table-responsive">
-                        <table class="table table-nowrap table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Projects</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">Deadline</th>
-                                    <th scope="col">Budget</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Skote admin UI</td>
-                                    <td>2 Sep, 2019</td>
-                                    <td>20 Oct, 2019</td>
-                                    <td>$506</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Skote admin Logo</td>
-                                    <td>1 Sep, 2019</td>
-                                    <td>2 Sep, 2019</td>
-                                    <td>$94</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Redesign - Landing page</td>
-                                    <td>21 Sep, 2019</td>
-                                    <td>29 Sep, 2019</td>
-                                    <td>$156</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>App Landing UI</td>
-                                    <td>29 Sep, 2019</td>
-                                    <td>04 Oct, 2019</td>
-                                    <td>$122</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Blog Template</td>
-                                    <td>05 Oct, 2019</td>
-                                    <td>16 Oct, 2019</td>
-                                    <td>$164</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Redesign - Multipurpose Landing</td>
-                                    <td>17 Oct, 2019</td>
-                                    <td>05 Nov, 2019</td>
-                                    <td>$192</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">7</th>
-                                    <td>Logo Branding</td>
-                                    <td>04 Nov, 2019</td>
-                                    <td>05 Nov, 2019</td>
-                                    <td>$94</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

@@ -20,9 +20,9 @@
         <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Адреса маршрута</h4>
+                    <h4 class="card-title mb-4">{{ __('pages.routes.routeAddresses') }}</h4>
                     <div class="form-group">
-                        <label for="transport_id">Водитель</label>
+                        <label for="transport_id">{{ __('pages.routes.transport') }}</label>
                         <select name="transport_id" id="transportId" class="form-control">
                             @foreach ($transports as $transport)
                                 <option value="{{ $transport->id }}">
@@ -32,25 +32,25 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-success btn-block waves-effect waves-light" id="saveRouteBtn">Сохранить</button>
+                        <button type="button" class="btn btn-success btn-block waves-effect waves-light" id="saveRouteBtn">{{ __('form.buttons.save') }}</button>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#forward" role="tab" aria-selected="true">
                                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                <span class="d-none d-sm-block">Туда</span>    
+                                <span class="d-none d-sm-block">{{ __('pages.routes.from') }}</span>    
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#back" role="tab" aria-selected="false">
                                 <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                <span class="d-none d-sm-block">Обратно</span>    
+                                <span class="d-none d-sm-block">{{ __('pages.routes.to') }}</span>    
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#calendar" role="tab" aria-selected="false">
                                 <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                <span class="d-none d-sm-block">Календарь</span>    
+                                <span class="d-none d-sm-block">{{ __('pages.routes.calendar') }}</span>    
                             </a>
                         </li>
                     </ul>
@@ -78,7 +78,7 @@
                         <form id="addAddressForm" class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="control-label">Страна</label>
+                                    <label class="control-label">{{ __('common.country') }}</label>
                                     <select class="form-control select2" name="country" required>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -87,17 +87,17 @@
                                 </div>
     
                                 <div class="form-group">
-                                    <label for="">Город, адрес</label>
-                                    <input type="text" class="form-control" required name="address" placeholder="Введите город, адрес">
+                                    <label for="address">{{ __('pages.routes.address') }}</label>
+                                    <input type="text" class="form-control" required name="address" placeholder="{{ __('pages.routes.address') }}">
                                     <div class="invalid-feedback">
                                         * Обязательное поле.
                                     </div>
                                 </div>
             
                                 <div class="form-group">
-                                    <label for="">Дата отправления</label>
+                                    <label for="departure_date">{{ __('pages.routes.departureDate') }}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" required name="departure_date" placeholder="Выберите дату" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" class="form-control" required name="departure_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -105,14 +105,14 @@
                                 </div>
     
                                 <div class="form-group">
-                                    <label for="">Время отправления</label>
+                                    <label for="departure_time">{{ __('pages.routes.departureTime') }}</label>
                                     <input type="time" class="form-control" name="departure_time" placeholder="Введите время" value="00:00" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Дата прибытия</label>
+                                    <label for="arrival_date">{{ __('pages.routes.arrivalDate') }}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" required name="arrival_date" placeholder="Выберите дату" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                        <input type="text" class="form-control" required name="arrival_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
@@ -120,20 +120,20 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Время прибытия</label>
+                                    <label for="arrival_time">{{ __('pages.routes.arrivalTime') }}</label>
                                     <input type="time" class="form-control" required name="arrival_time" value="00:00" placeholder="Введите время">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Тип</label>
+                                    <label for="type">{{ __('pages.routes.type') }}</label>
                                     <select class="form-control" name="type" required>
-                                        <option value="forward">Туда</option>
-                                        <option value="back">Обратно</option>
+                                        <option value="forward">{{ __('pages.routes.from') }}</option>
+                                        <option value="back">{{ __('pages.routes.to') }}</option>
                                     </select>
                                 </div>
     
                                 <div class="form-group mb-0">
-                                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">Добавить адрес</button>
+                                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">{{ __('form.buttons.add') }}</button>
                                 </div>
                             </div>
                         </form>

@@ -14,19 +14,19 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#forward" role="tab" aria-selected="true">
                                     <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Туда</span>    
+                                    <span class="d-none d-sm-block">{{ __('pages.routes.from') }}</span>    
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#back" role="tab" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                    <span class="d-none d-sm-block">Обратно</span>    
+                                    <span class="d-none d-sm-block">{{ __('pages.routes.to') }}</span>    
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#calendar" role="tab" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">Календарь</span>    
+                                    <span class="d-none d-sm-block">{{ __('pages.routes.calendar') }}</span>    
                                 </a>
                             </li>
                         </ul>

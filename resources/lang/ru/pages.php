@@ -357,13 +357,20 @@ return [
         'label' => 'Маршруты водителей',
         'driverInfoLabel' => 'Все маршруты',
         'infoModalLabel' => 'Просмотр маршрута',
-        'datatable' => [
-            'from' => 'Туда',
-            'to' => 'Обратно',
-            'transport' => 'Транспорт',
-            'status' => 'Статус',
-            'actions' => 'Действия'
-        ],
+        'from' => 'Туда',
+        'to' => 'Обратно',
+        'transport' => 'Транспорт',
+        'status' => 'Статус',
+        'actions' => 'Действия',
+        'calendar' => 'Календарь',
+        'departureDate' => 'Дата отправления',
+        'departureTime' => 'Время отправления',
+        'arrivalDate' => 'Дата прибытия',
+        'arrivalTime' => 'Время прибытия',
+        'type' => 'Тип',
+        'routeAddresses' => 'Адреса маршрута',
+        'noAddressesWarning' => 'Перед сохранением добавьте хотя бы один адрес!',
+        'address' => 'Город, адрес',
         'emptySet' => 'На данный момент маршрутов водителей в базе не найдено.',
     ],
 
@@ -373,6 +380,9 @@ return [
         'approveBtn' => 'Принять',
         'declineBtn' => 'Отклонить',
         'generateRandomPassBtn' => 'Случайный пароль',
+        'generalInfo' => 'Общая информация',
+        'userInfo' => 'Данные пользователя',
+        'driversAndTransport' => 'Водители и Транспорт',
         'datatable' => [
             'request' => 'Заявка',
             'type' => 'Тип',
@@ -416,4 +426,23 @@ return [
         ],
         'emptySet' => 'На данный момент заявок в базе не найдено.',
     ],
+
+    'orders' => [
+        'label' => 'Заказы',
+        'infoLabel' => 'Все заказы',
+        'from' => 'Откуда',
+        'to' => 'Куда',
+        'date' => 'Дата',
+        'client' => 'Заказчик',
+        'passengers' => 'Пассажиры',
+        'packages' => 'Посылки',
+        'moving' => 'Переезд',
+        'type' => 'Тип заказа',
+        'totalPrice' => 'Общая сумма',
+        'buyerPhoneNumber' => 'Номер телефона заказчика',
+        'buyerEmail' => 'Email адрес заказчика',
+        'passengersLabel' => 'Пассажиры, которые включены в заказ',
+        'packagesLabel' => 'Посылки, которые включены в заказ',
+        'package' => 'Посылка'
+    ]
 ];

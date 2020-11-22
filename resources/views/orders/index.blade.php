@@ -1,8 +1,8 @@
 @extends('layouts.app', [
     'breadcrumbs' => [
-        'title' => 'Заказы',
+        'title' => __('pages.orders.label'),
         'items' => [
-            [ 'name' => 'Заказы', 'link' => null ],
+            [ 'name' => __('pages.orders.label'), 'link' => null ],
         ]
     ]
 ])
@@ -12,18 +12,18 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="card-title">Заказы</div>
+                    <div class="card-title">{{ __('pages.orders.infoLabel') }}</div>
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
-                                <th>Откуда</th>
-                                <th>Куда</th>
-                                <th>Дата</th>
-                                <th>Заказчик</th>
-                                <th>Пассажиры &middot; Посылки</th>
-                                <th>Тип заказа</th>
-                                <th>Общая сумма</th>
-                                <th>Действия</th>
+                                <th>{{ __('pages.orders.from') }}</th>
+                                <th>{{ __('pages.orders.to') }}</th>
+                                <th>{{ __('pages.orders.date') }}</th>
+                                <th>{{ __('pages.orders.client') }}</th>
+                                <th>{{ __('pages.orders.passengers') }} &middot; {{ __('pages.orders.packages') }}</th>
+                                <th>{{ __('pages.orders.type') }}</th>
+                                <th>{{ __('pages.orders.totalPrice') }}</th>
+                                <th>{{ __('common.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +42,11 @@
                                     </td>
                                     <td>
                                         @if ($order->order_type === 'passengers')
-                                            <span class="badge badge-success font-size-14">Пассажиры</span>
+                                            <span class="badge badge-success font-size-14">{{ __('pages.orders.passengers') }}</span>
                                         @elseif($order->order_type === 'packages')
-                                            <span class="badge badge-info font-size-14">Посылки</span>
+                                            <span class="badge badge-info font-size-14">{{ __('pages.orders.packages') }}</span>
                                         @else
-                                            <span class="badge badge-warning font-size-14">Переезд</span>
+                                            <span class="badge badge-warning font-size-14">{{ __('pages.orders.moving') }}</span>
                                         @endif
                                     </td>
                                     <td>{{ $order->total_price }} &euro;</td>

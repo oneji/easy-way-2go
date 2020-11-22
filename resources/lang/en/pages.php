@@ -357,13 +357,20 @@ return [
         'label' => 'Routes',
         'driverInfoLabel' => 'All routes',
         'infoModalLabel' => 'View route',
-        'datatable' => [
-            'from' => 'From',
-            'to' => 'To',
-            'transport' => 'Transport',
-            'status' => 'Status',
-            'actions' => 'Actions'
-        ],
+        'from' => 'From',
+        'to' => 'To',
+        'transport' => 'Transport',
+        'status' => 'Status',
+        'actions' => 'Actions',
+        'calendar' => 'Calendar',
+        'departureDate' => 'Departure date',
+        'departureTime' => 'Departure time',
+        'arrivalDate' => 'Arrival date',
+        'arrivalTime' => 'Arrival time',
+        'type' => 'Type',
+        'routeAddresses' => 'Route addresses',
+        'noAddressesWarning' => 'Before saving add at least one route address!',
+        'address' => 'City, address',
         'emptySet' => 'For now, we could not find any items.',
     ],
     
@@ -373,6 +380,9 @@ return [
         'approveBtn' => 'Approve',
         'declineBtn' => 'Decline',
         'generateRandomPassBtn' => 'Random password',
+        'generalInfo' => 'General information',
+        'userInfo' => 'User information',
+        'driversAndTransport' => 'Drivers and Transport',
         'datatable' => [
             'request' => 'Request',
             'type' => 'Type',
@@ -416,4 +426,23 @@ return [
         ],
         'emptySet' => 'For now, we could not find any items.',
     ],
+
+    'orders' => [
+        'label' => 'Orders',
+        'infoLabel' => 'All orders',
+        'from' => 'From',
+        'to' => 'To',
+        'date' => 'Date',
+        'client' => 'Client',
+        'passengers' => 'Passengers',
+        'packages' => 'Packages',
+        'moving' => 'Moving',
+        'type' => 'Order type',
+        'totalPrice' => 'Total price',
+        'buyerPhoneNumber' => 'Buyer phone number',
+        'buyerEmail' => 'Buyer Email address',
+        'passengersLabel' => 'Passengers that are included to the order',
+        'packagesLabel' => 'Packages that are included to the order',
+        'package' => 'Package'
+    ]
 ];

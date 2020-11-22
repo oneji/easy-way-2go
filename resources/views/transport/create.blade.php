@@ -12,7 +12,6 @@
     @parent
     
     <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .radio-btn-group {
             display: flex;
@@ -64,7 +63,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="register_country">{{ __('pages.transport.form.labels.country') }}</label>
-                                    <select name="register_country" class="form-control" required>
+                                    <select name="register_country" class="form-control select2" required>
                                         <option value="" selected disabled>{{ __('pages.transport.form.placeholders.country') }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -92,7 +91,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_brand_id">{{ __('pages.transport.form.labels.brand') }}</label>
-                                    <select name="car_brand_id" class="form-control" required>
+                                    <select name="car_brand_id" class="form-control select2" required>
                                         @foreach ($carBrands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                         @endforeach
@@ -103,7 +102,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_model_id">{{ __('pages.transport.form.labels.model') }}</label>
-                                    <select name="car_model_id" class="form-control" required>
+                                    <select name="car_model_id" class="form-control select2" required>
                                         @foreach ($carModels as $model)
                                             <option value="{{ $model->id }}">{{ $model->name }}</option>
                                         @endforeach
@@ -114,7 +113,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="year">{{ __('pages.transport.form.labels.year') }}</label>
-                                    <select name="year" class="form-control" id="yearpicker" required></select>
+                                    <select name="year" class="form-control select2" id="yearpicker" required></select>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +127,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -140,7 +139,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -152,7 +151,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -164,7 +163,7 @@
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
-                                    </div><!-- input-group -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +208,13 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
@@ -226,7 +231,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.canPullTrailer') }}</h5>
@@ -242,7 +247,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.hasTrailer') }}</h5>
@@ -258,7 +263,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.palletTransportation') }}</h5>
@@ -274,7 +279,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.conditioner') }}</h5>
@@ -290,7 +295,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.wifi') }}</h5>
@@ -306,7 +311,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.tvVideo') }}</h5>
@@ -322,7 +327,7 @@
                                     </div>
                                 </div>
                             </div>
-
+        
                             <div class="col-md-6">
                                 <div class="mt-4 mt-lg-0">
                                     <h5 class="font-size-14">{{ __('pages.transport.form.labels.disabledPeopleSeats') }}</h5>
@@ -341,9 +346,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.transport.form.documentsLabel') }}</h4>
@@ -430,15 +433,12 @@
 @section('scripts')
     @parent
 
-    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('.select2').select2();
-            
             for (i = new Date().getFullYear(); i > 1900; i--){
                 $('#yearpicker').append($('<option />').val(i).html(i));
             }

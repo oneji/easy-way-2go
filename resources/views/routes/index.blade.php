@@ -47,11 +47,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.to') }}</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.from') }}</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.transport') }}</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.status') }}</th>
-                                    <th scope="col">{{ __('pages.routes.datatable.actions') }}</th>
+                                    <th scope="col">{{ __('pages.routes.to') }}</th>
+                                    <th scope="col">{{ __('pages.routes.from') }}</th>
+                                    <th scope="col">{{ __('pages.routes.transport') }}</th>
+                                    <th scope="col">{{ __('pages.routes.status') }}</th>
+                                    <th scope="col">{{ __('pages.routes.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

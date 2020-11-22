@@ -12,7 +12,6 @@
     @parent
     
     <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .radio-btn-group {
             display: flex;
@@ -125,7 +124,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="last_name" class="control-label">{{ __('pages.clients.addForm.labels.nationality') }}</label>
                             <div class="col-md-10">
-                                <select name="nationality" class="form-control" required>
+                                <select name="nationality" class="form-control select2" required>
                                     <option value="" selected>{{ __('pages.clients.addForm.placeholders.nationality') }}</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -197,14 +196,8 @@
 @section('scripts')
     @parent
 
-    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
 @endsection

@@ -12,8 +12,6 @@
     @parent
     
     <link href="{{ asset('assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- Lightbox css -->
     <link href="{{ asset('assets/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .radio-btn-group {
@@ -113,7 +111,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="register_country">{{ __('pages.transport.form.labels.country') }}</label>
-                                    <select name="register_country" class="form-control" required>
+                                    <select name="register_country" class="form-control select2" required>
                                         <option value="" disabled>{{ __('pages.transport.form.placeholders.country') }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}" {{ $transport->register_country === $country->id ? 'selected' : null }}>{{ $country->name }}</option>
@@ -141,7 +139,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_brand_id">{{ __('pages.transport.form.labels.brand') }}</label>
-                                    <select name="car_brand_id" class="form-control" required>
+                                    <select name="car_brand_id" class="form-control select2" required>
                                         @foreach ($carBrands as $brand)
                                             <option value="{{ $brand->id }}" {{ $transport->car_brand_id === $brand->id ? 'selected' : null }}>{{ $brand->name }}</option>
                                         @endforeach
@@ -152,7 +150,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_model_id">{{ __('pages.transport.form.labels.model') }}</label>
-                                    <select name="car_model_id" class="form-control" required>
+                                    <select name="car_model_id" class="form-control select2" required>
                                         @foreach ($carModels as $model)
                                             <option value="{{ $model->id }}" {{ $transport->car_model_id === $model->id ? 'selected' : null }}>{{ $model->name }}</option>
                                         @endforeach
@@ -163,7 +161,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label for="car_number">{{ __('pages.transport.form.labels.year') }}</label>
-                                    <select name="year" class="form-control" id="yearpicker" required>
+                                    <select name="year" class="form-control select2" id="yearpicker" required>
                                         <option value="{{ $transport->year }}" selected>{{ $transport->year }}</option>
                                     </select>
                                 </div>
@@ -515,17 +513,13 @@
 @section('scripts')
     @parent
 
-    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
-    <!-- Magnific Popup-->
     <script src="{{ asset('assets/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('.select2').select2();
-            
             for (i = new Date().getFullYear(); i > 1900; i--){
                 $('#yearpicker').append($('<option />').val(i).html(i));
             }

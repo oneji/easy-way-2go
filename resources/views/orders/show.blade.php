@@ -13,39 +13,39 @@
         <div class="col-sm-12 col-md-3 col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-3">Общая информация</h4>
+                    <h4 class="card-title mb-3">{{ __('common.generalInfo') }}</h4>
                     <div class="table-responsive">
                         <table class="table table-nowrap mb-0">
                             <tbody>
                                 <tr>
-                                    <th scope="row">Откуда:</th>
+                                    <th scope="row">{{ __('pages.orders.from') }}:</th>
                                     <td>{{ $order->country_from->name .', '. $order->from_address }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Куда:</th>
+                                    <th scope="row">{{ __('pages.orders.to') }}:</th>
                                     <td>{{ $order->country_to->name .', '. $order->to_address }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Дата:</th>
+                                    <th scope="row">{{ __('pages.orders.date') }}:</th>
                                     <td>{{ \Carbon\Carbon::parse($order->date)->translatedFormat('M d, Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Номер телефона покупателя:</th>
+                                    <th scope="row">{{ __('pages.orders.buyerPhoneNumber') }}:</th>
                                     <td>{{ $order->buyer_phone_number ?? __('pages.transport.form.labels.no') }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Email адрес покупателя:</th>
+                                    <th scope="row">{{ __('pages.orders.buyerEmail') }}:</th>
                                     <td>{{ $order->email ?? __('pages.transport.form.labels.no') }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Тип заказа:</th>
+                                    <th scope="row">{{ __('pages.orders.type') }}:</th>
                                     <td>
                                         @if ($order->order_type === 'passengers')
-                                            <span class="badge badge-success">Пассажиры</span>
+                                            <span class="badge badge-success">{{ __('pages.orders.passengers') }}</span>
                                         @elseif($order->order_type === 'packages')
-                                            <span class="badge badge-info">Посылки</span>
+                                            <span class="badge badge-info">{{ __('pages.orders.packages') }}</span>
                                         @else
-                                            <span class="badge badge-warning">Переезд</span>
+                                            <span class="badge badge-warning">{{ __('pages.orders.moving') }}</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -56,7 +56,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">К оплате:</th>
+                                    <th scope="row">{{ __('pages.orders.totalPrice') }}:</th>
                                     <td>{{ $order->total_price }} &euro;</td>
                                 </tr>
                             </tbody>
@@ -71,8 +71,8 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title">Пассажиры</h4>
-                        <p class="card-title-desc">Пассажиры участвующие в заказе</p>
+                        <h4 class="card-title">{{ __('pages.orders.passengers') }}</h4>
+                        <p class="card-title-desc">{{ __('pages.orders.passengersLabel') }}</p>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                             @foreach ($order->passengers as $idx => $passenger)
@@ -144,15 +144,15 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Посылки</h4>
-                    <p class="card-title-desc">Посылки включенные в заказ</p>
+                    <h4 class="card-title">{{ __('pages.orders.packages') }}</h4>
+                    <p class="card-title-desc">{{ __('pages.orders.packagesLabel') }}</p>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                         @foreach ($order->packages as $idx => $package)
                             <li class="nav-item">
                                 <a class="nav-link {{ $idx === 0 ? 'active' : null }}" data-toggle="tab" href="#package-{{ $package->id }}" role="tab">
                                     <span class="d-block d-sm-none"><i class="fas fa-box"></i></span>
-                                    <span class="d-none d-sm-block">Посылка {{ $idx + 1 }}</span> 
+                                    <span class="d-none d-sm-block">{{ __('pages.orders.package') }} {{ $idx + 1 }}</span> 
                                 </a>
                             </li>
                         @endforeach

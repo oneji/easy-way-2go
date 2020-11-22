@@ -6,7 +6,7 @@
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-3">Общая информация</h4>
+                        <h4 class="card-title mb-3">{{ __('common.generalInfo') }}</h4>
                         <div class="table-responsive">
                             <table class="table table-nowrap mb-0">
                                 <tbody>
@@ -48,7 +48,7 @@
             <div class="col-sm-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-3">Данные пользователя</h4>
+                        <h4 class="card-title mb-3">{{ __('pages.bas.userInfo') }}</h4>
                         <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="custom-validation" novalidate id="approveForm">
                             @csrf
         
@@ -93,7 +93,7 @@
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-3">Водители и транспорт</h4>
+                        <h4 class="card-title mb-3">{{ __('pages.bas.driversAndTransport') }}</h4>
 
                         <div class="row">
                             <div class="col-md-3">

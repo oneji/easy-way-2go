@@ -6,6 +6,8 @@ return [
     'country' => 'Страна',
     'warning' => 'Внимание!',
     'actions' => 'Действия',
-    'generalInfo' => 'Общая информация'
+    'generalInfo' => 'Общая информация',
+    'langRu' => 'Русский',
+    'langEn' => 'Английский'
     
 ];

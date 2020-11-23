@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title mb-3">{{ __('pages.bas.userInfo') }}</h4>
-                        <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="custom-validation" novalidate id="approveForm">
+                        <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="form-horizontal custom-validation" novalidate id="approveForm">
                             @csrf
         
                             <div class="form-group">
@@ -342,9 +342,6 @@
 @section('scripts')
     @parent
 
-    <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
-    <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
     <script>
         $(function() {
             $('#generateRandomPassBtn').on('click', function() {

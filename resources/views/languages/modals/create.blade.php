@@ -14,11 +14,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="name">{{ __('form.labels.name') }}</label>
+                                <label for="name">{{ __('form.labels.name') }}: {{ __('common.langRu') }}</label>
                                 <input name="translations[ru][name]" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="name">{{ __('form.labels.name') }}</label>
+                                <label for="name">{{ __('form.labels.name') }}: {{ __('common.langEn') }}</label>
                                 <input name="translations[en][name]" type="text" class="form-control" placeholder="{{ __('form.placeholders.name') }}" required>
                             </div>
                             <div class="form-group">

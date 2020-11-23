@@ -21,19 +21,26 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-4">{{ __('pages.routes.routeAddresses') }}</h4>
-                    <div class="form-group">
-                        <label for="transport_id">{{ __('pages.routes.transport') }}</label>
-                        <select name="transport_id" id="transportId" class="form-control">
-                            @foreach ($transports as $transport)
-                                <option value="{{ $transport->id }}">
-                                    {{ $transport->car_number }} &middot; {{ $transport->car_brand->name . ' ' . $transport->car_model->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success btn-block waves-effect waves-light" id="saveRouteBtn">{{ __('form.buttons.save') }}</button>
-                    </div>
+                    @if ($transports->count() > 0)
+                        <div class="form-group">
+                            <label for="transport_id">{{ __('pages.routes.transport') }}</label>
+                            <select name="transport_id" id="transportId" class="form-control">
+                                @foreach ($transports as $transport)
+                                    <option value="{{ $transport->id }}">
+                                        {{ $transport->car_number }} &middot; {{ $transport->car_brand->name . ' ' . $transport->car_model->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success btn-block waves-effect waves-light" id="saveRouteBtn">{{ __('form.buttons.save') }}</button>
+                        </div>
+                    @else
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <i class="mdi mdi-information mr-2"></i>
+                            {{ __('pages.transport.bindDriverModal.firstAddTransportLabel') }}
+                        </div>
+                    @endif
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#forward" role="tab" aria-selected="true">
@@ -131,10 +138,12 @@
                                         <option value="back">{{ __('pages.routes.to') }}</option>
                                     </select>
                                 </div>
-    
-                                <div class="form-group mb-0">
-                                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">{{ __('form.buttons.add') }}</button>
-                                </div>
+                                
+                                @if ($transports->count() > 0)
+                                    <div class="form-group mb-0">
+                                        <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">{{ __('form.buttons.add') }}</button>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>

@@ -434,9 +434,6 @@
     @parent
 
     <script src="{{ asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
-    <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
     <script>
         $(document).ready(function() {
             for (i = new Date().getFullYear(); i > 1900; i--){

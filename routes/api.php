@@ -25,7 +25,7 @@ Route::namespace('API')->group(function() {
         
         // User authentication
         Route::get('verify/{code}', 'UserController@verify');
-        Route::post('login', 'UserController@login');
+        Route::get('login', 'UserController@login');
     });
 
     // Driver routes
@@ -58,5 +58,15 @@ Route::namespace('API')->group(function() {
         Route::post('passengers', 'PassengerController@store');
         Route::put('passengers/{id}', 'PassengerController@update');
         Route::delete('passengers/{id}', 'PassengerController@delete');
+
+        // Countries
+        Route::get('countries', 'CountryController@all');
+        // Driving experiences
+        Route::get('driving-experiences', 'DrivingExperienceController@all');
+        // Car brands
+        Route::get('car-brands',  'CarBrandController@all');
+        // Car models
+        Route::get('car-models',  'CarModelController@all');
+        Route::get('car-models/getByBrandId/{id}',  'CarModelController@getByBrandId');
     });
 });

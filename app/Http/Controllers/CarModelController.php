@@ -24,7 +24,7 @@ class CarModelController extends Controller
      */
     public function index()
     {
-        $carModels = $this->carModelService->all();
+        $carModels = $this->carModelService->getPaginated();
         $carBrands = CarBrand::all();
 
         return view('car-models.index', [

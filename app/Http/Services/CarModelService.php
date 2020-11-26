@@ -14,6 +14,16 @@ class CarModelService
      */
     public function all()
     {
+        return CarModel::all();
+    }
+    
+    /**
+     * Get all car models
+     * 
+     * @return collection
+     */
+    public function getPaginated()
+    {
         return CarModel::paginate(10);
     }
 
@@ -26,6 +36,17 @@ class CarModelService
     public function getById($id)
     {
         return CarModel::find($id);
+    }
+
+    /**
+     * Get a specific car model by brand id
+     * 
+     * @param   int $brandId
+     * @return  collection
+     */
+    public function getByBrandId($brandId)
+    {
+        return CarModel::whereCarBrandId($brandId)->get();
     }
 
     /**

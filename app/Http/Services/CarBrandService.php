@@ -14,6 +14,16 @@ class CarBrandService
      */
     public function all()
     {
+        return CarBrand::all();
+    }
+    
+    /**
+     * Get all car brands
+     * 
+     * @return collection
+     */
+    public function getPaginated()
+    {
         return CarBrand::paginate(10);
     }
 

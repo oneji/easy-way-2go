@@ -28,7 +28,7 @@ class DrivingExperienceController extends Controller
      */
     public function index()
     {
-        $deList = $this->deService->all();
+        $deList = $this->deService->getPaginated();
         $langs = Language::all();
 
         return view('driving-experience.index', [

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Services\CarBrandService;
 use App\Http\Requests\StoreCarBrandRequest;
 
 class CarBrandController extends Controller
 {
+    private $carBrandService;
+
     /**
      * CarBrandController constructor
      * 
@@ -23,7 +24,7 @@ class CarBrandController extends Controller
      */
     public function index()
     {
-        $carBrands = $this->carBrandService->all();
+        $carBrands = $this->carBrandService->getPaginated();
 
         return view('car-brands.index', [
             'carBrands' => $carBrands

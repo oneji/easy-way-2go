@@ -13,6 +13,16 @@ class DrivingExperienceService
      */
     public function all()
     {
+        return DrivingExperience::all();
+    }
+    
+    /**
+     * Show a listing of driving experience.
+     * 
+     * @return collection
+     */
+    public function getPaginated()
+    {
         return DrivingExperience::paginate(10);
     }
 

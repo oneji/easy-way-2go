@@ -14,7 +14,7 @@ class CountryService
      */
     public function all()
     {
-        return Country::all();
+        return Country::orderBy('name')->get();
     }
 
     /**

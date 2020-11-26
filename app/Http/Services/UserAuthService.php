@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
+use App\Http\JsonRequests\LoginUserRequest;
 use Carbon\Carbon;
 use App\User;
 use App\Driver;
@@ -14,21 +14,14 @@ class UserAuthService
     /**
      * Authenticate the user and return jwt token.
      * 
-     * @param   \Illuminate\Http\Request $request
+     * @param   \App\Http\JsonRequests\LoginUserRequest $request
      * @return  array
      */
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
         $credentials = $request->only('email', 'password');
-        $type = $request->type;
-
-        if($type === 'driver') {
-            $user = Driver::where('email', $request->email)->first();
-        } else if($type === 'client') {
-            $user = Client::where('email', $request->email)->first();
-        } else if($type === 'brigadir') {
-            $user = Brigadir::where('email', $request->email)->first();
-        }
+        
+        $user = $this->findUser($credentials['email']);
 
         if(!$user) {
             return [
@@ -46,7 +39,7 @@ class UserAuthService
         }
 
         // Authenticate the user
-        if (!$token = auth($type)->attempt($credentials)) {
+        if (!$token = auth($user->role)->attempt($credentials)) {
             return [
                 'ok' => false,
                 'message' => 'Неверный логин или пароль.'
@@ -57,8 +50,26 @@ class UserAuthService
             'ok' => true,
             'token' => $token,
             'user' => $user,
-            'expires_in' => auth($type)->factory()->getTTL() * 60
+            'expires_in' => auth($user->role)->factory()->getTTL() * 60
         ];
+    }
+
+    /**
+     * Find the user from all tables
+     * 
+     * @param string $email
+     */
+    public function findUser($email)
+    {
+        $driver = Driver::where('email', $email)->first();
+        $client = Client::where('email', $email)->first();
+        $brigadir = Brigadir::where('email', $email)->first();
+        
+        if($driver) return $driver;
+        else if($client) return $client;
+        else if($brigadir) return $brigadir;
+
+        return null;
     }
 
     /**  

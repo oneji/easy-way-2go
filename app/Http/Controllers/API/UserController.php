@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\UserAuthService;
-use App\Http\Requests\LoginUserRequest;
+use App\Http\JsonRequests\LoginUserRequest;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -25,24 +25,11 @@ class UserController extends Controller
     /**
      * Autheticate a user with given credentials
      * 
-     * @param   \Illuminate\Http\Request $request
+     * @param   \App\Http\JsonRequests\LoginUserRequest $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => [ 'required', 'email' ],
-            'password' => [ 'required' ],
-            'type' => [ 'required' ]
-        ]);
-
-        if($validator->fails()) {
-            return response()->json([
-                'ok' => false,
-                'errors' => $validator->errors()
-            ]);
-        }
-
         $response = $this->userAuthService->login($request);
 
         return response()->json($response);

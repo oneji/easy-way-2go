@@ -44,6 +44,9 @@ Route::namespace('API')->group(function() {
     Route::post('baRequests', 'BaRequestController@store');
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 
+    // Countries
+    Route::get('countries', 'CountryController@all');
+
     Route::middleware('jwt.verify')->group(function() {
         // Clients
         Route::put('clients/changePassword', 'ClientController@changePassword');
@@ -59,8 +62,6 @@ Route::namespace('API')->group(function() {
         Route::put('passengers/{id}', 'PassengerController@update');
         Route::delete('passengers/{id}', 'PassengerController@delete');
 
-        // Countries
-        Route::get('countries', 'CountryController@all');
         // Driving experiences
         Route::get('driving-experiences', 'DrivingExperienceController@all');
         // Car brands

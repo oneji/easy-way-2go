@@ -24,17 +24,17 @@ class CheckJWT
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json([
                     'ok' => false,
-                    'error' => 'Token is invalid'
+                    'message' => 'Token is invalid'
                 ], 401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
                 return response()->json([
                     'ok' => false,
-                    'status' => 'Token is expired'
+                    'message' => 'Token is expired'
                 ], 401);
             } else {
                 return response()->json([
                     'ok' => false,
-                    'status' => 'Token not found.'
+                    'message' => 'Token not found.'
                 ], 401);
             }
         }

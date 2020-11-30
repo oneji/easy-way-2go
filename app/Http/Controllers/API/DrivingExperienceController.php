@@ -26,11 +26,11 @@ class DrivingExperienceController extends Controller
      */
     public function all()
     {
-        $items = $this->deService->all();
+        $data = $this->deService->all();
 
         return response()->json([
-            'ok' => true,
-            'items' => $items
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

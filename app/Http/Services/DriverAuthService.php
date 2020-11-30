@@ -36,7 +36,7 @@ class DriverAuthService
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
-            'ok' => true,
+            'success' => true,
             'verification_code' => $driver->verification_code,
         ];
     }

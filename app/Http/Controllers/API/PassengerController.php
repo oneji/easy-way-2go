@@ -33,8 +33,8 @@ class PassengerController extends Controller
         $passengers = $this->passengerService->all($client->id);
 
         return response()->json([
-            'ok' => true,
-            'passengers' => $passengers
+            'success' => true,
+            'data' => $passengers
         ]);
     }
 
@@ -49,8 +49,8 @@ class PassengerController extends Controller
         $passenger = $this->passengerService->store($request);
 
         return response()->json([
-            'ok' => true,
-            'passenger' => $passenger
+            'success' => true,
+            'data' => $passenger
         ]);
     }
     
@@ -66,7 +66,7 @@ class PassengerController extends Controller
         $this->passengerService->update($request, $id);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 
@@ -80,7 +80,7 @@ class PassengerController extends Controller
         $this->passengerService->delete($id);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 }

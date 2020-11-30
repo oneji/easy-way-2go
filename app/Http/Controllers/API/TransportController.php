@@ -13,8 +13,7 @@ use Validator;
 
 class TransportController extends Controller
 {
-    private $transportService;
-    private $driverService;
+    protected $transportService;
 
     /**
      * TransportController constructor.
@@ -22,10 +21,9 @@ class TransportController extends Controller
      * @param \App\Http\Services\TransportService $transportService
      * @param \App\Http\Services\DriverService $driverService
      */
-    public function __construct(TransportService $transportService, DriverService $driverService)
+    public function __construct(TransportService $transportService)
     {
         $this->transportService = $transportService;
-        $this->driverService = $driverService;
     }
 
     /**
@@ -36,7 +34,7 @@ class TransportController extends Controller
         $this->transportService->store($request->all());
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 
@@ -51,7 +49,7 @@ class TransportController extends Controller
         $this->transportService->update($request->all(), $id);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 
@@ -65,7 +63,7 @@ class TransportController extends Controller
         $this->transportService->bindDriver($request->transport_id, $request->driver_id);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 }

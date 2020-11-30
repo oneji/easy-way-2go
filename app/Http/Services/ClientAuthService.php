@@ -31,7 +31,7 @@ class ClientAuthService
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
-            'ok' => true,
+            'success' => true,
             'verification_code' => $client->verification_code,
         ];
     }

@@ -31,8 +31,8 @@ class OrderController extends Controller
         $orders = $this->orderService->getClientOrders();
 
         return response()->json([
-            'ok' => true,
-            'orders' => $orders
+            'success' => true,
+            'data' => $orders
         ]);
     }
 
@@ -47,7 +47,7 @@ class OrderController extends Controller
         $this->orderService->store($request);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 }

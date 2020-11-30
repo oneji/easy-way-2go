@@ -31,8 +31,8 @@ class RouteController extends Controller
         $route = $this->routeService->getById($id);
 
         return response()->json([
-            'ok' => true,
-            'route' => $route
+            'success' => true,
+            'data' => $route
         ]);
     }
 
@@ -47,7 +47,7 @@ class RouteController extends Controller
         $this->routeService->store($request);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 
@@ -60,6 +60,9 @@ class RouteController extends Controller
     {
         $routes = $this->routeService->search($request);
 
-        return response()->json($routes);
+        return response()->json([
+            'success' => true,
+            'data' => $routes
+        ]);
     }
 }

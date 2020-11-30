@@ -30,6 +30,8 @@ class RouteController extends Controller
     {
         $routes = $this->routeService->getPaginated();
 
+        // return $routes;
+
         return view('routes.index', [
             'routes' => $routes
         ]);

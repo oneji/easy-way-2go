@@ -60,9 +60,9 @@ $(function() {
 
         $.ajax({
             url: '/api/routes/getById/' + id,
-            success: function(data) {
-                console.log(data)
-                let { route } = data;
+            success: function(response) {
+                console.log(response)
+                let { data } = response;
 
                 let routeForwardTimeline = infoModal.find('#routeForwardTimeline');
                 let routeBackTimeline = infoModal.find('#routeBackTimeline');
@@ -70,7 +70,7 @@ $(function() {
                 routeForwardTimeline.html('');
                 routeBackTimeline.html('');
 
-                route.route_addresses.map(address => {
+                data.route_addresses.map(address => {
                     if(address.type === 'forward') {
                         routeForwardTimeline.append(`
                             <li class="event-list pb-3">
@@ -112,7 +112,7 @@ $(function() {
                     }
                 });
 
-                route.route_repeats.map(date => {
+                data.route_repeats.map(date => {
                     // routeCalendar.find('#routesCalendar').datepicker('setDates', [date.from])
                 });
 

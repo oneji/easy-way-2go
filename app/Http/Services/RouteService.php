@@ -50,11 +50,14 @@ class RouteService
         $route->transport_id = $request->transport_id;
         $route->save();
 
+        // dd($request->addresses);
+
         // Save route addresses
         foreach ($request->addresses as $address) {
             $route->route_addresses()->save(new RouteAddress([
                 'country_id' => $address['country_id'],
                 'address' => $address['address'],
+                'place_id'=> $address['place_id'],
                 'departure_date' => Carbon::parse($address['departure_date']),
                 'departure_time' => $address['departure_time'],
                 'arrival_date' => Carbon::parse($address['arrival_date']),

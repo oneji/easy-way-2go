@@ -21,6 +21,7 @@ class RouteAddress extends Model
     protected $fillable = [
         'country_id',
         'address',
+        'place_id',
         'departure_date',
         'departure_time',
         'arrival_date',

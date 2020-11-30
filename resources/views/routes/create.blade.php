@@ -193,8 +193,6 @@
                         }
                     }
 
-                    console.log('lastAddress', lastAddress);
-
                     if(lastAddress !== null && lastAddress !== undefined) {
                         order = lastAddress.order + 1;
                     }
@@ -204,7 +202,8 @@
                     idx,
                     country_id: addAddressForm.find('select[name=country]').val(),
                     country: addAddressForm.find('select[name=country]').find('option:selected').text(),
-                    address: addAddressForm.find('select[name=address]').val(),
+                    address: addAddressForm.find('select[name=address]').find('option:selected').text(),
+                    place_id: addAddressForm.find('select[name=address]').val(),
                     departure_date: addAddressForm.find('input[name=departure_date]').val(), 
                     departure_time: addAddressForm.find('input[name=departure_time]').val(),
                     arrival_date: addAddressForm.find('input[name=arrival_date]').val(),
@@ -212,8 +211,6 @@
                     type: addAddressForm.find('select[name=type]').val(),
                     order: order
                 }
-
-                console.log('order', data.order);
                 
                 if(addresses.length === 0) {
                     $(`#addresses-${data.type}`).html('');
@@ -268,15 +265,15 @@
                 if(addresses.length > 0) {
                     addresses.map(address => {
                         waypts.push({
-                            location: address.address,
+                            location: { placeId: address.place_id },
                             stopover: true,
                         });
                     });
         
                     directionsService.route(
                         {
-                            origin: addresses[0].address,
-                            destination: addresses[addresses.length - 1].address,
+                            origin: { placeId: addresses[0].place_id },
+                            destination: { placeId: addresses[addresses.length - 1].place_id },
                             waypoints: waypts,
                             optimizeWaypoints: false,
                             travelMode: google.maps.TravelMode.DRIVING,
@@ -355,14 +352,12 @@
                     delay: 1000,
                     data: function (params) {
                         return {
-                            // ?input=%D1%84%D0%B5%D0%B4%D0%B8%D0%BD%D0%B0%2011/9&key=AIzaSyCHPS6mXbStkOthoiF6lAzAYTuHwBLSs7M&sessiontoken=1234567890
                             input: params.term,
                             key: 'AIzaSyCHPS6mXbStkOthoiF6lAzAYTuHwBLSs7M',
                             sessiontoken: '1234567890'
                         }
                     },
                     processResults: function (data) {
-                        console.log(data);
                         var select2Data = $.map(data.predictions, function (obj) {
                             obj.id = obj.place_id;
                             obj.text = obj.description;

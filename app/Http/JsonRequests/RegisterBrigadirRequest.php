@@ -5,9 +5,8 @@ namespace App\Http\JsonRequests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreOrderRequest extends FormRequest
+class RegisterBrigadirRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,15 +39,15 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_country' => 'required|integer|exists:countries,id',
-            'from_address' => 'required|string',
-            'to_country' => 'required|integer|exists:countries,id',
-            'to_address' => 'required|string',
-            'date' => 'required',
-            'order_type' => 'required',
-            'passengers' => Rule::requiredIf(function() {
-                return request()->order_type === 'passengers';
-            })
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'photo' => 'nullable',
+            'nationality' => 'required|integer|exists:countries,id',
+            'company_name' => 'required|string|max:255',
+            'inn' => 'required|string|max:255'
         ];
     }
 }

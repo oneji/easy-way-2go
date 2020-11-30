@@ -29,8 +29,8 @@ class CountryController extends Controller
         $countries = $this->countryService->all();
 
         return response()->json([
-            'ok' => true,
-            'countries' => $countries
+            'success' => true,
+            'data' => $countries
         ]);
     }
 }

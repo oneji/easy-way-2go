@@ -27,7 +27,7 @@ class StoreBaRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'ok' => false,
+            'success' => false,
             'errors' => $validator->errors()
         ], 422));
     }

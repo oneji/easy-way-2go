@@ -34,7 +34,7 @@ class ClientController extends Controller
         $this->clientService->updateProfile($request, $id);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 
@@ -48,7 +48,7 @@ class ClientController extends Controller
         $this->clientService->changePassword($request);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 }

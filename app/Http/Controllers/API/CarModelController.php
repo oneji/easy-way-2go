@@ -29,8 +29,8 @@ class CarModelController extends Controller
         $models = $this->carModelService->all();
 
         return response()->json([
-            'ok' => true,
-            'models' => $models
+            'success' => true,
+            'data' => $models
         ]);
     }
 
@@ -44,8 +44,8 @@ class CarModelController extends Controller
         $models = $this->carModelService->getByBrandId($brandId);
 
         return response()->json([
-            'ok' => true,
-            'models' => $models
+            'success' => true,
+            'data' => $models
         ]);
     }
 }

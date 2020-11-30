@@ -5,10 +5,7 @@ namespace App\Http\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
-use Carbon\Carbon;
-use App\User;
-use JWTAuth;
-use App\ClientData;
+use App\Client;
 
 class ClientAuthService
 {
@@ -22,28 +19,20 @@ class ClientAuthService
      */
     public function register(Request $request)
     {
-        $user = new User($request->except('password'));
-        $user->verification_code = mt_rand(100000, 999999);
-        $user->role = User::ROLE_CLIENT;
-        $user->password = Hash::make($request->password);
+        $client = new Client($request->except('password'));
+        $client->verification_code = mt_rand(100000, 999999);
+        $client->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {
-            $user->photo = $this->uploadImage($request->photo, 'user_photos');
+            $client->photo = $this->uploadImage($request->photo, 'user_photos');
         }
         
-        $user->save();
-
-        // Save additional data
-        $user->client_data()->save(new ClientData([
-            'id_card' => $request->id_card,
-            'passport_number' => $request->passport_number,
-            'passport_expires_at' => $request->passport_expires_at
-        ]));
+        $client->save();
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
             'ok' => true,
-            'verification_code' => $user->verification_code,
+            'verification_code' => $client->verification_code,
         ];
     }
 }

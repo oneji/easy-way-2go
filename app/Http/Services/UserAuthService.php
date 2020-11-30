@@ -25,7 +25,7 @@ class UserAuthService
 
         if(!$user) {
             return [
-                'ok' => false,
+                'success' => false,
                 'message' => 'Пользователя с таким email адресом не найдено.'
             ];
         }
@@ -33,7 +33,7 @@ class UserAuthService
         // Check if the user is verified
         if(!$user->verified) {
             return [
-                'ok' => false,
+                'success' => false,
                 'message' => 'Перед тем как войти, подтвердите ваш номер телефона.'
             ];
         }
@@ -41,13 +41,13 @@ class UserAuthService
         // Authenticate the user
         if (!$token = auth($user->role)->attempt($credentials)) {
             return [
-                'ok' => false,
+                'success' => false,
                 'message' => 'Неверный логин или пароль.'
             ];
         }
 
         return [
-            'ok' => true,
+            'success' => true,
             'token' => $token,
             'user' => $user,
             'expires_in' => auth($user->role)->factory()->getTTL() * 60
@@ -80,14 +80,17 @@ class UserAuthService
      */
     public function verify($verificationCode)
     {
-        $user = User::where('verification_code', $verificationCode)->first();
+        $driver = Driver::where('verification_code', $verificationCode)->first();
+        $client = Client::where('verification_code', $verificationCode)->first();
+        $brigadir = Brigadir::where('verification_code', $verificationCode)->first();
         
-        if(!$user) {
-            return [
-                'ok' => false,
-                'message' => 'Ввведен неверный код подтверждения.'
-            ];   
-        }
+        if($driver) {
+            $user = $driver;
+        } else if($client) {
+            $user = $client;
+        } else if($brigadir) {
+            $user = $brigadir;
+        };
 
         $user->verified = 1;
         $user->verification_code = null;
@@ -95,9 +98,9 @@ class UserAuthService
         $user->save();
 
         return [
-            'ok' => true,
+            'success' => true,
             'message' => 'Номер телефона успешно подтвержден.',
-            'user' => $user
+            'data' => $user
         ];
     }
 }

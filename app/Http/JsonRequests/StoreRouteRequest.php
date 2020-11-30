@@ -5,9 +5,8 @@ namespace App\Http\JsonRequests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreOrderRequest extends FormRequest
+class StoreRouteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,15 +39,16 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_country' => 'required|integer|exists:countries,id',
-            'from_address' => 'required|string',
-            'to_country' => 'required|integer|exists:countries,id',
-            'to_address' => 'required|string',
-            'date' => 'required',
-            'order_type' => 'required',
-            'passengers' => Rule::requiredIf(function() {
-                return request()->order_type === 'passengers';
-            })
+            'addresses' => 'required',
+            'repeats' => 'required',
+            'addresses.*.country_id' => [ 'required', 'exists:countries,id' ],
+            'addresses.*.address' => [ 'required', 'string' ],
+            'addresses.*.departure_date' => [ 'required', 'date' ],
+            'addresses.*.departure_time' => [ 'required', 'string' ],
+            'addresses.*.arrival_date' => [ 'required', 'date' ],
+            'addresses.*.arrival_time' => [ 'required', 'string' ],
+            'addresses.*.type' => 'required',
+            'transport_id' => 'required'
         ];
     }
 }

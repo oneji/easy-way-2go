@@ -29,8 +29,8 @@ class CarBrandController extends Controller
         $brands = $this->carBrandService->all();
 
         return response()->json([
-            'ok' => true,
-            'brands' => $brands
+            'success' => true,
+            'data' => $brands
         ]);
     }
 }

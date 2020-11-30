@@ -2,13 +2,10 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
+use App\Http\JsonRequests\RegisterBrigadirRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
-use Carbon\Carbon;
 use App\Brigadir;
-use JWTAuth;
-use App\BrigadirData;
 
 class BrigadirAuthService
 {
@@ -17,14 +14,14 @@ class BrigadirAuthService
     /**
      * Store a newly created user in the db.
      * 
-     * @param   \Illuminate\Http\Request $request
+     * @param   \App\Http\JsonRequests\RegisterBrigadirRequest $request
      * @return  array
      */
-    public function register(Request $request)
+    public function register(RegisterBrigadirRequest $request)
     {
         $user = new Brigadir($request->except('password'));
         $user->verification_code = mt_rand(100000, 999999);
-        $user->role = Brigadir::ROLE_BRIGADIR;
+        $user->role = 'brigadir';
         $user->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {

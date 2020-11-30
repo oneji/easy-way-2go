@@ -32,8 +32,8 @@ class BaRequestController extends Controller
         $baRequest = $this->baService->getById($id);
 
         return response()->json([
-            'ok' => true,
-            'baRequest' => $baRequest
+            'success' => true,
+            'data' => $baRequest
         ]);
     }
 
@@ -48,7 +48,7 @@ class BaRequestController extends Controller
         $this->baService->store($request);
 
         return response()->json([
-            'ok' => true
+            'success' => true
         ]);
     }
 }

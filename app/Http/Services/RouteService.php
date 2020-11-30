@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
+use App\Http\JsonRequests\StoreRouteRequest;
 use App\Http\JsonRequests\SearchRouteRequest;
 use Carbon\Carbon;
 use App\RouteRepeat;
@@ -42,9 +42,9 @@ class RouteService
     /**
      * Store a newly created route
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\JsonRequests\SearchRouteRequest $request
      */
-    public function store(Request $request)
+    public function store(StoreRouteRequest $request)
     {
         $route = new Route();
         $route->transport_id = $request->transport_id;

@@ -44,7 +44,6 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        // return $request;
         $this->orderService->store($request);
 
         return response()->json([

@@ -7,7 +7,7 @@
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         #map {
-            height: 500px;
+            height: 100%;
             width: 100%;
         }
     </style>
@@ -17,7 +17,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-4">{{ __('pages.routes.routeAddresses') }}</h4>
@@ -72,84 +72,77 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
-            <div id="map"></div>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <form id="addAddressForm" class="form-horizontal">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="control-label">{{ __('common.country') }}</label>
-                                    <select class="form-control select2" name="country" required>
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-    
-                                <div class="form-group">
-                                    <label for="address">{{ __('pages.routes.address') }}</label>
-                                    {{-- <input type="text" class="form-control" required name="address" placeholder="{{ __('pages.routes.address') }}"> --}}
-                                    <select class="form-control select2-ajax" name="address" required></select>
-                                    <div class="invalid-feedback">
-                                        * Обязательное поле.
-                                    </div>
-                                </div>
             
-                                <div class="form-group">
-                                    <label for="departure_date">{{ __('pages.routes.departureDate') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" required name="departure_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="card">
+                <form id="addAddressForm" class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="control-label">{{ __('common.country') }}</label>
+                            <select class="form-control select2" name="country" required>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
     
-                                <div class="form-group">
-                                    <label for="departure_time">{{ __('pages.routes.departureTime') }}</label>
-                                    <input type="time" class="form-control" name="departure_time" placeholder="Введите время" value="00:00" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="arrival_date">{{ __('pages.routes.arrivalDate') }}</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" required name="arrival_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
+                        <div class="form-group">
+                            <label for="address">{{ __('pages.routes.address') }}</label>
+                            <select class="form-control select2-ajax" name="address" required></select>
+                        </div>
+    
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label for="departure_date">{{ __('pages.routes.departureDate') }}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" required name="departure_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="arrival_time">{{ __('pages.routes.arrivalTime') }}</label>
-                                    <input type="time" class="form-control" required name="arrival_time" value="00:00" placeholder="Введите время">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="type">{{ __('pages.routes.type') }}</label>
-                                    <select class="form-control" name="type" required>
-                                        <option value="forward">{{ __('pages.routes.from') }}</option>
-                                        <option value="back">{{ __('pages.routes.to') }}</option>
-                                    </select>
-                                </div>
-                                
-                                @if ($transports->count() > 0)
-                                    <div class="form-group mb-0">
-                                        <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">{{ __('form.buttons.add') }}</button>
-                                    </div>
-                                @endif
                             </div>
-                        </form>
+                            <div class="col-sm-6">
+                                <label for="departure_time">{{ __('pages.routes.departureTime') }}</label>
+                                <input type="time" class="form-control" name="departure_time" value="00:00" required>
+                            </div>
+                        </div>
+    
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label for="arrival_date">{{ __('pages.routes.arrivalDate') }}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" required name="arrival_date" placeholder="{{ __('common.chooseDate') }}" data-position="bottom" data-provide="datepicker" data-date-autoclose="true">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-sm-6">
+                                <label for="arrival_time">{{ __('pages.routes.arrivalTime') }}</label>
+                                <input type="time" class="form-control" required name="arrival_time" value="00:00">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="type">{{ __('pages.routes.type') }}</label>
+                            <select class="form-control" name="type" required>
+                                <option value="forward">{{ __('pages.routes.from') }}</option>
+                                <option value="back">{{ __('pages.routes.to') }}</option>
+                            </select>
+                        </div>
+                        
+                        @if ($transports->count() > 0)
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-success btn-block waves-effect waves-light" id="addAddressBtn">{{ __('form.buttons.add') }}</button>
+                            </div>
+                        @endif
                     </div>
-                </div>
+                </form>
             </div>
+        </div>
+
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+            <div id="map"></div>
         </div>
     </div>
 @endsection
@@ -227,9 +220,9 @@
                             </div>
                             <div class="media-body">
                                 <div>
-                                    <h5 class="font-size-14">${data.country}, ${data.address}</h5>
+                                    <h5 class="font-size-14 mb-0">${data.country}, ${data.address}</h5>
                                     <p class="text-muted mb-0">Отправление: ${data.departure_date} - ${data.departure_time}</p>
-                                    <p class="text-muted">Прибытие: ${data.arrival_date} - ${data.arrival_time}</p>
+                                    <p class="text-muted mb-0">Прибытие: ${data.arrival_date} - ${data.arrival_time}</p>
                                     <a href="#" data-id="${idx}" data-type="${data.type}" class="delete-address-btn">Удалить</a>
                                 </div>
                             </div>

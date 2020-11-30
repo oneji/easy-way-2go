@@ -87,13 +87,13 @@ class RouteService
         
         foreach ($routes as $route) {
             $startings = RouteAddress::where('country_id', $request->from_country)
-                ->where('address', 'like', "%$request->from_address%")
+                ->where('place_id', 'like', "%$request->from_address%")
                 ->where('departure_date', Carbon::parse($request->date))
                 ->whereRouteId($route->id)
                 ->get();
 
             $endings = RouteAddress::where('country_id', $request->to_country)
-                ->where('address', 'like', "%$request->to_address%")
+                ->where('place_id', 'like', "%$request->to_address%")
                 ->where('departure_date', Carbon::parse($request->date))
                 ->whereRouteId($route->id)
                 ->get();

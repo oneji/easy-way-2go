@@ -88,4 +88,12 @@ class Client extends Authenticatable implements JWTSubject
     {
         return $this->first_name .' '. $this->last_name;
     }
+
+    /**
+     * Get all of the client's bank cards.
+     */
+    public function bank_cards()
+    {
+        return $this->morphMany('App\BankCard', 'cardable');
+    }
 }

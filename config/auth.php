@@ -59,7 +59,7 @@ return [
             'hash' => false,
         ],
         
-        'brigadirs' => [
+        'brigadir' => [
             'driver' => 'jwt',
             'provider' => 'brigadirs',
             'hash' => false,

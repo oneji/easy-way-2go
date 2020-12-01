@@ -69,5 +69,9 @@ Route::namespace('API')->group(function() {
         // Car models
         Route::get('car-models',  'CarModelController@all');
         Route::get('car-models/getByBrandId/{id}',  'CarModelController@getByBrandId');
+
+        // Bank cards
+        Route::get('bankCards', 'BankCardController@all');
+        Route::post('bankCards', 'BankCardController@store');
     });
 });

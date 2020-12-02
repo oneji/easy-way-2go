@@ -51,6 +51,7 @@ class UserAuthService
         }
 
         return [
+            'status' => 200,
             'success' => true,
             'token' => $token,
             'user' => $user,

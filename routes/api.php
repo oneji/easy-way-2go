@@ -28,13 +28,12 @@ Route::namespace('API')->group(function() {
         Route::post('login', 'UserController@login');
     });
 
-    // Driver routes
-    Route::post('routes', 'RouteController@store');
-
     // Transport
     Route::post('transport', 'TransportController@store');
     Route::put('transport/{id}', 'TransportController@update');
     Route::post('transport/bindDriver', 'TransportController@bindDriver');
+    // Transport routes
+    Route::post('routes', 'RouteController@store');
 
     // Routes
     Route::get('routes/getById/{id}', 'RouteController@getById');
@@ -64,12 +63,12 @@ Route::namespace('API')->group(function() {
         Route::delete('passengers/{id}', 'PassengerController@delete');
 
         // Driving experiences
-        Route::get('driving-experiences', 'DrivingExperienceController@all');
+        Route::get('drivingExperiences', 'DrivingExperienceController@all');
         // Car brands
-        Route::get('car-brands',  'CarBrandController@all');
+        Route::get('carBrands',  'CarBrandController@all');
         // Car models
-        Route::get('car-models',  'CarModelController@all');
-        Route::get('car-models/getByBrandId/{id}',  'CarModelController@getByBrandId');
+        Route::get('carModels',  'CarModelController@all');
+        Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
 
         // Bank cards
         Route::get('bankCards', 'BankCardController@all');

@@ -41,13 +41,17 @@ class StoreRouteRequest extends FormRequest
         return [
             'addresses' => 'required',
             'repeats' => 'required',
-            'addresses.*.country_id' => [ 'required', 'exists:countries,id' ],
-            'addresses.*.address' => [ 'required', 'string' ],
-            'addresses.*.departure_date' => [ 'required', 'date' ],
-            'addresses.*.departure_time' => [ 'required', 'string' ],
-            'addresses.*.arrival_date' => [ 'required', 'date' ],
-            'addresses.*.arrival_time' => [ 'required', 'string' ],
+            'addresses.*.place_id' => 'required',
+            'addresses.*.order' => 'required|integer',
+            'addresses.*.country_id' => 'required|exists:countries,id',
+            'addresses.*.address' => 'required|string',
+            'addresses.*.departure_date' => 'required|date',
+            'addresses.*.departure_time' => 'required|string',
+            'addresses.*.arrival_date' => 'required|date',
+            'addresses.*.arrival_time' => 'required|string',
             'addresses.*.type' => 'required',
+            'repeats.*.from' => 'required',
+            'repeats.*.to' => 'required',
             'transport_id' => 'required'
         ];
     }

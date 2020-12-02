@@ -22,7 +22,7 @@ Route::namespace('API')->group(function() {
         // User authentication
         Route::post('verify', 'UserController@verify');
         Route::post('login', 'UserController@login');
-        Route::get('me', 'UserController@me');
+        Route::get('me', 'UserController@me')->middleware('jwt.verify');
     });
 
     // Transport

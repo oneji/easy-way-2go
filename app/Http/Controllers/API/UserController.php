@@ -46,4 +46,17 @@ class UserController extends Controller
 
         return response()->json($response);
     }
+
+    /**
+     * Fetch user from the token
+     */
+    public function me()
+    {
+        $data = $this->userAuthService->me();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

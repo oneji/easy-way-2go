@@ -104,4 +104,18 @@ class UserAuthService
             'data' => $user
         ];
     }
+
+    /**
+     * Fetch user from token
+     */
+    public function me()
+    {
+        $client = auth('client')->user();
+        $driver = auth('driver')->user();
+        $brigadir = auth('brigadir')->user();
+
+        if($client) return $client;
+        if($driver) return $driver;
+        if($brigadir) return $brigadir;
+    }
 }

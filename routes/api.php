@@ -16,16 +16,13 @@ Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
         Route::post('clients/register', 'ClientAuthController@register');
-        
-        // Driver authentication
-        Route::post('drivers/register', 'DriverAuthController@register');
-        
-        // Brigadir authentication
+        Route::post('drivers/register', 'DriverAuthController@register');        
         Route::post('brigadirs/register', 'BrigadirAuthController@register');
         
         // User authentication
         Route::post('verify', 'UserController@verify');
         Route::post('login', 'UserController@login');
+        Route::get('me', 'UserController@me');
     });
 
     // Transport

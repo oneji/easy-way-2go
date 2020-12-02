@@ -85,6 +85,7 @@ class UserAuthService
         $client = Client::where('verification_code', $request->code)->first();
         $brigadir = Brigadir::where('verification_code', $request->code)->first();
         
+        $user = null;
         if($driver) {
             $user = $driver;
         } else if($client) {
@@ -93,15 +94,32 @@ class UserAuthService
             $user = $brigadir;
         };
 
+        if(!$user) {
+            return [
+                'success' => false,
+                'message' => 'Неверный код подтверждения.'
+            ];
+        }
+
         $user->verified = 1;
         $user->verification_code = null;
         $user->phone_number_verified_at = Carbon::now();
         $user->save();
 
+        // Authenticate the user
+        if (!$token = auth($user->role)->login($user)) {
+            return [
+                'success' => false,
+                'message' => 'Неверный логин или пароль.'
+            ];
+        }
+
         return [
             'success' => true,
             'message' => 'Номер телефона успешно подтвержден.',
-            'data' => $user
+            'user' => $user,
+            'token' => $token,
+            'expires_in' => auth($user->role)->factory()->getTTL() * 60
         ];
     }
 

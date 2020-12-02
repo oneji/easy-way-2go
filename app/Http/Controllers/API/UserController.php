@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         $response = $this->userAuthService->login($request);
 
-        return response()->json($response);
+        return response()->json($response, $response['status']);
     }
 
     /**

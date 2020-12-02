@@ -27,6 +27,7 @@ class UserAuthService
         if(!$user) {
             return [
                 'success' => false,
+                'status' => 422,
                 'message' => 'Пользователя с таким email адресом не найдено.'
             ];
         }
@@ -35,6 +36,7 @@ class UserAuthService
         if(!$user->verified) {
             return [
                 'success' => false,
+                'status' => 422,
                 'message' => 'Перед тем как войти, подтвердите ваш номер телефона.'
             ];
         }
@@ -43,6 +45,7 @@ class UserAuthService
         if (!$token = auth($user->role)->attempt($credentials)) {
             return [
                 'success' => false,
+                'status' => 422,
                 'message' => 'Неверный логин или пароль.'
             ];
         }
@@ -107,12 +110,7 @@ class UserAuthService
         $user->save();
 
         // Authenticate the user
-        if (!$token = auth($user->role)->login($user)) {
-            return [
-                'success' => false,
-                'message' => 'Неверный логин или пароль.'
-            ];
-        }
+        $token = auth($user->role)->login($user);
 
         return [
             'success' => true,

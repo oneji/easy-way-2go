@@ -8,6 +8,7 @@ use App\User;
 use App\Driver;
 use App\Client;
 use App\Brigadir;
+use App\Http\JsonRequests\VerifyCodeRequest;
 
 class UserAuthService
 {
@@ -75,14 +76,14 @@ class UserAuthService
     /**  
      * Verify user by verification code.
      * 
-     * @param   int $verificationCode
+     * @param   \App\Http\JsonRequests\VerifyCodeRequest $request
      * @return  array
      */
-    public function verify($verificationCode)
+    public function verify(VerifyCodeRequest $request)
     {
-        $driver = Driver::where('verification_code', $verificationCode)->first();
-        $client = Client::where('verification_code', $verificationCode)->first();
-        $brigadir = Brigadir::where('verification_code', $verificationCode)->first();
+        $driver = Driver::where('verification_code', $request->code)->first();
+        $client = Client::where('verification_code', $request->code)->first();
+        $brigadir = Brigadir::where('verification_code', $request->code)->first();
         
         if($driver) {
             $user = $driver;

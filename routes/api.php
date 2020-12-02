@@ -24,8 +24,8 @@ Route::namespace('API')->group(function() {
         Route::post('brigadirs/register', 'BrigadirAuthController@register');
         
         // User authentication
-        Route::get('verify/{code}', 'UserController@verify');
-        Route::get('login', 'UserController@login');
+        Route::post('verify', 'UserController@verify');
+        Route::post('login', 'UserController@login');
     });
 
     // Driver routes

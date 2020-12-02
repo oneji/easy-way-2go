@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\UserAuthService;
 use App\Http\JsonRequests\LoginUserRequest;
-use Illuminate\Support\Facades\Validator;
+use App\Http\JsonRequests\VerifyCodeRequest;
 
 class UserController extends Controller
 {
@@ -38,12 +37,12 @@ class UserController extends Controller
     /**
      * Verify user by verification code.
      * 
-     * @param   int $verificationCode
+     * @param   \App\Http\JsonRequests\VerifyCodeRequest $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function verify($verificationCode)
+    public function verify(VerifyCodeRequest $request)
     {
-        $response = $this->userAuthService->verify($verificationCode);
+        $response = $this->userAuthService->verify($request);
 
         return response()->json($response);
     }

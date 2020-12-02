@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\Client;
+use App\Http\JsonRequests\CheckEmailRequest;
+use Illuminate\Http\Request;
 
 class ClientService
 {
@@ -143,5 +145,25 @@ class ClientService
             $client->password = Hash::make($newPassword);
             $client->save();
         }
+    }
+
+    /**
+     * Check client's email address
+     * 
+     * @param \App\Http\JsonRequests\CheckEmailRequest $request
+     */
+    public function checkEmail(CheckEmailRequest $request)
+    {
+        $client = Client::where('email', $request->email)->exists();
+        $success = false;
+
+        if($client) {
+            $success = true;
+        }
+        
+        return [
+            'success' => $success,
+            'email' => $request->email
+        ];
     }
 }

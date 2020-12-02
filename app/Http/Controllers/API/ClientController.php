@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateClientRequest;
 use App\Http\Controllers\Controller;
+use App\Http\JsonRequests\CheckEmailRequest;
 use App\Http\Services\ClientService;
 
 class ClientController extends Controller
@@ -50,5 +51,18 @@ class ClientController extends Controller
         return response()->json([
             'success' => true
         ]);
+    }
+
+    /**
+     * Check client's email
+     * 
+     * @param \App\Http\JsonRequests\CheckEmailRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkEmail(CheckEmailRequest $request)
+    {
+        $response = $this->clientService->checkEmail($request);
+
+        return response()->json($response);
     }
 }

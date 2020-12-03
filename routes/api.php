@@ -70,5 +70,8 @@ Route::namespace('API')->group(function() {
         // Bank cards
         Route::get('bankCards', 'BankCardController@all');
         Route::post('bankCards', 'BankCardController@store');
+
+        // Cargo types
+        Route::get('cargoTypes', 'CargoTypeController@all');
     });
 });

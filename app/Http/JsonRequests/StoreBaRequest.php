@@ -42,31 +42,31 @@ class StoreBaRequest extends FormRequest
         return [
             'type' => 'required',
             // Drivers validation rules
-            'drivers' => Rule::requiredIf(function() {
-                return request()->type === 'head_driver';
-            }),
-            'drivers.*.first_name' => 'required|string',
-            'drivers.*.last_name' => 'required|string',
-            'drivers.*.birthday' => 'required',
-            'drivers.*.nationality' => 'required|integer|exists:countries,id',
-            'drivers.*.phone_number' => 'required|string',
-            'drivers.*.email' => 'required|email',
-            'drivers.*.country_id' => 'required|integer|exists:countries,id',
-            'drivers.*.city' => 'required|string',
-            'drivers.*.dl_issue_place' => 'required|integer|exists:countries,id',
-            'drivers.*.dl_issued_at' => 'required',
-            'drivers.*.dl_expires_at' => 'required',
-            'drivers.*.driving_experience_id' => 'required|integer|exists:driving_experiences,id',
-            'drivers.*.conviction' => 'required|integer',
-            'drivers.*.comment' => 'required',
-            'drivers.*.was_kept_drunk' => 'required|integer',
-            'drivers.*.grades' => 'required|integer',
-            'drivers.*.grades_expire_at' => 'required',
-            'drivers.*.dtp' => 'required|integer',
+            // 'drivers' => Rule::requiredIf(function() {
+            //     return request()->type === 'head_driver';
+            // }),
+            // 'drivers.*.first_name' => 'required|string',
+            // 'drivers.*.last_name' => 'required|string',
+            // 'drivers.*.birthday' => 'required',
+            // 'drivers.*.nationality' => 'required|integer|exists:countries,id',
+            // 'drivers.*.phone_number' => 'required|string',
+            // 'drivers.*.email' => 'required|email',
+            // 'drivers.*.country_id' => 'required|integer|exists:countries,id',
+            // 'drivers.*.city' => 'required|string',
+            // 'drivers.*.dl_issue_place' => 'required|integer|exists:countries,id',
+            // 'drivers.*.dl_issued_at' => 'required',
+            // 'drivers.*.dl_expires_at' => 'required',
+            // 'drivers.*.driving_experience_id' => 'required|integer|exists:driving_experiences,id',
+            // 'drivers.*.conviction' => 'required|integer',
+            // 'drivers.*.comment' => 'required',
+            // 'drivers.*.was_kept_drunk' => 'required|integer',
+            // 'drivers.*.grades' => 'required|integer',
+            // 'drivers.*.grades_expire_at' => 'required',
+            // 'drivers.*.dtp' => 'required|integer',
             // Transport validation rules
-            'transport' => Rule::requiredIf(function() {
-                return request()->type === 'head_driver';
-            }),
+            // 'transport' => Rule::requiredIf(function() {
+            //     return request()->type === 'head_driver';
+            // }),
             // 'transport.registered_on' => 'required',
             // 'transport.register_country' => 'required|exists:countries,id',
             // 'transport.register_city' => 'required',

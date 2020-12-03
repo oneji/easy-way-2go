@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use Illuminate\Http\Request;
-use App\Http\JsonRequests\StoreBaRequest;
 use App\Http\Services\UploadFileService;
 use App\Http\Requests\ApproveBaRequest;
 use App\Jobs\SendEmailJob;
@@ -59,9 +58,9 @@ class BaRequestService
     /**
      * Store a newly created bussiness account request
      * 
-     * @param App\Http\JsonRequests\StoreBaRequest $request
+     * @param \Illuminate\Http\Request $request
      */
-    public function store(StoreBaRequest $request)
+    public function store(Request $request)
     {
         $baRequest = new BaRequest();
         $baRequest->type = $request->type;

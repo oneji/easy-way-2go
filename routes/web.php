@@ -11,6 +11,18 @@
 |
 */
 
+// Route::get('emails', function() {
+//     $code = 123123;
+//     $email = 'test@gmail.com';
+//     $password = 'testPassword';
+
+//     return view('emails.register', [
+//         'code' => $code,
+//         'email' => $email,
+//         'password' => $password
+//     ]);
+// });
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]

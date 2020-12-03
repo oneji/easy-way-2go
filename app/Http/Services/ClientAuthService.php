@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use App\Client;
+use App\Jobs\RegisterJob;
 
 class ClientAuthService
 {
@@ -29,10 +30,12 @@ class ClientAuthService
         
         $client->save();
 
+        RegisterJob::dispatch($client->email, $client->verification_code);
+
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
             'success' => true,
-            'verification_code' => $client->verification_code,
+            'verification_code' => $client->verification_code
         ];
     }
 }

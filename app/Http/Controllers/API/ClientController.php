@@ -48,7 +48,7 @@ class ClientController extends Controller
     {
         $response = $this->clientService->changePassword($request);
 
-        return response()->json($response);
+        return response()->json($response, $response['status']);
     }
 
     /**

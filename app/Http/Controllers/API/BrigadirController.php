@@ -63,6 +63,6 @@ class BrigadirController extends Controller
     {
         $response = $this->brigadirService->changePassword($request);
 
-        return response()->json($response);
+        return response()->json($response, $response['status']);
     }
 }

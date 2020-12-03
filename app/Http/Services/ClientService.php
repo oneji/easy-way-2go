@@ -147,12 +147,14 @@ class ClientService
 
             return [
                 'success' => true,
+                'status' => 200,
                 'message' => 'Пароль успешно обновлён.'
             ];
         }
 
         return [
             'success' => false,
+            'status' => 422,
             'message' => 'Старый пароль введен неверно.'
         ];
     }

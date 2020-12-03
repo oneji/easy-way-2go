@@ -48,6 +48,11 @@ Route::namespace('API')->group(function() {
         Route::put('clients/changePassword', 'ClientController@changePassword');
         Route::put('clients/{id}', 'ClientController@update');
         Route::get('clients/checkEmail', 'ClientController@checkEmail');
+       
+        // Brigadirs
+        Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
+        Route::put('brigadirs/{id}', 'BrigadirController@updateProfile');
+        Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
 
         // Orders
         Route::get('orders', 'OrderController@all');

@@ -144,7 +144,17 @@ class ClientService
         if(Hash::check($oldPassword, $client->password)) {
             $client->password = Hash::make($newPassword);
             $client->save();
+
+            return [
+                'success' => true,
+                'message' => 'Пароль успешно обновлён.'
+            ];
         }
+
+        return [
+            'success' => false,
+            'message' => 'Старый пароль введен неверно.'
+        ];
     }
 
     /**

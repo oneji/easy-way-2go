@@ -18,11 +18,21 @@ class Order extends Model
     ];
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'from_country',
+        'from_address',
+        'to_country',
+        'to_address',
+        'date',
+        'buyer_phone_number',
+        'buyer_email',
+        'order_type',
+        'total_price',
+    ];
 
     /**
      * The "booting" method of the model.

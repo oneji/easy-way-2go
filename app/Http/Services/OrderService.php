@@ -52,21 +52,38 @@ class OrderService
      */
     public function store(StoreOrderRequest $request)
     {
-        $order = new Order($request->except('passengers', 'packages', 'package', 'packages_count', 'package_dimensions_type'));
+        $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);
         $order->client_id = auth('client')->user()->id;
         $order->save();
 
-        if(isset($request->passengers)) {
-            PassengerService::attachToOrder($request->passengers, $order->id);
-        }
+        if($order->order_type === 'moving') {
+            // Save moving data
+            MovingDataService::store([
+                'from_floor' => $request->from_floor,
+                'to_floor' => $request->to_floor,
+                'time' => $request->time,
+                'movers_count' => $request->movers_count,
+                'parking' => $request->parking,
+                'parking_working_hours' => $request->parking_working_hours,
+                'order_id' => $order->id,
+                'cargos' => $request->cargos
+            ]);
 
-        if(isset($request->package_dimensions_type)) {
-            if($request->package_dimensions_type === Package::TYPE_SAME) {
-                PackageService::attachSameToOrder($request->package, $request->packages_count, $order->id);
-            } else {
-                PackageService::attachDifferentToOrder($request->packages, $order->id);
+        } else {
+            if(isset($request->passengers)) {
+                PassengerService::attachToOrder($request->passengers, $order->id);
+            }
+    
+            if(isset($request->package_dimensions_type)) {
+                if($request->package_dimensions_type === Package::TYPE_SAME) {
+                    PackageService::attachSameToOrder($request->package, $request->packages_count, $order->id);
+                } else {
+                    PackageService::attachDifferentToOrder($request->packages, $order->id);
+                }
             }
         }
+
+        return $order;
     }
 }

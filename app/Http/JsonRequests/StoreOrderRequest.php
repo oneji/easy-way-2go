@@ -46,9 +46,7 @@ class StoreOrderRequest extends FormRequest
             'to_address' => 'required|string',
             'date' => 'required',
             'order_type' => 'required',
-            'passengers' => Rule::requiredIf(function() {
-                return request()->order_type === 'passengers';
-            })
+            'total_price' => 'required|numeric'
         ];
     }
 }

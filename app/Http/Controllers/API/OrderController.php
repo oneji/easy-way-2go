@@ -53,6 +53,15 @@ class OrderController extends Controller
                     'errors' => $validator['errors']
                 ]);
             }
+        } else if($request->order_type === 'passengers') {
+            $validator = $this->validatePassengersType($request);
+            
+            if(!$validator['success']) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator['errors']
+                ]);
+            }
         }
 
         $data = $this->orderService->store($request);
@@ -85,6 +94,35 @@ class OrderController extends Controller
             'cargos.*.weight' => 'required|numeric',
             'cargos.*.packaging' => 'required|integer',
             'cargos.*.photos' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'success' => false,
+                'errors' => $validator->errors()
+            ];
+        }
+
+        return [ 'success' => true ];
+    }
+    
+    /**
+     * Validate passengers order type fields
+     * 
+     * @param \App\Http\JsonRequests\StoreOrderRequest $request
+     */
+    private function validatePassengersType(StoreOrderRequest $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'passengers' => 'required',
+            'passengers.*.gender' => 'required|integer',
+            'passengers.*.first_name' => 'required|string',
+            'passengers.*.last_name' => 'required|string',
+            'passengers.*.birthday' => 'required|string',
+            'passengers.*.nationality' => 'required|integer|exists:countries,id',
+            'passengers.*.id_card' => 'required|string',
+            'passengers.*.passport_number' => 'required|string',
+            'passengers.*.passport_expires_at' => 'required|string'
         ]);
 
         if($validator->fails()) {

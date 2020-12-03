@@ -55,6 +55,15 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить'
     ],
+    
+    'cargoTypes' => [
+        'label' => 'Типы груза',
+        'modelsLabel' => 'Типы',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о типах груза не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить'
+    ],
 
     'brigadirs' => [
         'label' => 'Бригадиры',

@@ -16,6 +16,7 @@ return [
     'clients'           => 'Clients',
     'routes'            => 'Routes',
     'bas'               => 'Bussiness account requests',
-    'orders'            => 'Orders'
+    'orders'            => 'Orders',
+    'cargoTypes'        => 'Cargo types'
 
 ];

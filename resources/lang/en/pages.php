@@ -55,6 +55,15 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+    
+    'cargoTypes' => [
+        'label' => 'Types of cargo',
+        'modelsLabel' => 'Types',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+    ],
 
     'brigadirs' => [
         'label' => 'Formen',

@@ -138,6 +138,7 @@
                                 <li><a href="{{ route('admin.de.index') }}">{{ __('menu.drivingExperience') }}</a></li>
                                 <li><a href="{{ route('admin.carBrands.index') }}">{{ __('menu.carBrands') }}</a></li>
                                 <li><a href="{{ route('admin.carModels.index') }}">{{ __('menu.carModels') }}</a></li>
+                                <li><a href="{{ route('admin.cargoTypes.index') }}">{{ __('menu.cargoTypes') }}</a></li>
                             </ul>
                         </li>
                         <li>

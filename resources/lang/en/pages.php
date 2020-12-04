@@ -72,6 +72,8 @@ return [
         'emptySet' => 'For now, we could not find any items.',
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
+        'createFormLabel' => 'Add new FAQ item',
+        'editFormLabel' => 'Edit FAQ item'
     ],
 
     'brigadirs' => [

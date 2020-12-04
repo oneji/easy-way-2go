@@ -65,13 +65,15 @@ return [
         'editModalLabel' => 'Изменить'
     ],
     
-    'cargoTypes' => [
+    'faq' => [
         'label' => 'База знаний',
         'modelsLabel' => 'База знаний',
         'actionsLabel' => 'Действия',
         'emptySet' => 'На данный момент записей в базе знаний не найдено.',
         'addModalLabel' => 'Добавить',
-        'editModalLabel' => 'Изменить'
+        'editModalLabel' => 'Изменить',
+        'createFormLabel' => 'Добавить элемент в Базу знаний',
+        'editFormLabel' => 'Изменить элемент в базе знаний',
     ],
 
     'brigadirs' => [

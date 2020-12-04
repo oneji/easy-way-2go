@@ -14,8 +14,8 @@
 
                 <div class="card-body">
 
-                    <h4 class="card-title">Custom Tabs</h4>
-                    <p class="card-title-desc">Example of custom tabs</p>
+                    <h4 class="card-title">{{ __('pages.faq.createFormLabel') }}</h4>
+                    <p class="card-title-desc"></p>
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs nav-tabs-custom" role="tablist">

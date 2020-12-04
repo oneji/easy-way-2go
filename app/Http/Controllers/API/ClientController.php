@@ -32,10 +32,11 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, $id)
     {
-        $this->clientService->updateProfile($request, $id);
+        $data = $this->clientService->updateProfile($request, $id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 

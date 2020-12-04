@@ -127,6 +127,8 @@ class ClientService
         }
 
         $client->save();
+
+        return $client;
     }
 
     /**

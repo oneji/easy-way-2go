@@ -129,6 +129,8 @@ class BrigadirService
         }
 
         $brigadir->save();
+
+        return $brigadir;
     }
 
     /**
@@ -143,6 +145,8 @@ class BrigadirService
         $brigadir->company_name = $request->company_name;
         $brigadir->inn = $request->inn;
         $brigadir->save();
+
+        return $brigadir;
     }
 
     /**

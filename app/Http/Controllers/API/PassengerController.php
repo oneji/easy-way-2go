@@ -63,10 +63,11 @@ class PassengerController extends Controller
      */
     public function update(UpdatePassengerRequest $request, $id)
     {
-        $this->passengerService->update($request, $id);
+        $data = $this->passengerService->update($request, $id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 

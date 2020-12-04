@@ -48,6 +48,8 @@ class TransportService
 
         // Docs
         $this->storeDocs($transport, $data);
+
+        return $transport;
     }
 
     /**
@@ -86,6 +88,8 @@ class TransportService
         $transport->save();
 
         $this->storeDocs($transport, $data);
+
+        return $transport;
     }
 
     /**

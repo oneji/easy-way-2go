@@ -53,6 +53,7 @@ class PassengerService
     public function update(UpdatePassengerRequest $request, $id)
     {
         $passenger = Passenger::find($id);
+
         if($passenger) {
             $passenger->gender = $request->gender;
             $passenger->first_name = $request->first_name;
@@ -63,6 +64,8 @@ class PassengerService
             $passenger->passport_number = $request->passport_number;
             $passenger->passport_expires_at = Carbon::parse($request->passport_expires_at);
             $passenger->save();
+
+            return $passenger;
         }
     }
     
@@ -86,7 +89,6 @@ class PassengerService
      */
     public static function attachToOrder($passengersData, $orderId)
     {
-        $passengersToInsert = [];
         foreach($passengersData as $passenger) {
             $passenger = new Passenger($passenger);
             $passenger->birthday = Carbon::parse($passenger['birthday']);

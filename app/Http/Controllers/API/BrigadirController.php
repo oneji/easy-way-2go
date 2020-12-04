@@ -31,10 +31,11 @@ class BrigadirController extends Controller
      */
     public function updateProfile(UpdateBrigadirRequest $request, $id)
     {
-        $this->brigadirService->updateProfile($request, $id);
+        $data = $this->brigadirService->updateProfile($request, $id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
     
@@ -47,10 +48,11 @@ class BrigadirController extends Controller
      */
     public function updateCompany(UpdateBrigadirCompanyRequest $request, $id)
     {
-        $this->brigadirService->updateCompany($request, $id);
+        $data = $this->brigadirService->updateCompany($request, $id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 

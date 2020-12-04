@@ -31,10 +31,11 @@ class TransportController extends Controller
      */
     public function store(StoreTransportRequest $request)
     {
-        $this->transportService->store($request->all());
+        $data = $this->transportService->store($request->all());
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 
@@ -46,10 +47,11 @@ class TransportController extends Controller
      */
     public function update(UpdateTransportRequest $request, $id)
     {
-        $this->transportService->update($request->all(), $id);
+        $data = $this->transportService->update($request->all(), $id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 

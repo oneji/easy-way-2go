@@ -9,6 +9,7 @@ use App\Driver;
 use App\Client;
 use App\Brigadir;
 use App\Http\JsonRequests\VerifyCodeRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserAuthService
 {
@@ -20,15 +21,15 @@ class UserAuthService
      */
     public function login(LoginUserRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('login', 'password');
         
-        $user = $this->findUser($credentials['email']);
+        $user = $this->findUser($credentials['login']);
 
         if(!$user) {
             return [
                 'success' => false,
                 'status' => 422,
-                'message' => 'Пользователя с таким email адресом не найдено.'
+                'message' => 'Пользователь не найден.'
             ];
         }
 
@@ -42,7 +43,9 @@ class UserAuthService
         }
 
         // Authenticate the user
-        if (!$token = auth($user->role)->attempt($credentials)) {
+        if(Hash::check($credentials['password'], $user->password)) {
+            $token = auth($user->role)->login($user);
+        } else {
             return [
                 'success' => false,
                 'status' => 422,
@@ -62,17 +65,25 @@ class UserAuthService
     /**
      * Find the user from all tables
      * 
-     * @param string $email
+     * @param string $login
      */
-    public function findUser($email)
+    public function findUser($login)
     {
-        $driver = Driver::where('email', $email)->first();
-        $client = Client::where('email', $email)->first();
-        $brigadir = Brigadir::where('email', $email)->first();
+        $driver = Driver::where('email', $login)
+            ->orWhere('phone_number', $login)
+            ->first();
+        
+        $client = Client::where('email', $login)
+            ->orWhere('phone_number', $login)
+            ->first();
+
+        $brigadir = Brigadir::where('email', $login)
+            ->orWhere('phone_number', $login)
+            ->first();
         
         if($driver) return $driver;
-        else if($client) return $client;
-        else if($brigadir) return $brigadir;
+        if($client) return $client;
+        if($brigadir) return $brigadir;
 
         return null;
     }

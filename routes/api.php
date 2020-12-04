@@ -78,5 +78,9 @@ Route::namespace('API')->group(function() {
 
         // Cargo types
         Route::get('cargoTypes', 'CargoTypeController@all');
+
+        // Faq
+        Route::get('faq', 'FaqController@all');
+        Route::get('faq/getById/{id}', 'FaqController@getById');
     });
 });

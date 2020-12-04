@@ -5,6 +5,7 @@ namespace App\Http\JsonRequests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateClientRequest extends FormRequest
 {
@@ -45,7 +46,7 @@ class UpdateClientRequest extends FormRequest
             'birthday' => 'required',
             'nationality' => 'required|integer|exists:countries,id',
             'phone_number' => 'required|string',
-            'email' => 'required',
+            'email' => [ 'required', Rule::unique('clients')->ignore($this->id), ],
             'id_card' => 'required|string',
             'id_card_expires_at' => 'required',
             'passport_number' => 'required|string',

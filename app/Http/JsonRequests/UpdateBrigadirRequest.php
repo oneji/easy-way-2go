@@ -5,6 +5,7 @@ namespace App\Http\JsonRequests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBrigadirRequest extends FormRequest
 {
@@ -43,7 +44,7 @@ class UpdateBrigadirRequest extends FormRequest
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'phone_number' => 'required|max:255',
-            'email' => 'required|email',
+            'email' => [ 'required', Rule::unique('brigadirs')->ignore($this->id), ],
             'birthday' => 'required|string',
             'nationality' => 'required|integer|exists:counties,id'
         ];

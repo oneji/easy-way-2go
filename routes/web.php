@@ -96,6 +96,14 @@ Route::group([
         // Orders
         Route::get('orders', 'OrderController@index')->name('orders.index');
         Route::get('orders/{id}', 'OrderController@show')->name('orders.show');
+
+        // Faq
+        Route::get('faq', 'FaqController@index')->name('faq.index');
+        Route::get('faq/create', 'FaqController@create')->name('faq.create');
+        Route::post('faq', 'FaqController@store')->name('faq.store');
+        Route::get('faq/edit/{id}', 'FaqController@edit')->name('faq.edit');
+        Route::put('faq/{id}', 'FaqController@update')->name('faq.update');
+        Route::delete('faq/{id}', 'FaqController@delete')->name('faq.delete');
     });
 });
 

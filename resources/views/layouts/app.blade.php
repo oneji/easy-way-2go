@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Перевозки EuroWay2GO" name="description" />
     <meta content="EuroWay2GO" name="author" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -182,6 +184,12 @@
                                 <span>{{ __('menu.orders') }}</span>
                             </a>
                         </li>
+                        <li class="{{ Request::segment(2) === 'faq' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.faq.index') }}" class="waves-effect {{ Request::segment(2) === 'faq' ? 'active' : null }}" aria-expanded="false">
+                                <i class="bx bx-book-bookmark"></i>
+                                <span>{{ __('menu.faq') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -264,6 +272,7 @@
         <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
         <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
         <script src="{{ asset('assets/libs/parsleyjs/ru.js') }}"></script>
+        <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
         <script>
             $(function() {
                 $('.select2').select2();

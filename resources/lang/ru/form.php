@@ -12,12 +12,18 @@ return [
     // Labels
     'labels' => [
         'name' => 'Название',
-        'code' => 'Код'
+        'code' => 'Код',
+        'title' => 'Заголовок',
+        'description' => 'Описание',
+        'fullDescription' => 'Полное описание'
     ],
     // Placeholders
     'placeholders' => [
         'name' => 'Введите название',
-        'code' => 'Введите код'
+        'code' => 'Введите код',
+        'title' => 'Введите заголовок',
+        'description' => 'Введите описание',
+        'fullDescription' => 'Введите полное описание'
     ]
     
 ];

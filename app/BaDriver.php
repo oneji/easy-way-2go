@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use App\Scopes\CountryScope;
-use App\Scopes\NationalityScope;
 use App\Scopes\DrivingExperienceScope;
 
 class BaDriver extends Model

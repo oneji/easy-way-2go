@@ -64,6 +64,15 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+    
+    'faq' => [
+        'label' => 'FAQ',
+        'modelsLabel' => 'FAQ',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+    ],
 
     'brigadirs' => [
         'label' => 'Formen',

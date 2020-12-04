@@ -46,12 +46,12 @@ Route::namespace('API')->group(function() {
     Route::middleware('jwt.verify')->group(function() {
         // Clients
         Route::put('clients/changePassword', 'ClientController@changePassword');
-        Route::put('clients/{id}', 'ClientController@update');
+        Route::post('clients/{id}', 'ClientController@update');
         Route::get('clients/checkEmail', 'ClientController@checkEmail');
        
         // Brigadirs
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
-        Route::put('brigadirs/{id}', 'BrigadirController@updateProfile');
+        Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
 
         // Orders

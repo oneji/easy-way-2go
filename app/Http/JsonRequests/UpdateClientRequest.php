@@ -50,7 +50,8 @@ class UpdateClientRequest extends FormRequest
             'id_card' => 'required|string',
             'id_card_expires_at' => 'required',
             'passport_number' => 'required|string',
-            'passport_expires_at' => 'required'
+            'passport_expires_at' => 'required',
+            'photo' => 'file'
         ];
     }
 }

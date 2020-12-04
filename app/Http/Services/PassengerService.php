@@ -16,9 +16,14 @@ class PassengerService
      * 
      * @param int $clientId
      */
-    public function all($clientId)
+    public function all($clientId, $name = null)
     {
-        return Passenger::where('client_id', $clientId)->get();
+        return Passenger::where('client_id', $clientId)
+            ->when($name, function($query) use ($name) {
+                $query->where('first_name', 'like', "%$name%")
+                    ->orWhere('last_name', 'like', "%$name%");
+            })
+            ->get();
     }
 
     /**

@@ -39,6 +39,21 @@ class PassengerController extends Controller
     }
 
     /**
+     * Get by id
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        $data = $this->passengerService->getById($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
      * Store a newly created passenger
      * 
      * @param   \App\Http\JsonRequests\StorePassengerRequest $request

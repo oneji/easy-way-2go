@@ -27,6 +27,16 @@ class PassengerService
     }
 
     /**
+     * Get by id 
+     * 
+     * @param int $id
+     */
+    public function getById($id)
+    {
+        return Passenger::find($id);
+    }
+
+    /**
      * Store a newly created passengers
      * 
      * @param   \App\Http\JsonRequests\StorePassengerRequest $request

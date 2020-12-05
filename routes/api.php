@@ -60,6 +60,7 @@ Route::namespace('API')->group(function() {
         
         // Passengers
         Route::get('passengers', 'PassengerController@all');
+        Route::get('passengers/getById/{id}', 'PassengerController@getById');
         Route::post('passengers', 'PassengerController@store');
         Route::put('passengers/{id}', 'PassengerController@update');
         Route::delete('passengers/{id}', 'PassengerController@delete');

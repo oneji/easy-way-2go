@@ -27,11 +27,21 @@ class Passenger extends Model
     public $timestamps = false;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'gender',
+        'first_name',
+        'last_name',
+        'birthday',
+        'nationality',
+        'id_card',
+        'id_card_expires_at',
+        'passport_number',
+        'passport_expires_at'
+    ];
 
     /**
      * Get the nationality country for the passenger.

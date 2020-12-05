@@ -36,6 +36,7 @@ class PassengerService
     {
         $passenger = new Passenger($request->all());
         $passenger->birthday = Carbon::parse($request->birthday);
+        $passenger->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
         $passenger->passport_expires_at = Carbon::parse($request->passport_expires_at);
         $passenger->client_id = auth('client')->user()->id;
         $passenger->save();
@@ -61,6 +62,7 @@ class PassengerService
             $passenger->birthday = Carbon::parse($request->birthday);
             $passenger->nationality = $request->nationality;
             $passenger->id_card = $request->id_card;
+            $passenger->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
             $passenger->passport_number = $request->passport_number;
             $passenger->passport_expires_at = Carbon::parse($request->passport_expires_at);
             $passenger->save();

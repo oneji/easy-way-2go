@@ -44,18 +44,26 @@ class BaRequestController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        if(!$request->type) {
+            return response()->json([
+                'success' => false,
+                'errors' => [
+                    'type' => [ 'Field type is required' ]
+                ]
+            ], 422);
+        }
+
         if($request->type === 'firm_owner') {
             $validator = $this->validateFirmOwnerType($request);
 
             if(!$validator['success']) {
-                return response()->json($validator);
+                return response()->json($validator, 422);
             }
         } elseif($request->type === 'head_driver') {
             $validator = $this->validateHeadDriverType($request);
 
             if(!$validator['success']) {
-                return response()->json($validator);
+                return response()->json($validator, 422);
             }
         }
 

@@ -2,12 +2,10 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
 use App\Http\JsonRequests\StoreOrderRequest;
 use App\Http\Services\PassengerService;
 use App\Http\Services\PackageService;
 use Carbon\Carbon;
-use App\Passenger;
 use App\Package;
 use App\Order;
 
@@ -20,7 +18,7 @@ class OrderService
     {
         $client = auth('client')->user();
 
-        return Order::where('client_id', $client->id)->get();
+        return Order::with([ 'country_from', 'country_to' ])->where('client_id', $client->id)->get();
     }
 
     /**
@@ -55,6 +53,7 @@ class OrderService
         $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);
         $order->client_id = auth('client')->user()->id;
+        $order->status = 'future';
         $order->save();
 
         if($order->order_type === 'moving') {

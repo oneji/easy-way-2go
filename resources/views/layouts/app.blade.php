@@ -190,6 +190,12 @@
                                 <span>{{ __('menu.faq') }}</span>
                             </a>
                         </li>
+                        <li class="{{ Request::segment(2) === 'faq' ? 'mm-active' : null }}">
+                            <a href="{{ route('admin.help.index') }}" class="waves-effect {{ Request::segment(2) === 'help' ? 'active' : null }}" aria-expanded="false">
+                                <i class="bx bx-book-bookmark"></i>
+                                <span>{{ __('menu.help') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- Sidebar -->

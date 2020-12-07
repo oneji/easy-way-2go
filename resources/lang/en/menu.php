@@ -18,6 +18,7 @@ return [
     'bas'               => 'Bussiness account requests',
     'orders'            => 'Orders',
     'cargoTypes'        => 'Cargo types',
-    'faq'               => 'FAQ'
+    'faq'               => 'FAQ',
+    'help'              => 'Help'
 
 ];

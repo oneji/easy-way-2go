@@ -14,7 +14,8 @@ class FaqController extends Controller
      * 
      * @param \App\Http\Services\FaqService $faqService
      */
-    public function __construct(FaqService $faqService) {
+    public function __construct(FaqService $faqService)
+    {
         $this->faqService = $faqService;
     }
 

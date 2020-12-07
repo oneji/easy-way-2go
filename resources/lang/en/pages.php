@@ -75,6 +75,17 @@ return [
         'createFormLabel' => 'Add new FAQ item',
         'editFormLabel' => 'Edit FAQ item'
     ],
+    
+    'help' => [
+        'label' => 'Help',
+        'modelsLabel' => 'Help',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+        'createFormLabel' => 'Add new Help item',
+        'editFormLabel' => 'Edit Help item'
+    ],
 
     'brigadirs' => [
         'label' => 'Formen',

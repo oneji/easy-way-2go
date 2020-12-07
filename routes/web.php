@@ -104,6 +104,15 @@ Route::group([
         Route::get('faq/edit/{id}', 'FaqController@edit')->name('faq.edit');
         Route::put('faq/{id}', 'FaqController@update')->name('faq.update');
         Route::delete('faq/{id}', 'FaqController@delete')->name('faq.delete');
+        
+        // Help
+        Route::get('help', 'HelpSectionController@index')->name('help.index');
+        Route::get('help/create', 'HelpSectionController@create')->name('help.create');
+        Route::post('help', 'HelpSectionController@store')->name('help.store');
+        Route::get('help/edit/{id}', 'HelpSectionController@edit')->name('help.edit');
+        Route::put('help/{id}', 'HelpSectionController@update')->name('help.update');
+        Route::delete('help/{id}', 'HelpSectionController@delete')->name('help.delete');
+        Route::get('help/getById/{id}', 'HelpSectionController@getById')->name('help.getById');
     });
 });
 

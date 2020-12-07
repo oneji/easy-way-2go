@@ -83,5 +83,8 @@ Route::namespace('API')->group(function() {
         // Faq
         Route::get('faq', 'FaqController@all');
         Route::get('faq/getById/{id}', 'FaqController@getById');
+        
+        // Help
+        Route::get('help', 'HelpSectionController@all');
     });
 });

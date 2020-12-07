@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\FaqService;
+use App\Http\Services\HelpSectionService;
 
-class FaqController extends Controller
+class HelpSectionController extends Controller
 {
-    protected $faqService;
+    protected $sectionService;
 
     /**
      * FaqController constructor
      * 
-     * @param \App\Http\Services\FaqService $faqService
+     * @param \App\Http\Services\HelpSectionService $sectionService
      */
-    public function __construct(FaqService $faqService)
+    public function __construct(HelpSectionService $sectionService)
     {
-        $this->faqService = $faqService;
+        $this->sectionService = $sectionService;
     }
 
     
@@ -27,7 +27,7 @@ class FaqController extends Controller
      */
     public function all()
     {
-        $data = $this->faqService->all();
+        $data = $this->sectionService->all();
 
         return response()->json([
             'success' => true,
@@ -43,7 +43,7 @@ class FaqController extends Controller
      */
     public function getById($id)
     {
-        $data = $this->faqService->getById($id);
+        $data = $this->sectionService->getById($id);
 
         return response()->json([
             'success' => true,

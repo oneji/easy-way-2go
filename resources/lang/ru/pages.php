@@ -75,6 +75,17 @@ return [
         'createFormLabel' => 'Добавить элемент в Базу знаний',
         'editFormLabel' => 'Изменить элемент в базе знаний',
     ],
+    
+    'help' => [
+        'label' => 'Помощь',
+        'modelsLabel' => 'Помощь',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о помощи не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить',
+        'createFormLabel' => 'Добавить элемент в раздел Помощи',
+        'editFormLabel' => 'Изменить элемент в разделе Помощи',
+    ],
 
     'brigadirs' => [
         'label' => 'Бригадиры',

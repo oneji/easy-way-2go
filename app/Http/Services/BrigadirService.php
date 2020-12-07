@@ -168,14 +168,14 @@ class BrigadirService
             return [
                 'success' => true,
                 'status' => 200,
-                'message' => 'Пароль успешно обновлён.'
+                'message' => 'Password successfully updated.'
             ];
         }
 
         return [
             'success' => false,
             'success' => 422,
-            'message' => 'Старый пароль введен неверно.'
+            'message' => 'The old password is wrong.'
         ];
     }
 }

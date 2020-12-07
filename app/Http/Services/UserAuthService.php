@@ -29,7 +29,7 @@ class UserAuthService
             return [
                 'success' => false,
                 'status' => 422,
-                'message' => 'Пользователь не найден.'
+                'message' => 'User with these credentials could not be found.'
             ];
         }
 
@@ -38,7 +38,7 @@ class UserAuthService
             return [
                 'success' => false,
                 'status' => 422,
-                'message' => 'Перед тем как войти, подтвердите ваш номер телефона.'
+                'message' => 'You must verify your phone number before logging in.'
             ];
         }
 
@@ -49,7 +49,7 @@ class UserAuthService
             return [
                 'success' => false,
                 'status' => 422,
-                'message' => 'Неверный логин или пароль.'
+                'message' => 'Login or password is incorrect.'
             ];
         }
 
@@ -112,7 +112,7 @@ class UserAuthService
         if(!$user) {
             return [
                 'success' => false,
-                'message' => 'Неверный код подтверждения.'
+                'message' => 'Wrong verification code provided.'
             ];
         }
 
@@ -126,7 +126,7 @@ class UserAuthService
 
         return [
             'success' => true,
-            'message' => 'Номер телефона успешно подтвержден.',
+            'message' => 'Phone number verification is successful.',
             'user' => $user,
             'token' => $token,
             'expires_in' => auth($user->role)->factory()->getTTL() * 60

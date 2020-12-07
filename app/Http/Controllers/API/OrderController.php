@@ -93,7 +93,7 @@ class OrderController extends Controller
             'cargos.*.height' => 'required|numeric',
             'cargos.*.weight' => 'required|numeric',
             'cargos.*.packaging' => 'required|integer',
-            'cargos.*.photos' => 'required'
+            // 'cargos.*.photos' => 'required'
         ]);
 
         if($validator->fails()) {

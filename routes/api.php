@@ -43,6 +43,9 @@ Route::namespace('API')->group(function() {
     // Countries
     Route::get('countries', 'CountryController@all');
 
+    // Help
+    Route::get('help', 'HelpSectionController@all');
+
     Route::middleware('jwt.verify')->group(function() {
         // Clients
         Route::put('clients/changePassword', 'ClientController@changePassword');
@@ -83,8 +86,5 @@ Route::namespace('API')->group(function() {
         // Faq
         Route::get('faq', 'FaqController@all');
         Route::get('faq/getById/{id}', 'FaqController@getById');
-        
-        // Help
-        Route::get('help', 'HelpSectionController@all');
     });
 });

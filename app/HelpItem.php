@@ -6,12 +6,13 @@ use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class HelpSection extends Model
+class HelpItem extends Model
 {
     use HasTranslations;
     
     public $translatable = [
-        'name'
+        'title',
+        'description'
     ];
 
     /**
@@ -27,8 +28,9 @@ class HelpSection extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'icon'
+        'title',
+        'description',
+        'help_section_id'
     ];
 
     /**
@@ -41,13 +43,5 @@ class HelpSection extends Model
         parent::boot();
 
         static::addGlobalScope(new ActiveScope);
-    }
-
-    /**
-     * Get the items for the blog post.
-     */
-    public function items()
-    {
-        return $this->hasMany('App\HelpItem', 'help_section_id');
     }
 }

@@ -20,8 +20,12 @@
                     </h5>
 
                     <div class="col-6">
-                        <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2 float-right" data-toggle="modal" data-target=".help-modal">
+                        <a href="{{ route('admin.helpItems.create') }}" class="btn btn-info btn-rounded waves-effect waves-light mb-2 mr-2 float-right">
                             <i class="mdi mdi-plus mr-1"></i> {{ __('form.buttons.add') }}
+                        </a>
+
+                        <a href="#" class="btn btn-success btn-rounded waves-effect waves-light mb-2 mr-2 float-right" data-toggle="modal" data-target=".help-modal">
+                            <i class="mdi mdi-plus mr-1"></i> {{ __('pages.help.addSectionBtn') }}
                         </a>
                     </div>
                 </div>
@@ -55,7 +59,40 @@
 
                                 <div id="collapse-{{ $item->id }}" class="collapse collapsed" aria-labelledby="heading-{{ $item->id }}" data-parent="#accordion">
                                     <div class="card-body">
-                                        {!! $item->full_description !!}
+                                        <div id="accordion2">
+                                            @foreach ($item->items as $helpItem)
+                                                <div class="card mb-1 shadow-none">
+                                                    <div class="card-header" id="heading-{{ $helpItem->id }}">
+                                                        <h6 class="m-0 d-flex align-items-center justify-content-between">
+                                                            <a href="#helpItem-{{ $helpItem->id }}" class="text-dark" data-toggle="collapse" aria-expanded="true" aria-controls="helpItem-{{ $helpItem->id }}">
+                                                                {{ $helpItem->title }}
+                                                            </a>
+                    
+                                                            <div class="actions-btns">
+                                                                <a href="{{ route('admin.helpItems.edit', [$helpItem->id]) }}" class="btn btn-success btn-sm mr-1">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                                
+                                                                <a href="#" onclick="event.preventDefault(); document.getElementById('deleteHelpItemForm{{ $helpItem->id }}').submit();" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                    
+                                                                <form action="{{ route('admin.help.delete', [$helpItem->id]) }}" method="POST" id="deleteHelpItemForm{{ $helpItem->id }}" class="hidden">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                </form>
+                                                            </div>
+                                                        </h6>
+                                                    </div>
+                    
+                                                    <div id="helpItem-{{ $helpItem->id }}" class="collapse collapsed" aria-labelledby="heading-{{ $helpItem->id }}" data-parent="#accordion2">
+                                                        <div class="card-body">
+                                                            {!! $helpItem->description !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +133,6 @@
                     url: '/help/getById/' + sectionId,
                     type: 'GET',
                     success: function(section) {
-                        console.log(section)
                         for (const langCode in section.name) {
                             editHelpModal.find('form').find(`input[data-lang=${langCode}]`).val(section.name[langCode]);
                         }

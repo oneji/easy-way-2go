@@ -15,7 +15,7 @@ class HelpSectionService
      */
     public function all()
     {
-        return HelpSection::all();
+        return HelpSection::with('items')->get();
     }
     
     /**
@@ -25,7 +25,7 @@ class HelpSectionService
      */
     public function getPaginated()
     {
-        return HelpSection::paginate(10);
+        return HelpSection::with('items')->paginate(10);
     }
 
     /**

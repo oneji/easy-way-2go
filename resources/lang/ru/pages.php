@@ -85,6 +85,7 @@ return [
         'editModalLabel' => 'Изменить',
         'createFormLabel' => 'Добавить элемент в раздел Помощи',
         'editFormLabel' => 'Изменить элемент в разделе Помощи',
+        'addSectionBtn' => 'Добавить новый раздел'
     ],
 
     'brigadirs' => [

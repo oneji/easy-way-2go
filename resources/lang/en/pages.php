@@ -84,7 +84,8 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
         'createFormLabel' => 'Add new Help item',
-        'editFormLabel' => 'Edit Help item'
+        'editFormLabel' => 'Edit Help item',
+        'addSectionBtn' => 'Add new section'
     ],
 
     'brigadirs' => [

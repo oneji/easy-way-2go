@@ -23,8 +23,8 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="customFile">Icon</label> <br>
-                                <input type="file" name="icon" id="customFile" required>
+                                <label for="customFile">{{ __('form.labels.icon') }}</label> <br>
+                                <input type="file" name="icon" id="customFile" required placeholder="{{ __('form.placeholders.icon') }}">
                             </div>
                         </div>
 

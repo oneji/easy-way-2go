@@ -24,8 +24,8 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label>Icon</label> <br>
-                                <input type="file" name="icon">
+                                <label>{{ __('form.labels.icon') }}</label> <br>
+                                <input type="file" name="icon" placeholder="{{ __('form.placeholders.icon') }}">
                             </div>
                         </div>
 

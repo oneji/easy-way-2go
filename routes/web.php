@@ -124,6 +124,12 @@ Route::group([
         Route::put('payment-methods/{id}', 'PaymentMethodController@update')->name('paymentMethods.update');
         Route::delete('payment-methods/{id}', 'PaymentMethodController@delete')->name('paymentMethods.delete');
         Route::get('payment-methods/getById/{id}', 'PaymentMethodController@getById')->name('paymentMethods.getById');
+
+        // Payment statuses
+        Route::get('payment-statuses', 'PaymentStatusController@index')->name('paymentStatuses.index');
+        Route::get('payment-statuses/getById/{id}', 'PaymentStatusController@getById')->name('paymentStatuses.getById');
+        Route::post('payment-statuses', 'PaymentStatusController@store')->name('paymentStatuses.store');
+        Route::put('payment-statuses/{id}', 'PaymentStatusController@update')->name('paymentStatuses.update');
     });
 });
 

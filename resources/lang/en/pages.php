@@ -46,6 +46,15 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+    
+    'paymentStatuses' => [
+        'label' => 'Payment statuses',
+        'statusesLabel' => 'Status|Statuses',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+    ],
 
     'carModels' => [
         'label' => 'Car models',

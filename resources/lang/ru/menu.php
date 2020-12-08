@@ -20,6 +20,7 @@ return [
     'cargoTypes'        => 'Типы груза',
     'faq'               => 'База знаний',
     'help'              => 'Раздел "Помощь"',
-    'paymentMethods'    => 'Способы оплаты'
+    'paymentMethods'    => 'Способы оплаты',
+    'paymentStatuses'    => 'Статусы оплаты заказа',
     
 ];

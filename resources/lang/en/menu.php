@@ -20,6 +20,7 @@ return [
     'cargoTypes'        => 'Cargo types',
     'faq'               => 'FAQ',
     'help'              => 'Help',
-    'paymentMethods'    => 'Payment methods'
+    'paymentMethods'    => 'Payment methods',
+    'paymentStatuses'    => 'Payment statuses'
 
 ];

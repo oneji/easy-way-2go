@@ -98,6 +98,15 @@ return [
         'createFormLabel' => 'Добавить'
     ],
 
+    'paymentStatuses' => [
+        'label' => 'Статусы оплаты заказа',
+        'statusesLabel' => 'Статус|Статусы',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о статусах оплаты заказа не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить',
+    ],
+
     'brigadirs' => [
         'label' => 'Бригадиры',
         'datatable' => [

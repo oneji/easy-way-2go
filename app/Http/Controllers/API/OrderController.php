@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\JsonRequests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Services\OrderService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -26,9 +27,9 @@ class OrderController extends Controller
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function all()
+    public function all(Request $request)
     {
-        $orders = $this->orderService->getClientOrders();
+        $orders = $this->orderService->getClientOrders($request);
 
         return response()->json([
             'success' => true,

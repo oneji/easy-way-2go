@@ -8,17 +8,37 @@ use App\Http\Services\PackageService;
 use Carbon\Carbon;
 use App\Package;
 use App\Order;
+use Illuminate\Http\Request;
 
 class OrderService
 {
     /**
      * Get client's orders
      */
-    public function getClientOrders()
+    public function getClientOrders(Request $request)
     {
         $client = auth('client')->user();
+        // Filtering params
+        $id = $request->query('id');
+        $type = $request->query('type');
+        $from = $request->query('from');
+        $to = $request->query('to');
 
-        return Order::with([ 'country_from', 'country_to', 'moving_data' ])->where('client_id', $client->id)->get();
+        return Order::with([ 'country_from', 'country_to', 'moving_data' ])
+            ->when($id, function($query, $id) {
+                $query->where('id', 'like', "%$id%");
+            })
+            ->when($type, function($query, $type) {
+                $query->where('order_type', $type);
+            })
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->where('client_id', $client->id)
+            ->get();
     }
 
     /**

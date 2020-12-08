@@ -31,7 +31,7 @@ class Order extends Model
         'buyer_phone_number',
         'buyer_email',
         'order_type',
-        'total_price',
+        'total_price'
     ];
 
     /**

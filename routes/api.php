@@ -46,6 +46,16 @@ Route::namespace('API')->group(function() {
     // Help
     Route::get('help', 'HelpSectionController@all');
 
+    // Driving experiences
+    Route::get('drivingExperiences', 'DrivingExperienceController@all');
+    // Car brands
+    Route::get('carBrands',  'CarBrandController@all');
+    // Car models
+    Route::get('carModels',  'CarModelController@all');
+    Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
+    // Cargo types
+    Route::get('cargoTypes', 'CargoTypeController@all');
+
     Route::middleware('jwt.verify')->group(function() {
         // Clients
         Route::put('clients/changePassword', 'ClientController@changePassword');
@@ -68,20 +78,9 @@ Route::namespace('API')->group(function() {
         Route::put('passengers/{id}', 'PassengerController@update');
         Route::delete('passengers/{id}', 'PassengerController@delete');
 
-        // Driving experiences
-        Route::get('drivingExperiences', 'DrivingExperienceController@all');
-        // Car brands
-        Route::get('carBrands',  'CarBrandController@all');
-        // Car models
-        Route::get('carModels',  'CarModelController@all');
-        Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
-
         // Bank cards
         Route::get('bankCards', 'BankCardController@all');
         Route::post('bankCards', 'BankCardController@store');
-
-        // Cargo types
-        Route::get('cargoTypes', 'CargoTypeController@all');
 
         // Faq
         Route::get('faq', 'FaqController@all');

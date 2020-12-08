@@ -87,4 +87,20 @@ class Order extends Model
     {
         return $this->hasMany('App\Package');
     }
+
+    /**
+     * Get the moving data associated with the order.
+     */
+    public function moving_data()
+    {
+        return $this->hasOne('App\MovingData');
+    }
+
+    /**
+     * Get all of the cargos for the order.
+     */
+    public function moving_cargos()
+    {
+        return $this->hasManyThrough('App\MovingCargo', 'App\MovingData');
+    }
 }

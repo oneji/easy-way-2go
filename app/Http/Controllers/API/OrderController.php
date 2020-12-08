@@ -37,6 +37,22 @@ class OrderController extends Controller
     }
 
     /**
+     * Get order by id
+     * 
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getById($id)
+    {
+        $data = $this->orderService->getById($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
      * Store a newly created order
      * 
      * @param  \App\Http\JsonRequests\StoreOrderRequest $request
@@ -84,7 +100,7 @@ class OrderController extends Controller
             'to_floor' => 'required|integer',
             'time' => 'required',
             'movers_count' => 'required|integer',
-            'parking' => 'required|integer',
+            'parking' => 'required',
             'parking_working_hours' => 'nullable',
             'cargos' => 'required',
             'cargos.*.cargo_type_id' => 'required|integer|exists:cargo_types,id',

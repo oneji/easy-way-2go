@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class DummyScope implements Scope
+class PhotoScope implements Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
@@ -17,6 +17,6 @@ class DummyScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        //
+        $builder->with('photos');
     }
 }

@@ -29,6 +29,15 @@ class MovingData extends Model
     public $timestamps = false;
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'parking' => 'boolean'
+    ];
+
+    /**
      * Get the cargos for the moving data.
      */
     public function cargos()

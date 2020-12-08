@@ -72,6 +72,7 @@ Route::namespace('API')->group(function() {
         // Orders
         Route::get('orders', 'OrderController@all');
         Route::post('orders', 'OrderController@store');
+        Route::get('orders/getById/{id}', 'OrderController@getById');
         
         // Passengers
         Route::get('passengers', 'PassengerController@all');

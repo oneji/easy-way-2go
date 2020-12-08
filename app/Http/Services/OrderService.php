@@ -18,7 +18,7 @@ class OrderService
     {
         $client = auth('client')->user();
 
-        return Order::with([ 'country_from', 'country_to' ])->where('client_id', $client->id)->get();
+        return Order::with([ 'country_from', 'country_to', 'moving_data' ])->where('client_id', $client->id)->get();
     }
 
     /**
@@ -28,7 +28,7 @@ class OrderService
      */
     public function all()
     {
-        return Order::with([ 'country_from', 'country_to' ])->get();
+        return Order::with([ 'country_from', 'country_to', 'moving_data' ])->get();
     }
 
     /**
@@ -38,7 +38,12 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([ 'country_from', 'country_to' ])
+        return Order::with([
+                'country_from',
+                'country_to',
+                'moving_data',
+                'moving_cargos'
+            ])
             ->whereId($id)
             ->first();
     }

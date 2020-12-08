@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\PhotoScope;
 use Illuminate\Database\Eloquent\Model;
 
 class MovingCargo extends Model
@@ -33,5 +34,17 @@ class MovingCargo extends Model
     public function photos()
     {
         return $this->morphMany('App\Photo', 'photoable');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new PhotoScope);
     }
 }

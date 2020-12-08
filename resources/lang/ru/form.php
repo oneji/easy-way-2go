@@ -17,7 +17,8 @@ return [
         'description' => 'Описание',
         'fullDescription' => 'Полное описание',
         'icon' => 'Иконка',
-        'section' => 'Раздел'
+        'section' => 'Раздел',
+        'code' => 'Ключ'
     ],
     // Placeholders
     'placeholders' => [
@@ -26,7 +27,9 @@ return [
         'title' => 'Введите заголовок',
         'description' => 'Введите описание',
         'fullDescription' => 'Введите полное описание',
-        'icon' => 'Выберите иконку'
+        'icon' => 'Выберите иконку',
+        'section' => 'Выберите раздел',
+        'code' => 'Введите код'
     ]
     
 ];

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HelpSectionRequest;
 use App\Http\Services\HelpSectionService;
-use Illuminate\Http\Request;
 
 class HelpSectionController extends Controller
 {

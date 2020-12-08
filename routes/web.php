@@ -117,6 +117,13 @@ Route::group([
         Route::put('help-items/{id}', 'HelpItemController@update')->name('helpItems.update');
         Route::get('help-items/create', 'HelpItemController@create')->name('helpItems.create');
         Route::get('help-items/edit/{id}', 'HelpItemController@edit')->name('helpItems.edit');
+
+        // Payment methods
+        Route::get('payment-methods', 'PaymentMethodController@index')->name('paymentMethods.index');
+        Route::post('payment-methods', 'PaymentMethodController@store')->name('paymentMethods.store');
+        Route::put('payment-methods/{id}', 'PaymentMethodController@update')->name('paymentMethods.update');
+        Route::delete('payment-methods/{id}', 'PaymentMethodController@delete')->name('paymentMethods.delete');
+        Route::get('payment-methods/getById/{id}', 'PaymentMethodController@getById')->name('paymentMethods.getById');
     });
 });
 

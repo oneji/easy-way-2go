@@ -55,6 +55,8 @@ Route::namespace('API')->group(function() {
     Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
     // Cargo types
     Route::get('cargoTypes', 'CargoTypeController@all');
+    // Payment methods
+    Route::get('paymentMethods', 'PaymentMethodController@all');
 
     Route::middleware('jwt.verify')->group(function() {
         // Clients

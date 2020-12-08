@@ -18,10 +18,9 @@ class HelpSectionController extends Controller
     {
         $this->sectionService = $sectionService;
     }
-
     
     /**
-     * Get all faqs
+     * Get all help
      * 
      * @return \Illuminate\Http\JsonResponse
      */

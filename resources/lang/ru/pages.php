@@ -88,6 +88,16 @@ return [
         'addSectionBtn' => 'Добавить новый раздел'
     ],
 
+    'paymentMethods' => [
+        'label' => 'Способы оплаты',
+        'modelsLabel' => 'Спосбы оплаты',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о способах оплаты не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить',
+        'createFormLabel' => 'Добавить'
+    ],
+
     'brigadirs' => [
         'label' => 'Бригадиры',
         'datatable' => [

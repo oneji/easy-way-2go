@@ -87,6 +87,16 @@ return [
         'editFormLabel' => 'Edit Help item',
         'addSectionBtn' => 'Add new section'
     ],
+    
+    'paymentMethods' => [
+        'label' => 'Payment methods',
+        'modelsLabel' => 'Payment methods',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+        'createFormLabel' => 'Add new'
+    ],
 
     'brigadirs' => [
         'label' => 'Formen',

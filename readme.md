@@ -77,6 +77,12 @@ Run the database seeder and you're done
 
     php artisan migrate:refresh
 
+## API Documentation
+
+**You can also find API documentation for this application by the link provided below:**
+
+    https://app.swaggerhub.com/apis-docs/oneji/EuroWay2GO/1.0
+
 ----------
 
 # Code overview

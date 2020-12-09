@@ -68,7 +68,7 @@ class OrderController extends Controller
                 return response()->json([
                     'success' => false,
                     'errors' => $validator['errors']
-                ]);
+                ], 422);
             }
         } else if($request->order_type === 'passengers') {
             $validator = $this->validatePassengersType($request);
@@ -77,7 +77,7 @@ class OrderController extends Controller
                 return response()->json([
                     'success' => false,
                     'errors' => $validator['errors']
-                ]);
+                ], 422);
             }
         }
 

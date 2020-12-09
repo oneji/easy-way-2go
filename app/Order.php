@@ -38,6 +38,15 @@ class Order extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date' => 'datetime:d.m.y',
+    ];
+
+    /**
      * The "booting" method of the model.
      *
      * @return void

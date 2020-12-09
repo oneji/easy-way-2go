@@ -99,7 +99,7 @@ class Order extends Model
     /**
      * Get all of the cargos for the order.
      */
-    public function moving_cargos()
+    public function cargos()
     {
         return $this->hasManyThrough('App\MovingCargo', 'App\MovingData');
     }

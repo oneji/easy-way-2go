@@ -58,14 +58,18 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([
-                'country_from',
-                'country_to',
-                'moving_data',
-                'moving_cargos'
-            ])
-            ->whereId($id)
-            ->first();
+        return Order::with([ 'country_from', 'country_to', 'cargos' ])
+            ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
+            ->select(
+                'orders.*',
+                'moving_data.from_floor',
+                'moving_data.to_floor',
+                'moving_data.time',
+                'moving_data.movers_count',
+                'moving_data.parking',
+                'moving_data.parking_working_hours'
+            )
+            ->find($id);
     }
 
     /**

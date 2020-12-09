@@ -130,6 +130,12 @@ Route::group([
         Route::get('payment-statuses/getById/{id}', 'PaymentStatusController@getById')->name('paymentStatuses.getById');
         Route::post('payment-statuses', 'PaymentStatusController@store')->name('paymentStatuses.store');
         Route::put('payment-statuses/{id}', 'PaymentStatusController@update')->name('paymentStatuses.update');
+        
+        // Order statuses
+        Route::get('order-statuses', 'OrderStatusController@index')->name('orderStatuses.index');
+        Route::get('order-statuses/getById/{id}', 'OrderStatusController@getById')->name('orderStatuses.getById');
+        Route::post('order-statuses', 'OrderStatusController@store')->name('orderStatuses.store');
+        Route::put('order-statuses/{id}', 'OrderStatusController@update')->name('orderStatuses.update');
     });
 });
 

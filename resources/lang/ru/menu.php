@@ -22,5 +22,6 @@ return [
     'help'              => 'Раздел "Помощь"',
     'paymentMethods'    => 'Способы оплаты',
     'paymentStatuses'    => 'Статусы оплаты заказа',
+    'orderStatuses'    => 'Статусы заказа',
     
 ];

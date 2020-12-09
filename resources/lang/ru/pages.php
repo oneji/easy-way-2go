@@ -106,6 +106,15 @@ return [
         'addModalLabel' => 'Добавить',
         'editModalLabel' => 'Изменить',
     ],
+    
+    'orderStatuses' => [
+        'label' => 'Статусы заказа',
+        'statusesLabel' => 'Статус|Статусы',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о статусах заказа не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить',
+    ],
 
     'brigadirs' => [
         'label' => 'Бригадиры',

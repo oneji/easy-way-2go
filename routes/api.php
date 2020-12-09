@@ -59,6 +59,8 @@ Route::namespace('API')->group(function() {
     Route::get('paymentMethods', 'PaymentMethodController@all');
     // Payment statuses
     Route::get('paymentStatuses', 'PaymentStatusController@all');
+    // Order statuses
+    Route::get('orderStatuses', 'OrderStatusController@all');
 
     Route::middleware('jwt.verify')->group(function() {
         // Clients

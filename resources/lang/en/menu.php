@@ -21,6 +21,7 @@ return [
     'faq'               => 'FAQ',
     'help'              => 'Help',
     'paymentMethods'    => 'Payment methods',
-    'paymentStatuses'    => 'Payment statuses'
+    'paymentStatuses'   => 'Payment statuses',
+    'orderStatuses'     => 'Order statuses',
 
 ];

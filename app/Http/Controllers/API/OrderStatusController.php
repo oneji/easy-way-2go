@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\PaymentStatusService;
+use App\Http\Services\OrderStatusService;
 
-class PaymentStatusController extends Controller
+class OrderStatusController extends Controller
 {
     private $statusService;
 
     /**
      * CarBrandController constructor
      * 
-     * @param \App\Http\Services\PaymentStatusService $statusService
+     * @param \App\Http\Services\OrderStatusService $statusService
      */
-    public function __construct(PaymentStatusService $statusService)
+    public function __construct(OrderStatusService $statusService)
     {
         $this->statusService = $statusService;
     }

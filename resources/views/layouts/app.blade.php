@@ -143,6 +143,7 @@
                                 <li><a href="{{ route('admin.cargoTypes.index') }}">{{ __('menu.cargoTypes') }}</a></li>
                                 <li><a href="{{ route('admin.paymentMethods.index') }}">{{ __('menu.paymentMethods') }}</a></li>
                                 <li><a href="{{ route('admin.paymentStatuses.index') }}">{{ __('menu.paymentStatuses') }}</a></li>
+                                <li><a href="{{ route('admin.orderStatuses.index') }}">{{ __('menu.orderStatuses') }}</a></li>
                             </ul>
                         </li>
                         <li>

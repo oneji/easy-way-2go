@@ -103,4 +103,12 @@ class Order extends Model
     {
         return $this->hasManyThrough('App\MovingCargo', 'App\MovingData');
     }
+
+    /**
+     * Get the order status that owns the order.
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\OrderStatus', 'order_status_id');
+    }
 }

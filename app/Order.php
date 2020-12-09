@@ -7,6 +7,9 @@ use Spatie\Translatable\HasTranslations;
 use App\Scopes\Order\PassengerScope;
 use App\Scopes\Order\PackageScope;
 use App\Scopes\ClientScope;
+use App\Scopes\MovingCargoScope;
+use App\Scopes\OrderStatusScope;
+use App\Scopes\PaymentStatusScope;
 
 class Order extends Model
 {
@@ -46,6 +49,9 @@ class Order extends Model
         static::addGlobalScope(new PassengerScope);
         static::addGlobalScope(new PackageScope);
         static::addGlobalScope(new ClientScope);
+        static::addGlobalScope(new OrderStatusScope);
+        static::addGlobalScope(new MovingCargoScope);
+        static::addGlobalScope(new PaymentStatusScope);
     }
 
     /**
@@ -110,5 +116,13 @@ class Order extends Model
     public function status()
     {
         return $this->belongsTo('App\OrderStatus', 'order_status_id');
+    }
+    
+    /**
+     * Get the payment status that owns the order.
+     */
+    public function payment_status()
+    {
+        return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
     }
 }

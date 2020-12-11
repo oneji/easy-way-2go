@@ -84,6 +84,7 @@ class OrderService
         $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);
         $order->client_id = auth('client')->user()->id;
+        $order->order_status_id = OrderStatus::getFuture()->id;
         $order->save();
 
         if($order->order_type === 'moving') {

@@ -31,6 +31,16 @@ class OrderStatus extends Model
     ];
 
     /**
+     * Get future status
+     * 
+     * @return object
+     */
+    public static function getFuture()
+    {
+        return static::whereCode('future')->first();
+    }
+
+    /**
      * Get cancelled status
      * 
      * @return object

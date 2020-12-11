@@ -28,14 +28,14 @@
                             </div>
                         </div>
                         
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="unit">{{ __('form.labels.unit') }}</label>
                                 <input name="unit" type="text" class="form-control" placeholder="{{ __('form.placeholders.unit') }}" required>
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="price">{{ __('form.labels.price') }}, &euro;</label>
                                 <input name="price" type="text" class="form-control" placeholder="{{ __('form.placeholders.price') }}" required>

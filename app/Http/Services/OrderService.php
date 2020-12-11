@@ -2,12 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Http\JsonRequests\CancelOrderRequest;
 use App\Http\JsonRequests\StoreOrderRequest;
 use App\Http\Services\PassengerService;
 use App\Http\Services\PackageService;
 use Carbon\Carbon;
 use App\Package;
 use App\Order;
+use App\OrderStatus;
 use Illuminate\Http\Request;
 
 class OrderService
@@ -112,5 +114,18 @@ class OrderService
         }
 
         return $order;
+    }
+
+    /**
+     * Cancel order
+     * 
+     * @param \App\Http\JsonRequests\CancelOrderRequest
+     */
+    public function cancel(CancelOrderRequest $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->order_status_id = OrderStatus::getCancelled()->id;
+        $order->cancellation_reason = $request->reason;
+        $order->save();
     }
 }

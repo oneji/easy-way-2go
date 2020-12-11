@@ -35,8 +35,8 @@ class OrderStatus extends Model
      * 
      * @return object
      */
-    public function getCancelled()
+    public static function getCancelled()
     {
-        return $this->where('code', 'cancelled')->first();
+        return static::whereCode('cancelled')->first();
     }
 }

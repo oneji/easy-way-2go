@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\JsonRequests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
+use App\Http\JsonRequests\CancelOrderRequest;
 use App\Http\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -150,5 +151,19 @@ class OrderController extends Controller
         }
 
         return [ 'success' => true ];
+    }
+
+    /**
+     * Cancel order
+     * 
+     * @param \App\Http\JsonRequests\CancelOrderRequest $request
+     */
+    public function cancel(CancelOrderRequest $request)
+    {
+        $this->orderService->cancel($request);
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

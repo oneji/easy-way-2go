@@ -65,6 +65,17 @@ return [
         'addModalLabel' => 'Add new',
         'editModalLabel' => 'Edit',
     ],
+    
+    'prices' => [
+        'label' => 'Prices',
+        'codeLabel' => 'Key',
+        'unitLabel' => 'Unit, pc',
+        'priceLabel' => 'Price',
+        'actionsLabel' => 'Actions',
+        'emptySet' => 'For now, we could not find any items.',
+        'addModalLabel' => 'Add new',
+        'editModalLabel' => 'Edit',
+    ],
 
     'carModels' => [
         'label' => 'Car models',

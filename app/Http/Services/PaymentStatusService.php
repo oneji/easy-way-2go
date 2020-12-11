@@ -18,7 +18,7 @@ class PaymentStatusService
     }
     
     /**
-     * Get all payment statuses
+     * Get all payment statuses paginated
      * 
      * @return collection
      */

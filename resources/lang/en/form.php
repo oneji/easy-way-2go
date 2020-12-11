@@ -18,7 +18,9 @@ return [
         'fullDescription' => 'Full description',
         'icon' => 'Icon',
         'section' => 'Section',
-        'code' => 'Code'
+        'code' => 'Code',
+        'price' => 'Price',
+        'unit' => 'Unit, pc'
     ],
     // Placeholders
     'placeholders' => [
@@ -29,7 +31,9 @@ return [
         'fullDescription' => 'Enter full description',
         'icon' => 'Choose icon',
         'section' => 'Choose section',
-        'code' => 'Enter code'
+        'code' => 'Enter code',
+        'price' => 'Enter price',
+        'unit' => 'Enter unit'
     ]
 
 ];

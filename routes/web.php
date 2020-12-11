@@ -136,6 +136,12 @@ Route::group([
         Route::get('order-statuses/getById/{id}', 'OrderStatusController@getById')->name('orderStatuses.getById');
         Route::post('order-statuses', 'OrderStatusController@store')->name('orderStatuses.store');
         Route::put('order-statuses/{id}', 'OrderStatusController@update')->name('orderStatuses.update');
+        
+        // Prices
+        Route::get('prices', 'PriceController@index')->name('prices.index');
+        Route::get('prices/getById/{id}', 'PriceController@getById')->name('prices.getById');
+        Route::post('prices', 'PriceController@store')->name('prices.store');
+        Route::put('prices/{id}', 'PriceController@update')->name('prices.update');
     });
 });
 

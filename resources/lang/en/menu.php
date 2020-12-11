@@ -23,5 +23,6 @@ return [
     'paymentMethods'    => 'Payment methods',
     'paymentStatuses'   => 'Payment statuses',
     'orderStatuses'     => 'Order statuses',
+    'prices'            => 'Prices',
 
 ];

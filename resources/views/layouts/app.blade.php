@@ -144,6 +144,7 @@
                                 <li><a href="{{ route('admin.paymentMethods.index') }}">{{ __('menu.paymentMethods') }}</a></li>
                                 <li><a href="{{ route('admin.paymentStatuses.index') }}">{{ __('menu.paymentStatuses') }}</a></li>
                                 <li><a href="{{ route('admin.orderStatuses.index') }}">{{ __('menu.orderStatuses') }}</a></li>
+                                <li><a href="{{ route('admin.prices.index') }}">{{ __('menu.prices') }}</a></li>
                             </ul>
                         </li>
                         <li>

@@ -32,7 +32,7 @@ class PaymentStatusController extends Controller
     }
 
     /**
-     * Get a specific car brand by id
+     * Get a specific payment status by id
      * 
      * @param   int $id
      * @return  collection
@@ -45,7 +45,7 @@ class PaymentStatusController extends Controller
     }
 
     /**
-     * Store a newly created car brand
+     * Store a newly created payment status
      * 
      * @param \App\Http\Requests\PaymentStatusRequest $request
      */
@@ -57,7 +57,7 @@ class PaymentStatusController extends Controller
     }
 
     /**
-     * Update an existing car brand
+     * Update an existing payment status
      * 
      * @param \App\Http\Requests\PaymentStatusRequest $request
      * @param int $id

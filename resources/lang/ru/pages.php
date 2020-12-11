@@ -117,6 +117,17 @@ return [
         'editModalLabel' => 'Изменить',
     ],
 
+    'prices' => [
+        'label' => 'Цена',
+        'codeLabel' => 'Ключ',
+        'unitLabel' => 'Единица, шт',
+        'priceLabel' => 'Цена',
+        'actionsLabel' => 'Действия',
+        'emptySet' => 'На данный момент записей о ценах не найдено.',
+        'addModalLabel' => 'Добавить',
+        'editModalLabel' => 'Изменить',
+    ],
+
     'brigadirs' => [
         'label' => 'Бригадиры',
         'datatable' => [

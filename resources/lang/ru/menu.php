@@ -21,7 +21,8 @@ return [
     'faq'               => 'База знаний',
     'help'              => 'Раздел "Помощь"',
     'paymentMethods'    => 'Способы оплаты',
-    'paymentStatuses'    => 'Статусы оплаты заказа',
-    'orderStatuses'    => 'Статусы заказа',
+    'paymentStatuses'   => 'Статусы оплаты заказа',
+    'orderStatuses'     => 'Статусы заказа',
+    'prices'            => 'Цены'
     
 ];

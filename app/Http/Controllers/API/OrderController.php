@@ -160,10 +160,11 @@ class OrderController extends Controller
      */
     public function cancel(CancelOrderRequest $request)
     {
-        $this->orderService->cancel($request);
+        $data = $this->orderService->cancel($request);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

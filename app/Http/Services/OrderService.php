@@ -128,5 +128,7 @@ class OrderService
         $order->order_status_id = OrderStatus::getCancelled()->id;
         $order->cancellation_reason = $request->reason;
         $order->save();
+
+        return $order;
     }
 }

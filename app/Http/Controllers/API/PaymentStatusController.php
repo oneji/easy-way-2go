@@ -10,7 +10,7 @@ class PaymentStatusController extends Controller
     private $statusService;
 
     /**
-     * CarBrandController constructor
+     * PaymentStatusController constructor
      * 
      * @param \App\Http\Services\PaymentStatusService $statusService
      */

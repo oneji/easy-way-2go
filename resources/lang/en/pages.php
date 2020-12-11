@@ -58,6 +58,7 @@ return [
     
     'orderStatuses' => [
         'label' => 'Order statuses',
+        'codeLabel' => 'Key',
         'statusesLabel' => 'Status|Statuses',
         'actionsLabel' => 'Actions',
         'emptySet' => 'For now, we could not find any items.',

@@ -109,6 +109,7 @@ return [
     
     'orderStatuses' => [
         'label' => 'Статусы заказа',
+        'codeLabel' => 'Ключ',
         'statusesLabel' => 'Статус|Статусы',
         'actionsLabel' => 'Действия',
         'emptySet' => 'На данный момент записей о статусах заказа не найдено.',

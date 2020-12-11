@@ -26,6 +26,17 @@ class OrderStatus extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'code'
     ];
+
+    /**
+     * Get cancelled status
+     * 
+     * @return object
+     */
+    public function getCancelled()
+    {
+        return $this->where('code', 'cancelled')->first();
+    }
 }

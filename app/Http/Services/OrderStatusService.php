@@ -59,6 +59,7 @@ class OrderStatusService
     {
         $status = OrderStatus::find($id);
         $status->name = $request->name;
+        $status->code = $request->code;
         $status->save();
     }
 }

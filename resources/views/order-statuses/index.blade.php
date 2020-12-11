@@ -41,6 +41,7 @@
                                     <tr>
                                         <th scope="col" style="width: 70px;">#</th>
                                         <th scope="col">{{ trans_choice('pages.orderStatuses.statusesLabel', 2) }}</th>
+                                        <th scope="col">{{ __('pages.orderStatuses.codeLabel') }}</th>
                                         <th scope="col">{{ __('pages.orderStatuses.actionsLabel') }}</th>
                                     </tr>
                                 </thead>
@@ -49,6 +50,7 @@
                                         <tr>
                                             <td>{{ $idx + 1 }}</td>
                                             <td>{{ $status->name }}</td>
+                                            <td>{{ $status->code }}</td>
                                             <td>
                                                 <ul class="list-inline font-size-20 contact-links mb-0">
                                                     <li class="list-inline-item px-2">
@@ -102,6 +104,8 @@
                         for (const langCode in status.name) {
                             editStatusModal.find('form').find(`input[data-lang=${langCode}]`).val(status.name[langCode]);
                         }
+
+                        editStatusModal.find('form').find('input[name=code]').val(status.code);
 
                         editStatusModal.find('form').attr('action', `order-statuses/${statusId}`);
 

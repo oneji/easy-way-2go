@@ -44,7 +44,10 @@ class UpdateBrigadirRequest extends FormRequest
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'phone_number' => 'required|max:255',
-            'email' => [ 'required', Rule::unique('brigadirs')->ignore($this->id), ],
+            'email' => [
+                'required',
+                Rule::unique('brigadirs')->ignore($this->id)
+            ],
             'birthday' => 'required|string',
             'nationality' => 'required|integer|exists:countries,id',
             'photo' => 'file'

@@ -33,6 +33,8 @@ class BrigadirController extends Controller
     {
         $data = $this->brigadirService->updateProfile($request, $id);
 
+        if(!$data) abort(404);
+
         return response()->json([
             'success' => true,
             'data' => $data

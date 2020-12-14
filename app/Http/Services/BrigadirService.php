@@ -12,7 +12,9 @@ use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Jobs\InviteDriverJob;
+use App\Transport;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BrigadirService
@@ -100,12 +102,22 @@ class BrigadirService
     /**
      * Get brigadir's all drivers
      * 
-     * @param   int $brigadirId
+     * @param   \Illuminate\Http\Request $request
      * @return  collection
      */
-    public function getDrivers($brigadirId)
+    public function getDrivers(Request $request)
     {
-        return Driver::where('brigadir_id', $brigadirId)->get();
+        $brigadir = auth('brigadir')->user();
+        
+        // Fitlering params
+        $carNumber = $request->query('number');
+
+        return Transport::with('drivers')
+            ->when($carNumber, function($query, $carNumber) {
+                $query->where('car_number', 'like', "%$carNumber%");
+            })
+            ->whereBrigadirId($brigadir->id)
+            ->get();
     }
 
     /**

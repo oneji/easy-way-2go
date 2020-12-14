@@ -75,6 +75,7 @@ Route::namespace('API')->group(function() {
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
         Route::post('brigadirs/inviteDriver', 'BrigadirController@inviteDriver');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
+        Route::get('brigadirs/getDrivers', 'BrigadirController@getDrivers');
 
         // Orders
         Route::get('orders', 'OrderController@all');

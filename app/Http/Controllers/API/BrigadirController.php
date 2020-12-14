@@ -62,7 +62,8 @@ class BrigadirController extends Controller
     /**
      * Update brigadir's password
      * 
-     * @param \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
+     * @param   \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function changePassword(ChangeBrigadirPasswordRequest $request)
     {
@@ -74,7 +75,8 @@ class BrigadirController extends Controller
     /**
      * Invite driver
      * 
-     * @param \App\Http\JsonRequests\InviteDriverRequest $request
+     * @param   \App\Http\JsonRequests\InviteDriverRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function inviteDriver(InviteDriverRequest $request)
     {
@@ -82,6 +84,22 @@ class BrigadirController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    /**
+     * Get all drivers
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getDrivers(Request $request)
+    {
+        $data = $this->brigadirService->getDrivers($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

@@ -195,6 +195,7 @@ class BrigadirService
         $driver->phone_number = $request->phone_number;
         $driver->email = $request->email;
         $driver->password = Hash::make($password);
+        $driver->brigadir_id = auth('brigadir')->user()->id;
         $driver->save();
         
         InviteDriverJob::dispatch($request->email, $password);

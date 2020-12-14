@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\ChangeBrigadirPasswordRequest;
+use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Http\Services\BrigadirService;
@@ -68,5 +69,19 @@ class BrigadirController extends Controller
         $response = $this->brigadirService->changePassword($request);
 
         return response()->json($response, $response['status']);
+    }
+
+    /**
+     * Invite driver
+     * 
+     * @param \App\Http\JsonRequests\InviteDriverRequest $request
+     */
+    public function inviteDriver(InviteDriverRequest $request)
+    {
+        $this->brigadirService->inviteDriver($request);
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

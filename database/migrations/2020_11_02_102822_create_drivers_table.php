@@ -16,10 +16,10 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('first_name');
-            $table->text('last_name');
+            $table->text('last_name')->nullable();
             $table->integer('gender')->default(0);
             $table->date('birthday')->nullable();
-            $table->unsignedBigInteger('nationality');
+            $table->unsignedBigInteger('nationality')->nullable();
             $table->string('phone_number');
             $table->integer('verification_code')->nullable();
             $table->integer('verified')->default(0);
@@ -27,7 +27,7 @@ class CreateDriversTable extends Migration
             $table->string('photo')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->text('city')->nullable();
             $table->unsignedBigInteger('dl_issue_place')->nullable();
             $table->date('dl_issued_at')->nullable();
@@ -39,7 +39,7 @@ class CreateDriversTable extends Migration
             $table->integer('was_kept_drunk')->default(0);
             $table->integer('grades')->nullable();
             $table->date('grades_expire_at')->nullable();
-            $table->unsignedBigInteger('driving_experience_id');
+            $table->unsignedBigInteger('driving_experience_id')->nullable();
             $table->string('role')->default('driver');
             $table->rememberToken();
             $table->timestamps();

@@ -8,8 +8,10 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Brigadir;
 use App\Driver;
 use App\Http\JsonRequests\ChangeBrigadirPasswordRequest;
+use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
+use App\Jobs\InviteDriverJob;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -177,5 +179,24 @@ class BrigadirService
             'success' => 422,
             'message' => 'The old password is wrong.'
         ];
+    }
+
+    /**
+     * Invite driver
+     * 
+     * @param \App\Http\JsonRequests\InviteDriverRequest $request
+     */
+    public function inviteDriver(InviteDriverRequest $request)
+    {
+        $password = uniqid();
+
+        $driver = new Driver();
+        $driver->first_name = $request->name;
+        $driver->phone_number = $request->phone_number;
+        $driver->email = $request->email;
+        $driver->password = Hash::make($password);
+        $driver->save();
+        
+        InviteDriverJob::dispatch($request->email, $password);
     }
 }

@@ -71,10 +71,10 @@ Route::namespace('API')->group(function() {
         Route::get('clients/checkEmail', 'ClientController@checkEmail');
        
         // Brigadirs
-        Route::post('brigadirs/inviteDriver', 'BrigadirController@inviteDriver');
-        Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
-        Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
+        Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
+        Route::post('brigadirs/inviteDriver', 'BrigadirController@inviteDriver');
+        Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
 
         // Orders
         Route::get('orders', 'OrderController@all');

@@ -176,7 +176,7 @@ class BrigadirService
 
         return [
             'success' => false,
-            'success' => 422,
+            'status' => 422,
             'message' => 'The old password is wrong.'
         ];
     }

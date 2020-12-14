@@ -34,7 +34,8 @@ class Order extends Model
         'buyer_phone_number',
         'buyer_email',
         'order_type',
-        'total_price'
+        'total_price',
+        'transport_id'
     ];
 
     /**
@@ -77,6 +78,14 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo('App\Client');
+    }
+    
+    /**
+     * Get the transport that owns the order.
+     */
+    public function transport()
+    {
+        return $this->belongsTo('App\Transport');
     }
     
     /**

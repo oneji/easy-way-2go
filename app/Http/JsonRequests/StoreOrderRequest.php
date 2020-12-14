@@ -46,7 +46,8 @@ class StoreOrderRequest extends FormRequest
             'to_address' => 'required|string',
             'date' => 'required',
             'order_type' => 'required',
-            'total_price' => 'required|numeric'
+            'total_price' => 'required|numeric',
+            'transport_id' => 'required|integer|exists:transports,id' 
         ];
     }
 }

@@ -26,7 +26,17 @@ class OrderService
         $from = $request->query('from');
         $to = $request->query('to');
 
-        return Order::with([ 'country_from', 'country_to', 'moving_data' ])
+        return Order::with([ 'country_from', 'country_to', 'moving_data', 'transport' ])
+            ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
+            ->select(
+                'orders.*',
+                'moving_data.from_floor',
+                'moving_data.to_floor',
+                'moving_data.time',
+                'moving_data.movers_count',
+                'moving_data.parking',
+                'moving_data.parking_working_hours'
+            )
             ->when($id, function($query, $id) {
                 $query->where('id', 'like', "%$id%");
             })
@@ -99,7 +109,6 @@ class OrderService
                 'order_id' => $order->id,
                 'cargos' => $request->cargos
             ]);
-
         } else {
             if(isset($request->passengers)) {
                 PassengerService::attachToOrder($request->passengers, $order->id);

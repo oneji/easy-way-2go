@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Services\UploadFileService;
 use App\Http\Requests\ApproveBaRequest;
 use App\Jobs\SendEmailJob;
@@ -14,7 +15,6 @@ use App\BaDriver;
 use App\Brigadir;
 use App\Driver;
 use App\Transport;
-use Hash;
 
 class BaRequestService
 {
@@ -191,8 +191,6 @@ class BaRequestService
         $brigadir->birthday = Carbon::parse($firmOwnerData['birthday']);
         $brigadir->nationality = $firmOwnerData->nationality;
         $brigadir->phone_number = $firmOwnerData->phone_number;
-        $brigadir->verified = 1;
-        $brigadir->phone_number_verified_at = Carbon::now();
         $brigadir->password = Hash::make($password);
         $brigadir->email = $email;
         $brigadir->company_name = $firmOwnerData->company_name;

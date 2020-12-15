@@ -13,6 +13,7 @@ use App\BaRequest;
 use App\BaDriver;
 use App\Brigadir;
 use App\Driver;
+use App\Transport;
 use Hash;
 
 class BaRequestService
@@ -70,8 +71,8 @@ class BaRequestService
         if($request->type === 'firm_owner') {
             $this->storeFirmOwnerData($request->except('type'), $baRequest->id);
         } else if($request->type === 'head_driver') {
-            $this->storeRequestDrivers($request->drivers, $baRequest->id);
-            $this->storeRequestTransport($request->transport, $baRequest->id);
+            $drivers = $this->storeRequestDrivers($request->drivers, $baRequest->id);
+            $this->storeRequestTransport($request->transport, $baRequest->id, $drivers);
         }
     }
 
@@ -101,6 +102,7 @@ class BaRequestService
      */
     private function storeRequestDrivers($drivers, $baRequestId)
     {
+        $drivers = [];
         foreach ($drivers as $driverData) {
             $driver = new BaDriver($driverData);
             $driver->birthday = Carbon::parse($driverData['birthday']);
@@ -118,7 +120,11 @@ class BaRequestService
             }
 
             $driver->save();
+
+            $drivers[] = $driver->id;
         }
+
+        return $drivers;
     }
 
     /**
@@ -127,7 +133,7 @@ class BaRequestService
      * @param object $transportData
      * @param int $baRequestId
      */
-    public function storeRequestTransport($transportData, $baRequestId)
+    public function storeRequestTransport($transportData, $baRequestId, $drivers)
     {
         $transport = new BaTransport($transportData);
 
@@ -168,7 +174,8 @@ class BaRequestService
         if($baRequest->type === 'firm_owner') {
             $this->createBrigadirByBaRequestId($request->email, $request->password, $id);
         } elseif($baRequest->type === 'head_driver') {
-            $this->createDriverByBaRequestId($id);
+            $drivers = $this->createDriverByBaRequestId($id);
+            $this->createTransportByBaRequestId($baRequest->transport, $drivers, $baRequest->id);
         }
     }
 
@@ -202,7 +209,7 @@ class BaRequestService
     }
     
     /**
-     * Create a new driver from firm owner data
+     * Create a new driver from head driver data
      * 
      * @param string $email
      * @param string $password
@@ -211,6 +218,7 @@ class BaRequestService
     private function createDriverByBaRequestId($id)
     {
         $baDrivers = BaDriver::where('ba_request_id', $id)->get();
+        $drivers = [];
         
         foreach ($baDrivers as $driverData) {
             $rawPassword = uniqid();
@@ -239,7 +247,51 @@ class BaRequestService
             $driver->passport_photos = $driverData['passport_photos'];
             $driver->save();
 
+            $drivers[] = $driver->id;
+
             SendEmailJob::dispatch($driver->email, $rawPassword);
         }
+
+        return $drivers;
+    }
+
+    /**
+     * Create a transport by ba request id
+     * 
+     * @param array $drivers
+     * @param int $baRequestId
+     */
+    public function createTransportByBaRequestId($transportData, $drivers, $baRequestId)
+    {
+        $transport = new Transport();
+        $transport->registered_on = $transportData->registered_on;
+        $transport->register_country = $transportData->register_country;
+        $transport->register_city = $transportData->register_city;
+        $transport->car_number = $transportData->car_number;
+        $transport->car_brand_id = $transportData->car_brand_id;
+        $transport->car_model_id = $transportData->car_model_id;
+        $transport->year = $transportData->year;
+        // Save parsed date fields
+        $transport->teh_osmotr_date_from = Carbon::parse($transportData['teh_osmotr_date_from']);
+        $transport->teh_osmotr_date_to = Carbon::parse($transportData['teh_osmotr_date_to']);
+        $transport->insurance_date_from = Carbon::parse($transportData['insurance_date_from']);
+        $transport->insurance_date_to = Carbon::parse($transportData['insurance_date_to']);
+        // ***
+        $transport->has_cmr = $transportData->has_cmr;
+        $transport->passengers_seats = $transportData->passengers_seats; 
+        $transport->cubo_metres_available = $transportData->cubo_metres_available; 
+        $transport->kilos_available = $transportData->kilos_available; 
+        $transport->ok_for_move = $transportData->ok_for_move; 
+        $transport->can_pull_trailer = $transportData->can_pull_trailer; 
+        $transport->has_trailer = $transportData->has_trailer; 
+        $transport->pallet_transportation = $transportData->pallet_transportation; 
+        $transport->air_conditioner = $transportData->air_conditioner; 
+        $transport->wifi = $transportData->wifi; 
+        $transport->tv_video = $transportData->tv_video; 
+        $transport->disabled_people_seats = $transportData->disabled_people_seats;
+        $transport->save();
+
+        // Bind drivers to the transport
+        $transport->drivers()->attach($drivers);
     }
 }

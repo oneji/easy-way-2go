@@ -3,21 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 use App\Scopes\CountryScope;
 use App\Scopes\DrivingExperienceScope;
 
 class BaDriver extends Model
 {
-    use HasTranslations;
-    
-    public $translatable = [
-        'first_name',
-        'last_name',
-        'city',
-        'comment'
-    ];
-
     /**
      * Indicates if the model should be timestamped.
      *

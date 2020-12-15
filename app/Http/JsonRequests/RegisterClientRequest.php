@@ -41,7 +41,7 @@ class RegisterClientRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:255', 'unique:clients,phone_number', 'unique:drivers,phone_number', 'unique:brigadirs,phone_number', 'unique:users,phone_number'],
+            'phone_number' => ['required', 'string', 'max:255', 'unique:clients,phone_number', 'unique:drivers,phone_number', 'unique:brigadirs,phone_number'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:clients,email', 'unique:drivers,email', 'unique:brigadirs,email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'photo' => ['nullable'],

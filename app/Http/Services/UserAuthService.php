@@ -33,6 +33,12 @@ class UserAuthService
             ];
         }
 
+        return [
+            'success' => true,
+            'status' => 200,
+            'user' => $user->verified
+        ];
+
         // Check if the user is verified
         if(!$user->verified) {
             return [

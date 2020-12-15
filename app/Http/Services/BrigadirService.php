@@ -15,6 +15,7 @@ use App\Jobs\InviteDriverJob;
 use App\Transport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BrigadirService
@@ -71,11 +72,9 @@ class BrigadirService
     public function update(UpdateUserRequest $request, $id)
     {
         $brigadir = Brigadir::find($id);
-        foreach ($request->translations as $code => $value) {
-            $brigadir->setTranslation('first_name', $code, $value['first_name']);
-            $brigadir->setTranslation('last_name', $code, $value['last_name']);
-            $brigadir->setTranslation('company_name', $code, $value['company_name']);
-        }
+        $brigadir->first_name = $request->first_name;
+        $brigadir->last_name = $request->last_name;
+        $brigadir->company_name = $request->company_name;
         $brigadir->birthday = Carbon::parse($request->birthday);
         $brigadir->nationality = $request->nationality;
         $brigadir->phone_number = $request->phone_number;
@@ -112,11 +111,14 @@ class BrigadirService
         // Fitlering params
         $carNumber = $request->query('number');
 
+        $driverIds = Driver::where('brigadir_id', $brigadir->id)->pluck('id');
+        $transportIds = DB::table('driver_transport')->whereIn('driver_id', $driverIds)->pluck('transport_id'); 
+
         return Transport::with('drivers')
             ->when($carNumber, function($query, $carNumber) {
                 $query->where('car_number', 'like', "%$carNumber%");
             })
-            ->whereBrigadirId($brigadir->id)
+            ->whereIn('id', $transportIds)
             ->get();
     }
 

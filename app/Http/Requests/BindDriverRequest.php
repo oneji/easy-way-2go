@@ -24,7 +24,7 @@ class BindDriverRequest extends FormRequest
     public function rules()
     {
         return [
-            'driver_id' => [ 'required', 'exists:users,id', 'numeric' ],
+            'driver_id' => [ 'required', 'exists:drivers,id', 'numeric' ],
             'transport_id' => [ 'required', 'exists:transports,id', 'numeric' ]
         ];
     }

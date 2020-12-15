@@ -70,6 +70,8 @@ class ClientService
     public function update(UpdateUserRequest $request, $id)
     {
         $client = Client::find($id);
+        $client->first_name = $request->first_name;
+        $client->last_name = $request->last_name;
         $client->birthday = Carbon::parse($request->birthday);
         $client->nationality = $request->nationality;
         $client->phone_number = $request->phone_number;
@@ -79,11 +81,6 @@ class ClientService
         $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
         $client->passport_number = $request->passport_number;
         $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
-
-        foreach ($request->translations as $code => $value) {
-            $client->setTranslation('first_name', $code, $value['first_name']);
-            $client->setTranslation('last_name', $code, $value['last_name']);
-        }
         
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');

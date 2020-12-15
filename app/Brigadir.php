@@ -6,18 +6,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Translatable\HasTranslations;
 
 class Brigadir extends Authenticatable implements JWTSubject
 {
-    use HasTranslations;
-    
-    public $translatable = [
-        'first_name',
-        'last_name',
-        'company_name'
-    ];
-
     /**
      * User genders
      */

@@ -89,12 +89,10 @@ class DriverService
     public function update(UpdateUserRequest $request, $id)
     {
         $driver = Driver::find($id);
-        foreach ($request->translations as $code => $value) {
-            $driver->setTranslation('first_name', $code, $value['first_name']);
-            $driver->setTranslation('last_name', $code, $value['last_name']);
-            $driver->setTranslation('city', $code, $value['city']);
-            $driver->setTranslation('comment', $code, $value['comment']);
-        }
+        $driver->first_name = $request->first_name;
+        $driver->last_name = $request->last_name;
+        $driver->city = $request->city;
+        $driver->comment = $request->comment;
         $driver->birthday = Carbon::parse($request->birthday);
         $driver->nationality = $request->nationality;
         $driver->phone_number = $request->phone_number;

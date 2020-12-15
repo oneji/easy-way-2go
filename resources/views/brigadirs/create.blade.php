@@ -35,7 +35,7 @@
         @csrf
         
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 offset-lg-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.createBrigadir.addForm.label') }}</h4>
@@ -60,23 +60,19 @@
                             </div>
                         </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="first_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="first_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="first_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.firstName') }}</label>
+                            <div class="col-md-10">
+                                <input name="first_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="last_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="last_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="last_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.lastName') }}</label>
+                            <div class="col-md-10">
+                                <input name="last_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
                         
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.email') }}</label>
@@ -140,14 +136,12 @@
                             </div>
                         </div>
                         
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="company_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}</label>
+                            <div class="col-md-10">
+                                <input name="company_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
                             </div>
-                        @endforeach
+                        </div>
                         
                         <div class="form-group row">
                             <label for="inn" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
@@ -155,19 +149,14 @@
                                 <input id="inn" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                <div class="card">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.add') }}</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.add') }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </form>
 @endsection
 

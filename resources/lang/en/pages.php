@@ -129,7 +129,7 @@ return [
     ],
 
     'brigadirs' => [
-        'label' => 'Formen',
+        'label' => 'Foremen',
         'datatable' => [
             'fullName' => 'Full name',
             'phoneNumber' => 'Phone number',

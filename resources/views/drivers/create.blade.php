@@ -61,26 +61,22 @@
                         </div>
 
                         
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="first_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.firstName') }}</label>
+                            <div class="col-md-10">
+                                <input name="first_name" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.firstName') }}" required>
                             </div>
-                        @endforeach
-
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="last_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
-                                </div>
-                            </div>
-                        @endforeach
+                        </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.email') }}: {{ $lang->name }}</label>
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.lastName') }}</label>
+                            <div class="col-md-10">
+                                <input name="last_name" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.lastName') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.email') }}</label>
                             <div class="col-md-10">
                                 <input name="email" type="email" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.email') }}" parsley-type="email" required>
                             </div>
@@ -153,14 +149,12 @@
                             </div>
                         </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.city') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="translations[{{ $lang->code }}][city]" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
-                                </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-2 col-form-label">{{ __('pages.drivers.addForm.labels.city') }}</label>
+                            <div class="col-md-10">
+                                <input name="city" type="text" class="form-control" placeholder="{{ __('pages.drivers.addForm.placeholders.city') }}">
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -219,15 +213,12 @@
                                 </div>
                             </div>
 
-                            @foreach ($langs as $lang)
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}: {{ $lang->name }}</label>
-                                        <textarea name="translations[{{ $lang->code }}][comment]" class="form-control" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}"></textarea>
-                                    </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">{{ __('pages.drivers.addForm.labels.comment') }}</label>
+                                    <textarea name="comment" class="form-control" cols="30" maxlength="255" rows="3" placeholder="{{ __('pages.drivers.addForm.placeholders.comment') }}"></textarea>
                                 </div>
-                            @endforeach
-
+                            </div>
                             <div class="col-sm-12">
                                 <div class="custom-control custom-switch mb-2" dir="ltr">
                                     <input type="checkbox" class="custom-control-input" id="convictionSwitch" name="conviction">

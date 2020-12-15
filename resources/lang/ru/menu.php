@@ -11,7 +11,7 @@ return [
     'countries'         => 'Страны',
     'carBrands'         => 'Марки транспорта',
     'carModels'         => 'Модели транспорта',
-    'brigadirs'         => 'Бригадиры',
+    'brigadirs'         => 'Собственники фирмы',
     'drivers'           => 'Водители',
     'clients'           => 'Клиенты',
     'routes'            => 'Маршруты',

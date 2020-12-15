@@ -43,7 +43,7 @@
         @method('PUT')
 
         <div class="row">
-            <div class="col-8">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 offset-lg-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.editBrigadir.addForm.label') }}</h4>
@@ -78,23 +78,19 @@
                             </div>
                         </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="first_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input value="{{ $brigadir->getTranslation('first_name', $lang->code) }}" name="translations[{{ $lang->code }}][first_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="first_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.firstName') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $brigadir->first_name }}" name="first_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.firstName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="last_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input value="{{ $brigadir->getTranslation('last_name', $lang->code) }}" name="translations[{{ $lang->code }}][last_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="last_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.lastName') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $brigadir->last_name }}" name="last_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.lastName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
                         
                         <div class="form-group row">
                             <label for="email" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.email') }}</label>
@@ -144,14 +140,12 @@
                             </div>
                         </div>
                         
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input value="{{ $brigadir->getTranslation('company_name', $lang->code) }}" name="translations[{{ $lang->code }}][company_name]" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label for="company_name" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.company') }}</label>
+                            <div class="col-md-10">
+                                <input value="{{ $brigadir->company_name }}" name="company_name" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.company') }}" required>
                             </div>
-                        @endforeach
+                        </div>
                         
                         <div class="form-group row">
                             <label for="inn" class="col-md-2 col-form-label">{{ __('pages.createBrigadir.addForm.labels.inn') }}</label>
@@ -159,19 +153,14 @@
                                 <input value="{{ $brigadir->inn }}" name="inn" type="text" class="form-control" placeholder="{{ __('pages.createBrigadir.addForm.placeholders.inn') }}" required>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.save') }}</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.save') }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </form>
 @endsection
 

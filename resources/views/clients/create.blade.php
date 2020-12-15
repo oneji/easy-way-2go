@@ -35,7 +35,7 @@
         @csrf
         
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 offset-lg-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __('pages.clients.clientInfoLabel') }}</h4>
@@ -60,23 +60,19 @@
                             </div>
                         </div>
 
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label" for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="first_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="first_name">{{ __('pages.clients.addForm.labels.firstName') }}</label>
+                            <div class="col-md-10">
+                                <input name="first_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.firstName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
                         
-                        @foreach ($langs as $lang)
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label" for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}: {{ $lang->name }}</label>
-                                <div class="col-md-10">
-                                    <input name="last_name[{{ $lang->code }}]" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
-                                </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="last_name">{{ __('pages.clients.addForm.labels.lastName') }}</label>
+                            <div class="col-md-10">
+                                <input name="last_name" type="text" class="form-control" placeholder="{{ __('pages.clients.addForm.placeholders.lastName') }}" required>
                             </div>
-                        @endforeach
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" for="email">{{ __('pages.clients.addForm.labels.email') }}</label>
@@ -177,14 +173,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.add') }}</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success waves-effect waves-light" style="float: right">{{ __('form.buttons.add') }}</button>
+                        </div>
                     </div>
                 </div>
             </div>

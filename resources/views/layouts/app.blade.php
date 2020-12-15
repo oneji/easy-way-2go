@@ -90,14 +90,9 @@
                     </div>
 
                     <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @if (Auth::user()->photo !== null)
-                                <img class="rounded-circle header-profile-user" src="{{ asset('storage/'.Auth::user()->photo) }}" alt="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}">
-                            @else
-                                <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}">
-                            @endif
-                            <span class="d-none d-xl-inline-block ml-1">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</span>
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/users/no-photo.png') }}" alt="{{ Auth::user()->name }}">
+                            <span class="d-none d-xl-inline-block ml-1">{{ Auth::user()->name }}</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">

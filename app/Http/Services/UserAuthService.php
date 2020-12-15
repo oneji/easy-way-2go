@@ -33,15 +33,6 @@ class UserAuthService
             ];
         }
 
-        // Check if the user is verified
-        if(!$user->verified) {
-            return [
-                'success' => false,
-                'status' => 422,
-                'message' => 'You must verify your phone number before logging in.'
-            ];
-        }
-
         // Authenticate the user
         if(Hash::check($credentials['password'], $user->password)) {
             $token = auth($user->role)->login($user);

@@ -41,8 +41,8 @@ class RegisterBrigadirRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'phone_number' => 'required|string|max:255|unique:drivers|unique:clients|unique:brigadirs|unique:users',
+            'email' => 'required|email|max:255|unique:drivers|unique:clients|unique:brigadirs|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'photo' => 'nullable',
             'nationality' => 'required|integer|exists:countries,id',

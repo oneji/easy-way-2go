@@ -41,8 +41,8 @@ class RegisterDriverRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'string', 'max:255', 'unique:users', 'unique:drivers', 'unique:clients', 'unique:brigadirs'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique:drivers', 'unique:clients', 'unique:brigadirs'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'photo' => ['nullable'],
             'country' => [ 'required', 'integer', 'exists:countries,id' ],

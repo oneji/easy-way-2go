@@ -71,8 +71,8 @@ class BaRequestService
         if($request->type === 'firm_owner') {
             $this->storeFirmOwnerData($request->except('type'), $baRequest->id);
         } else if($request->type === 'head_driver') {
-            $drivers = $this->storeRequestDrivers($request->drivers, $baRequest->id);
-            $this->storeRequestTransport($request->transport, $baRequest->id, $drivers);
+            $this->storeRequestDrivers($request->drivers, $baRequest->id);
+            $this->storeRequestTransport($request->transport, $baRequest->id);
         }
     }
 
@@ -102,7 +102,6 @@ class BaRequestService
      */
     private function storeRequestDrivers($drivers, $baRequestId)
     {
-        $drivers = [];
         foreach ($drivers as $driverData) {
             $driver = new BaDriver($driverData);
             $driver->birthday = Carbon::parse($driverData['birthday']);
@@ -120,11 +119,7 @@ class BaRequestService
             }
 
             $driver->save();
-
-            $drivers[] = $driver->id;
         }
-
-        return $drivers;
     }
 
     /**
@@ -133,7 +128,7 @@ class BaRequestService
      * @param object $transportData
      * @param int $baRequestId
      */
-    public function storeRequestTransport($transportData, $baRequestId, $drivers)
+    public function storeRequestTransport($transportData, $baRequestId)
     {
         $transport = new BaTransport($transportData);
 

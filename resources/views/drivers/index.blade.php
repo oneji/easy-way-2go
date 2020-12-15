@@ -65,10 +65,10 @@
                                             <p class="text-muted mb-0">{{ $driver->email }}</p>
                                         </td>
                                         <td>{{ $driver->phone_number }}</td>
-                                        <td>{{ $driver->country->name }}</td>
+                                        <td>{{ $driver->country ? $driver->country->name : null }}</td>
                                         <td>{{ $driver->city }}</td>
                                         <td>
-                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driving_experience->name }}</span>
+                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driving_experience ? $driver->driving_experience->name : null }}</span>
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">

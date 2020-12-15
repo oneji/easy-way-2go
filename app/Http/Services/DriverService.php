@@ -53,9 +53,6 @@ class DriverService
     public function store(StoreUserRequest $request)
     {
         $driver = new Driver($request->except('password'));
-        $driver->verified = 1;
-        $driver->birthday = Carbon::parse($request->birthday);
-        $driver->phone_number_verified_at = Carbon::now();
         $driver->password = Hash::make($request->password);
 
         $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);

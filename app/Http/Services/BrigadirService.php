@@ -51,9 +51,6 @@ class BrigadirService
     public function store(StoreUserRequest $request)
     {
         $brigadir = new Brigadir($request->except('password'));
-        $brigadir->verified = 1;
-        $brigadir->birthday = Carbon::parse($request->birthday);
-        $brigadir->phone_number_verified_at = Carbon::now();
         $brigadir->password = Hash::make($request->password);
         
         if($request->hasFile('photo')) {

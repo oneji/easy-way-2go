@@ -75,7 +75,7 @@
                     </div>
                 @else
                     <div class="table-responsive">
-                        <table class="table table-centered table-nowrap">
+                        <table id="datatable" class="table table-centered table-nowrap">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 70px;">#</th>
@@ -122,12 +122,6 @@
                         </table>
                     </div>
                 @endif
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        {{ $baRequests->links() }}
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -139,4 +133,9 @@
     
     <script src="{{ asset('assets/js/custom/bas.js') }}"></script>
     <script src="{{ asset('assets/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('#datatable').DataTable()
+        })
+    </script>
 @endsection

@@ -27,7 +27,7 @@ class BaRequestController extends Controller
      */
     public function index()
     {
-        $baRequests = $this->baService->getPaginated();
+        $baRequests = $this->baService->all();
 
         return view('bas.index', [
             'baRequests' => $baRequests

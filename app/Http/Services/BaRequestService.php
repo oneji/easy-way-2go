@@ -25,7 +25,7 @@ class BaRequestService
      */
     public function all()
     {
-        return BaRequest::all();
+        return BaRequest::orderBy('id', 'desc')->get();
     }
     
     /**

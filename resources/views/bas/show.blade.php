@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($baRequest->status !== 'pending')
+        <div class="alert alert-{{ $baRequest->status === 'approved' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-all mr-2"></i>
+            Business account request has been {{ $baRequest->status }}.
+        </div>
+    @endif
+
     <div class="row">
         @if ($baRequest->type === 'firm_owner')
             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -45,52 +52,54 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-12 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title mb-3">{{ __('pages.bas.userInfo') }}</h4>
-                        <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="form-horizontal custom-validation" novalidate id="approveForm">
-                            @csrf
-        
-                            <div class="form-group">
-                                <label for="email">{{ __('pages.bas.firmOwner.email') }}</label>
-                                <input type="email" name="email" placeholder="{{ __('pages.bas.firmOwner.email') }}" value="{{ $baRequest->data->email }}" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">{{ __('pages.bas.firmOwner.password') }}</label>
-                                <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.password') }}" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">{{ __('pages.bas.firmOwner.passwordConfirmation') }}</label>
-                                <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.passwordConfirmation') }}" class="form-control" required>
-                            </div>
-                        </form>
-
-                        <div class="form-group">
-                            <button type="button" class="btn btn-info waves-effect waves-light" id="generateRandomPassBtn">
-                                <i class="bx bxs-keyboard font-size-16 align-middle mr-2"></i> {{ __('pages.bas.generateRandomPassBtn') }}
-                            </button>
-                            <a href="#"
-                                class="btn btn-success waves-effect waves-light" 
-                                onclick="event.preventDefault(); document.getElementById('approveForm').submit();">
-                                <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
-                            </a>
-
-                            <a 
-                                href="#"
-                                class="btn btn-danger waves-effect waves-light" 
-                                onclick="event.preventDefault(); document.getElementById('declineForm').submit();"
-                            >
-                                <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
-                            </a>
-
-                            <form action="{{ route('admin.bas.decline', [$baRequest->id]) }}" method="POST" id="declineForm">
+            @if ($baRequest->status === 'pending')
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">{{ __('pages.bas.userInfo') }}</h4>
+                            <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" class="form-horizontal custom-validation" novalidate id="approveForm">
                                 @csrf
+            
+                                <div class="form-group">
+                                    <label for="email">{{ __('pages.bas.firmOwner.email') }}</label>
+                                    <input type="email" name="email" placeholder="{{ __('pages.bas.firmOwner.email') }}" value="{{ $baRequest->data->email }}" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{{ __('pages.bas.firmOwner.password') }}</label>
+                                    <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.password') }}" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{{ __('pages.bas.firmOwner.passwordConfirmation') }}</label>
+                                    <input type="text" name="password" placeholder="{{ __('pages.bas.firmOwner.passwordConfirmation') }}" class="form-control" required>
+                                </div>
                             </form>
+                            
+                            <div class="form-group">
+                                <button type="button" class="btn btn-info waves-effect waves-light" id="generateRandomPassBtn">
+                                    <i class="bx bxs-keyboard font-size-16 align-middle mr-2"></i> {{ __('pages.bas.generateRandomPassBtn') }}
+                                </button>
+                                <a href="#"
+                                    class="btn btn-success waves-effect waves-light" 
+                                    onclick="event.preventDefault(); document.getElementById('approveForm').submit();">
+                                    <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
+                                </a>
+
+                                <a 
+                                    href="#"
+                                    class="btn btn-danger waves-effect waves-light" 
+                                    onclick="event.preventDefault(); document.getElementById('declineForm').submit();"
+                                >
+                                    <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
+                                </a>
+
+                                <form action="{{ route('admin.bas.decline', [$baRequest->id]) }}" method="POST" id="declineForm">
+                                    @csrf
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @else
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -125,33 +134,35 @@
                                         </a>
                                     @endif
 
-                                    <div class="form-group">
-                                        <a
-                                            href="#"
-                                            class="btn btn-success btn-block waves-effect waves-light"
-                                            onclick="event.preventDefault(); document.getElementById('approveForm').submit();"
-                                        >
-                                            <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
-                                        </a>
-                                        
-                                        <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" id="approveForm">
-                                            @csrf
-                                        </form>
-                                    </div>
+                                    @if ($baRequest->status === 'pending')
+                                        <div class="form-group">
+                                            <a
+                                                href="#"
+                                                class="btn btn-success btn-block waves-effect waves-light"
+                                                onclick="event.preventDefault(); document.getElementById('approveForm').submit();"
+                                            >
+                                                <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
+                                            </a>
+                                            
+                                            <form action="{{ route('admin.bas.approve', [$baRequest->id]) }}" method="POST" id="approveForm">
+                                                @csrf
+                                            </form>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <a 
-                                            href="#"
-                                            class="btn btn-danger btn-block waves-effect waves-light"
-                                            onclick="event.preventDefault(); document.getElementById('declineForm').submit();"
-                                        >
-                                            <i class="bx bx-x font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
-                                        </a>
+                                        <div class="form-group">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-danger btn-block waves-effect waves-light"
+                                                onclick="event.preventDefault(); document.getElementById('declineForm').submit();"
+                                            >
+                                                <i class="bx bx-x font-size-16 align-middle mr-2"></i> {{ __('pages.bas.declineBtn') }}
+                                            </a>
 
-                                        <form action="{{ route('admin.bas.decline', [$baRequest->id]) }}" method="POST" id="declineForm">
-                                            @csrf
-                                        </form>
-                                    </div>
+                                            <form action="{{ route('admin.bas.decline', [$baRequest->id]) }}" method="POST" id="declineForm">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-9">

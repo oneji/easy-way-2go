@@ -59,4 +59,17 @@ class UserController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Refresh token
+     */
+    public function refreshToken()
+    {
+        $token = $this->userAuthService->refreshToken();
+
+        return response()->json([
+            'success' => true,
+            'token' => $token
+        ]);
+    }
 }

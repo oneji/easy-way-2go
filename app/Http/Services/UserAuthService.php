@@ -137,4 +137,18 @@ class UserAuthService
         if($driver) return $driver;
         if($brigadir) return $brigadir;
     }
+
+    /**
+     * Refresh token
+     */
+    public function refreshToken()
+    {
+        $client = auth('client')->user();
+        $driver = auth('driver')->user();
+        $brigadir = auth('brigadir')->user();
+
+        if($client) return auth('client')->refresh();
+        if($driver) return auth('driver')->refresh();
+        if($brigadir) return auth('brigadir')->refresh();
+    }
 }

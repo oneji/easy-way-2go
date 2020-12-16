@@ -11,6 +11,7 @@ use App\Http\Traits\UploadDocsTrait;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Driver;
+use App\Http\JsonRequests\ChangePasswordRequest;
 
 class DriverService
 {
@@ -173,5 +174,35 @@ class DriverService
         $driver->save();
 
         return $filteredDocs;
+    }
+
+    /**
+     * Change password
+     * 
+     * @param \App\Http\JsonRequests\ChangePasswordRequest $request
+     * @param int $id
+     */
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $driver = Driver::find(auth('driver')->user()->id);
+        $oldPassword = $request->old_password;
+        $newPassword = $request->password;
+
+        if(Hash::check($oldPassword, $driver->password)) {
+            $driver->password = Hash::make($newPassword);
+            $driver->save();
+
+            return [
+                'success' => true,
+                'status' => 200,
+                'message' => 'Password successfully updated.'
+            ];
+        }
+
+        return [
+            'success' => false,
+            'status' => 422,
+            'message' => 'The old password is wrong.'
+        ];
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Driver;
 use App\Http\JsonRequests\ChangePasswordRequest;
+use App\Http\JsonRequests\UpdateDriverRequest;
 
 class DriverService
 {
@@ -204,5 +205,68 @@ class DriverService
             'status' => 422,
             'message' => 'The old password is wrong.'
         ];
+    }
+
+    /**
+     * Update a specific driver.
+     * 
+     * @param   \App\Http\JsonRequests\UpdateDriverRequest $request
+     * @param   int $id
+     */
+    public function updateProfile(UpdateDriverRequest $request, $id)
+    {
+        $driver = Driver::find($id);
+        $driver->first_name = $request->first_name;
+        $driver->last_name = $request->last_name;
+        $driver->city = $request->city;
+        $driver->comment = $request->comment;
+        $driver->birthday = Carbon::parse($request->birthday);
+        $driver->nationality = $request->nationality;
+        $driver->phone_number = $request->phone_number;
+        $driver->email = $request->email;
+        $driver->gender = $request->gender;
+        $driver->country_id = $request->country_id;
+        $driver->dl_issue_place = $request->dl_issue_place;
+        $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
+        $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
+        $driver->driving_experience_id = $request->driving_experience_id;
+        $driver->conviction = isset($request->conviction) ? 1 : 0;
+        $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
+        $driver->dtp = isset($request->dtp) ? 1 : 0;
+        $driver->grades = $request->grades;
+        $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        
+        if($request->hasFile('photo')) {
+            Storage::disk('public')->delete($driver->photo);
+            $driver->photo = $this->uploadImage($request->photo, 'user_photos');
+        }
+
+        // Upload driver's documents
+        $passportDocs = [];
+        $dLicenseDocs = [];
+
+        if($request->hasFile('passport_photos')) {
+            $passportDocs = UploadFileService::uploadMultiple($request->passport_photos, 'driver_docs');
+        }
+
+        if($request->hasFile('driving_license_photos')) {
+            $dLicenseDocs = UploadFileService::uploadMultiple($request->driving_license_photos, 'driver_docs');
+        }
+
+        if($driver->driving_license_photos !== null) {
+            $driver->driving_license_photos = array_merge($driver->driving_license_photos, $dLicenseDocs);
+        } else {
+            $driver->driving_license_photos = $dLicenseDocs ? $dLicenseDocs : null;
+        }
+
+        if($driver->passport_photos !== null) {
+            $driver->passport_photos = array_merge($driver->passport_photos, $dLicenseDocs);
+        } else {
+            $driver->passport_photos = $passportDocs ? $passportDocs : null;
+        }
+
+        $driver->save();
+
+        return $driver;
     }
 }

@@ -9,34 +9,14 @@
 ])
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12 col-md-3 col-lg-3">
+    {{-- <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-3">{{ __('common.generalInfo') }}</h4>
                     <div class="table-responsive">
                         <table class="table table-nowrap mb-0">
                             <tbody>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.from') }}:</th>
-                                    <td>{{ $order->country_from->name .', '. $order->from_address }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.to') }}:</th>
-                                    <td>{{ $order->country_to->name .', '. $order->to_address }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.date') }}:</th>
-                                    <td>{{ \Carbon\Carbon::parse($order->date)->translatedFormat('M d, Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.buyerPhoneNumber') }}:</th>
-                                    <td>{{ $order->buyer_phone_number ?? __('pages.transport.form.labels.no') }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.buyerEmail') }}:</th>
-                                    <td>{{ $order->email ?? __('pages.transport.form.labels.no') }}</td>
-                                </tr>
                                 <tr>
                                     <th scope="row">{{ __('pages.orders.type') }}:</th>
                                     <td>
@@ -55,141 +35,136 @@
                                         <a href="{{ route('admin.clients.show', [$order->client->id]) }}">{{ $order->client->getFullName() }}</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">{{ __('pages.orders.totalPrice') }}:</th>
-                                    <td>{{ $order->total_price }} &euro;</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div> --}}
 
-        @if ($order->passengers->count() > 0)
-            <div class="col-sm-12 col-md-5 col-lg-5">
-                <div class="card">
-                    <div class="card-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="mb-0">
+                            <img src="{{ asset('assets/images/logo-black.svg') }}" alt="logo" height="30"/>
+                        </div>
+                        <h4 class="font-size-16 mb-0">Заказ #{{ $order->id }}</h4>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <address>
+                                <strong>{{ __('pages.orders.from') }}:</strong><br>
+                                {{ $order->country_from->name .', '. $order->from_address }}
+                            </address>
+                            <address>
+                                <strong>{{ __('pages.orders.to') }}:</strong><br>
+                                {{ $order->country_to->name .', '. $order->to_address }}
+                            </address>
+                            <address>
+                                <strong>{{ __('pages.orders.date') }}:</strong><br>
+                                {{ \Carbon\Carbon::parse($order->date)->translatedFormat('M d, Y') }}
+                            </address>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 mt-3">
+                            <address>
+                                <strong>{{ __('pages.orders.buyerPhoneNumber') }}:</strong> {{ $order->buyer_phone_number }}<br>
+                                <strong>{{ __('pages.orders.buyerEmail') }}:</strong> {{ $order->buyer_email }}
+                            </address>
+                        </div>
+                    </div>
+                    @if ($order->passengers->count() > 0)
+                        <div class="py-2 mt-3">
+                            <h3 class="font-size-15 font-weight-bold">{{ __('pages.orders.passengers') }}</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px;">No.</th>
+                                        <th>ФИО</th>
+                                        <th>Пол</th>
+                                        <th>День рождения</th>
+                                        <th>Национальность</th>
+                                        <th>ID карта</th>
+                                        <th>Номер паспорта</th>
+                                        <th>Срок истечения паспорта</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($order->passengers as $idx => $passenger)
+                                        <tr>
+                                            <td>{{ $idx + 1 }}</td>
+                                            <td>{{ $passenger->first_name .' '. $passenger->last_name }}</td>
+                                            <td>
+                                                @if ($passenger->gender === 0)
+                                                    Мистер
+                                                @elseif($passenger->gender === 1)
+                                                    Миссис
+                                                @else
+                                                    Не определился
+                                                @endif
+                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($passenger->birthday)->translatedFormat('M d, Y') }}</td>
+                                            <td>{{ $passenger->nationality_country->name }}</td>
+                                            <td>{{ $passenger->id_card }}</td>
+                                            <td>{{ $passenger->passport_number }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($passenger->passport_expires_at)->translatedFormat('M d, Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
 
-                        <h4 class="card-title">{{ __('pages.orders.passengers') }}</h4>
-                        <p class="card-title-desc">{{ __('pages.orders.passengersLabel') }}</p>
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                            @foreach ($order->passengers as $idx => $passenger)
-                                <li class="nav-item">
-                                    <a class="nav-link {{ $idx === 0 ? 'active' : null }}" data-toggle="tab" href="#passenger-{{ $passenger->id }}" role="tab">
-                                        <span class="d-block d-sm-none"><i class="fas fa-user"></i></span>
-                                        <span class="d-none d-sm-block">{{ $passenger->first_name .' '. $passenger->last_name }}</span> 
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-
-                        <!-- Tab panes -->
-                        <div class="tab-content p-3 text-muted">
-                            @foreach ($order->passengers as $idx => $passenger)
-                                <div class="tab-pane {{ $idx === 0 ? 'active' : null }}" id="passenger-{{ $passenger->id }}" role="tabpanel">
-                                    <div class="table-responsive">
-                                        <table class="table table-nowrap mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">ФИО:</th>
-                                                    <td>{{ $passenger->first_name .' '. $passenger->last_name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Пол:</th>
-                                                    <td>
-                                                        @if ($passenger->gender === 0)
-                                                            Мистер
-                                                        @elseif($passenger->gender === 1)
-                                                            Миссис
-                                                        @else
-                                                            Не определился
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">День рождения:</th>
-                                                    <td>{{ \Carbon\Carbon::parse($passenger->birthday)->translatedFormat('M d, Y') }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Национальность:</th>
-                                                    <td>{{ $passenger->nationality_country->name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">ID карта:</th>
-                                                    <td>{{ $passenger->id_card }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Номер паспорта:</th>
-                                                    <td>{{ $passenger->passport_number }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Срок истечения паспорта:</th>
-                                                    <td>{{ \Carbon\Carbon::parse($passenger->passport_expires_at)->translatedFormat('M d, Y') }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            @endforeach
+                    @if ($order->packages->count() > 0)
+                        <div class="py-2 mt-3">
+                            <h3 class="font-size-15 font-weight-bold">{{ __('pages.orders.packages') }}</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px;">No.</th>
+                                        <th style="width: 70px;">Вес</th>
+                                        <th style="width: 70px;">Длина</th>
+                                        <th style="width: 70px;">Ширина</th>
+                                        <th style="width: 70px;">Высота</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($order->packages as $idx => $package)
+                                        <tr>
+                                            <td>{{ $idx + 1 }}</td>
+                                            <td>{{ $package->weight }}</td>
+                                            <td>{{ $package->length }}</td>
+                                            <td>{{ $package->width }}</td>
+                                            <td>{{ $package->height }}</td>
+                                        </tr>
+                                    @endforeach
+                                        <tr>
+                                            <td colspan="4" class="border-0 text-right">
+                                                <strong>{{ __('pages.orders.totalPrice') }}</strong></td>
+                                            <td class="border-0 text-right"><h4 class="m-0">{{ $order->total_price }}&euro;</h4></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                    
+                    <div class="d-print-none">
+                        <div class="float-right">
+                            <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light mr-1"><i class="fa fa-print"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
-
-        @if ($order->packages->count() > 0)
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-
-                    <h4 class="card-title">{{ __('pages.orders.packages') }}</h4>
-                    <p class="card-title-desc">{{ __('pages.orders.packagesLabel') }}</p>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                        @foreach ($order->packages as $idx => $package)
-                            <li class="nav-item">
-                                <a class="nav-link {{ $idx === 0 ? 'active' : null }}" data-toggle="tab" href="#package-{{ $package->id }}" role="tab">
-                                    <span class="d-block d-sm-none"><i class="fas fa-box"></i></span>
-                                    <span class="d-none d-sm-block">{{ __('pages.orders.package') }} {{ $idx + 1 }}</span> 
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content p-3 text-muted">
-                        @foreach ($order->packages as $idx => $package)
-                            <div class="tab-pane {{ $idx === 0 ? 'active' : null }}" id="package-{{ $package->id }}" role="tabpanel">
-                                <div class="table-responsive">
-                                    <table class="table table-nowrap mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Вес:</th>
-                                                <td>{{ $package->weight }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Длина:</th>
-                                                <td>{{ $package->length }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Ширина:</th>
-                                                <td>{{ $package->width }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Высота:</th>
-                                                <td>{{ $package->height }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
         </div>
-        @endif
     </div>
+    <!-- end row -->
 @endsection

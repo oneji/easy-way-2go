@@ -42,12 +42,13 @@ class StoreOrderRequest extends FormRequest
         return [
             'from_country' => 'required|integer|exists:countries,id',
             'from_address' => 'required|string',
+            'from_place_id' => 'required|string',
             'to_country' => 'required|integer|exists:countries,id',
             'to_address' => 'required|string',
+            'to_place_id' => 'required|string',
             'date' => 'required',
             'order_type' => 'required',
-            'total_price' => 'required|numeric',
-            'transport_id' => 'required|integer|exists:transports,id' 
+            'total_price' => 'required|numeric'
         ];
     }
 }

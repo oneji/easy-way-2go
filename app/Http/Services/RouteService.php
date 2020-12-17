@@ -85,7 +85,7 @@ class RouteService
     {
         $data = $request->all();
         // First load route addresses to decrease queries to the DB 
-        $routes = Route::with('route_addresses')->get();
+        $routes = Route::with([ 'route_addresses', 'transport' ])->get();
         
         $newRoutes = [];
         foreach ($routes as $route) {

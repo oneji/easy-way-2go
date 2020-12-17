@@ -121,6 +121,11 @@ class OrderService
                     PackageService::attachDifferentToOrder($request->packages, $order->id);
                 }
             }
+
+            // Save addresses for the order
+            if(isset($request->addresses)) {
+                $order->addresses()->attach($request->addresses);
+            }
         }
 
         return $order;

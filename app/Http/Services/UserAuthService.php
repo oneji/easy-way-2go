@@ -87,18 +87,7 @@ class UserAuthService
      */
     public function verify(VerifyCodeRequest $request)
     {
-        $driver = Driver::where('verification_code', $request->code)->first();
-        $client = Client::where('verification_code', $request->code)->first();
-        $brigadir = Brigadir::where('verification_code', $request->code)->first();
-        
-        $user = null;
-        if($driver) {
-            $user = $driver;
-        } else if($client) {
-            $user = $client;
-        } else if($brigadir) {
-            $user = $brigadir;
-        };
+        $user = Client::where('verification_code', $request->code)->first();
 
         if(!$user) {
             return [

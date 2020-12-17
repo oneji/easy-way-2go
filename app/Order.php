@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 use App\Scopes\Order\PassengerScope;
 use App\Scopes\Order\PackageScope;
 use App\Scopes\ClientScope;
@@ -13,12 +12,6 @@ use App\Scopes\PaymentStatusScope;
 
 class Order extends Model
 {
-    use HasTranslations;
-    
-    public $translatable = [
-        'from_address',
-        'to_address'
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -28,8 +21,10 @@ class Order extends Model
     protected $fillable = [
         'from_country',
         'from_address',
+        'from_place_id',
         'to_country',
         'to_address',
+        'to_place_id',
         'date',
         'buyer_phone_number',
         'buyer_email',
@@ -142,5 +137,13 @@ class Order extends Model
     public function payment_status()
     {
         return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
+    }
+
+    /**
+     * The addresses that belong to the order.
+     */
+    public function addresses()
+    {
+        return $this->belongsToMany('App\RouteAddress');
     }
 }

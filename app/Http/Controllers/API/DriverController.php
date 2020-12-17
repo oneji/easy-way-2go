@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateDriverRequest;
 use App\Http\Services\DriverService;
+use Illuminate\Http\Request;
 
 class DriverController extends Controller
 {
@@ -45,6 +46,22 @@ class DriverController extends Controller
     {
         $data = $this->driverService->updateProfile($request, $id);
 
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * Get a list of orders
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getOrders(Request $request)
+    {
+        $data = $this->driverService->getOrders($request);
+        
         return response()->json([
             'success' => true,
             'data' => $data

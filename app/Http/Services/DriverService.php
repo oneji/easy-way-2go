@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use App\Driver;
 use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateDriverRequest;
+use App\Order;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DriverService
 {
@@ -268,5 +271,42 @@ class DriverService
         $driver->save();
 
         return $driver;
+    }
+
+    /**
+     * Get a list of orders
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getOrders(Request $request)
+    {
+        $user = auth('driver')->user();
+        // Filtering params
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        $from = $request->query('from');            // string
+        $to = $request->query('to');                // string
+
+        $transport = DB::table('driver_transport')->whereDriverId($user->id)->pluck('transport_id');
+
+        // Get order by transport ids
+        $orders = Order::with('transport')
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        return $orders;
     }
 }

@@ -12,6 +12,7 @@ use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Jobs\InviteDriverJob;
+use App\Order;
 use App\Transport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -210,5 +211,52 @@ class BrigadirService
         $driver->save();
         
         InviteDriverJob::dispatch($request->email, $password);
+    }
+
+    /**
+     * Get a list of orders
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getOrders(Request $request)
+    {
+        // Filtering params
+        $carNumber = $request->query('car_number'); // string
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        $from = $request->query('from');            // string
+        $to = $request->query('to');                // string
+
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport by driver ids
+        $transport = DB::table('driver_transport')
+            ->join('transports', 'transports.id', 'driver_transport.transport_id')
+            ->select('transports.*')
+            ->where('transports.car_number', 'like', "%$carNumber%")
+            ->whereIn('driver_id', $drivers)
+            ->pluck('id');
+        
+        // Get order by transport ids
+        $orders = Order::with('transport')
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        return $orders;
     }
 }

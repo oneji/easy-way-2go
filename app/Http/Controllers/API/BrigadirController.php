@@ -102,4 +102,20 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get a list of orders
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getOrders(Request $request)
+    {
+        $data = $this->brigadirService->getOrders($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

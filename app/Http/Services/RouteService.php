@@ -83,24 +83,26 @@ class RouteService
      */
     public function search(SearchRouteRequest $request)
     {
-        $routes = Route::all();
+        $data = $request->all();
+        // First load route addresses to decrease queries to the DB 
+        $routes = Route::with('route_addresses')->get();
         
+        $newRoutes = [];
         foreach ($routes as $route) {
-            $startings = RouteAddress::where('country_id', $request->from_country)
-                ->where('place_id', 'like', "%$request->from_address%")
-                ->where('departure_date', Carbon::parse($request->date))
-                ->whereRouteId($route->id)
-                ->get();
+            $startings = $route->route_addresses->filter(function($value) use ($data) {
+                return $value['place_id'] === $data['from_address']
+                    && (int) $value['country_id'] === (int) $data['from_country']
+                    && Carbon::parse($value['departure_date']) == Carbon::parse($data['date']);
+            })->values();
 
-            $endings = RouteAddress::where('country_id', $request->to_country)
-                ->where('place_id', 'like', "%$request->to_address%")
-                ->where('departure_date', Carbon::parse($request->date))
-                ->whereRouteId($route->id)
-                ->get();
+            $endings = $route->route_addresses->filter(function($value) use ($data) {
+                return $value['place_id'] === $data['to_address']
+                    && (int) $value['country_id'] === (int) $data['to_country']
+                    && Carbon::parse($value['departure_date']) == Carbon::parse($data['date']);
+            })->values();
             
             $starting = null;
             $ending = null;
-            $intermediates = null;
             foreach ($startings as $item) {
                 foreach ($endings as $endItem) {
                     if($item->type === $endItem->type && $item->order < $endItem->order) {
@@ -110,29 +112,23 @@ class RouteService
                 }
             }
 
-            // return [
-            //     'starting' => $starting,
-            //     'ending' => $ending,
-            // ];
-
+            $intermediates = null;
             if($starting && $ending) {
-                $intermediates = RouteAddress::whereBetween('order', [ $starting->order, $ending->order ])
+                $intermediates = $route->route_addresses->whereBetween('order', [ $starting->order, $ending->order ])
                     ->whereNotIn('id', [$starting->id, $ending->id])
-                    ->whereRouteId($route->id)
-                    ->whereType($starting->type)
-                    ->orderBy('order')
-                    ->get();
+                    ->where('type', $starting->type)
+                    ->sortBy('order');
 
-                    $route['addresses'] = $intermediates->prepend($starting)->push($ending);
+                $route['addresses'] = $intermediates->prepend($starting)->push($ending);
+                // Unset route addresses array cz we now have a new filtered one...
+                $route->unsetRelation('route_addresses');
+
+                if($intermediates->count() > 0) {
+                    $newRoutes[] = $route;
+                }
             }
-
-            // return [
-            //     'starting' => $starting,
-            //     'ending' => $ending,
-            //     'intermediates' => $intermediates
-            // ];
         }
 
-        return $routes;
+        return $newRoutes;
     }
 }

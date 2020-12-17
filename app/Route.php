@@ -17,7 +17,7 @@ class Route extends Model
      */
     public function transport()
     {
-        return $this->belongsTo('App\Transport');
+        return $this->belongsTo('App\Transport')->with([ 'car_model', 'car_brand' ]);
     }
 
     /**

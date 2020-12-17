@@ -12,7 +12,7 @@
         }
     </style>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GMAPS_API_KEY') }}&libraries=&v=weekly" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GMAPS_API_KEY') }}&libraries=places&v=weekly" defer></script>
 @endsection
 
 @section('content')
@@ -347,7 +347,7 @@
                         return {
                             input: params.term,
                             key: 'AIzaSyCHPS6mXbStkOthoiF6lAzAYTuHwBLSs7M',
-                            sessiontoken: '1234567890'
+                            sessiontoken: $('meta[name=csrf-token]').attr('content')
                         }
                     },
                     processResults: function (data) {

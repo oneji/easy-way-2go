@@ -30,7 +30,10 @@ class Order extends Model
         'buyer_email',
         'order_type',
         'total_price',
-        'transport_id'
+        'transport_id',
+        'passengers_count',
+        'packages_count',
+        'total_weight'
     ];
 
     /**
@@ -51,12 +54,12 @@ class Order extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new PassengerScope);
-        static::addGlobalScope(new PackageScope);
-        static::addGlobalScope(new ClientScope);
+        // static::addGlobalScope(new PassengerScope);
+        // static::addGlobalScope(new PackageScope);
+        // static::addGlobalScope(new ClientScope);
         static::addGlobalScope(new OrderStatusScope);
-        static::addGlobalScope(new MovingCargoScope);
-        static::addGlobalScope(new PaymentStatusScope);
+        // static::addGlobalScope(new MovingCargoScope);
+        // static::addGlobalScope(new PaymentStatusScope);
     }
 
     /**

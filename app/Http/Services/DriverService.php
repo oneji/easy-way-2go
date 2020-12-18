@@ -291,7 +291,24 @@ class DriverService
         $transport = DB::table('driver_transport')->whereDriverId($user->id)->pluck('transport_id');
 
         // Get order by transport ids
-        $orders = Order::with('transport')
+        $orders = Order::with([ 'country_from', 'country_to' ])
+            ->leftJoin('transports', 'transports.id', 'orders.transport_id')
+            ->select(
+                'orders.id',
+                'orders.date',
+                'orders.from_address',
+                'orders.to_address',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'orders.passengers_count',
+                'orders.packages_count',
+                'orders.total_price',
+                'orders.order_type',
+                'orders.order_status_id',
+                'orders.from_country',
+                'orders.to_country'
+            )
             ->when($orderType, function($query, $orderType) {
                 $query->where('order_type', $orderType);
             })

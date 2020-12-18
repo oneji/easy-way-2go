@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\RegisterClientRequest;
 use App\Http\Services\ClientAuthService;
-use Illuminate\Support\Facades\Validator;
 
 class ClientAuthController extends Controller
 {

@@ -15,6 +15,7 @@ use App\Jobs\InviteDriverJob;
 use App\Order;
 use App\Transport;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -337,5 +338,33 @@ class BrigadirService
             'otherOrders' => $otherOrders,
             'drivers' => $drivers
         ];
+    }
+
+    /**
+     * Get all available transport
+     */
+    public function getTransport(Request $request)
+    {
+        $queryString = $request->query('q');
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport
+        $transport = Transport::with([ 'car_docs', 'drivers' ])
+            ->whereHas('drivers', function(Builder $query) use ($drivers, $queryString) {
+                $query->whereIn('id', $drivers);
+            })
+            ->where('car_number', 'like', "%$queryString%")
+            ->get([
+                'id',
+                'car_number',
+                'wifi',
+                'air_conditioner',
+                'tv_video',
+                'disabled_people_seats'
+            ]);
+
+        return $transport;
     }
 }

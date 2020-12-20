@@ -133,4 +133,19 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get all available transport
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function getTransport(Request $request)
+    {
+        $data = $this->brigadirService->getTransport($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

@@ -69,6 +69,14 @@ class Order extends Model
     {
         return $this->belongsToMany('App\Passenger');
     }
+    
+    /**
+     * Get the drivers for the order.
+     */
+    public function drivers()
+    {
+        return $this->belongsToMany('App\Driver');
+    }
 
     /**
      * Get the client that owns the order.

@@ -11,6 +11,7 @@ use App\Package;
 use App\Order;
 use App\OrderStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
@@ -126,6 +127,10 @@ class OrderService
             if(isset($request->addresses)) {
                 $order->addresses()->attach($request->addresses);
             }
+
+            // Attach drivers separately to order
+            $driverIds = DB::table('driver_transport')->where('transport_id', $request->transport_id)->pluck('driver_id');
+            $order->drivers()->attach($driverIds);
         }
 
         return $order;

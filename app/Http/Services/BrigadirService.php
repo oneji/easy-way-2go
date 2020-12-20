@@ -303,6 +303,9 @@ class BrigadirService
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
+                'transports.wifi',
+                'transports.tv_video',
+                'transports.air_conditioner',
                 'orders.passengers_count',
                 'orders.packages_count',
                 'orders.total_price',
@@ -317,8 +320,6 @@ class BrigadirService
         $orderId = $request->query('order_id');     // string
         $orderType = $request->query('type');       // string
         $orderStatus = $request->query('status');   // integer: order_status_id
-        
-        $otherOrders = Order::with([ 'payment_method', 'addresses' ]);
         
         $drivers = DB::table('driver_order')
             ->join('drivers', 'drivers.id', 'driver_order.driver_id')
@@ -432,7 +433,7 @@ class BrigadirService
 
         return [
             'order' => $order,
-            'route' => $route,
+            'routes' => $route,
             'drivers' => $drivers
         ];
     }

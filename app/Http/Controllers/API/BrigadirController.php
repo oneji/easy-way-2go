@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\ChangeBrigadirPasswordRequest;
 use App\Http\JsonRequests\DetachDriverFromOrderRequest;
+use App\Http\JsonRequests\AttachDriverToOrderRequest;
 use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
@@ -195,6 +196,21 @@ class BrigadirController extends Controller
         return response()->json([
             'success' => true,
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Attach driver from order
+     * 
+     * @param   \App\Http\JsonRequests\AttachDriverToOrderRequest $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function attachDriverToOrder(AttachDriverToOrderRequest $request)
+    {
+        $this->brigadirService->attachDriverToOrder($request->driver_id, $request->order_id);
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

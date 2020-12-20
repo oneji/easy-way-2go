@@ -434,4 +434,19 @@ class BrigadirService
         ->whereBrigadirId($user->id)
         ->get();
     }
+
+    /**
+     * Attach driver to the order
+     * 
+     * @param   int $id
+     * @param   int $orderId
+     * @return  void
+     */
+    public function attachDriverToOrder($id, $orderId)
+    {
+        DB::table('driver_order')->insert([
+            'driver_id' => $id,
+            'order_id' => $orderId
+        ]);
+    }
 }

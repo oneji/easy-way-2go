@@ -38,6 +38,7 @@ class BrigadirService
      * Get the brigadir by id.
      * 
      * @param   int $id
+     * @return  collection
      */
     public function getById($id)
     {
@@ -48,7 +49,7 @@ class BrigadirService
      * Store a newly created brigadir in the db.
      * 
      * @param   \App\Http\Requests\StoreUserRequest $request
-     * @return  array
+     * @return  void
      */
     public function store(StoreUserRequest $request)
     {
@@ -67,6 +68,7 @@ class BrigadirService
      * 
      * @param   \App\Http\Requests\UpdateUserRequest $request
      * @param   int $id
+     * @return  void
      */
     public function update(UpdateUserRequest $request, $id)
     {
@@ -90,7 +92,7 @@ class BrigadirService
     /**
      * Get brigadir's count
      * 
-     * @return collection
+     * @return number
      */
     public function count()
     {
@@ -124,8 +126,9 @@ class BrigadirService
     /**
      * Update brigadir's profile
      * 
-     * @param \App\Http\JsonRequests\UpdateBrigadirRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\UpdateBrigadirRequest $request
+     * @param   int $id
+     * @return  \App\Brigadir $brigadir
      */
     public function updateProfile(UpdateBrigadirRequest $request, $id)
     {
@@ -151,8 +154,9 @@ class BrigadirService
     /**
      * Update brigadir's company info
      * 
-     * @param \App\Http\JsonRequests\UpdateBrigadirCompanyRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\UpdateBrigadirCompanyRequest $request
+     * @param   int $id
+     * @return  \App\Brigadir $brigadir
      */
     public function updateCompany(UpdateBrigadirCompanyRequest $request, $id)
     {
@@ -167,8 +171,9 @@ class BrigadirService
     /**
      * Change password
      * 
-     * @param \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
+     * @param   int $id
+     * @return  array
      */
     public function changePassword(ChangeBrigadirPasswordRequest $request)
     {
@@ -197,7 +202,8 @@ class BrigadirService
     /**
      * Invite driver
      * 
-     * @param \App\Http\JsonRequests\InviteDriverRequest $request
+     * @param   \App\Http\JsonRequests\InviteDriverRequest $request
+     * @return  void
      */
     public function inviteDriver(InviteDriverRequest $request)
     {
@@ -282,7 +288,9 @@ class BrigadirService
     /**
      * Get a specific order by id
      * 
-     * @param int $id
+     * @param   \Illuminate\Http\Request $request
+     * @param   int $id
+     * @return  array
      */
     public function getOrderById(Request $request, $id)
     {
@@ -349,6 +357,9 @@ class BrigadirService
 
     /**
      * Get all available transport
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
      */
     public function getTransport(Request $request)
     {
@@ -378,12 +389,30 @@ class BrigadirService
     /**
      * Block access to the driver
      * 
-     * @param int $id
+     * @param   int $id
+     * @return  void
      */
     public function blockDriver($id)
     {
         Driver::where('id', $id)->update([
             'blocked' => 1
         ]);
+    }
+
+    /**
+     * Detach driver from order
+     * 
+     * @param   int $id
+     * @param   int $orderId
+     * @return  void
+     */
+    public function detachDriverFromOrder($id, $orderId)
+    {
+        DB::table('driver_order')
+            ->where([
+                'driver_id' => $id,
+                'order_id' => $orderId
+            ])
+            ->delete();
     }
 }

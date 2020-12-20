@@ -75,6 +75,7 @@ Route::namespace('API')->group(function() {
         
         Route::get('brigadirs/orders', 'BrigadirController@getOrders');
         Route::get('brigadirs/orders/getById/{id}', 'BrigadirController@getOrderById');
+        Route::delete('brigadirs/orders/detachDriver', 'BrigadirController@detachDriverFromOrder');
         
         Route::get('brigadirs/transport', 'BrigadirController@getTransport');
         

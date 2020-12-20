@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\ChangeBrigadirPasswordRequest;
+use App\Http\JsonRequests\DetachDriverFromOrderRequest;
 use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
@@ -122,7 +123,8 @@ class BrigadirController extends Controller
     /**
      * Get a speificic order by id
      * 
-     * @param int $id
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function getOrderById(Request $request, $id)
     {
@@ -137,7 +139,8 @@ class BrigadirController extends Controller
     /**
      * Get all available transport
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function getTransport(Request $request)
     {
@@ -152,11 +155,27 @@ class BrigadirController extends Controller
     /**
      * Block driver access
      * 
-     * @param int $id
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function blockDriver($id)
     {
         $this->brigadirService->blockDriver($id);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Detach driver from order
+     * 
+     * @param   \App\Http\JsonRequests\DetachDriverFromOrderRequest $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function detachDriverFromOrder(DetachDriverFromOrderRequest $request)
+    {
+        $this->brigadirService->detachDriverFromOrder($request->driver_id, $request->order_id);
 
         return response()->json([
             'success' => true

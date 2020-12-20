@@ -118,4 +118,19 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get a speificic order by id
+     * 
+     * @param int $id
+     */
+    public function getOrderById(Request $request, $id)
+    {
+        $data = $this->brigadirService->getOrderById($request, $id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

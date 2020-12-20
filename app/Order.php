@@ -141,6 +141,14 @@ class Order extends Model
     {
         return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
     }
+    
+    /**
+     * Get the payment method that owns the order.
+     */
+    public function payment_method()
+    {
+        return $this->belongsTo('App\PaymentMethod', 'payment_method_id');
+    }
 
     /**
      * The addresses that belong to the order.

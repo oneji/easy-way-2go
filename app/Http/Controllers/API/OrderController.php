@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\JsonRequests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\CancelOrderRequest;
+use App\Http\JsonRequests\SetTransportToOrderRequest;
 use App\Http\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -168,6 +169,20 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Set new transport
+     * 
+     * @param \App\Http\JsonRequests\SetTransportToOrderRequest $request
+     */
+    public function setNewTransport(SetTransportToOrderRequest $request)
+    {
+        $this->orderService->setNewTransport($request->order_id, $request->transport_id);
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

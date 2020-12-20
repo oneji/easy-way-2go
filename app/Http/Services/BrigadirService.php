@@ -277,4 +277,65 @@ class BrigadirService
 
         return $orders;
     }
+
+    /**
+     * Get a specific order by id
+     * 
+     * @param int $id
+     */
+    public function getOrderById(Request $request, $id)
+    {
+        $order = Order::with([ 'country_from', 'country_to' ])
+            ->join('transports', 'transports.id', 'orders.transport_id')
+            ->select(
+                'orders.id',
+                'transports.car_number',
+                'orders.date',
+                'orders.from_address',
+                'orders.to_address',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'orders.passengers_count',
+                'orders.packages_count',
+                'orders.total_price',
+                'orders.order_type',
+                'orders.order_status_id',
+                'orders.from_country',
+                'orders.to_country',
+                'orders.transport_id'
+            )
+            ->find($id);
+
+        // Filtering params
+        $orderId = $request->query('id'); // string
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        
+        $otherOrders = Order::with('payment_method')
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($orderId, function($query, $orderId) {
+                $query->where('id', 'like', "%$orderId%");
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereTransportId($order->transport_id)
+            ->where('id', '<>', $order->id)
+            ->get();
+        
+        $drivers = DB::table('driver_transport')
+            ->join('drivers', 'drivers.id', 'driver_transport.driver_id')
+            ->select('drivers.*')
+            ->where('driver_transport.transport_id', $order->transport_id)
+            ->get();
+
+        return [
+            'order' => $order,
+            'otherOrders' => $otherOrders,
+            'drivers' => $drivers
+        ];
+    }
 }

@@ -145,4 +145,17 @@ class OrderService
 
         return $order;
     }
+
+    /**
+     * Set new tranport
+     * 
+     * @param int $id
+     * @param int $transportId
+     */
+    public function setNewTransport($id, $transportId)
+    {
+        $order = Order::find($id);
+        $order->transport_id = $transportId;
+        $order->save();
+    }
 }

@@ -327,11 +327,18 @@ class BrigadirService
             ->where('id', '<>', $order->id)
             ->get();
         
-        $drivers = DB::table('driver_transport')
-            ->join('drivers', 'drivers.id', 'driver_transport.driver_id')
-            ->select('drivers.*')
-            ->where('driver_transport.transport_id', $order->transport_id)
-            ->get();
+        $drivers = DB::table('driver_order')
+            ->join('drivers', 'drivers.id', 'driver_order.driver_id')
+            ->where('driver_order.order_id', $order->id)
+            ->get([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'phone_number',
+                'role',
+                'photo'
+            ]);
 
         return [
             'order' => $order,
@@ -366,5 +373,17 @@ class BrigadirService
             ]);
 
         return $transport;
+    }
+
+    /**
+     * Block access to the driver
+     * 
+     * @param int $id
+     */
+    public function blockDriver($id)
+    {
+        Driver::where('id', $id)->update([
+            'blocked' => 1
+        ]);
     }
 }

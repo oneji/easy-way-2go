@@ -148,4 +148,18 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Block driver access
+     * 
+     * @param int $id
+     */
+    public function blockDriver($id)
+    {
+        $this->brigadirService->blockDriver($id);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }

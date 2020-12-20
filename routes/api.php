@@ -11,7 +11,6 @@
 |
 */
 
-// Auth
 Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
@@ -72,12 +71,16 @@ Route::namespace('API')->group(function() {
         // Brigadirs
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
-        Route::post('brigadirs/inviteDriver', 'BrigadirController@inviteDriver');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
-        Route::get('brigadirs/getDrivers', 'BrigadirController@getDrivers');
-        Route::get('brigadirs/getOrders', 'BrigadirController@getOrders');
-        Route::get('brigadirs/getOrderById/{id}', 'BrigadirController@getOrderById');
-        Route::get('brigadirs/getTransport', 'BrigadirController@getTransport');
+        
+        Route::get('brigadirs/orders', 'BrigadirController@getOrders');
+        Route::get('brigadirs/orders/getById/{id}', 'BrigadirController@getOrderById');
+        
+        Route::get('brigadirs/transport', 'BrigadirController@getTransport');
+        
+        Route::get('brigadirs/drivers', 'BrigadirController@getDrivers');
+        Route::post('brigadirs/drivers/invite', 'BrigadirController@inviteDriver');
+        Route::post('brigadirs/drivers/block/{id}', 'BrigadirController@blockDriver');
 
         // Drivers
         Route::put('drivers/changePassword', 'DriverController@changePassword');

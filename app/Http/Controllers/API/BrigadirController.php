@@ -94,9 +94,9 @@ class BrigadirController extends Controller
      * @param   \Illuminate\Http\Request $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function getDrivers(Request $request)
+    public function getDriversGroupedByTransport(Request $request)
     {
-        $data = $this->brigadirService->getDrivers($request);
+        $data = $this->brigadirService->getDriversGroupedByTransport($request);
 
         return response()->json([
             'success' => true,
@@ -179,6 +179,22 @@ class BrigadirController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    /**
+     * Get drivers
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getDrivers(Request $request)
+    {
+        $data = $this->brigadirService->getDrivers($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

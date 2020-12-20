@@ -105,7 +105,7 @@ class BrigadirService
      * @param   \Illuminate\Http\Request $request
      * @return  collection
      */
-    public function getDrivers(Request $request)
+    public function getDriversGroupedByTransport(Request $request)
     {
         $brigadir = auth('brigadir')->user();
         
@@ -414,5 +414,24 @@ class BrigadirService
                 'order_id' => $orderId
             ])
             ->delete();
+    }
+
+    /**
+     * Get drivers
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getDrivers(Request $request)
+    {
+        $user = auth('brigadir')->user();
+
+        $name = $request->query('name');
+        return Driver::when($name, function($query, $name) {
+            $query->where('first_name', 'like', "%$name%")
+                ->orWhere('last_name', 'like', "%$name%");
+        })
+        ->whereBrigadirId($user->id)
+        ->get();
     }
 }

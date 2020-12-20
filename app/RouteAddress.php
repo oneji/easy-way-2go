@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class RouteAddress extends Model
@@ -29,6 +30,38 @@ class RouteAddress extends Model
         'type',
         'order'
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'departure_date' => 'datetime:d.m.y',
+        'arrival_date' => 'datetime:d.m.y'
+    ];
+
+    /**
+     * Get the route addresses's departure time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getDepartureTimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('H:i');
+    }
+    
+    /**
+     * Get the route addresses's arrival time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getArrivalTimeAttribute($value)
+    {
+        return Carbon::parse($value)->format('H:i');
+    }
 
     /**
      * Get the country that owns the route address.

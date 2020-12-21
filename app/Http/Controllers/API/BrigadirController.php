@@ -11,6 +11,7 @@ use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Http\Services\BrigadirService;
+use Illuminate\Support\Facades\Validator;
 
 class BrigadirController extends Controller
 {
@@ -208,6 +209,61 @@ class BrigadirController extends Controller
     public function attachDriverToOrder(AttachDriverToOrderRequest $request)
     {
         $this->brigadirService->attachDriverToOrder($request->driver_id, $request->order_id);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Get driver by id
+     * 
+     * @param int $id
+     */
+    public function getDriverById($id)
+    {
+        $data = $this->brigadirService->getDriverById($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * Get driver's transport
+     * 
+     * @param int $id
+     */
+    public function getDriversTransport($id)
+    {
+        $data = $this->brigadirService->getDriversTransport($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * Change drivers password
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function changeDriversPassword(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $this->brigadirService->changeDriversPassword($request, $id);
 
         return response()->json([
             'success' => true

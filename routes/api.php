@@ -38,28 +38,16 @@ Route::namespace('API')->group(function() {
     Route::post('baRequests', 'BaRequestController@store');
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 
-    // Countries
     Route::get('countries', 'CountryController@all');
-
-    // Help
     Route::get('help', 'HelpSectionController@all');
-
-    // Driving experiences
     Route::get('drivingExperiences', 'DrivingExperienceController@all');
-    // Car brands
     Route::get('carBrands',  'CarBrandController@all');
-    // Car models
     Route::get('carModels',  'CarModelController@all');
     Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
-    // Cargo types
     Route::get('cargoTypes', 'CargoTypeController@all');
-    // Payment methods
     Route::get('paymentMethods', 'PaymentMethodController@all');
-    // Payment statuses
     Route::get('paymentStatuses', 'PaymentStatusController@all');
-    // Order statuses
     Route::get('orderStatuses', 'OrderStatusController@all');
-    // Prices
     Route::get('prices', 'PriceController@all');
 
     Route::middleware('jwt.verify')->group(function() {
@@ -84,6 +72,9 @@ Route::namespace('API')->group(function() {
         Route::get('brigadirs/drivers', 'BrigadirController@getDrivers');
         Route::post('brigadirs/drivers/invite', 'BrigadirController@inviteDriver');
         Route::post('brigadirs/drivers/block/{id}', 'BrigadirController@blockDriver');
+        Route::get('brigadirs/drivers/getById/{id}', 'BrigadirController@getDriverById');
+        Route::get('brigadirs/drivers/getTransport/{id}', 'BrigadirController@getDriversTransport');
+        Route::put('brigadirs/drivers/changePassword/{id}', 'BrigadirController@changeDriversPassword');
 
         // Drivers
         Route::put('drivers/changePassword', 'DriverController@changePassword');

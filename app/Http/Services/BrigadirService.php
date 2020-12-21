@@ -532,4 +532,42 @@ class BrigadirService
             'order_id' => $orderId
         ]);
     }
+
+    /**
+     * Get driver by id
+     * 
+     * @param   int $id
+     * @return  collection
+     */
+    public function getDriverById($id)
+    {
+        return Driver::find($id);
+    }
+
+    /**
+     * Get driver's transport
+     * 
+     * @param   int $id
+     * @return  collection
+     */
+    public function getDriversTransport($id)
+    {
+        return DB::table('driver_transport')
+            ->join('transports', 'transports.id', 'driver_transport.transport_id')
+            ->select('transports.*')
+            ->whereDriverId($id)
+            ->first();
+    }
+
+    /**
+     * Change driver's password
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function changeDriversPassword(Request $request, $id)
+    {
+        $driver = Driver::find($id);
+        $driver->password = Hash::make($request->password);
+        $driver->save();
+    }
 }

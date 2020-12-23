@@ -350,8 +350,8 @@ class BrigadirService
         $forwardRoutes = $route->route_addresses->where('type', 'forward');
         $backRoutes = $route->route_addresses->where('type', 'back');
 
-        $otherForwardOrders = Order::
-            when($orderType, function($query, $orderType) {
+        $otherForwardOrders = Order::with([ 'payment_method', 'country_from', 'country_to' ])
+            ->when($orderType, function($query, $orderType) {
                 $query->where('order_type', $orderType);
             })
             ->when($orderId, function($query, $orderId) {
@@ -367,10 +367,21 @@ class BrigadirService
                 $query->where('transport_id', $trip->transport_id)
                     ->orWhere('route_id', $trip->route_id);
             })
-            ->get();
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price'
+            ]);
 
-        $otherBackOrders = Order::
-            when($orderType, function($query, $orderType) {
+        $otherBackOrders = Order::with([ 'payment_method' ])
+            ->when($orderType, function($query, $orderType) {
                 $query->where('order_type', $orderType);
             })
             ->when($orderId, function($query, $orderId) {
@@ -386,7 +397,18 @@ class BrigadirService
                 $query->where('transport_id', $trip->transport_id)
                     ->orWhere('route_id', $trip->route_id);
             })
-            ->get();
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price'
+            ]);
         
         $forwardStats = [
             'passengers' => 0,

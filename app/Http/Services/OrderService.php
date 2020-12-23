@@ -83,7 +83,7 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([ 'country_from', 'country_to', 'cargos' ])
+        return Order::with([ 'country_from', 'country_to', 'cargos', 'passengers', 'packages' ])
             ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
             ->select(
                 'orders.*',

@@ -61,8 +61,9 @@ Route::namespace('API')->group(function() {
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
         
-        Route::get('brigadirs/orders', 'BrigadirController@getOrders');
-        Route::get('brigadirs/orders/getById/{id}', 'BrigadirController@getOrderById');
+        Route::get('brigadirs/trips', 'BrigadirController@getTrips');
+        Route::get('brigadirs/trips/getById/{id}', 'BrigadirController@getTripById');
+
         Route::delete('brigadirs/orders/detachDriver', 'BrigadirController@detachDriverFromOrder');
         Route::post('brigadirs/orders/attachDriver', 'BrigadirController@attachDriverToOrder');
         

@@ -71,7 +71,7 @@ class Route extends Model
      * 
      * @param string $type
      */
-    private function getCitiesByType($type)
+    public function getCitiesByType($type)
     {
         $addresses = $this->route_addresses->where('type', $type);
         $firstCity = $addresses->first();

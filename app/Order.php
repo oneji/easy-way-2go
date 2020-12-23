@@ -12,7 +12,6 @@ use App\Scopes\PaymentStatusScope;
 
 class Order extends Model
 {
-
     /**
      * The attributes that are mass assignable.
      *
@@ -57,7 +56,7 @@ class Order extends Model
         // static::addGlobalScope(new PassengerScope);
         // static::addGlobalScope(new PackageScope);
         // static::addGlobalScope(new ClientScope);
-        static::addGlobalScope(new OrderStatusScope);
+        // static::addGlobalScope(new OrderStatusScope);
         // static::addGlobalScope(new MovingCargoScope);
         // static::addGlobalScope(new PaymentStatusScope);
     }

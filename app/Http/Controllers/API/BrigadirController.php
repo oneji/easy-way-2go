@@ -107,14 +107,14 @@ class BrigadirController extends Controller
     }
 
     /**
-     * Get a list of orders
+     * Get a list of trips
      * 
      * @param   \Illuminate\Http\Request $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function getOrders(Request $request)
+    public function getTrips(Request $request)
     {
-        $data = $this->brigadirService->getOrders($request);
+        $data = $this->brigadirService->getTrips($request);
 
         return response()->json([
             'success' => true,
@@ -123,14 +123,14 @@ class BrigadirController extends Controller
     }
 
     /**
-     * Get a speificic order by id
+     * Get a speificic trip by id
      * 
      * @param   int $id
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function getOrderById(Request $request, $id)
+    public function getTripById(Request $request, $id)
     {
-        $data = $this->brigadirService->getOrderById($request, $id);
+        $data = $this->brigadirService->getTripById($request, $id);
 
         return response()->json([
             'success' => true,

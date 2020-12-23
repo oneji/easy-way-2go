@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
+    protected $tripService;
+
+    /**
+     * OrderService constructor
+     * 
+     * @param \App\Http\Services\TripService $tripService
+     */
+    public function __construct(TripService $tripService)
+    {
+        $this->tripService = $tripService;
+    }
+
     /**
      * Get client's orders
      */
@@ -92,10 +104,24 @@ class OrderService
      */
     public function store(StoreOrderRequest $request)
     {
+        // Create a trip an attach order to it
+        $trip = $this->tripService->findOrCreate([
+            'transport_id' => $request->transport_id,
+            'route_id' => $request->route_id,
+            'status_id' => OrderStatus::getFuture()->id,
+            'date' => Carbon::parse($request->date),
+            'time' => '00:00',
+            'from_country_id' => $request->from_country,
+            'to_country_id' => $request->to_country,
+            'from_address' => $request->from_address,
+            'to_address' => $request->to_address,
+        ]);
+
         $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);
         $order->client_id = auth('client')->user()->id;
         $order->order_status_id = OrderStatus::getFuture()->id;
+        $order->trip_id = $trip->id;
         $order->save();
 
         if($order->order_type === 'moving') {
@@ -130,8 +156,9 @@ class OrderService
 
             // Attach drivers separately to order
             $driverIds = DB::table('driver_transport')->where('transport_id', $request->transport_id)->pluck('driver_id');
-            $order->drivers()->attach($driverIds);
         }
+
+        $trip->drivers()->attach($driverIds);
 
         return $order;
     }

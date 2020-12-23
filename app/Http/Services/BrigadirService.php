@@ -421,7 +421,7 @@ class BrigadirService
                 'fact_price' => $forwardStats['fact_price'],
                 'total_price' => $forwardStats['total_price'],
             ],
-            'otherOrders' => $otherForwardOrders
+            'orders' => $otherForwardOrders
         ];
 
         $route['back'] = [
@@ -433,15 +433,15 @@ class BrigadirService
                 'fact_price' => $backStats['fact_price'],
                 'total_price' => $backStats['total_price'],
             ],
-            'otherOrders' => $otherBackOrders
+            'orders' => $otherBackOrders
         ];
 
         $route->unsetRelation('route_addresses');
 
         return [
-            // 'trip' => $trip,
+            'trip' => $trip,
             'routes' => $route,
-            // 'drivers' => $drivers
+            'drivers' => $drivers
         ];
     }
 

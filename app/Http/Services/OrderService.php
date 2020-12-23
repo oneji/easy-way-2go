@@ -119,7 +119,7 @@ class OrderService
             $driverIds = DB::table('driver_transport')->where('transport_id', $request->transport_id)->pluck('driver_id');
         }
 
-        $trip->drivers()->attach($driverIds);
+        $trip->drivers()->sync($driverIds);
 
         return $order;
     }

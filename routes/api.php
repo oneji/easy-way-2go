@@ -55,6 +55,7 @@ Route::namespace('API')->group(function() {
         Route::put('clients/changePassword', 'ClientController@changePassword');
         Route::post('clients/{id}', 'ClientController@update');
         Route::get('clients/checkEmail', 'ClientController@checkEmail');
+        Route::get('clients/orders', 'ClientController@getOrders');
        
         // Brigadirs
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
@@ -83,7 +84,6 @@ Route::namespace('API')->group(function() {
         Route::get('drivers/getOrders', 'DriverController@getOrders');
 
         // Orders
-        Route::get('orders', 'OrderController@all');
         Route::post('orders', 'OrderController@store');
         Route::get('orders/getById/{id}', 'OrderController@getById');
         Route::post('orders/cancel', 'OrderController@cancel');

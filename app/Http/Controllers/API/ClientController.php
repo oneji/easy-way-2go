@@ -64,4 +64,19 @@ class ClientController extends Controller
 
         return response()->json($response);
     }
+
+    /**
+     * Get all orders
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOrders(Request $request)
+    {
+        $orders = $this->clientService->getOrders($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $orders
+        ]);
+    }
 }

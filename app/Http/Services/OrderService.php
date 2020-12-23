@@ -28,45 +28,6 @@ class OrderService
     }
 
     /**
-     * Get client's orders
-     */
-    public function getClientOrders(Request $request)
-    {
-        $client = auth('client')->user();
-        // Filtering params
-        $id = $request->query('id');
-        $type = $request->query('type');
-        $from = $request->query('from');
-        $to = $request->query('to');
-
-        return Order::with([ 'country_from', 'country_to', 'moving_data', 'transport' ])
-            ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
-            ->select(
-                'orders.*',
-                'moving_data.from_floor',
-                'moving_data.to_floor',
-                'moving_data.time',
-                'moving_data.movers_count',
-                'moving_data.parking',
-                'moving_data.parking_working_hours'
-            )
-            ->when($id, function($query, $id) {
-                $query->where('id', 'like', "%$id%");
-            })
-            ->when($type, function($query, $type) {
-                $query->where('order_type', $type);
-            })
-            ->when($from, function($query, $from) {
-                $query->where('date', '>=', Carbon::parse($from));
-            })
-            ->when($to, function($query, $to) {
-                $query->where('date', '<=', Carbon::parse($to));
-            })
-            ->where('client_id', $client->id)
-            ->get();
-    }
-
-    /**
      * Get all orders
      * 
      * @return collection

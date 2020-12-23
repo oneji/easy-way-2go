@@ -25,21 +25,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Get all orders
-     * 
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function all(Request $request)
-    {
-        $orders = $this->orderService->getClientOrders($request);
-
-        return response()->json([
-            'success' => true,
-            'data' => $orders
-        ]);
-    }
-
-    /**
      * Get order by id
      * 
      * @param   int $id

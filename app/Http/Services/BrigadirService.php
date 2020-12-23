@@ -285,7 +285,11 @@ class BrigadirService
             sum(packages_count) as packages,
             sum(total_price) as total_price,
             trip_id'
-        )->groupBy('trip_id')->get();
+        )
+        // ->whereHas('addresses', function($query) {
+        //     $query->where('type', 'forward');
+        // })
+        ->groupBy('trip_id')->get();
 
         foreach ($trips as $trip) {
             foreach ($stats as $stat) {
@@ -309,7 +313,8 @@ class BrigadirService
      */
     public function getTripById(Request $request, $id)
     {
-        $trip = Trip::join('transports', 'transports.id', 'trips.transport_id')
+        $trip = Trip::with('status')
+            ->join('transports', 'transports.id', 'trips.transport_id')
             ->select(
                 'trips.id',
                 'transports.car_number',

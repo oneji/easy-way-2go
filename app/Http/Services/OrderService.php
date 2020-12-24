@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Package;
 use App\Order;
 use App\OrderStatus;
+use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -140,15 +141,16 @@ class OrderService
     }
 
     /**
-     * Set new tranport
+     * Approve order
      * 
      * @param int $id
-     * @param int $transportId
      */
-    public function setNewTransport($id, $transportId)
+    public function approve($id)
     {
         $order = Order::find($id);
-        $order->transport_id = $transportId;
+        $order->approved = 1;
         $order->save();
+
+        return $order;
     }
 }

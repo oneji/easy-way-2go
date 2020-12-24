@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SetTransportToOrderRequest extends FormRequest
+class SetDriverToTripRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,8 +39,8 @@ class SetTransportToOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'order_id' => 'required|integer|exists:orders,id',
-            'transport_id' => 'required|integer|exists:transports,id'
+            'driver_id' => 'required|integer|exists:drivers,id',
+            'trip_id' => 'required|integer|exists:trips,id'
         ];
     }
 }

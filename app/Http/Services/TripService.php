@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Route;
 use App\Trip;
+use Illuminate\Support\Facades\DB;
 
 class TripService
 {
@@ -39,5 +40,37 @@ class TripService
         $trip->save();
 
         return $trip;
+    }
+
+    /**
+     * Set trip's drivers
+     * 
+     * @param int $id
+     * @param int $driverId
+     */
+    public function setDriver($id, $driverId)
+    {
+        DB::table('driver_trip')->insert([
+            'driver_id' => $driverId,
+            'trip_id' => $id,
+        ]);
+    }
+
+    /**
+     * Set new tranport
+     * 
+     * @param int $id
+     * @param int $transportId
+     */
+    public function setNewTransport($id, $transportId)
+    {
+        $trip = Trip::with('orders')->find($id);
+        $trip->transport_id = $transportId;
+        $trip->save();
+
+        foreach ($trip->orders as $order) {
+            $order->transport_id = $transportId;
+            $order->save();
+        }
     }
 }

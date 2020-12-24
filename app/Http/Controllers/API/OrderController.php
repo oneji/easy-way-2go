@@ -157,18 +157,19 @@ class OrderController extends Controller
             'data' => $data
         ]);
     }
-
+    
     /**
-     * Set new transport
+     * Approve order
      * 
-     * @param \App\Http\JsonRequests\SetTransportToOrderRequest $request
+     * @param int $id
      */
-    public function setNewTransport(SetTransportToOrderRequest $request)
+    public function approve($id)
     {
-        $this->orderService->setNewTransport($request->order_id, $request->transport_id);
+        $data = $this->orderService->approve($id);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

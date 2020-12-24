@@ -12,7 +12,6 @@ use App\Scopes\PaymentStatusScope;
 
 class Order extends Model
 {
-
     /**
      * The attributes that are mass assignable.
      *
@@ -57,7 +56,7 @@ class Order extends Model
         // static::addGlobalScope(new PassengerScope);
         // static::addGlobalScope(new PackageScope);
         // static::addGlobalScope(new ClientScope);
-        static::addGlobalScope(new OrderStatusScope);
+        // static::addGlobalScope(new OrderStatusScope);
         // static::addGlobalScope(new MovingCargoScope);
         // static::addGlobalScope(new PaymentStatusScope);
     }
@@ -68,6 +67,14 @@ class Order extends Model
     public function passengers()
     {
         return $this->belongsToMany('App\Passenger');
+    }
+    
+    /**
+     * Get the drivers for the order.
+     */
+    public function drivers()
+    {
+        return $this->belongsToMany('App\Driver');
     }
 
     /**
@@ -140,6 +147,14 @@ class Order extends Model
     public function payment_status()
     {
         return $this->belongsTo('App\PaymentStatus', 'payment_status_id');
+    }
+    
+    /**
+     * Get the payment method that owns the order.
+     */
+    public function payment_method()
+    {
+        return $this->belongsTo('App\PaymentMethod', 'payment_method_id');
     }
 
     /**

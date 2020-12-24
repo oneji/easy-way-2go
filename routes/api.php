@@ -11,7 +11,6 @@
 |
 */
 
-// Auth
 Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
@@ -39,28 +38,16 @@ Route::namespace('API')->group(function() {
     Route::post('baRequests', 'BaRequestController@store');
     Route::get('baRequests/getById/{id}', 'BaRequestController@getById');
 
-    // Countries
     Route::get('countries', 'CountryController@all');
-
-    // Help
     Route::get('help', 'HelpSectionController@all');
-
-    // Driving experiences
     Route::get('drivingExperiences', 'DrivingExperienceController@all');
-    // Car brands
     Route::get('carBrands',  'CarBrandController@all');
-    // Car models
     Route::get('carModels',  'CarModelController@all');
     Route::get('carModels/getByBrandId/{id}',  'CarModelController@getByBrandId');
-    // Cargo types
     Route::get('cargoTypes', 'CargoTypeController@all');
-    // Payment methods
     Route::get('paymentMethods', 'PaymentMethodController@all');
-    // Payment statuses
     Route::get('paymentStatuses', 'PaymentStatusController@all');
-    // Order statuses
     Route::get('orderStatuses', 'OrderStatusController@all');
-    // Prices
     Route::get('prices', 'PriceController@all');
 
     Route::middleware('jwt.verify')->group(function() {
@@ -68,14 +55,28 @@ Route::namespace('API')->group(function() {
         Route::put('clients/changePassword', 'ClientController@changePassword');
         Route::post('clients/{id}', 'ClientController@update');
         Route::get('clients/checkEmail', 'ClientController@checkEmail');
+        Route::get('clients/orders', 'ClientController@getOrders');
        
         // Brigadirs
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
-        Route::post('brigadirs/inviteDriver', 'BrigadirController@inviteDriver');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
-        Route::get('brigadirs/getDrivers', 'BrigadirController@getDrivers');
-        Route::get('brigadirs/getOrders', 'BrigadirController@getOrders');
+        
+        Route::get('brigadirs/trips', 'BrigadirController@getTrips');
+        Route::get('brigadirs/trips/getById/{id}', 'BrigadirController@getTripById');
+
+        Route::delete('brigadirs/orders/detachDriver', 'BrigadirController@detachDriverFromOrder');
+        Route::post('brigadirs/orders/attachDriver', 'BrigadirController@attachDriverToOrder');
+        
+        Route::get('brigadirs/transport', 'BrigadirController@getTransport');
+        
+        Route::get('brigadirs/getDriversGroupedByTransport', 'BrigadirController@getDriversGroupedByTransport');
+        Route::get('brigadirs/drivers', 'BrigadirController@getDrivers');
+        Route::post('brigadirs/drivers/invite', 'BrigadirController@inviteDriver');
+        Route::post('brigadirs/drivers/block/{id}', 'BrigadirController@blockDriver');
+        Route::get('brigadirs/drivers/getById/{id}', 'BrigadirController@getDriverById');
+        Route::get('brigadirs/drivers/getTransport/{id}', 'BrigadirController@getDriversTransport');
+        Route::put('brigadirs/drivers/changePassword/{id}', 'BrigadirController@changeDriversPassword');
 
         // Drivers
         Route::put('drivers/changePassword', 'DriverController@changePassword');
@@ -83,10 +84,10 @@ Route::namespace('API')->group(function() {
         Route::get('drivers/getOrders', 'DriverController@getOrders');
 
         // Orders
-        Route::get('orders', 'OrderController@all');
         Route::post('orders', 'OrderController@store');
         Route::get('orders/getById/{id}', 'OrderController@getById');
         Route::post('orders/cancel', 'OrderController@cancel');
+        Route::put('orders/setNewTransport', 'OrderController@setNewTransport');
         
         // Passengers
         Route::get('passengers', 'PassengerController@all');

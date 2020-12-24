@@ -13,8 +13,11 @@ use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Jobs\InviteDriverJob;
 use App\Order;
+use App\Route;
 use App\Transport;
+use App\Trip;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +40,7 @@ class BrigadirService
      * Get the brigadir by id.
      * 
      * @param   int $id
+     * @return  collection
      */
     public function getById($id)
     {
@@ -47,7 +51,7 @@ class BrigadirService
      * Store a newly created brigadir in the db.
      * 
      * @param   \App\Http\Requests\StoreUserRequest $request
-     * @return  array
+     * @return  void
      */
     public function store(StoreUserRequest $request)
     {
@@ -66,6 +70,7 @@ class BrigadirService
      * 
      * @param   \App\Http\Requests\UpdateUserRequest $request
      * @param   int $id
+     * @return  void
      */
     public function update(UpdateUserRequest $request, $id)
     {
@@ -89,7 +94,7 @@ class BrigadirService
     /**
      * Get brigadir's count
      * 
-     * @return collection
+     * @return number
      */
     public function count()
     {
@@ -102,7 +107,7 @@ class BrigadirService
      * @param   \Illuminate\Http\Request $request
      * @return  collection
      */
-    public function getDrivers(Request $request)
+    public function getDriversGroupedByTransport(Request $request)
     {
         $brigadir = auth('brigadir')->user();
         
@@ -123,8 +128,9 @@ class BrigadirService
     /**
      * Update brigadir's profile
      * 
-     * @param \App\Http\JsonRequests\UpdateBrigadirRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\UpdateBrigadirRequest $request
+     * @param   int $id
+     * @return  \App\Brigadir $brigadir
      */
     public function updateProfile(UpdateBrigadirRequest $request, $id)
     {
@@ -150,8 +156,9 @@ class BrigadirService
     /**
      * Update brigadir's company info
      * 
-     * @param \App\Http\JsonRequests\UpdateBrigadirCompanyRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\UpdateBrigadirCompanyRequest $request
+     * @param   int $id
+     * @return  \App\Brigadir $brigadir
      */
     public function updateCompany(UpdateBrigadirCompanyRequest $request, $id)
     {
@@ -166,8 +173,9 @@ class BrigadirService
     /**
      * Change password
      * 
-     * @param \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
-     * @param int $id
+     * @param   \App\Http\JsonRequests\ChangeBrigadirPasswordRequest $request
+     * @param   int $id
+     * @return  array
      */
     public function changePassword(ChangeBrigadirPasswordRequest $request)
     {
@@ -196,7 +204,8 @@ class BrigadirService
     /**
      * Invite driver
      * 
-     * @param \App\Http\JsonRequests\InviteDriverRequest $request
+     * @param   \App\Http\JsonRequests\InviteDriverRequest $request
+     * @return  void
      */
     public function inviteDriver(InviteDriverRequest $request)
     {
@@ -214,12 +223,12 @@ class BrigadirService
     }
 
     /**
-     * Get a list of orders
+     * Get a list of trips
      * 
      * @param   \Illuminate\Http\Request $request
      * @return  collection
      */
-    public function getOrders(Request $request)
+    public function getTrips(Request $request)
     {
         // Filtering params
         $carNumber = $request->query('car_number'); // string
@@ -240,29 +249,24 @@ class BrigadirService
             ->whereIn('driver_id', $drivers)
             ->pluck('id');
         
-        // Get order by transport ids
-        $orders = Order::with([ 'country_from', 'country_to' ])
-            ->leftJoin('transports', 'transports.id', 'orders.transport_id')
+        // Get trips by transport id
+        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+            ->leftJoin('transports', 'transports.id', 'trips.transport_id')
             ->select(
-                'orders.id',
+                'trips.id',
                 'transports.car_number',
-                'orders.date',
-                'orders.from_address',
-                'orders.to_address',
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
-                'orders.passengers_count',
-                'orders.packages_count',
-                'orders.total_price',
-                'orders.order_type',
-                'orders.order_status_id',
-                'orders.from_country',
-                'orders.to_country'
+                'trips.date',
+                'trips.time',
+                'trips.from_address',
+                'trips.to_address',
+                'trips.type',
+                'trips.status_id',
+                'trips.from_country_id',
+                'trips.to_country_id'
             )
-            ->when($orderType, function($query, $orderType) {
-                $query->where('order_type', $orderType);
-            })
             ->when($from, function($query, $from) {
                 $query->where('date', '>=', Carbon::parse($from));
             })
@@ -270,11 +274,334 @@ class BrigadirService
                 $query->where('date', '<=', Carbon::parse($to));
             })
             ->when($orderStatus, function($query, $orderStatus) {
-                $query->where('order_status_id', $orderStatus);
+                $query->where('status_id', $orderStatus);
             })
             ->whereIn('transport_id', $transport)
             ->get();
+        
+        // Collecton trip stats
+        $stats = Order::selectRaw('
+            sum(passengers_count) as passengers,
+            sum(packages_count) as packages,
+            sum(total_price) as total_price,
+            trip_id'
+        )
+        // ->whereHas('addresses', function($query) {
+        //     $query->where('type', 'forward');
+        // })
+        ->groupBy('trip_id')->get();
 
-        return $orders;
+        foreach ($trips as $trip) {
+            foreach ($stats as $stat) {
+                if($stat->trip_id === $trip->id) {
+                    $trip['passengers'] = $stat->passengers .'/'. $trip->passengers_seats;
+                    $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
+                    $trip['total_price'] = $stat->total_price;
+                }
+            }
+        }
+        
+        return $trips;
+    }
+
+    /**
+     * Get a specific trip by id
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @param   int $id
+     * @return  array
+     */
+    public function getTripById(Request $request, $id)
+    {
+        $trip = Trip::with('status')
+            ->join('transports', 'transports.id', 'trips.transport_id')
+            ->select(
+                'trips.id',
+                'transports.car_number',
+                'trips.date',
+                'trips.time',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'transports.wifi',
+                'transports.tv_video',
+                'transports.air_conditioner',
+                'trips.type',
+                'trips.status_id',
+                'trips.transport_id',
+                'trips.route_id'
+            )
+            ->find($id);
+
+        // // Filtering params
+        $orderId = $request->query('order_id');     // string
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        
+        $drivers = DB::table('driver_trip')
+            ->join('drivers', 'drivers.id', 'driver_trip.driver_id')
+            ->where('driver_trip.trip_id', $trip->id)
+            ->get([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'phone_number',
+                'role',
+                'photo'
+            ]);
+        
+        $route = Route::with('route_addresses')->find($trip->route_id);
+        $forwardRoutes = $route->route_addresses->where('type', 'forward');
+        $backRoutes = $route->route_addresses->where('type', 'back');
+
+        $otherForwardOrders = Order::with([ 'payment_method', 'country_from', 'country_to' ])
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($orderId, function($query, $orderId) {
+                $query->where('id', 'like', "%$orderId%");
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereHas('addresses', function(Builder $query) {
+                $query->where('type', 'forward');
+            })
+            ->where(function($query) use ($trip) {
+                $query->where('transport_id', $trip->transport_id)
+                    ->orWhere('route_id', $trip->route_id);
+            })
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price'
+            ]);
+
+        $otherBackOrders = Order::with([ 'payment_method' ])
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($orderId, function($query, $orderId) {
+                $query->where('id', 'like', "%$orderId%");
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereHas('addresses', function(Builder $query) {
+                $query->where('type', 'back');
+            })
+            ->where(function($query) use ($trip) {
+                $query->where('transport_id', $trip->transport_id)
+                    ->orWhere('route_id', $trip->route_id);
+            })
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price'
+            ]);
+        
+        $forwardStats = [
+            'passengers' => 0,
+            'packages' => 0,
+            'fact_price' => 0,
+            'total_price' => 0,
+        ];
+        foreach ($otherForwardOrders as $forwardOrder) {
+            $forwardStats['passengers'] += $forwardOrder->passengers_count;
+            $forwardStats['packages'] += $forwardOrder->packages_count;
+            $forwardStats['total_price'] += $forwardOrder->total_price;
+        }
+        
+        $backStats = [
+            'passengers' => 0,
+            'packages' => 0,
+            'fact_price' => 0,
+            'total_price' => 0,
+        ];
+        foreach ($otherBackOrders as $backOrder) {
+            $backStats['passengers'] += $backOrder->passengers_count;
+            $backStats['packages'] += $backOrder->packages_count;
+            $backStats['total_price'] += $backOrder->total_price;
+        }
+
+        $route['forward'] = [
+            'starting' => $forwardRoutes->where('order', 0)->first(),
+            'ending' => $forwardRoutes->sortByDesc('order')->first(),
+            'stats' => [
+                'passengers' => $forwardStats['passengers'] .'/'. $trip->passengers_seats,
+                'packages' => $forwardStats['packages'] .'/'. $trip->cubo_metres_available,
+                'fact_price' => $forwardStats['fact_price'],
+                'total_price' => $forwardStats['total_price'],
+            ],
+            'orders' => $otherForwardOrders
+        ];
+
+        $route['back'] = [
+            'starting' => $backRoutes->where('order', 0)->where('type', 'back')->first(),
+            'ending' => $backRoutes->where('type', 'back')->sortByDesc('order')->first(),
+            'stats' => [
+                'passengers' => $backStats['passengers'] .'/'. $trip->passengers_seats,
+                'packages' => $backStats['packages'] .'/'. $trip->cubo_metres_available,
+                'fact_price' => $backStats['fact_price'],
+                'total_price' => $backStats['total_price'],
+            ],
+            'orders' => $otherBackOrders
+        ];
+
+        $route->unsetRelation('route_addresses');
+
+        return [
+            'trip' => $trip,
+            'routes' => $route,
+            'drivers' => $drivers
+        ];
+    }
+
+    /**
+     * Get all available transport
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getTransport(Request $request)
+    {
+        $queryString = $request->query('q');
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport
+        $transport = Transport::with([ 'car_docs', 'drivers' ])
+            ->whereHas('drivers', function(Builder $query) use ($drivers, $queryString) {
+                $query->whereIn('id', $drivers);
+            })
+            ->where('car_number', 'like', "%$queryString%")
+            ->get([
+                'id',
+                'car_number',
+                'wifi',
+                'air_conditioner',
+                'tv_video',
+                'disabled_people_seats'
+            ]);
+
+        return $transport;
+    }
+
+    /**
+     * Block access to the driver
+     * 
+     * @param   int $id
+     * @return  void
+     */
+    public function blockDriver($id)
+    {
+        Driver::where('id', $id)->update([
+            'blocked' => 1
+        ]);
+    }
+
+    /**
+     * Detach driver from order
+     * 
+     * @param   int $id
+     * @param   int $orderId
+     * @return  void
+     */
+    public function detachDriverFromOrder($id, $orderId)
+    {
+        DB::table('driver_order')
+            ->where([
+                'driver_id' => $id,
+                'order_id' => $orderId
+            ])
+            ->delete();
+    }
+
+    /**
+     * Get drivers
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getDrivers(Request $request)
+    {
+        $user = auth('brigadir')->user();
+
+        $name = $request->query('name');
+        return Driver::when($name, function($query, $name) {
+            $query->where('first_name', 'like', "%$name%")
+                ->orWhere('last_name', 'like', "%$name%");
+        })
+        ->whereBrigadirId($user->id)
+        ->get();
+    }
+
+    /**
+     * Attach driver to the order
+     * 
+     * @param   int $id
+     * @param   int $orderId
+     * @return  void
+     */
+    public function attachDriverToOrder($id, $orderId)
+    {
+        DB::table('driver_order')->insert([
+            'driver_id' => $id,
+            'order_id' => $orderId
+        ]);
+    }
+
+    /**
+     * Get driver by id
+     * 
+     * @param   int $id
+     * @return  collection
+     */
+    public function getDriverById($id)
+    {
+        return Driver::find($id);
+    }
+
+    /**
+     * Get driver's transport
+     * 
+     * @param   int $id
+     * @return  collection
+     */
+    public function getDriversTransport($id)
+    {
+        return DB::table('driver_transport')
+            ->join('transports', 'transports.id', 'driver_transport.transport_id')
+            ->select('transports.*')
+            ->whereDriverId($id)
+            ->first();
+    }
+
+    /**
+     * Change driver's password
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function changeDriversPassword(Request $request, $id)
+    {
+        $driver = Driver::find($id);
+        $driver->password = Hash::make($request->password);
+        $driver->save();
     }
 }

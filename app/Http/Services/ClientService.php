@@ -12,6 +12,7 @@ use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\Client;
 use App\Http\JsonRequests\CheckEmailRequest;
+use App\Order;
 use Illuminate\Http\Request;
 
 class ClientService
@@ -176,5 +177,53 @@ class ClientService
             'success' => $success,
             'email' => $request->email
         ];
+    }
+
+    /**
+     * Get all client's orders
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return collection
+     */
+    public function getOrders(Request $request)
+    {
+        $client = auth('client')->user();
+        // Filtering params
+        $id = $request->query('id');
+        $type = $request->query('type');
+        $from = $request->query('from');
+        $to = $request->query('to');
+
+        return Order::with([ 'country_from', 'country_to' ])
+            ->join('transports', 'transports.id', 'orders.transport_id')
+            ->join('trips', 'trips.id', 'orders.trip_id')
+            ->join('order_statuses', 'order_statuses.id', 'trips.status_id')
+            ->select(
+                'orders.id',
+                'orders.from_country',
+                'orders.from_address',
+                'orders.to_country',
+                'orders.to_address',
+                'orders.total_price',
+                'orders.transport_id',
+                'orders.order_type',
+                'orders.date',
+                'transports.car_number',
+                'order_statuses.name as status'
+            )
+            ->when($id, function($query, $id) {
+                $query->where('id', 'like', "%$id%");
+            })
+            ->when($type, function($query, $type) {
+                $query->where('order_type', $type);
+            })
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->where('client_id', $client->id)
+            ->get();
     }
 }

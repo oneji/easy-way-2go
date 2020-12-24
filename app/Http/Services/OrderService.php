@@ -11,46 +11,20 @@ use App\Package;
 use App\Order;
 use App\OrderStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
-    /**
-     * Get client's orders
-     */
-    public function getClientOrders(Request $request)
-    {
-        $client = auth('client')->user();
-        // Filtering params
-        $id = $request->query('id');
-        $type = $request->query('type');
-        $from = $request->query('from');
-        $to = $request->query('to');
+    protected $tripService;
 
-        return Order::with([ 'country_from', 'country_to', 'moving_data', 'transport' ])
-            ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
-            ->select(
-                'orders.*',
-                'moving_data.from_floor',
-                'moving_data.to_floor',
-                'moving_data.time',
-                'moving_data.movers_count',
-                'moving_data.parking',
-                'moving_data.parking_working_hours'
-            )
-            ->when($id, function($query, $id) {
-                $query->where('id', 'like', "%$id%");
-            })
-            ->when($type, function($query, $type) {
-                $query->where('order_type', $type);
-            })
-            ->when($from, function($query, $from) {
-                $query->where('date', '>=', Carbon::parse($from));
-            })
-            ->when($to, function($query, $to) {
-                $query->where('date', '<=', Carbon::parse($to));
-            })
-            ->where('client_id', $client->id)
-            ->get();
+    /**
+     * OrderService constructor
+     * 
+     * @param \App\Http\Services\TripService $tripService
+     */
+    public function __construct(TripService $tripService)
+    {
+        $this->tripService = $tripService;
     }
 
     /**
@@ -70,7 +44,7 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([ 'country_from', 'country_to', 'cargos' ])
+        return Order::with([ 'country_from', 'country_to', 'cargos', 'passengers', 'packages' ])
             ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
             ->select(
                 'orders.*',
@@ -91,10 +65,24 @@ class OrderService
      */
     public function store(StoreOrderRequest $request)
     {
+        // Create a trip an attach order to it
+        $trip = $this->tripService->findOrCreate([
+            'transport_id' => $request->transport_id,
+            'route_id' => $request->route_id,
+            'status_id' => OrderStatus::getFuture()->id,
+            'date' => Carbon::parse($request->date),
+            'time' => '00:00',
+            'from_country_id' => $request->from_country,
+            'to_country_id' => $request->to_country,
+            'from_address' => $request->from_address,
+            'to_address' => $request->to_address,
+        ]);
+
         $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);
         $order->client_id = auth('client')->user()->id;
         $order->order_status_id = OrderStatus::getFuture()->id;
+        $order->trip_id = $trip->id;
         $order->save();
 
         if($order->order_type === 'moving') {
@@ -126,7 +114,12 @@ class OrderService
             if(isset($request->addresses)) {
                 $order->addresses()->attach($request->addresses);
             }
+
+            // Attach drivers separately to order
+            $driverIds = DB::table('driver_transport')->where('transport_id', $request->transport_id)->pluck('driver_id');
         }
+
+        $trip->drivers()->sync($driverIds);
 
         return $order;
     }
@@ -144,5 +137,18 @@ class OrderService
         $order->save();
 
         return $order;
+    }
+
+    /**
+     * Set new tranport
+     * 
+     * @param int $id
+     * @param int $transportId
+     */
+    public function setNewTransport($id, $transportId)
+    {
+        $order = Order::find($id);
+        $order->transport_id = $transportId;
+        $order->save();
     }
 }

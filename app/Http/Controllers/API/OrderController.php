@@ -129,7 +129,8 @@ class OrderController extends Controller
             'passengers.*.passport_expires_at' => 'required|string',
             'transport_id' => 'required|integer|exists:transports,id',
             'passengers_count' => 'required|integer',
-            'packages_count' => 'required|integer'
+            'packages_count' => 'required|integer',
+            'route_id' => 'required|integer|exists:routes,id'
         ]);
 
         if($validator->fails()) {

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\ActiveScope;
+use Carbon\Carbon;
 
 class Passenger extends Model
 {
@@ -42,6 +43,17 @@ class Passenger extends Model
         'passport_number',
         'passport_expires_at'
     ];
+
+    /**
+     * Get the passenger's birthday.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getBirthdayAttribute($value)
+    {
+        return Carbon::parse($value)->format('d.m.Y');
+    }
 
     /**
      * Get the nationality country for the passenger.

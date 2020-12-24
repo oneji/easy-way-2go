@@ -2,6 +2,8 @@
 
 namespace App\Http\Services;
 
+use App\Http\JsonRequests\CancelTripRequest;
+use App\OrderStatus;
 use App\Route;
 use App\Trip;
 use Illuminate\Support\Facades\DB;
@@ -72,5 +74,20 @@ class TripService
             $order->transport_id = $transportId;
             $order->save();
         }
+    }
+
+    /**
+     * Cancel trip
+     * 
+     * @param \App\Http\JsonRequests\CancelTripRequest
+     */
+    public function cancel(CancelTripRequest $request)
+    {
+        $trip = Trip::find($request->trip_id);
+        $trip->status_id = OrderStatus::getCancelled()->id;
+        $trip->cancellation_reason = $request->reason;
+        $trip->save();
+
+        return $trip;
     }
 }

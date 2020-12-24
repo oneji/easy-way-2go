@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\JsonRequests\CancelTripRequest;
 use App\Http\JsonRequests\SetDriverToTripRequest;
 use App\Http\JsonRequests\SetTransportToOrderRequest;
 use App\Http\JsonRequests\SetTransportToTripRequest;
@@ -63,6 +64,21 @@ class TripController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    /**
+     * Cancel trip
+     * 
+     * @param \App\Http\JsonRequests\CancelTripRequest $request
+     */
+    public function cancel(CancelTripRequest $request)
+    {
+        $data = $this->tripService->cancel($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

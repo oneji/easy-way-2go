@@ -56,10 +56,6 @@ class Driver extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $casts = [
-        'verified' => 'boolean',
-        'conviction' => 'boolean',
-        'was_kept_drunk' => 'boolean',
-        'dtp' => 'boolean',
         'driving_license_photos' => 'object',
         'passport_photos' => 'object',
     ];

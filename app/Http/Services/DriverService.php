@@ -14,6 +14,7 @@ use App\Driver;
 use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateDriverRequest;
 use App\Order;
+use App\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -325,5 +326,26 @@ class DriverService
             ->get();
 
         return $orders;
+    }
+
+    /**
+     * Get driver's routes
+     * 
+     * @return collection
+     */
+    public function getRoutes()
+    {
+        $driver = auth('driver')->user();
+        // Get driver's transport
+        $transport = DB::table('driver_transport')->where('driver_id', $driver->id)->pluck('transport_id');
+        // Get all routes
+        $routes = Route::with('route_addresses')->whereIn('transport_id', $transport)->get();
+
+        foreach ($routes as $route) {
+            $route['starting'] = $route->getStartingCountryWithTime();
+            $route['ending'] = $route->getEndingCountryWithTime();
+        }
+
+        return $routes;
     }
 }

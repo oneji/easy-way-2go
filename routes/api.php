@@ -82,6 +82,7 @@ Route::namespace('API')->group(function() {
         Route::put('drivers/changePassword', 'DriverController@changePassword');
         Route::post('drivers/{id}', 'DriverController@update');
         Route::get('drivers/getOrders', 'DriverController@getOrders');
+        Route::get('drivers/getRoutes', 'DriverController@getRoutes');
 
         // Orders
         Route::post('orders', 'OrderController@store');

@@ -67,4 +67,19 @@ class DriverController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get driver's routes
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRoutes()
+    {
+        $data = $this->driverService->getRoutes();
+
+        return [
+            'success' => true,
+            'data' => $data
+        ];
+    }
 }

@@ -71,11 +71,28 @@ class DriverController extends Controller
     /**
      * Get driver's routes
      * 
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getRoutes()
+    public function getRoutes(Request $request)
     {
-        $data = $this->driverService->getRoutes();
+        $data = $this->driverService->getRoutes($request);
+
+        return [
+            'success' => true,
+            'data' => $data
+        ];
+    }
+    
+    /**
+     * Get driver's archived routes
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getArchivedRoutes(Request $request)
+    {
+        $data = $this->driverService->getArchivedRoutes($request);
 
         return [
             'success' => true,

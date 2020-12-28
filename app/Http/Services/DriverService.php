@@ -331,15 +331,50 @@ class DriverService
     /**
      * Get driver's routes
      * 
+     * @param \Illuminate\Http\Request
      * @return collection
      */
-    public function getRoutes()
+    public function getRoutes(Request $request)
     {
+        // Filtering params
+        $q = $request->query('q');
+
         $driver = auth('driver')->user();
         // Get driver's transport
         $transport = DB::table('driver_transport')->where('driver_id', $driver->id)->pluck('transport_id');
         // Get all routes
-        $routes = Route::with('route_addresses')->whereIn('transport_id', $transport)->get();
+        $routes = Route::with('route_addresses')
+            ->where('status', 'active')
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        foreach ($routes as $route) {
+            $route['starting'] = $route->getStartingCountryWithTime();
+            $route['ending'] = $route->getEndingCountryWithTime();
+        }
+
+        return $routes;
+    }
+    
+    /**
+     * Get driver's archived routes
+     * 
+     * @param \Illuminate\Http\Request
+     * @return collection
+     */
+    public function getArchivedRoutes(Request $request)
+    {
+        // Filtering params
+        $q = $request->query('q');
+
+        $driver = auth('driver')->user();
+        // Get driver's transport
+        $transport = DB::table('driver_transport')->where('driver_id', $driver->id)->pluck('transport_id');
+        // Get all routes
+        $routes = Route::with('route_addresses')
+            ->where('status', 'archive')
+            ->whereIn('transport_id', $transport)
+            ->get();
 
         foreach ($routes as $route) {
             $route['starting'] = $route->getStartingCountryWithTime();

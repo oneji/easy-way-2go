@@ -487,7 +487,7 @@ class BrigadirService
         $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
         // Get all user's transport
         $transport = Transport::with([ 'car_docs', 'drivers' ])
-            ->whereHas('drivers', function(Builder $query) use ($drivers, $queryString) {
+            ->whereHas('drivers', function(Builder $query) use ($drivers) {
                 $query->whereIn('id', $drivers);
             })
             ->where('car_number', 'like', "%$queryString%")
@@ -603,5 +603,91 @@ class BrigadirService
         $driver = Driver::find($id);
         $driver->password = Hash::make($request->password);
         $driver->save();
+    }
+
+    /**
+     * Get routes
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return collection
+     */
+    public function getRoutes(Request $request)
+    {
+        $q = $request->query('q');
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport
+        $transport = Transport::with([ 'car_docs', 'drivers' ])
+            ->whereHas('drivers', function(Builder $query) use ($drivers) {
+                $query->whereIn('id', $drivers);
+            })
+            ->pluck('id');
+        
+        $routes = Route::with('route_addresses')
+            ->join('transports', 'transports.id', 'routes.transport_id')
+            ->select(
+                'transports.car_number',
+                'routes.*'
+            )
+            ->where('status', 'active')
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        foreach ($routes as $route) {
+            $route['forward'] = $route->getStartingCountryWithTime();
+            $route['back'] = $route->getEndingCountryWithTime();
+            $route['drivers'] = DB::table('driver_transport')
+                ->join('drivers', 'drivers.id', 'driver_transport.driver_id')
+                ->where('transport_id', $route->transport_id)
+                ->select('drivers.first_name', 'drivers.last_name', 'drivers.photo')
+                ->get();
+        }
+        
+        return $routes;
+    }
+    
+    /**
+     * Get archived routes
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return collection
+     */
+    public function getArchivedRoutes(Request $request)
+    {
+        $q = $request->query('q');
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport
+        $transport = Transport::with([ 'car_docs', 'drivers' ])
+            ->whereHas('drivers', function(Builder $query) use ($drivers) {
+                $query->whereIn('id', $drivers);
+            })
+            ->pluck('id');
+        
+        $routes = Route::with('route_addresses')
+            ->join('transports', 'transports.id', 'routes.transport_id')
+            ->select(
+                'transports.car_number',
+                'routes.*'
+            )
+            ->where('status', 'archive')
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        foreach ($routes as $route) {
+            $route['forward'] = $route->getStartingCountryWithTime();
+            $route['back'] = $route->getEndingCountryWithTime();
+            $route['drivers'] = DB::table('driver_transport')
+                ->join('drivers', 'drivers.id', 'driver_transport.driver_id')
+                ->where('transport_id', $route->transport_id)
+                ->select('drivers.first_name', 'drivers.last_name', 'drivers.photo')
+                ->get();
+        }
+        
+        return $routes;
     }
 }

@@ -269,4 +269,36 @@ class BrigadirController extends Controller
             'success' => true
         ]);
     }
+
+    /**
+     * Get routes
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getRoutes(Request $request)
+    {
+        $data = $this->brigadirService->getRoutes($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+    
+    /**
+     * Get archived routes
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getArchivedRoutes(Request $request)
+    {
+        $data = $this->brigadirService->getArchivedRoutes($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

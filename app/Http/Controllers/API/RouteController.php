@@ -65,4 +65,20 @@ class RouteController extends Controller
             'data' => $routes
         ]);
     }
+
+    /**
+     * Archive route
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function archive($id)
+    {
+        $data = $this->routeService->archive($id);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]); 
+    }
 }

@@ -33,6 +33,7 @@ Route::namespace('API')->group(function() {
     // Routes
     Route::get('routes/getById/{id}', 'RouteController@getById');
     Route::get('routes/search', 'RouteController@search');
+    Route::put('routes/archive/{id}', 'RouteController@archive');
 
     // Business account requests
     Route::post('baRequests', 'BaRequestController@store');

@@ -50,8 +50,6 @@ class RouteService
         $route->transport_id = $request->transport_id;
         $route->save();
 
-        // dd($request->addresses);
-
         // Save route addresses
         foreach ($request->addresses as $address) {
             $route->route_addresses()->save(new RouteAddress([
@@ -130,5 +128,20 @@ class RouteService
         }
 
         return $newRoutes;
+    }
+
+    /**
+     * Archive route
+     * 
+     * @param int $id
+     * @return Route $route
+     */
+    public function archive($id)
+    {
+        $route = Route::find($id);
+        $route->status = 'archive';
+        $route->save();
+
+        return $route;
     }
 }

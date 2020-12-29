@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Expense;
 use App\Http\JsonRequests\CancelTripRequest;
 use App\Order;
 use App\OrderStatus;
@@ -11,6 +12,18 @@ use Illuminate\Support\Facades\DB;
 
 class TripService
 {
+    protected $expenseService;
+
+    /**
+     * TripService constructor
+     * 
+     * @param \App\Http\Services\ExpenseService $expenseService
+     */
+    public function __construct(ExpenseService $expenseService)
+    {
+        $this->expenseService = $expenseService;
+    }
+
     /**
      * Get all available trips
      * 
@@ -96,10 +109,18 @@ class TripService
      * Finish 1/2 of the trip
      * 
      * @param int $id
+     * @param \App\Http\JsonRequests\FinishHalfTripRequest $request
      */
-    public function finishHalf($id)
+    public function finishHalf($request, $id)
     {
         $trip = Trip::find($id);
+        $trip->status_id = OrderStatus::getHalfFinished()->id;
+        $trip->fact_price = $request->fact_price;
+        $trip->save();
+
+        if(isset($request->expenses)) {
+            $this->expenseService->store($request->expenses, $trip->id);
+        }
     }
 
     /**

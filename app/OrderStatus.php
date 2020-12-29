@@ -59,4 +59,14 @@ class OrderStatus extends Model
     {
         return static::whereCode('finished')->first();
     }
+    
+    /**
+     * Get finished status
+     * 
+     * @return object
+     */
+    public static function getHalfFinished()
+    {
+        return static::whereCode('start_way_back')->first();
+    }
 }

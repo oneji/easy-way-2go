@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\CancelTripRequest;
 use App\Http\JsonRequests\ChangeTripDirectionRequest;
+use App\Http\JsonRequests\FinishHalfTripRequest;
 use App\Http\JsonRequests\SetDriverToTripRequest;
 use App\Http\JsonRequests\SetTransportToOrderRequest;
 use App\Http\JsonRequests\SetTransportToTripRequest;
@@ -89,12 +90,12 @@ class TripController extends Controller
     /**
      * Finish 1/2 of trip
      * 
-     * @param   int $id
+     * @param   \App\Http\JsonRequests\FinishHalfTripRequest $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function finishHalf($id)
+    public function finishHalf(FinishHalfTripRequest $request, $id)
     {
-        $this->tripService->finishHalf($id);
+        $this->tripService->finishHalf($request, $id);
 
         return response()->json([
             'success' => true

@@ -101,7 +101,7 @@ Route::namespace('API')->group(function() {
         Route::post('trips/setDriver', 'TripController@setDriver');
         Route::post('trips/setNewTransport', 'TripController@setNewTransport');
         Route::post('trips/cancel', 'TripController@cancel');
-        Route::post('trips/finishHalf', 'TripController@finishHalf');
+        Route::post('trips/finishHalf/{id}', 'TripController@finishHalf');
         Route::post('trips/changeDirection', 'TripController@changeDirection');
         
         // Passengers

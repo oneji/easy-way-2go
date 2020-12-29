@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\JsonRequests\CancelTripRequest;
+use App\Order;
 use App\OrderStatus;
 use App\Route;
 use App\Trip;
@@ -99,5 +100,58 @@ class TripService
     public function finishHalf($id)
     {
         $trip = Trip::find($id);
+    }
+
+    /**
+     * Change trips direction
+     * 
+     * @param int $id
+     * @param string $direction
+     */
+    public function changeDirection($id, $direction)
+    {
+        $trip = Trip::with([ 'from_country', 'to_country', 'status' ])
+            ->leftJoin('transports', 'transports.id', 'trips.transport_id')
+            ->select(
+                'trips.id',
+                'transports.car_number',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'trips.date',
+                'trips.time',
+                'trips.from_address',
+                'trips.to_address',
+                'trips.type',
+                'trips.status_id',
+                'trips.from_country_id',
+                'trips.to_country_id'
+            )
+            ->where('trips.id', $id)
+            ->first();
+        $trip->type = $direction;
+        $trip->save();
+
+        // Collecton trip stats
+        $stats = Order::selectRaw('
+            sum(passengers_count) as passengers,
+            sum(packages_count) as packages,
+            sum(total_price) as total_price,
+            trip_id'
+        )
+        ->whereHas('addresses', function($query) use ($direction) {
+            $query->where('type', $direction);
+        })
+        ->where('trip_id', $trip->id)
+        ->groupBy('trip_id')
+        ->first();
+
+        if($stats) {
+            $trip['passengers'] = $stats->passengers .'/'. $trip->passengers_seats;
+            $trip['packages'] = $stats->packages .'/'. $trip->cubo_metres_available;
+            $trip['total_price'] = $stats->total_price;
+        }
+
+        return $trip;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\CancelTripRequest;
+use App\Http\JsonRequests\ChangeTripDirectionRequest;
 use App\Http\JsonRequests\SetDriverToTripRequest;
 use App\Http\JsonRequests\SetTransportToOrderRequest;
 use App\Http\JsonRequests\SetTransportToTripRequest;
@@ -97,6 +98,22 @@ class TripController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+    
+    /**
+     * Chande trip direction
+     * 
+     * @param   \App\Http\JsonRequests\ChangeTripDirectionRequest $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function changeDirection(ChangeTripDirectionRequest $request)
+    {
+        $data = $this->tripService->changeDirection($request->trip_id, $request->direction);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 }

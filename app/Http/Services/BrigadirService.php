@@ -533,7 +533,10 @@ class BrigadirService
                 $query->whereIn('id', $drivers);
             })
             ->where('car_number', 'like', "%$queryString%")
-            ->get([ 'car_number' ]);
+            ->get([ 
+                'id',
+                'car_number'
+            ]);
 
         return $transport;
     }

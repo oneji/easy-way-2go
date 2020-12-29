@@ -150,6 +150,8 @@ class TripService
             $trip['passengers'] = $stats->passengers .'/'. $trip->passengers_seats;
             $trip['packages'] = $stats->packages .'/'. $trip->cubo_metres_available;
             $trip['total_price'] = $stats->total_price;
+        } else {
+            $trip['no_back'] = true;
         }
 
         return $trip;

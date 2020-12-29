@@ -304,7 +304,7 @@ class BrigadirService
                 $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
                 $trip['total_price'] = $stat->total_price;
             } else {
-                $trip['no-back'] = true;
+                $trip['no_back'] = true;
             }
         }
         

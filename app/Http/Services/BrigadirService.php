@@ -12,6 +12,7 @@ use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Jobs\InviteDriverJob;
+use App\Jobs\SyncUserToMongoChatJob;
 use App\Order;
 use App\OrderStatus;
 use App\Route;
@@ -58,12 +59,15 @@ class BrigadirService
     {
         $brigadir = new Brigadir($request->except('password'));
         $brigadir->password = Hash::make($request->password);
+        $brigadir->role = 'brigadir';
         
         if($request->hasFile('photo')) {
             $brigadir->photo = $this->uploadImage($request->photo, 'user_photos');
         }
         
         $brigadir->save();
+
+        SyncUserToMongoChatJob::dispatch($brigadir->toArray());
     }
 
     /**

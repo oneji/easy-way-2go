@@ -31,8 +31,6 @@ class BrigadirController extends Controller
     {
         $brigadirs = $this->brigadirService->all();
 
-        // return $brigadirs;
-
         return view('brigadirs.index', [
             'brigadirs' => $brigadirs
         ]);
@@ -60,7 +58,7 @@ class BrigadirController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->brigadirService->store($request);
+        $data = $this->brigadirService->store($request);
 
         $request->session()->flash('success', 'Бригадир успешно создан.');
 

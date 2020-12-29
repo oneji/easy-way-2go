@@ -12,6 +12,7 @@ use App\Http\Traits\UploadImageTrait;
 use Carbon\Carbon;
 use App\Client;
 use App\Http\JsonRequests\CheckEmailRequest;
+use App\Jobs\SyncUserToMongoChatJob;
 use App\Order;
 use Illuminate\Http\Request;
 
@@ -54,12 +55,15 @@ class ClientService
         $client->password = Hash::make($request->password);
         $client->id_card_expires_at = Carbon::parse($request->id_card_expires_at);
         $client->passport_expires_at = Carbon::parse($request->passport_expires_at);
+        $client->role = 'client';
 
         if($request->hasFile('photo')) {
             $client->photo = $this->uploadImage($request->photo, 'user_photos');
         }
 
         $client->save();
+
+        SyncUserToMongoChatJob::dispatch($client->toArray());
     }
 
     /**

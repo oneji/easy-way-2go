@@ -14,6 +14,7 @@ use App\BaRequest;
 use App\BaDriver;
 use App\Brigadir;
 use App\Driver;
+use App\Jobs\SyncUserToMongoChatJob;
 use App\Transport;
 
 class BaRequestService
@@ -195,9 +196,11 @@ class BaRequestService
         $brigadir->email = $email;
         $brigadir->company_name = $firmOwnerData->company_name;
         $brigadir->inn = $firmOwnerData->inn;
+        $brigadir->role = 'brigadir';
         
         $brigadir->save();
 
+        SyncUserToMongoChatJob::dispatch($brigadir->toArray());
         SendEmailJob::dispatch($email, $password);
     }
     
@@ -238,10 +241,12 @@ class BaRequestService
             $driver->password = Hash::make($rawPassword);
             $driver->driving_license_photos = $driverData['driving_license_photos'];
             $driver->passport_photos = $driverData['passport_photos'];
+            $driver->role = 'driver';
             $driver->save();
 
             $drivers[] = $driver->id;
 
+            SyncUserToMongoChatJob::dispatch($driver->toArray());
             SendEmailJob::dispatch($driver->email, $rawPassword);
         }
 

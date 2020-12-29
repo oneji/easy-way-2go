@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Driver;
 use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateDriverRequest;
+use App\Jobs\SyncUserToMongoChatJob;
 use App\Order;
 use App\Route;
 use Illuminate\Http\Request;
@@ -67,6 +68,7 @@ class DriverService
         $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
         $driver->dtp = isset($request->dtp) ? 1 : 0;
         $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        $driver->role = 'driver';
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -81,6 +83,8 @@ class DriverService
         }
         
         $driver->save();
+
+        SyncUserToMongoChatJob::dispatch($driver->toArray());
     }
 
     /**

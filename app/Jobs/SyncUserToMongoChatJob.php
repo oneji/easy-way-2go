@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use GuzzleHttp\Client;
 
 class SyncUserToMongoChatJob implements ShouldQueue
 {
@@ -32,7 +33,7 @@ class SyncUserToMongoChatJob implements ShouldQueue
      */
     public function handle()
     {
-        $httpClient = new \GuzzleHttp\Client([ 'base_uri' => config('urls.chat') ]);
+        $httpClient = new Client([ 'base_uri' => config('urls.chat') ]);
 
         $response = $httpClient->request('POST', '/users/store', [ 
             'form_params' => $this->user

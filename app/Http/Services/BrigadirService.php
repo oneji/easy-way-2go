@@ -506,6 +506,30 @@ class BrigadirService
 
         return $transport;
     }
+    
+    /**
+     * Get all available transport (only car_number)
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  collection
+     */
+    public function getTransportWithOnlyCarNumber(Request $request)
+    {
+        $queryString = $request->query('q');
+        // Get the current user
+        $user = auth('brigadir')->user();
+        // Get all user's drivers
+        $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
+        // Get all user's transport
+        $transport = Transport::
+            whereHas('drivers', function(Builder $query) use ($drivers) {
+                $query->whereIn('id', $drivers);
+            })
+            ->where('car_number', 'like', "%$queryString%")
+            ->get([ 'car_number' ]);
+
+        return $transport;
+    }
 
     /**
      * Block access to the driver

@@ -71,6 +71,7 @@ Route::namespace('API')->group(function() {
         Route::post('brigadirs/orders/attachDriver', 'BrigadirController@attachDriverToOrder');
         
         Route::get('brigadirs/transport', 'BrigadirController@getTransport');
+        Route::get('brigadirs/transportWithOnlyCarNumber', 'BrigadirController@getTransportWithOnlyCarNumber');
         
         Route::get('brigadirs/getDriversGroupedByTransport', 'BrigadirController@getDriversGroupedByTransport');
         Route::get('brigadirs/drivers', 'BrigadirController@getDrivers');

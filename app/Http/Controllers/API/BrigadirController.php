@@ -153,6 +153,22 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+   
+    /**
+     * Get all available transport (only car number)
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getTransportWithOnlyCarNumber(Request $request)
+    {
+        $data = $this->brigadirService->getTransportWithOnlyCarNumber($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 
     /**
      * Block driver access

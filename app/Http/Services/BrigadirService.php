@@ -13,6 +13,7 @@ use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Jobs\InviteDriverJob;
 use App\Order;
+use App\OrderStatus;
 use App\Route;
 use App\Transport;
 use App\Trip;
@@ -578,11 +579,22 @@ class BrigadirService
      */
     public function getDriverById($id)
     {
-        return Driver::leftJoin('driver_transport', 'driver_transport.driver_id', 'drivers.id')
+        $driver = Driver::leftJoin('driver_transport', 'driver_transport.driver_id', 'drivers.id')
             ->join('transports', 'driver_transport.transport_id', 'transports.id')
-            ->select('drivers.*', 'transports.car_number')
+            ->select('drivers.*', 'transports.car_number', 'transports.id as transport_id')
             ->where('drivers.id', $id)
             ->first();
+
+        $trips = DB::table('driver_trip')
+            ->join('trips', 'trips.id', 'driver_trip.trip_id')
+            ->select('trips.*')
+            ->where('driver_id', $driver->id)
+            ->get();
+            
+        $driver['future_trips'] = $trips->where('status_id', OrderStatus::getFuture()->id)->count();
+        $driver['finished_trips'] = $trips->where('status_id', OrderStatus::getFinished()->id)->count();
+
+        return $driver;
     }
 
     /**

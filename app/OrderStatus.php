@@ -49,4 +49,14 @@ class OrderStatus extends Model
     {
         return static::whereCode('cancelled')->first();
     }
+    
+    /**
+     * Get finished status
+     * 
+     * @return object
+     */
+    public static function getFinished()
+    {
+        return static::whereCode('finished')->first();
+    }
 }

@@ -39,7 +39,12 @@ class FinishHalfTripRequest extends FormRequest
     public function rules()
     {
         return [
-            'fact_price' => 'required|numeric'
+            'fact_price' => 'required|numeric',
+            'expenses' => 'required',
+            'expenses.*.name' => 'required|string|max:255',
+            'expenses.*.amount' => 'required|numeric',
+            'expenses.*.photos' => 'required',
+            'expenses.*.photos.*' => 'required|file'
         ];
     }
 }

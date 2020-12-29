@@ -33,10 +33,10 @@ class SyncUserToMongoChatJob implements ShouldQueue
      */
     public function handle()
     {
-        $httpClient = new Client([ 'base_uri' => config('urls.chat') ]);
+        // $httpClient = new Client([ 'base_uri' => config('urls.chat') ]);
 
-        $response = $httpClient->request('POST', '/users/store', [ 
-            'form_params' => $this->user
-        ]);
+        // $response = $httpClient->request('POST', '/users/store', [ 
+        //     'form_params' => $this->user
+        // ]);
     }
 }

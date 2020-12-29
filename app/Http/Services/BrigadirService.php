@@ -282,26 +282,29 @@ class BrigadirService
             })
             ->whereIn('transport_id', $transport)
             ->get();
-        
-        // Collecton trip stats
-        $stats = Order::selectRaw('
-            sum(passengers_count) as passengers,
-            sum(packages_count) as packages,
-            sum(total_price) as total_price,
-            trip_id'
-        )
-        // ->whereHas('addresses', function($query) {
-        //     $query->where('type', 'forward');
-        // })
-        ->groupBy('trip_id')->get();
 
         foreach ($trips as $trip) {
-            foreach ($stats as $stat) {
-                if($stat->trip_id === $trip->id) {
-                    $trip['passengers'] = $stat->passengers .'/'. $trip->passengers_seats;
-                    $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
-                    $trip['total_price'] = $stat->total_price;
-                }
+            $tripType = $trip->type;
+            // Collecton trip stats
+            $stat = Order::selectRaw('
+                sum(passengers_count) as passengers,
+                sum(packages_count) as packages,
+                sum(total_price) as total_price,
+                trip_id'
+            )
+            ->whereHas('addresses', function($query) use ($tripType) {
+                $query->where('type', $tripType);
+            })
+            ->groupBy('trip_id')
+            ->where('trip_id', $trip->id)
+            ->first();
+
+            if($stat) {
+                $trip['passengers'] = $stat->passengers .'/'. $trip->passengers_seats;
+                $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
+                $trip['total_price'] = $stat->total_price;
+            } else {
+                $trip['no-back'] = true;
             }
         }
         

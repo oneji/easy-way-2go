@@ -42,7 +42,8 @@ class TripController extends Controller
     /**
      * Set new driver to the trip
      * 
-     * @param \App\Http\JsonRequests\SetDriverToTripRequest $request
+     * @param   \App\Http\JsonRequests\SetDriverToTripRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function setDriver(SetDriverToTripRequest $request)
     {
@@ -56,7 +57,8 @@ class TripController extends Controller
     /**
      * Set new transport
      * 
-     * @param \App\Http\JsonRequests\SetTransportToTripRequest $request
+     * @param   \App\Http\JsonRequests\SetTransportToTripRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function setNewTransport(SetTransportToTripRequest $request)
     {
@@ -70,7 +72,8 @@ class TripController extends Controller
     /**
      * Cancel trip
      * 
-     * @param \App\Http\JsonRequests\CancelTripRequest $request
+     * @param   \App\Http\JsonRequests\CancelTripRequest $request
+     * @return  \Illuminate\Http\JsonResponse
      */
     public function cancel(CancelTripRequest $request)
     {
@@ -79,6 +82,21 @@ class TripController extends Controller
         return response()->json([
             'success' => true,
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Finish 1/2 of trip
+     * 
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function finishHalf($id)
+    {
+        $this->tripService->finishHalf($id);
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

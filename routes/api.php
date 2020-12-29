@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
@@ -27,10 +29,9 @@ Route::namespace('API')->group(function() {
     Route::post('transport', 'TransportController@store');
     Route::put('transport/{id}', 'TransportController@update');
     Route::post('transport/bindDriver', 'TransportController@bindDriver');
-    // Transport routes
-    Route::post('routes', 'RouteController@store');
 
     // Routes
+    Route::post('routes', 'RouteController@store');
     Route::get('routes/getById/{id}', 'RouteController@getById');
     Route::get('routes/search', 'RouteController@search');
     Route::put('routes/archive/{id}', 'RouteController@archive');
@@ -99,6 +100,7 @@ Route::namespace('API')->group(function() {
         Route::post('trips/setDriver', 'TripController@setDriver');
         Route::post('trips/setNewTransport', 'TripController@setNewTransport');
         Route::post('trips/cancel', 'TripController@cancel');
+        Route::post('trips/finishHalf', 'TripController@finishHalf');
         
         // Passengers
         Route::get('passengers', 'PassengerController@all');

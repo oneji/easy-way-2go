@@ -122,7 +122,10 @@ class BrigadirService
                 $query->where('car_number', 'like', "%$carNumber%");
             })
             ->whereIn('id', $transportIds)
-            ->get();
+            ->get([
+                'id',
+                'car_number',
+            ]);
     }
 
     /**
@@ -575,7 +578,11 @@ class BrigadirService
      */
     public function getDriverById($id)
     {
-        return Driver::find($id);
+        return Driver::leftJoin('driver_transport', 'driver_transport.driver_id', 'drivers.id')
+            ->join('transports', 'driver_transport.transport_id', 'transports.id')
+            ->select('drivers.*', 'transports.car_number')
+            ->where('drivers.id', $id)
+            ->first();
     }
 
     /**

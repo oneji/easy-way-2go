@@ -90,4 +90,14 @@ class TripService
 
         return $trip;
     }
+
+    /**
+     * Finish 1/2 of the trip
+     * 
+     * @param int $id
+     */
+    public function finishHalf($id)
+    {
+        $trip = Trip::find($id);
+    }
 }

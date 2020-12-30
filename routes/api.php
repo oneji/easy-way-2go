@@ -121,5 +121,8 @@ Route::namespace('API')->group(function() {
         // Faq
         Route::get('faq', 'FaqController@all');
         Route::get('faq/getById/{id}', 'FaqController@getById');
+        
+        // Debts
+        Route::get('debts', 'DebtController@all');
     });
 });

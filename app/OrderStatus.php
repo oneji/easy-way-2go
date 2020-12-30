@@ -61,7 +61,7 @@ class OrderStatus extends Model
     }
     
     /**
-     * Get finished status
+     * Get half finished status
      * 
      * @return object
      */
@@ -71,7 +71,7 @@ class OrderStatus extends Model
     }
     
     /**
-     * Get finished status
+     * Get boarding status
      * 
      * @return object
      */

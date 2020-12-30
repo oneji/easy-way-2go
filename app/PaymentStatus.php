@@ -26,6 +26,27 @@ class PaymentStatus extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'code'
     ];
+
+    /**
+     * Get paid status
+     * 
+     * @return object
+     */
+    public static function getPaid()
+    {
+        return static::whereCode('paid')->first();
+    }
+    
+    /**
+     * Get not paid status
+     * 
+     * @return object
+     */
+    public static function getNotPaid()
+    {
+        return static::whereCode('not_paid')->first();
+    }
 }

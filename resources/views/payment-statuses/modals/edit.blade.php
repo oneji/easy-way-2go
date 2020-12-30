@@ -24,6 +24,13 @@
 
                         <div class="col-12">
                             <div class="form-group">
+                                <label for="code">{{ __('form.labels.code') }}</label>
+                                <input name="code" type="text" class="form-control" placeholder="{{ __('form.placeholders.code') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-success btn-block waves-effect waves-light">{{ __('form.buttons.save') }}</button>
                             </div>
                         </div>

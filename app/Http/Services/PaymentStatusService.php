@@ -59,6 +59,7 @@ class PaymentStatusService
     {
         $status = PaymentStatus::find($id);
         $status->name = $request->name;
+        $status->code = $request->code;
         $status->save();
     }
 }

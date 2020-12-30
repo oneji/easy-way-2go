@@ -106,7 +106,6 @@
                         }
 
                         editStatusModal.find('form').find('input[name=code]').val(status.code);
-
                         editStatusModal.find('form').attr('action', `order-statuses/${statusId}`);
 
                         // Show the modal

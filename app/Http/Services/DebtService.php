@@ -50,7 +50,7 @@ class DebtService
                 'clients.first_name',
                 'clients.last_name',
                 'transports.car_number',
-                'orders.total_price',
+                'orders.total_price as debt_amount',
                 'clients.phone_number',
                 'clients.email'
             ]);

@@ -148,4 +148,16 @@ class TripController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Finish boarding
+     * 
+     * @param int $id
+     */
+    public function finishBoarding($id)
+    {
+        $data = $this->tripService->finishBoarding($id);
+
+        return response()->json($data);
+    }
 }

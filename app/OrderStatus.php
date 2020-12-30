@@ -79,4 +79,14 @@ class OrderStatus extends Model
     {
         return static::whereCode('boarding')->first();
     }
+    
+    /**
+     * Get on the way status
+     * 
+     * @return object
+     */
+    public static function getOnTheWay()
+    {
+        return static::whereCode('on_the_way')->first();
+    }
 }

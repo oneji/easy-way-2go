@@ -218,4 +218,21 @@ class TripService
 
         return $orders;
     }
+
+    /**
+     * Finish boarding
+     * 
+     * @param int $id
+     */
+    public function finishBoarding($id)
+    {
+        $trip = Trip::find($id);
+        $trip->status_id = OrderStatus::getOnTheWay()->id;
+        $trip->save();
+        
+        return [
+            'success' => true,
+            'trip_status' => OrderStatus::getOnTheWay()
+        ];
+    }
 }

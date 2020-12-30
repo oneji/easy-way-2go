@@ -35,7 +35,7 @@ class UserAuthService
 
         // Authenticate the user
         if(Hash::check($credentials['password'], $user->password)) {
-            $token = auth($user->role)->login($user);
+            $token = auth($user->role)->claims([ 'user' => $user ])->login($user);
         } else {
             return [
                 'success' => false,

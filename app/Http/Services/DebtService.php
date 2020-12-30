@@ -20,17 +20,13 @@ class DebtService
     {
         // Filtering params
         $carNumber = $request->query('car_number');
-
-        $user = null;
+        $user = $request->authUser;
         $transport = null;
 
-        if(Auth::guard('driver')->check()) {
-            $user = auth('driver')->user();
-
+        if($user->role === 'driver') {
             $transport = DB::table('driver_transport')->whereDriverId($user->id)->pluck('transport_id');
-        } elseif(Auth::guard('brigadir')->check()) {
-            $user = auth('brigadir')->user();
-            // Get all user drivers
+        } elseif($user->role === 'brigadir') {
+        //     // Get all user drivers
             $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
             // Get all user transport by driver ids
             $transport = DB::table('driver_transport')

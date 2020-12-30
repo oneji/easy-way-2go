@@ -19,7 +19,10 @@ class CheckJWT
     {
         try {
             // Get the user from token
-            $user = JWTAuth::parseToken()->authenticate();
+            $user = JWTAuth::parseToken();
+            $payload = JWTAuth::manager()->getJWTProvider()->decode(JWTAuth::getToken()->get());
+
+            $request->merge([ 'authUser' => $payload['user'] ]);
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json([

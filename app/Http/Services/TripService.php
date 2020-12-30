@@ -177,4 +177,44 @@ class TripService
 
         return $trip;
     }
+    
+    /**
+     * Start boarding
+     * 
+     * @param int $id
+     */
+    public function startBoarding($id)
+    {
+        $trip = Trip::find($id);
+        $trip->status_id = OrderStatus::getBoarding()->id;
+        $trip->save();
+    }
+
+    /**
+     * Get orders to start boarding
+     * 
+     * @param int $id
+     */
+    public function getOrdersToStartBoarding($id)
+    {
+        $orders = Order::with([
+            'payment_method',
+            'country_from',
+            'country_to',
+            'packages',
+            'passengers' => function($query) {
+                $query->select(
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'birthday',
+                    'passport_number',
+                    'id_card'
+                );
+            } ])
+            ->whereTripId($id)
+            ->get();
+
+        return $orders;
+    }
 }

@@ -117,4 +117,35 @@ class TripController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Start boarding
+     * 
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function startBoarding($id)
+    {
+        $this->tripService->startBoarding($id);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Get orders to start boarding
+     * 
+     * @param   int $id
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getOrdersToStartBoarding($id)
+    {
+        $data = $this->tripService->getOrdersToStartBoarding($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

@@ -69,4 +69,14 @@ class OrderStatus extends Model
     {
         return static::whereCode('start_way_back')->first();
     }
+    
+    /**
+     * Get finished status
+     * 
+     * @return object
+     */
+    public static function getBoarding()
+    {
+        return static::whereCode('boarding')->first();
+    }
 }

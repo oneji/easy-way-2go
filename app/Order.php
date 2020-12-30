@@ -32,7 +32,8 @@ class Order extends Model
         'transport_id',
         'passengers_count',
         'packages_count',
-        'total_weight'
+        'total_weight',
+        'route_id'
     ];
 
     /**
@@ -42,6 +43,7 @@ class Order extends Model
      */
     protected $casts = [
         'date' => 'datetime:d.m.y',
+        'approved' => 'boolean'
     ];
 
     /**

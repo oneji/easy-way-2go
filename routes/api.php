@@ -103,6 +103,8 @@ Route::namespace('API')->group(function() {
         Route::post('trips/cancel', 'TripController@cancel');
         Route::post('trips/finishHalf/{id}', 'TripController@finishHalf');
         Route::post('trips/changeDirection', 'TripController@changeDirection');
+        Route::post('trips/startBoarding/{id}', 'TripController@startBoarding');
+        Route::get('trips/getOrdersToStartBoarding/{id}', 'TripController@getOrdersToStartBoarding');
         
         // Passengers
         Route::get('passengers', 'PassengerController@all');

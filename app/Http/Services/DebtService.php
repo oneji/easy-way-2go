@@ -4,7 +4,9 @@ namespace App\Http\Services;
 
 use App\Driver;
 use App\Order;
+use App\OrderStatus;
 use App\PaymentStatus;
+use App\Transport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -53,5 +55,26 @@ class DebtService
             ]);
 
         return $debts;
+    }
+
+    /**
+     * Approve debt payment
+     * 
+     * @param int $id
+     */
+    public function approve($id)
+    {
+        $order = Order::find($id);
+        $order->payment_status_id = PaymentStatus::getPaid()->id;
+        $order->save();
+
+        $transport = Transport::find($order->transport_id);
+        $transport->balance += $order->total_price;
+        $transport->save();
+
+        return [
+            'success' => true,
+            'message' => 'You save successfully approved payment of debt №' . $order->id
+        ];
     }
 }

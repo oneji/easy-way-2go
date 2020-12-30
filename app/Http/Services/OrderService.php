@@ -10,7 +10,9 @@ use Carbon\Carbon;
 use App\Package;
 use App\Order;
 use App\OrderStatus;
+use App\PaymentMethod;
 use App\PaymentStatus;
+use App\Transport;
 use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -151,6 +153,15 @@ class OrderService
     {
         $order = Order::find($id);
         $order->approved = 1;
+        
+        if($order->payment_method_id === PaymentMethod::getCash()->id) {
+            $order->payment_status_id = PaymentStatus::getPaid()->id;
+            
+            $transport = Transport::find($order->transport_id);
+            $transport->balance += $order->total_price;
+            $transport->save();
+        }
+
         $order->save();
 
         return $order;

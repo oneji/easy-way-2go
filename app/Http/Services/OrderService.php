@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Package;
 use App\Order;
 use App\OrderStatus;
+use App\PaymentStatus;
 use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,6 +85,7 @@ class OrderService
         $order->client_id = auth('client')->user()->id;
         $order->order_status_id = OrderStatus::getFuture()->id;
         $order->trip_id = $trip->id;
+        $order->payment_status_id = PaymentStatus::getNotPaid()->id;
         $order->save();
 
         if($order->order_type === 'moving') {

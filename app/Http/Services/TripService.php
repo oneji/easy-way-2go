@@ -198,6 +198,7 @@ class TripService
     public function getOrdersToStartBoarding($id)
     {
         $orders = Order::with([
+            'payment_status',
             'payment_method',
             'country_from',
             'country_to',

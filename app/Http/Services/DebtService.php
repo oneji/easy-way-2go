@@ -18,11 +18,11 @@ class DebtService
      */
     public function all(Request $request)
     {
-        // Filtering params
-        $carNumber = $request->query('car_number');
         $user = $request->authUser;
-        $transport = null;
+        $carNumber = $request->query('car_number');
+        $orderId = $request->query('order_id');
 
+        $transport = null;
         if($user->role === 'driver') {
             $transport = DB::table('driver_transport')->whereDriverId($user->id)->pluck('transport_id');
         } elseif($user->role === 'brigadir') {
@@ -40,6 +40,7 @@ class DebtService
         $debts = Order::join('clients', 'clients.id', 'orders.client_id')
             ->join('transports', 'transports.id', 'orders.transport_id')
             ->where('payment_status_id', PaymentStatus::getNotPaid()->id)
+            ->where('orders.id', 'like', "%$orderId%")
             ->whereIn('transport_id', $transport)
             ->get([
                 'orders.id',

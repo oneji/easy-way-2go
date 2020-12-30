@@ -19,8 +19,7 @@ class CheckJWT
     {
         try {
             // Get the user from token
-            $user = JWTAuth::parseToken();
-            $payload = JWTAuth::manager()->getJWTProvider()->decode(JWTAuth::getToken()->get());
+            $payload = JWTAuth::parseToken()->getPayload();
 
             $request->merge([ 'authUser' => $payload['user'] ]);
         } catch (Exception $e) {

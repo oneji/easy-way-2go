@@ -14,7 +14,6 @@ use App\PaymentMethod;
 use App\PaymentStatus;
 use App\Transport;
 use App\Trip;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderService

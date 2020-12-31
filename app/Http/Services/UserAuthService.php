@@ -102,11 +102,11 @@ class UserAuthService
         $user->save();
 
         // Authenticate the user
-        $token = auth($user->role)->login($user);
+        $token = auth($user->role)->claims([ 'user' => $user ])->login($user);
 
         return [
             'success' => true,
-            'message' => 'Phone number verification is successful.',
+            'message' => 'Phone number verification is successfull.',
             'user' => $user,
             'token' => $token,
             'expires_in' => auth($user->role)->factory()->getTTL() * 60

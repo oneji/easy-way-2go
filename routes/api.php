@@ -124,5 +124,6 @@ Route::namespace('API')->group(function() {
         
         // Debts
         Route::get('debts', 'DebtController@all');
+        Route::post('debts/approve/{id}', 'DebtController@approve');
     });
 });

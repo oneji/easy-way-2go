@@ -43,4 +43,14 @@ class PaymentMethod extends Model
 
         static::addGlobalScope(new ActiveScope);
     }
+
+    /**
+     * Get cash method
+     * 
+     * @return object
+     */
+    public static function getCash()
+    {
+        return static::whereCode('cash')->first();
+    }
 }

@@ -34,4 +34,16 @@ class DebtController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Approve debt payment
+     * 
+     * @param int $id
+     */
+    public function approve($id)
+    {
+        $data = $this->service->approve($id);
+
+        return response()->json($data);
+    }
 }

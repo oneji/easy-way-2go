@@ -7,6 +7,7 @@ use App\Http\JsonRequests\ChangePasswordRequest;
 use App\Http\JsonRequests\UpdateClientRequest;
 use App\Http\Controllers\Controller;
 use App\Http\JsonRequests\CheckEmailRequest;
+use App\Http\JsonRequests\RegisterClientRequest;
 use App\Http\Services\ClientService;
 
 class ClientController extends Controller
@@ -21,6 +22,19 @@ class ClientController extends Controller
     public function __construct(ClientService $clientService)
     {
         $this->clientService = $clientService;
+    }
+
+    /**
+     * Store a newly created user in the db.
+     * 
+     * @param   \App\Http\JsonRequests\RegisterClientRequest $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function register(RegisterClientRequest $request)
+    {
+        $response = $this->clientService->register($request);
+
+        return response()->json($response);
     }
 
     /**

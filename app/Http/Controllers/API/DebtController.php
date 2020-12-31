@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\DebtService;
-use Illuminate\Support\Facades\Auth;
 
 class DebtController extends Controller
 {
@@ -32,7 +31,7 @@ class DebtController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $data,
+            'data' => $data
         ]);
     }
 }

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('API')->group(function() {
     Route::prefix('auth')->group(function() {
         // Client authentication
-        Route::post('clients/register', 'ClientAuthController@register');
+        Route::post('clients/register', 'ClientController@register');
         
         // User authentication
         Route::post('verify', 'UserController@verify');

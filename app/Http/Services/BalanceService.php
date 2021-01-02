@@ -18,27 +18,31 @@ class BalanceService
     public function all(Request $request)
     {
         $user = $request->authUser;
-        $balance = [];
-        $debts = [];
+        $transport = null;
+        $balance = 0;
+        $debts = 0;
 
         if($user->role === 'brigadir') {
-            // Get all user drivers
-            $drivers = Driver::whereBrigadirId($user->id)->pluck('id');
-            // Get all user transport by driver ids
+            // Get all user transport
+            $transport = Driver::join('driver_transport', 'driver_transport.driver_id', 'drivers.id')
+                ->join('transports', 'transports.id', 'driver_transport.transport_id')
+                ->select('transports.*')
+                ->where('drivers.brigadir_id', $user->id)
+                ->get();
+        } else if($user->role === 'driver') {
             $transport = DB::table('driver_transport')
                 ->join('transports', 'transports.id', 'driver_transport.transport_id')
                 ->select('transports.*')
-                ->whereIn('driver_id', $drivers)
+                ->whereDriverId($user->id)
                 ->get();
+        }
 
-            $balance = $transport->unique()->sum('balance');
+        $balance = $transport->unique()->sum('balance');
             $debts = Order::where('payment_status_id', PaymentStatus::getNotPaid()->id)
                 ->whereIn('transport_id', $transport->pluck('id'))
                 ->sum('total_price');
-        }
 
         return [
-            'success' => true,
             'balance' => $balance,
             'debts' => $debts
         ];

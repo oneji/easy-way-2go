@@ -379,15 +379,13 @@ class BrigadirService
             ->whereHas('addresses', function(Builder $query) {
                 $query->where('type', 'forward');
             })
-            ->where(function($query) use ($trip) {
-                $query->where('transport_id', $trip->transport_id)
-                    ->orWhere('route_id', $trip->route_id);
-            })
+            ->where('trip_id', $trip->id)
             ->get([
                 'id',
                 'date',
                 'from_address',
                 'to_address',
+                'trip_id',
                 'from_country',
                 'to_country',
                 'payment_method_id',

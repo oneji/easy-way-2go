@@ -13,21 +13,23 @@ use App\OrderStatus;
 use App\PaymentMethod;
 use App\PaymentStatus;
 use App\Transport;
-use App\Trip;
 use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
     protected $tripService;
+    protected $transactionService;
 
     /**
      * OrderService constructor
      * 
      * @param \App\Http\Services\TripService $tripService
+     * @param \App\Http\Services\TransactionService $transactionService
      */
-    public function __construct(TripService $tripService)
+    public function __construct(TripService $tripService, TransactionService $transactionService)
     {
         $this->tripService = $tripService;
+        $this->transactionService = $transactionService;
     }
 
     /**
@@ -159,6 +161,14 @@ class OrderService
             $transport = Transport::find($order->transport_id);
             $transport->balance += $order->total_price;
             $transport->save();
+
+            $this->transactionService->store([
+                'payment_method_id' => $order->payment_method_id,
+                'order_id' => $order->id,
+                'amount' => $order->total_price,
+                'type' => 'income',
+                'date' => Carbon::now()
+            ]);
         }
 
         $order->save();

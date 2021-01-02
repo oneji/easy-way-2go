@@ -7,12 +7,25 @@ use App\Order;
 use App\OrderStatus;
 use App\PaymentStatus;
 use App\Transport;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DebtService
 {
+    protected $transactionService;
+
+    /**
+     * OrderService constructor
+     * 
+     * @param \App\Http\Services\TransactionService $transactionService
+     */
+    public function __construct(TransactionService $transactionService)
+    {
+        $this->transactionService = $transactionService;
+    }
+
     /**
      * Get all user debts
      * 
@@ -72,9 +85,17 @@ class DebtService
         $transport->balance += $order->total_price;
         $transport->save();
 
+        $this->transactionService->store([
+            'payment_method_id' => $order->payment_method_id,
+            'order_id' => $order->id,
+            'amount' => $order->total_price,
+            'type' => 'income',
+            'date' => Carbon::now()
+        ]);
+
         return [
             'success' => true,
-            'message' => 'You save successfully approved payment of debt №' . $order->id
+            'message' => 'You have successfully approved payment of debt №' . $order->id
         ];
     }
 }

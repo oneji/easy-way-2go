@@ -128,5 +128,9 @@ Route::namespace('API')->group(function() {
 
         // Balance
         Route::get('balance', 'BalanceController@all');
+
+        // Statistics
+        Route::get('statistics', 'StatsController@getTotal');
+        Route::get('statistics/getByBus', 'StatsController@getByBus');
     });
 });

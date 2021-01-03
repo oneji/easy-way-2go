@@ -53,14 +53,30 @@ class DriverController extends Controller
     }
 
     /**
-     * Get a list of orders
+     * Get a list of trips
      * 
      * @param   \Illuminate\Http\Request $request
      * @return  \Illuminate\Http\JsonResponse
      */
-    public function getOrders(Request $request)
+    public function getTrips(Request $request)
     {
-        $data = $this->driverService->getOrders($request);
+        $data = $this->driverService->getTrips($request);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+    
+    /**
+     * Get a list of finished trips
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getFinishedTrips(Request $request)
+    {
+        $data = $this->driverService->getFinishedTrips($request);
         
         return response()->json([
             'success' => true,

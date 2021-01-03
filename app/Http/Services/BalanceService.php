@@ -102,17 +102,29 @@ class BalanceService
                 foreach ($filteredTransactions as $item) {
                     $expenses = Expense::where('trip_id', $item->trip_id)->sum('amount');
                 }
+
+                if($filteredTransactions->count() > 0) {
+                    $transactionsGroupedByDate = [];
+                    $i = Carbon::parse($now);
+                    do {
+                        if($filteredTransactions->where('date', $i)->count() > 0) {
+                            $transactionsGroupedByDate[Carbon::parse($i)->format('d.m.Y')] = $filteredTransactions->where('date', $i)->values();
+                        }
     
-                $weeks[$week] = [
-                    'from' => $formattedNow,
-                    'to' => $formattedEndOfWeek,
-                    'total_profit' => $totalProfit,
-                    'service_comission' => $serviceComission,
-                    'debts' => $debts,
-                    'expenses' => $expenses,
-                    'clean_profit' => $totalProfit - $serviceComission - $expenses,
-                    'transactions' => $filteredTransactions,
-                ];
+                        $i->addDay();
+                    } while ($i <= $endOfWeek);
+        
+                    $weeks[$week] = [
+                        'from' => $formattedNow,
+                        'to' => $formattedEndOfWeek,
+                        'total_profit' => $totalProfit,
+                        'service_comission' => $serviceComission,
+                        'debts' => $debts,
+                        'expenses' => $expenses,
+                        'clean_profit' => $totalProfit - $serviceComission - $expenses,
+                        'transactions' => $transactionsGroupedByDate,
+                    ];
+                }
     
                 // Move the next week
                 $week += 1;

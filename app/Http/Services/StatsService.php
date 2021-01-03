@@ -96,8 +96,6 @@ class StatsService
                 } else {
                     $datesArray = [$now->format('Y-m-d'), $endOfWeek->format('Y-m-d')];
                 }
-
-                // return $transactions->whereBetween('date', ['2021-01-02', '2021-01-09']);
     
                 $filteredTransactions = $transactions->whereBetween('date', $datesArray);
                 $totalProfit = $filteredTransactions->where('type', 'income')->sum('amount');
@@ -108,17 +106,29 @@ class StatsService
                 foreach ($filteredTransactions as $item) {
                     $expenses = Expense::where('trip_id', $item->trip_id)->sum('amount');
                 }
-    
-                $weeks[$week] = [
-                    'from' => $formattedNow,
-                    'to' => $formattedEndOfWeek,
-                    'total_profit' => $totalProfit,
-                    'service_comission' => $serviceComission,
-                    'debts' => $debts,
-                    'expenses' => $expenses,
-                    'clean_profit' => $totalProfit - $serviceComission - $expenses,
-                    'transactions' => $filteredTransactions,
-                ];
+
+                if($filteredTransactions->count() > 0) {
+                    $transactionsGroupedByDate = [];
+                    $i = Carbon::parse($now);
+                    do {
+                        if($filteredTransactions->where('date', $i)->count() > 0) {
+                            $transactionsGroupedByDate[Carbon::parse($i)->format('d.m.Y')] = $filteredTransactions->where('date', $i)->values();
+                        }
+
+                        $i->addDay();
+                    } while ($i <= $endOfWeek);
+
+                    $weeks[$week] = [
+                        'from' => $formattedNow,
+                        'to' => $formattedEndOfWeek,
+                        'total_profit' => $totalProfit,
+                        'service_comission' => $serviceComission,
+                        'debts' => $debts,
+                        'expenses' => $expenses,
+                        'clean_profit' => $totalProfit - $serviceComission - $expenses,
+                        'transactions' => $transactionsGroupedByDate,
+                    ];
+                }
     
                 // Move the next week
                 $week += 1;

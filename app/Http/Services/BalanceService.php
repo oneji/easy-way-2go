@@ -114,7 +114,7 @@ class BalanceService
                         $i->addDay();
                     } while ($i <= $endOfWeek);
         
-                    $weeks[$week] = [
+                    $weeks[] = [
                         'from' => $formattedNow,
                         'to' => $formattedEndOfWeek,
                         'total_profit' => $totalProfit,
@@ -127,7 +127,6 @@ class BalanceService
                 }
     
                 // Move the next week
-                $week += 1;
                 $now->addDays(8);
             } while ($now <= $endOfMonth);
         }

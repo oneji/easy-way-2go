@@ -175,4 +175,25 @@ class OrderService
 
         return $order;
     }
+
+    /**
+     * Get order by id from chat app
+     * 
+     * @param int $id
+     * @return object
+     */
+    public function getByIdFromChat($id)
+    {
+        return Order::with([ 'country_from', 'country_to' ])
+            ->select(
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country'
+            )
+            ->where('id', $id)
+            ->first();
+    }
 }

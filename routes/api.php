@@ -65,6 +65,7 @@ Route::namespace('API')->group(function() {
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
         
         Route::get('brigadirs/trips', 'BrigadirController@getTrips');
+        Route::get('brigadirs/trips/finished', 'BrigadirController@getFinishedTrips');
         Route::get('brigadirs/trips/getById/{id}', 'BrigadirController@getTripById');
 
         Route::delete('brigadirs/orders/detachDriver', 'BrigadirController@detachDriverFromOrder');
@@ -94,6 +95,7 @@ Route::namespace('API')->group(function() {
         // Orders
         Route::post('orders', 'OrderController@store');
         Route::get('orders/getById/{id}', 'OrderController@getById');
+        Route::get('orders/getByIdFromChat/{id}', 'OrderController@getByIdFromChat');
         Route::post('orders/cancel', 'OrderController@cancel');
         Route::post('orders/approve/{id}', 'OrderController@approve');
 

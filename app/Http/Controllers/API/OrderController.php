@@ -172,4 +172,19 @@ class OrderController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get order by id from chat
+     * 
+     * @param int $id
+     */
+    public function getByIdFromChat($id)
+    {
+        $data = $this->orderService->getByIdFromChat($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

@@ -139,6 +139,22 @@ class BrigadirController extends Controller
     }
 
     /**
+     * Get a list of finished trips
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function getFinishedTrips(Request $request)
+    {
+        $data = $this->brigadirService->getFinishedTrips($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
      * Get all available transport
      * 
      * @param   \Illuminate\Http\Request $request

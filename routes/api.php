@@ -11,9 +11,35 @@
 |
 */
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('API')->group(function() {
+    // Endpoint to get JWT_SECRET
+    Route::get('getJwtSecret', function(Request $request) {
+        $now = Carbon::now()->format('d.m.Y');
+        
+        if(!$request->hash) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hash is not provided'
+            ], 422);
+        }
+
+        if(md5($now) !== $request->hash) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hash is invalid'
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'secret' => env('JWT_SECRET')
+        ]);
+    });
+
     Route::prefix('auth')->group(function() {
         // Client authentication
         Route::post('clients/register', 'ClientController@register');

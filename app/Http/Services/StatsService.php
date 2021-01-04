@@ -44,7 +44,7 @@ class StatsService
         $user = $request->authUser;
         // Filtering params
         $carNumber = $request->query('car_number');
-        $from = $request->query('from') ? Carbon::parse($request->query('from')) : Carbon::now();
+        $from = $request->query('from') ? Carbon::parse($request->query('from')) : Carbon::now()->startOfMonth();
         $to = $request->query('to') ? Carbon::parse($request->query('to')) : Carbon::parse(Carbon::now())->endOfMonth();
     
         // ***

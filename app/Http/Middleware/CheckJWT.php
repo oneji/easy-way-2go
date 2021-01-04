@@ -25,18 +25,18 @@ class CheckJWT
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json([
-                    'ok' => false,
+                    'success' => false,
                     'message' => 'Token is invalid'
                 ], 401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
                 return response()->json([
-                    'ok' => false,
+                    'success' => false,
                     'message' => 'Token is expired'
                 ], 401);
             } else {
                 return response()->json([
-                    'ok' => false,
-                    'message' => 'Token not found.'
+                    'success' => false,
+                    'message' => 'Token is not provided'
                 ], 401);
             }
         }

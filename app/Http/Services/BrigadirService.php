@@ -570,7 +570,6 @@ class BrigadirService
         }
 
         $weeks = [];
-        $week = 1;
         if($trips->count() > 0) {
             $firstOrder = Order::where('trip_id', $trips->pluck('id'))->orderBy('id')->first();
     
@@ -605,7 +604,7 @@ class BrigadirService
                         $expenses = Expense::where('trip_id', $item->trip_id)->sum('amount');
                     }
         
-                    $weeks[$week] = [
+                    $weeks[] = [
                         'from' => $formattedNow,
                         'to' => $formattedEndOfWeek,
                         'total_profit' => $totalProfit,
@@ -617,7 +616,6 @@ class BrigadirService
                     ];
         
                     // Move the next week
-                    $week += 1;
                     $now->addDays(8);
                 } while ($now <= $endOfMonth);
             }

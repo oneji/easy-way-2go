@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
@@ -34,6 +35,36 @@ class Route extends Model
     public function route_repeats()
     {
         return $this->hasMany('App\RouteRepeat');
+    }
+
+    /**
+     * Get route starting point
+     * 
+     * @return object
+     */
+    public function getDateAndTimeFrom()
+    {
+        $cities = $this->getCitiesByType('forward');
+
+        return [
+            'date' => Carbon::parse($cities['first']->departure_date)->format('d.m.y'),
+            'time' => $cities['first']->departure_time
+        ];
+    }
+    
+    /**
+     * Get route starting point
+     * 
+     * @return object
+     */
+    public function getDateAndTimeTo()
+    {
+        $cities = $this->getCitiesByType('back');
+
+        return [
+            'date' => Carbon::parse($cities['last']->arrival_date)->format('d.m.y'),
+            'time' => $cities['last']->arrival_time
+        ];
     }
 
     /**

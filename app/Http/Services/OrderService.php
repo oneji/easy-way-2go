@@ -13,6 +13,7 @@ use App\OrderStatus;
 use App\PaymentMethod;
 use App\PaymentStatus;
 use App\Transport;
+use App\Route;
 use Illuminate\Support\Facades\DB;
 
 class OrderService
@@ -49,7 +50,7 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([
+        $order = Order::with([
             'country_from',
             'country_to',
             'cargos',
@@ -59,12 +60,14 @@ class OrderService
             'payment_method',
             'addresses',
         ])
+        ->join('transports', 'transports.id', 'orders.transport_id')
         ->join('clients', 'clients.id', 'orders.client_id')
         ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
         ->select(
             'orders.*',
             'clients.first_name as buyer_first_name',
             'clients.last_name as buyer_last_name',
+            'transports.car_number',
             'moving_data.from_floor',
             'moving_data.to_floor',
             'moving_data.time',
@@ -73,6 +76,12 @@ class OrderService
             'moving_data.parking_working_hours'
         )
         ->find($id);
+
+        $route = Route::find($order->route_id);
+        $order['forward'] = $route->getDateAndTimeFrom();
+        $order['back'] = $route->getDateAndTimeTo();
+
+        return $order;
     }
 
     /**

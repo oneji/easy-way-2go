@@ -78,8 +78,21 @@ class OrderService
         ->find($id);
 
         $route = Route::find($order->route_id);
-        $order['forward'] = $route->getDateAndTimeFrom();
-        $order['back'] = $route->getDateAndTimeTo();
+        $order['forward'] = [
+            'departure_date' => $route->getDateAndTimeFrom()['date'],
+            'departure_time' => $route->getDateAndTimeFrom()['time'],
+            'country' => $order->country_from,
+            'address' => $order->from_address
+        ];
+        $order['back'] = [ 
+            'arrival_date' => $route->getDateAndTimeTo()['date'],
+            'arrival_time' => $route->getDateAndTimeTo()['time'],
+            'country' => $order->country_to,
+            'address' => $order->to_address
+        ];
+
+        unset($order['country_from']);
+        unset($order['country_to']);
 
         return $order;
     }

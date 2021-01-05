@@ -49,18 +49,30 @@ class OrderService
      */
     public function getById($id)
     {
-        return Order::with([ 'country_from', 'country_to', 'cargos', 'passengers', 'packages', 'payment_method', 'addresses' ])
-            ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
-            ->select(
-                'orders.*',
-                'moving_data.from_floor',
-                'moving_data.to_floor',
-                'moving_data.time',
-                'moving_data.movers_count',
-                'moving_data.parking',
-                'moving_data.parking_working_hours'
-            )
-            ->find($id);
+        return Order::with([
+            'country_from',
+            'country_to',
+            'cargos',
+            'passengers',
+            'packages',
+            'payment_status',
+            'payment_method',
+            'addresses',
+        ])
+        ->join('clients', 'clients.id', 'orders.client_id')
+        ->leftJoin('moving_data', 'moving_data.order_id', 'orders.id')
+        ->select(
+            'orders.*',
+            'clients.first_name as buyer_first_name',
+            'clients.last_name as buyer_last_name',
+            'moving_data.from_floor',
+            'moving_data.to_floor',
+            'moving_data.time',
+            'moving_data.movers_count',
+            'moving_data.parking',
+            'moving_data.parking_working_hours'
+        )
+        ->find($id);
     }
 
     /**

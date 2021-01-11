@@ -48,7 +48,7 @@ Route::namespace('API')->group(function() {
         Route::post('verify', 'UserController@verify');
         Route::post('login', 'UserController@login');
         Route::get('me', 'UserController@me')->middleware('jwt.verify');
-        Route::get('refreshToken', 'UserController@refreshToken')->middleware('jwt.verify');
+        Route::get('refreshToken', 'UserController@refreshToken');
     });
 
     // Transport

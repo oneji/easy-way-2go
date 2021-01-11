@@ -4,12 +4,14 @@ namespace App\Http\Services;
 
 use App\Http\JsonRequests\LoginUserRequest;
 use Carbon\Carbon;
-use App\User;
 use App\Driver;
 use App\Client;
 use App\Brigadir;
 use App\Http\JsonRequests\VerifyCodeRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use JWTAuth;
+use Exception;
 
 class UserAuthService
 {
@@ -129,15 +131,27 @@ class UserAuthService
 
     /**
      * Refresh token
+     * 
+     * @param \Illuminate\Http\Request $request
      */
-    public function refreshToken()
+    public function refreshToken(Request $request)
     {
-        $client = auth('client')->user();
-        $driver = auth('driver')->user();
-        $brigadir = auth('brigadir')->user();
+        try {
+            // // Get the user from token
+            $payload = JWTAuth::parseToken()->getPayload();
+            $user = $payload['user'];
 
-        if($client) return auth('client')->refresh();
-        if($driver) return auth('driver')->refresh();
-        if($brigadir) return auth('brigadir')->refresh();
+            return [
+                'success' => true,
+                'status' => 200,
+                'token' => auth($user->role)->refresh()
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'status' => 401,
+                'message' => 'Token is not provided'
+            ];
+        }
     }
 }

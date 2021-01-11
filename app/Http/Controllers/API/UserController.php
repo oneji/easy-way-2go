@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\UserAuthService;
 use App\Http\JsonRequests\LoginUserRequest;
 use App\Http\JsonRequests\VerifyCodeRequest;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -63,13 +64,10 @@ class UserController extends Controller
     /**
      * Refresh token
      */
-    public function refreshToken()
+    public function refreshToken(Request $request)
     {
-        $token = $this->userAuthService->refreshToken();
+        $data = $this->userAuthService->refreshToken($request);
 
-        return response()->json([
-            'success' => true,
-            'token' => $token
-        ]);
+        return response()->json($data, $data['status']);
     }
 }

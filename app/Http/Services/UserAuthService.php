@@ -137,21 +137,34 @@ class UserAuthService
     public function refreshToken(Request $request)
     {
         try {
-            // // Get the user from token
+            // Get the user from token
             $payload = JWTAuth::parseToken()->getPayload();
-            $user = $payload['user'];
 
             return [
                 'success' => true,
                 'status' => 200,
-                'token' => auth($user->role)->refresh()
+                'token' => auth($request->role)->refresh()
             ];
         } catch (Exception $e) {
-            return [
-                'success' => false,
-                'status' => 401,
-                'message' => 'Token is not provided'
-            ];
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+                return [
+                    'success' => false,
+                    'status' => 401,
+                    'message' => 'Token is invalid'
+                ];
+            } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+                return [
+                    'success' => true,
+                    'status' => 200,
+                    'token' => auth($request->role)->refresh()
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'status' => 401,
+                    'message' => 'Token is not provided'
+                ];
+            }
         }
     }
 }

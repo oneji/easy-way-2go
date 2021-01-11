@@ -91,6 +91,8 @@ class OrderService
             'address' => $order->to_address
         ];
 
+        unset($order['from_address']);
+        unset($order['to_address']);
         unset($order['country_from']);
         unset($order['country_to']);
 

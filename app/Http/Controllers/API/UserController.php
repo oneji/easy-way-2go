@@ -7,6 +7,7 @@ use App\Http\Services\UserAuthService;
 use App\Http\JsonRequests\LoginUserRequest;
 use App\Http\JsonRequests\VerifyCodeRequest;
 use Illuminate\Http\Request;
+use Validator;
 
 class UserController extends Controller
 {
@@ -66,6 +67,17 @@ class UserController extends Controller
      */
     public function refreshToken(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'role' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         $data = $this->userAuthService->refreshToken($request);
 
         return response()->json($data, $data['status']);

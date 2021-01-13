@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('API')->group(function() {
+    // Sync user's to the mongo DB
+    Route::get('syncUsersToMongo', 'UserController@syncAllToMongo');
     // Endpoint to get JWT_SECRET
     Route::get('getJwtSecret', function(Request $request) {
         $now = Carbon::now()->format('d.m.Y');

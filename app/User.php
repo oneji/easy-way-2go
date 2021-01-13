@@ -9,6 +9,11 @@ use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
+    /**
+     * Sync to mongo db key
+     */
+    const SYNC_KEY = 'euroway2go';
+
     use Notifiable;
     use HasTranslations;
     

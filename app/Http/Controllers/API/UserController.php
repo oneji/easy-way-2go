@@ -82,4 +82,16 @@ class UserController extends Controller
 
         return response()->json($data, $data['status']);
     }
+
+    /**
+     * Sync all user's to the mongo db
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function syncAllToMongo(Request $request)
+    {
+        $data = $this->userAuthService->syncAllToMongo($request->query('key'));
+
+        return response()->json($data, $data['status']);
+    }
 }

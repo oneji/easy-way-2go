@@ -8,10 +8,13 @@ use App\Driver;
 use App\Client;
 use App\Brigadir;
 use App\Http\JsonRequests\VerifyCodeRequest;
+use App\Jobs\SyncUserToMongoChatJob;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class UserAuthService
 {
@@ -166,5 +169,40 @@ class UserAuthService
                 ];
             }
         }
+    }
+
+    /**
+     * Sync all user's to the mongo db
+     * 
+     * @param string $key
+     */
+    public function syncAllToMongo($key)
+    {
+        if($key === md5(User::SYNC_KEY)) {
+            // Prepare queries to union them
+            $clients = DB::table('clients')->select('id', 'first_name', 'last_name', 'email', 'role', 'photo', 'phone_number');
+            $drivers = DB::table('drivers')->select('id', 'first_name', 'last_name', 'email', 'role', 'photo', 'phone_number');
+    
+            $allUsers = DB::table('brigadirs')
+                ->select('id', 'first_name', 'last_name', 'email', 'role', 'photo', 'phone_number')
+                ->union($clients)
+                ->union($drivers)
+                ->orderBy('role')
+                ->get();
+    
+            foreach ($allUsers as $user) {
+                SyncUserToMongoChatJob::dispatch($user);
+            }
+    
+            return [
+                'success' => true,
+                'status' => 200
+            ];
+        }
+
+        return [
+            'success' => false,
+            'status' => 422
+        ];
     }
 }

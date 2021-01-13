@@ -163,5 +163,9 @@ Route::namespace('API')->group(function() {
         // Statistics
         Route::get('statistics', 'StatsController@getTotal');
         Route::get('statistics/getByBus', 'StatsController@getByBus');
+
+        // Email notifications
+        Route::get('emailNotifications', 'NotificationSettingsController@all');
+        Route::post('emailNotifications', 'NotificationSettingsController@update');
     });
 });

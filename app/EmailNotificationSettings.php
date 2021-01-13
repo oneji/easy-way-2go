@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NotificationSettings extends Model
+class EmailNotificationSettings extends Model
 {
     /**
      * Indicates if the model should be timestamped.

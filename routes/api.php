@@ -122,7 +122,7 @@ Route::namespace('API')->group(function() {
         Route::get('drivers/getArchivedRoutes', 'DriverController@getArchivedRoutes');
 
         // Orders
-        Route::post('orders', 'OrderController@store');
+        Route::post('orders', 'OrderController@store')->middleware('notify');
         Route::get('orders/getById/{id}', 'OrderController@getById');
         Route::get('orders/getByIdFromChat/{id}', 'OrderController@getByIdFromChat');
         Route::post('orders/cancel', 'OrderController@cancel');
@@ -165,7 +165,7 @@ Route::namespace('API')->group(function() {
         Route::get('statistics/getByBus', 'StatsController@getByBus');
 
         // Email notifications
-        Route::get('emailNotifications', 'NotificationSettingsController@all');
-        Route::post('emailNotifications', 'NotificationSettingsController@update');
+        Route::get('emailNotifications', 'EmailNotificationSettingsController@all');
+        Route::post('emailNotifications', 'EmailNotificationSettingsController@update');
     });
 });

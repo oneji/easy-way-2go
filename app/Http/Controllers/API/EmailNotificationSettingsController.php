@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\NotificationSettingsService;
+use App\Http\Services\EmailNotificationSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class NotificationSettingsController extends Controller
+class EmailNotificationSettingsController extends Controller
 {
     protected $service;
 
     /**
      * NotificationSettingsController constructor
      * 
-     * @param \App\Http\Services\NotificationSettingsService $service
+     * @param \App\Http\Services\EmailNotificationSettingsService $service
      */
-    public function __construct(NotificationSettingsService $service)
+    public function __construct(EmailNotificationSettingsService $service)
     {
         $this->service = $service;
     }

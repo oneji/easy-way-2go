@@ -2,13 +2,13 @@
 
 namespace App\Http\Services;
 
-use App\NotificationSettings;
+use App\EmailNotificationSettings;
 use Illuminate\Http\Request;
 
-class NotificationSettingsService
+class EmailNotificationSettingsService
 {
     /**
-     * Get all notification settings
+     * Get all email notification settings
      * 
      * @param \Illuminate\Http\Request $request
      */
@@ -16,7 +16,7 @@ class NotificationSettingsService
     {
         $user = $request->authUser;
         
-        $notifications = NotificationSettings::whereUserId($user->id)
+        $notifications = EmailNotificationSettings::whereUserId($user->id)
             ->whereUserRole($user->role)
             ->get();
 
@@ -24,7 +24,7 @@ class NotificationSettingsService
     }
 
     /**
-     * Update notification settings
+     * Update email notification settings
      * 
      * @param \Illuminate\Http\Request $request 
      */
@@ -32,7 +32,7 @@ class NotificationSettingsService
     {
         $user = $request->authUser;
 
-        $notificationSetting = new NotificationSettings();
+        $notificationSetting = new EmailNotificationSettings();
         $notificationSetting->type = $request->type;
         $notificationSetting->user_id = $user->id;
         $notificationSetting->user_role = $user->role;

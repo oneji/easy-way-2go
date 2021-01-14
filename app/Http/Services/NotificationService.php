@@ -7,6 +7,7 @@ use App\Driver;
 use App\Notifications\NewOrderNotification;
 use App\Notifications\OrderApprovedNotification;
 use App\Notifications\OrderCancelledNotification;
+use App\Notifications\OrderNewTransportNotification;
 use App\Order;
 
 class NotificationService
@@ -48,5 +49,16 @@ class NotificationService
     {
         $user = Client::find($order->client_id);
         $user->notify(new OrderCancelledNotification($order));
+    }
+
+    /**
+     * Notify order owner that the new transport has been set
+     * 
+     * @param Order $order
+     */
+    public static function orderNewTransport(Order $order)
+    {
+        $user = Client::find($order->client_id);
+        $user->notify(new OrderNewTransportNotification($order));
     }
 }

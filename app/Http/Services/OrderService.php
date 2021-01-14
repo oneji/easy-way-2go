@@ -180,6 +180,8 @@ class OrderService
         $order->cancellation_reason = $request->reason;
         $order->save();
 
+        NotificationService::orderCancelled($order);
+        
         return $order;
     }
 

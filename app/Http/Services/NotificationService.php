@@ -6,8 +6,8 @@ use App\Client;
 use App\Driver;
 use App\Notifications\NewOrderNotification;
 use App\Notifications\OrderApprovedNotification;
+use App\Notifications\OrderCancelledNotification;
 use App\Order;
-use Illuminate\Support\Facades\DB;
 
 class NotificationService
 {
@@ -37,5 +37,16 @@ class NotificationService
     {
         $user = Client::find($order->client_id);
         $user->notify(new OrderApprovedNotification($order));
+    }
+
+    /**
+     * Notify order owner that the order is cancelled
+     * 
+     * @param Order $order
+     */
+    public static function orderCancelled(Order $order)
+    {
+        $user = Client::find($order->client_id);
+        $user->notify(new OrderCancelledNotification($order));
     }
 }

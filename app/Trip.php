@@ -92,4 +92,12 @@ class Trip extends Model
     {
         return $this->belongsToMany('App\Driver');
     }
+
+    /**
+     * Get all of the transactions for the trip.
+     */
+    public function transactions()
+    {
+        return $this->hasManyThrough('App\Transaction', 'App\Order');
+    }
 }

@@ -65,18 +65,15 @@ class UserAuthService
      */
     public function findUser($login)
     {
-        $driver = Driver::with('notifications')
-            ->where('email', $login)
+        $driver = Driver::where('email', $login)
             ->orWhere('phone_number', $login)
             ->first();
         
-        $client = Client::with('notifications')
-            ->where('email', $login)
+        $client = Client::where('email', $login)
             ->orWhere('phone_number', $login)
             ->first();
 
-        $brigadir = Brigadir::with('notifications')
-            ->where('email', $login)
+        $brigadir = Brigadir::where('email', $login)
             ->orWhere('phone_number', $login)
             ->first();
         

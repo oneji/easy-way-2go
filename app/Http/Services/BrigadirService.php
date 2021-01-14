@@ -18,6 +18,7 @@ use App\Order;
 use App\OrderStatus;
 use App\PaymentStatus;
 use App\Route;
+use App\Transaction;
 use App\Transport;
 use App\Trip;
 use Carbon\Carbon;
@@ -785,6 +786,107 @@ class BrigadirService
             ->select('transports.*')
             ->whereDriverId($id)
             ->first();
+    }
+
+    /**
+     * Get driver's trips
+     */
+    public function getDriversTrips(Request $request, $id)
+    {
+        // Filtering params
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        $from = $request->query('from');            // string
+        $to = $request->query('to');                // string
+
+        // Get the current user
+        $user = $request->authUser;
+        // Get all user's transport by driver ids
+        $transport = DB::table('driver_transport')->whereDriverId($id)->pluck('transport_id');
+        
+        // Get trips by transport id
+        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+            ->leftJoin('transports', 'transports.id', 'trips.transport_id')
+            ->select(
+                'trips.id',
+                'transports.car_number',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'trips.date',
+                'trips.time',
+                'trips.from_address',
+                'trips.to_address',
+                'trips.type',
+                'trips.status_id',
+                'trips.from_country_id',
+                'trips.to_country_id'
+            )
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('status_id', $orderStatus);
+            })
+            ->whereIn('transport_id', $transport)
+            ->get();
+
+        $weeks = [];
+        if($trips->count() > 0) {
+            $firstOrder = Order::where('trip_id', $trips->pluck('id'))->orderBy('id')->first();
+            
+            if($firstOrder) {
+                $now = Carbon::parse($firstOrder->date);
+                $endOfMonth = Carbon::parse($firstOrder->date)->endOfMonth();
+    
+                do {
+                    $endOfWeek = Carbon::parse($now)->addDays(7);
+                    $formattedNow = $now->format('d.m.Y');
+                    $formattedEndOfWeek = $endOfWeek->format('d.m.Y');
+        
+                    if(Carbon::parse($now)->addDays(8) >= $endOfMonth) {
+                        $datesArray = [$now, $endOfMonth];
+                    } else {
+                        $datesArray = [$now, $endOfWeek];
+                    }
+        
+                    $filteredTrips = $trips->whereBetween('date', $datesArray);
+                    $tripTransactions = Order::leftJoin('transactions', 'transactions.order_id', 'orders.id')
+                        ->whereIn('orders.trip_id', $filteredTrips->pluck('id'))
+                        ->whereBetween('orders.date', $datesArray)
+                        ->get();
+
+                    $totalProfit = $tripTransactions->where('type', 'income')->sum('amount');
+                    $serviceComission = $tripTransactions->where('type', 'outcome')->sum('amount');
+                    $debts = $tripTransactions->where('payment_status_id', PaymentStatus::getNotPaid()->id)->sum('total_price');
+                    $expenses = 0;
+    
+                    foreach ($filteredTrips as $item) {
+                        $expenses = Expense::where('trip_id', $item->trip_id)->sum('amount');
+                    }
+        
+                    if($filteredTrips->count() > 0) {
+                        $weeks[] = [
+                            'from' => $formattedNow,
+                            'to' => $formattedEndOfWeek,
+                            'total_profit' => $totalProfit,
+                            'service_comission' => $serviceComission,
+                            'debts' => $debts,
+                            'expenses' => $expenses,
+                            'clean_profit' => $totalProfit - $serviceComission - $expenses,
+                            'trips' => $filteredTrips,
+                        ];
+                    }
+        
+                    // Move the next week
+                    $now->addDays(8);
+                } while ($now <= $endOfMonth);
+            }
+        }
+        
+        return $weeks;
     }
 
     /**

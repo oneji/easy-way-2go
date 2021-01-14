@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\NotificationScope;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,5 +86,17 @@ class Brigadir extends Authenticatable implements JWTSubject
     public function transports()
     {
         return $this->hasMany('App\Transport');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new NotificationScope);
     }
 }

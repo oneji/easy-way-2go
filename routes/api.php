@@ -108,6 +108,7 @@ Route::namespace('API')->group(function() {
         Route::post('brigadirs/drivers/block/{id}', 'BrigadirController@blockDriver');
         Route::get('brigadirs/drivers/getById/{id}', 'BrigadirController@getDriverById');
         Route::get('brigadirs/drivers/getTransport/{id}', 'BrigadirController@getDriversTransport');
+        Route::get('brigadirs/drivers/getTrips/{id}', 'BrigadirController@getDriversTrips');
         Route::put('brigadirs/drivers/changePassword/{id}', 'BrigadirController@changeDriversPassword');
 
         Route::get('brigadirs/routes', 'BrigadirController@getRoutes');

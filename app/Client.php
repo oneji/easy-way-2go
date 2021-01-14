@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\NotificationScope;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -88,5 +89,17 @@ class Client extends Authenticatable implements JWTSubject
     public function bank_cards()
     {
         return $this->morphMany('App\BankCard', 'cardable');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new NotificationScope);
     }
 }

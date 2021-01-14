@@ -19,7 +19,12 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./vue/components/ExampleComponent.vue').default);
+
+// Chat components
+Vue.component('chat-header', require('./vue/components/Chat/ChatHeader.vue').default)
+Vue.component('chat-search-input', require('./vue/components/Chat/ChatSearchInput.vue').default)
+Vue.component('contacts-list', require('./vue/components/Chat/ContactsList.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +32,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import VueSocketIO from './vue/plugins/vue-socket.io'
+
 const app = new Vue({
     el: '#app',
+    VueSocketIO
 });

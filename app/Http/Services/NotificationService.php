@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Services;
+
+use App\Client;
+use App\Driver;
+use App\Notifications\NewOrderNotification;
+use App\Notifications\OrderApprovedNotification;
+use App\Order;
+use Illuminate\Support\Facades\DB;
+
+class NotificationService
+{
+    /**
+     * Notify user's about a new order
+     * 
+     * @param Order $order
+     */
+    public static function newOrder(Order $order)
+    {
+        $users = Driver::join('driver_trip', 'driver_trip.driver_id', 'drivers.id')
+            ->select('drivers.*')
+            ->where('driver_trip.trip_id', $order->trip_id)
+            ->get();
+
+        foreach($users as $user) {
+            $user->notify(new NewOrderNotification($order));
+        }
+    }
+
+    /**
+     * Notify order owner that the order is approved
+     * 
+     * @param Order $order
+     */
+    public static function orderApproved(Order $order)
+    {
+        $user = Client::find($order->client_id);
+        $user->notify(new OrderApprovedNotification($order));
+    }
+}

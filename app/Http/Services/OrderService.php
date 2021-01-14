@@ -163,6 +163,8 @@ class OrderService
 
         $trip->drivers()->sync($driverIds);
 
+        NotificationService::newOrder($order);
+
         return $order;
     }
 
@@ -208,6 +210,8 @@ class OrderService
         }
 
         $order->save();
+
+        NotificationService::orderApproved($order);
 
         return $order;
     }

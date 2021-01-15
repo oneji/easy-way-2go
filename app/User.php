@@ -15,11 +15,6 @@ class User extends Authenticatable
     const SYNC_KEY = 'euroway2go';
 
     use Notifiable;
-    use HasTranslations;
-    
-    public $translatable = [
-        'name'
-    ];
 
     /**
      * The attributes that are mass assignable.

@@ -163,6 +163,8 @@ class OrderService
 
         $trip->drivers()->sync($driverIds);
 
+        NotificationService::newOrder($order);
+
         return $order;
     }
 
@@ -178,6 +180,8 @@ class OrderService
         $order->cancellation_reason = $request->reason;
         $order->save();
 
+        NotificationService::orderCancelled($order);
+        
         return $order;
     }
 
@@ -208,6 +212,8 @@ class OrderService
         }
 
         $order->save();
+
+        NotificationService::orderApproved($order);
 
         return $order;
     }

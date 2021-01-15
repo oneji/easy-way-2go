@@ -142,6 +142,11 @@ Route::group([
         Route::get('prices/getById/{id}', 'PriceController@getById')->name('prices.getById');
         Route::post('prices', 'PriceController@store')->name('prices.store');
         Route::put('prices/{id}', 'PriceController@update')->name('prices.update');
+
+        // Chat
+        Route::get('chat', function() {
+            return view('chat.index');
+        });
     });
 });
 

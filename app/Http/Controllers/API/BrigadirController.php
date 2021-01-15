@@ -278,6 +278,21 @@ class BrigadirController extends Controller
     }
 
     /**
+     * Get driver's trips
+     * 
+     * @param int $id
+     */
+    public function getDriversTrips(Request $request, $id)
+    {
+        $data = $this->brigadirService->getDriversTrips($request, $id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    /**
      * Change drivers password
      * 
      * @param \Illuminate\Http\Request $request

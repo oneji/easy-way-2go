@@ -33,6 +33,7 @@ class TripService
     {
         return Trip::with([ 'from_country', 'to_country' ])->get();
     }
+
     /**
      * Store a newly created trip
      * 
@@ -87,6 +88,8 @@ class TripService
         foreach ($trip->orders as $order) {
             $order->transport_id = $transportId;
             $order->save();
+
+            NotificationService::orderNewTransport($order);
         }
     }
 

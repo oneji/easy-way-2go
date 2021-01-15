@@ -81,7 +81,6 @@ class StatsService
         $firstOrder = $transactions->sortBy('id')->first();
 
         $weeks = [];
-        $week = 1;
         if($firstOrder) {
             $now = $from;
             $endOfMonth = $to;
@@ -134,7 +133,6 @@ class StatsService
                 $now->addDays(8);
             } while ($now <= $endOfMonth);
         }
-        
 
         return $weeks;
     }

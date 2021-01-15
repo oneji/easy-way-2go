@@ -2,11 +2,15 @@
 
 namespace App;
 
+use App\Scopes\NotificationScope;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Driver extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
+    
     /**
      * User genders
      */
@@ -110,5 +114,17 @@ class Driver extends Authenticatable implements JWTSubject
     public function transport()
     {
         return $this->belongsToMany('App\Transport');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new NotificationScope);
     }
 }

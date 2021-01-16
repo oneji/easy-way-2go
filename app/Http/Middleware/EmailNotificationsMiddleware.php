@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Jobs\NewOrderEmailNotificationJob;
 use Closure;
+use Illuminate\Support\Facades\DB;
 
 class EmailNotificationsMiddleware
 {
@@ -19,6 +21,8 @@ class EmailNotificationsMiddleware
         
         // Handle order notifications....
         $order = $response->original['data'];
+        
+        NewOrderEmailNotificationJob::dispatch($order);
 
         return $response;
     }

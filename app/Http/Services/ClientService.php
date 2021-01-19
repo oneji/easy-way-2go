@@ -222,12 +222,13 @@ class ClientService
      */
     public function getOrders(Request $request)
     {
-        $client = auth('client')->user();
+        $client = $request->authUser;
         // Filtering params
         $id = $request->query('id');
         $type = $request->query('type');
         $from = $request->query('from');
         $to = $request->query('to');
+        $limit = $request->query('limit') ? $request->query('limit') : 10;
 
         return Order::with([ 'country_from', 'country_to' ])
             ->join('transports', 'transports.id', 'orders.transport_id')
@@ -259,6 +260,6 @@ class ClientService
                 $query->where('date', '<=', Carbon::parse($to));
             })
             ->where('client_id', $client->id)
-            ->get();
+            ->paginate($limit);
     }
 }

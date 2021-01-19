@@ -32,10 +32,13 @@ class EmailNotificationSettingsService
     {
         $user = $request->authUser;
 
-        $notificationSetting = new EmailNotificationSettings();
-        $notificationSetting->type = $request->type;
-        $notificationSetting->user_id = $user->id;
-        $notificationSetting->user_role = $user->role;
-        $notificationSetting->save(); 
+        $items = [];
+        foreach ($request->types as $type) {
+            EmailNotificationSettings::updateOrCreate([
+                'type' => $type,
+                'user_id' => $user->id,
+                'user_role' => $user->role
+            ]);
+        }        
     }
 }

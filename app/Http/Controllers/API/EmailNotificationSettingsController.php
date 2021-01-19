@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\EmailNotificationSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class EmailNotificationSettingsController extends Controller
 {
@@ -46,7 +47,11 @@ class EmailNotificationSettingsController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'type' => 'required|in:my_messages,my_orders,drivers_messages,drivers_orders'
+            'types' => [
+                'required',
+                'array',
+                Rule::in(['my_messages', 'my_orders', 'drivers_orders', 'drivers_messages']),
+            ]
         ]);
 
         if($validator->fails()) {

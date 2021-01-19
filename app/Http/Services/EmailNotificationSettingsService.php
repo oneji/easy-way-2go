@@ -2,6 +2,9 @@
 
 namespace App\Http\Services;
 
+use App\Brigadir;
+use App\Client;
+use App\Driver;
 use App\EmailNotificationSettings;
 use Illuminate\Http\Request;
 
@@ -31,8 +34,8 @@ class EmailNotificationSettingsService
     public function update(Request $request)
     {
         $user = $request->authUser;
+        $this->updateEmailNotificationsPermission($user, $request->allow_email_notifications); 
 
-        $items = [];
         foreach ($request->types as $type) {
             EmailNotificationSettings::updateOrCreate([
                 'type' => $type,
@@ -40,5 +43,28 @@ class EmailNotificationSettingsService
                 'user_role' => $user->role
             ]);
         }        
+    }
+
+    /**
+     * Update "allow_email_notifications" flag in user
+     * 
+     * @param object user
+     * @param int $allow
+     */
+    public function updateEmailNotificationsPermission($user, $allow)
+    {
+        if($user->role === 'brigadir') {
+            Brigadir::whereId($user->id)->update([
+                'allow_email_notifications' => $allow
+            ]);
+        } else if($user->role === 'driver') {
+            Driver::whereId($user->id)->update([
+                'allow_email_notifications' => $allow
+            ]);
+        } else if($user->role === 'client') {
+            Client::whereId($user->id)->update([
+                'allow_email_notifications' => $allow
+            ]);
+        }
     }
 }

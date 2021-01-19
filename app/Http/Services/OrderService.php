@@ -59,6 +59,7 @@ class OrderService
             'payment_status',
             'payment_method',
             'addresses',
+            'status'
         ])
         ->join('transports', 'transports.id', 'orders.transport_id')
         ->join('clients', 'clients.id', 'orders.client_id')

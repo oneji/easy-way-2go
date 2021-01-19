@@ -12,15 +12,24 @@ class EmailNotificationSettings extends Model
      * @var bool
      */
     public $timestamps = false;
-
+    
     /**
-     * The attributes that are mass assignable.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $fillable = [
-        'type',
+        'data',
         'user_id',
         'user_role'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'data' => 'object',
     ];
 }

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+use function PHPSTORM_META\map;
+
 class EmailNotificationSettingsController extends Controller
 {
     protected $service;
@@ -48,11 +50,8 @@ class EmailNotificationSettingsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'allow_email_notifications' => 'required|integer|in:0,1',
-            'types' => [
-                'required',
-                'array',
-                Rule::in(['my_messages', 'my_orders', 'drivers_orders', 'drivers_messages']),
-            ]
+            'my_orders' => 'required',
+            'my_messages' => 'required'
         ]);
 
         if($validator->fails()) {

@@ -19,7 +19,8 @@ class EmailNotificationSettingsService
     {
         $user = $request->authUser;
         
-        $notifications = EmailNotificationSettings::whereUserId($user->id)
+        $notifications = EmailNotificationSettings::select('id', 'data')
+            ->whereUserId($user->id)
             ->whereUserRole($user->role)
             ->get();
 
@@ -36,13 +37,25 @@ class EmailNotificationSettingsService
         $user = $request->authUser;
         $this->updateEmailNotificationsPermission($user, $request->allow_email_notifications); 
 
-        foreach ($request->types as $type) {
-            EmailNotificationSettings::updateOrCreate([
-                'type' => $type,
-                'user_id' => $user->id,
-                'user_role' => $user->role
-            ]);
-        }        
+        if($user->role === 'brigadir') {
+            $data = [
+                'my_orders' => $request->my_orders,
+                'my_messages' => $request->my_messages,
+                'drivers_orders' => isset($request->drivers_orders) ? $request->drivers_orders : false,
+                'drivers_messages' => isset($request->drivers_messages) ? $request->drivers_messages : false
+            ];
+        } else {
+            $data = [
+                'my_orders' => $request->my_orders,
+                'my_messages' => $request->my_messages
+            ];
+        }
+
+        EmailNotificationSettings::updateOrCreate([
+            'data' => $data,
+            'user_id' => $user->id,
+            'user_role' => $user->role
+        ]);
     }
 
     /**

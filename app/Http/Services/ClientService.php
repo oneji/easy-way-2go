@@ -230,10 +230,9 @@ class ClientService
         $to = $request->query('to');
         $limit = $request->query('limit') ? $request->query('limit') : 10;
 
-        return Order::with([ 'country_from', 'country_to' ])
+        return Order::with([ 'country_from', 'country_to', 'status' ])
             ->join('transports', 'transports.id', 'orders.transport_id')
             ->join('trips', 'trips.id', 'orders.trip_id')
-            ->join('order_statuses', 'order_statuses.id', 'trips.status_id')
             ->select(
                 'orders.id',
                 'orders.from_country',
@@ -245,7 +244,7 @@ class ClientService
                 'orders.order_type',
                 'orders.date',
                 'transports.car_number',
-                'order_statuses.name as status'
+                'orders.order_status_id'
             )
             ->when($id, function($query, $id) {
                 $query->where('id', 'like', "%$id%");

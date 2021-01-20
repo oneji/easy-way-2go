@@ -38,7 +38,7 @@
                 <table id="tech-companies-1" class="table table-striped">
                     <thead>
                         <tr>
-                            <th data-priority="1">№ Заказа</th>
+                            <th data-priority="1" class="text-center">№ Заказа</th>
                             <th data-priority="3">Дата</th>
                             <th data-priority="1">Откуда</th>
                             <th data-priority="3">Куда</th>

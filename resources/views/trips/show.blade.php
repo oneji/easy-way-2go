@@ -32,6 +32,12 @@
                             <span class="d-none d-sm-block">Back</span> 
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#drivers" role="tab">
+                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                            <span class="d-none d-sm-block">Drivers</span> 
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -84,8 +90,12 @@
                             'orders' => $routes['back']['orders']
                         ])
                     </div>
+                    <div class="tab-pane" id="drivers" role="tabpanel">
+                        @include('trips.partials.__drivers', [
+                            'drivers' => $drivers
+                        ])
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>

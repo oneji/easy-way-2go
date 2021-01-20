@@ -19,12 +19,12 @@ class EmailNotificationSettingsService
     {
         $user = $request->authUser;
         
-        $notifications = EmailNotificationSettings::select('id', 'data')
+        $settings = EmailNotificationSettings::select('id', 'data')
             ->whereUserId($user->id)
             ->whereUserRole($user->role)
-            ->get();
+            ->first();
 
-        return $notifications;
+        return $settings ? $settings->data : null;
     }
 
     /**
@@ -51,11 +51,18 @@ class EmailNotificationSettingsService
             ];
         }
 
-        EmailNotificationSettings::updateOrCreate([
-            'data' => $data,
-            'user_id' => $user->id,
-            'user_role' => $user->role
-        ]);
+        $settings = EmailNotificationSettings::whereUserId($user->id)->whereUserRole($user->role)->first();
+
+        if($settings) {
+            $settings->update([ 'data' => $data ]);
+        } else {
+            $newSettings = new EmailNotificationSettings([
+                'data' => $data,
+                'user_id' => $user->id,
+                'user_role' => $user->role
+            ]);
+            $newSettings->save();
+        }
     }
 
     /**

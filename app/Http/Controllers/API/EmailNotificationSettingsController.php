@@ -49,7 +49,7 @@ class EmailNotificationSettingsController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'allow_email_notifications' => 'required|integer|in:0,1',
+            'allow_email_notifications' => 'required|boolean',
             'my_orders' => 'required',
             'my_messages' => 'required'
         ]);

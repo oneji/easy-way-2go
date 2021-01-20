@@ -62,6 +62,7 @@ class Driver extends Authenticatable implements JWTSubject
     protected $casts = [
         'driving_license_photos' => 'object',
         'passport_photos' => 'object',
+        'allow_email_notifications' => 'boolean'
     ];
 
     /**

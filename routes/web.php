@@ -97,6 +97,10 @@ Route::group([
         Route::get('orders', 'OrderController@index')->name('orders.index');
         Route::get('orders/{id}', 'OrderController@show')->name('orders.show');
 
+        // Trips
+        Route::get('trips', 'TripController@index')->name('trips.index');
+        Route::get('trips/{id}', 'TripController@show')->name('trips.show');
+
         // Faq
         Route::get('faq', 'FaqController@index')->name('faq.index');
         Route::get('faq/create', 'FaqController@create')->name('faq.create');

@@ -516,5 +516,19 @@ return [
         'passengersLabel' => 'Passengers that are included to the order',
         'packagesLabel' => 'Packages that are included to the order',
         'package' => 'Package'
+    ],
+
+    'trips' => [
+        'label' => 'Trips',
+        'infoLabel' => 'All trips',
+        'bus' => 'Bus',
+        'date' => 'Date',
+        'from' => 'From',
+        'to' => 'To',
+        'passengers' => 'Passengers',
+        'packages' => 'Packages',
+        'moving' => 'Moving',
+        'status' => 'Status',
+        'totalPrice' => 'Total price'
     ]
 ];

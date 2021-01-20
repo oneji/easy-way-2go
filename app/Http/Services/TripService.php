@@ -8,6 +8,8 @@ use App\Order;
 use App\OrderStatus;
 use App\Route;
 use App\Trip;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TripService
@@ -27,11 +29,73 @@ class TripService
     /**
      * Get all available trips
      * 
+     * @param \Illumiante\Http\Request $request
      * @return collection
      */
-    public function all()
+    public function all(Request $request)
     {
-        return Trip::with([ 'from_country', 'to_country' ])->get();
+        // Filtering params
+        $carNumber = $request->query('car_number'); // string
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        $from = $request->query('from');            // string
+        $to = $request->query('to');                // string
+        
+        // Get trips by transport id
+        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+            ->leftJoin('transports', 'transports.id', 'trips.transport_id')
+            ->select(
+                'trips.id',
+                'transports.car_number',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'trips.date',
+                'trips.time',
+                'trips.from_address',
+                'trips.to_address',
+                'trips.type',
+                'trips.status_id',
+                'trips.from_country_id',
+                'trips.to_country_id'
+            )
+            ->when($from, function($query, $from) {
+                $query->where('date', '>=', Carbon::parse($from));
+            })
+            ->when($to, function($query, $to) {
+                $query->where('date', '<=', Carbon::parse($to));
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('status_id', $orderStatus);
+            })
+            ->get();
+
+        foreach ($trips as $trip) {
+            $tripType = $trip->type;
+            // Collecton trip stats
+            $stat = Order::selectRaw('
+                sum(passengers_count) as passengers,
+                sum(packages_count) as packages,
+                sum(total_price) as total_price,
+                trip_id'
+            )
+            ->whereHas('addresses', function($query) use ($tripType) {
+                $query->where('type', $tripType);
+            })
+            ->groupBy('trip_id')
+            ->where('trip_id', $trip->id)
+            ->first();
+
+            if($stat) {
+                $trip['passengers'] = $stat->passengers .'/'. $trip->passengers_seats;
+                $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
+                $trip['total_price'] = $stat->total_price;
+            } else {
+                $trip['no_back'] = true;
+            }
+        }
+        
+        return $trips;
     }
 
     /**
@@ -191,6 +255,178 @@ class TripService
         $trip = Trip::find($id);
         $trip->status_id = OrderStatus::getBoarding()->id;
         $trip->save();
+    }
+
+    /**
+     * Get trip by id
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @param   int $id
+     * @return  array
+     */
+    public function getById(Request $request, $id)
+    {
+        $trip = Trip::with('status')
+            ->join('transports', 'transports.id', 'trips.transport_id')
+            ->select(
+                'trips.id',
+                'transports.car_number',
+                'trips.date',
+                'trips.time',
+                'transports.passengers_seats',
+                'transports.cubo_metres_available',
+                'transports.kilos_available',
+                'transports.wifi',
+                'transports.tv_video',
+                'transports.air_conditioner',
+                'trips.type',
+                'trips.status_id',
+                'trips.transport_id',
+                'trips.route_id'
+            )
+            ->find($id);
+
+        // Filtering params
+        $orderId = $request->query('order_id');     // string
+        $orderType = $request->query('type');       // string
+        $orderStatus = $request->query('status');   // integer: order_status_id
+        $paymentStatus = $request->query('payment'); // integer: payment_status_id
+        
+        $drivers = DB::table('driver_trip')
+            ->join('drivers', 'drivers.id', 'driver_trip.driver_id')
+            ->where('driver_trip.trip_id', $trip->id)
+            ->get([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'phone_number',
+                'role',
+                'photo'
+            ]);
+        
+        $route = Route::with('route_addresses')->find($trip->route_id);
+        $forwardRoutes = $route->route_addresses->where('type', 'forward');
+        $backRoutes = $route->route_addresses->where('type', 'back');
+
+        $otherForwardOrders = Order::with([ 'payment_method', 'country_from', 'country_to', 'payment_status' ])
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($orderId, function($query, $orderId) {
+                $query->where('id', 'like', "%$orderId%");
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->whereHas('addresses', function($query) {
+                $query->where('type', 'forward');
+            })
+            ->where('trip_id', $trip->id)
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'trip_id',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price',
+                'payment_status_id'
+            ]);
+
+        $otherBackOrders = Order::with([ 'payment_method', 'country_from', 'country_to', 'payment_status' ])
+            ->when($orderType, function($query, $orderType) {
+                $query->where('order_type', $orderType);
+            })
+            ->when($orderId, function($query, $orderId) {
+                $query->where('id', 'like', "%$orderId%");
+            })
+            ->when($orderStatus, function($query, $orderStatus) {
+                $query->where('order_status_id', $orderStatus);
+            })
+            ->when($paymentStatus, function($query, $paymentStatus) {
+                $query->where('payment_status_id', $paymentStatus);
+            })
+            ->whereHas('addresses', function($query) {
+                $query->where('type', 'back');
+            })
+            ->where(function($query) use ($trip) {
+                $query->where('transport_id', $trip->transport_id)
+                    ->orWhere('route_id', $trip->route_id);
+            })
+            ->get([
+                'id',
+                'date',
+                'from_address',
+                'to_address',
+                'from_country',
+                'to_country',
+                'payment_method_id',
+                'passengers_count',
+                'packages_count',
+                'total_price',
+                'payment_status_id'
+            ]);
+        
+        $forwardStats = [
+            'passengers' => 0,
+            'packages' => 0,
+            'fact_price' => 0,
+            'total_price' => 0,
+        ];
+        foreach ($otherForwardOrders as $forwardOrder) {
+            $forwardStats['passengers'] += $forwardOrder->passengers_count;
+            $forwardStats['packages'] += $forwardOrder->packages_count;
+            $forwardStats['total_price'] += $forwardOrder->total_price;
+        }
+        
+        $backStats = [
+            'passengers' => 0,
+            'packages' => 0,
+            'fact_price' => 0,
+            'total_price' => 0,
+        ];
+        foreach ($otherBackOrders as $backOrder) {
+            $backStats['passengers'] += $backOrder->passengers_count;
+            $backStats['packages'] += $backOrder->packages_count;
+            $backStats['total_price'] += $backOrder->total_price;
+        }
+
+        $route['forward'] = [
+            'starting' => $forwardRoutes->where('order', 0)->first(),
+            'ending' => $forwardRoutes->sortByDesc('order')->first(),
+            'stats' => [
+                'passengers' => $forwardStats['passengers'] .'/'. $trip->passengers_seats,
+                'packages' => $forwardStats['packages'] .'/'. $trip->cubo_metres_available,
+                'fact_price' => $forwardStats['fact_price'],
+                'total_price' => $forwardStats['total_price'],
+            ],
+            'orders' => $otherForwardOrders
+        ];
+
+        $route['back'] = [
+            'starting' => $backRoutes->where('order', 0)->where('type', 'back')->first(),
+            'ending' => $backRoutes->where('type', 'back')->sortByDesc('order')->first(),
+            'stats' => [
+                'passengers' => $backStats['passengers'] .'/'. $trip->passengers_seats,
+                'packages' => $backStats['packages'] .'/'. $trip->cubo_metres_available,
+                'fact_price' => $backStats['fact_price'],
+                'total_price' => $backStats['total_price'],
+            ],
+            'orders' => $otherBackOrders
+        ];
+
+        $route->unsetRelation('route_addresses');
+
+        return [
+            'trip' => $trip,
+            'routes' => $route,
+            'drivers' => $drivers
+        ];
     }
 
     /**

@@ -27,10 +27,29 @@
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+            .card {
+                box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)!important;
+            }
+        </style>
     @show
 </head>
 
 <body data-sidebar="dark">
+    <!-- Loader -->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner-chase">
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Begin page -->
     <div id="app">
         <div id="layout-wrapper">
@@ -177,10 +196,10 @@
                                     <span>{{ __('menu.bas') }}</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::segment(2) === 'orders' ? 'mm-active' : null }}">
-                                <a href="{{ route('admin.orders.index') }}" class="waves-effect {{ Request::segment(2) === 'orders' ? 'active' : null }}" aria-expanded="false">
+                            <li class="{{ Request::segment(2) === 'trips' ? 'mm-active' : null }}">
+                                <a href="{{ route('admin.trips.index') }}" class="waves-effect {{ Request::segment(2) === 'trips' ? 'active' : null }}" aria-expanded="false">
                                     <i class="bx bx-transfer-alt"></i>
-                                    <span>{{ __('menu.orders') }}</span>
+                                    <span>{{ __('menu.trips') }}</span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'faq' ? 'mm-active' : null }}">

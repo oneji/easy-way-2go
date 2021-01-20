@@ -16,7 +16,7 @@ return [
     'clients'           => 'Clients',
     'routes'            => 'Routes',
     'bas'               => 'Bussiness account requests',
-    'orders'            => 'Orders',
+    'trips'             => 'Trips',
     'cargoTypes'        => 'Cargo types',
     'faq'               => 'FAQ',
     'help'              => 'Help',

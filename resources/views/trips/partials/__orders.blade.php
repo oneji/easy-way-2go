@@ -57,7 +57,10 @@
                                 <td>{{ $order->country_to->name .', '. $order->to_address }}</td>
                                 <td class="text-center">{{ $order->passengers_count }}</td>
                                 <td class="text-center">{{ $order->packages_count }}</td>
-                                <td>{{ $order->payment_method->name ?? 'Нет' }}</td>
+                                <td class="d-flex align-items-center">
+                                    <i class="fa fa-circle mr-2 font-size-10" style="color: {{ $order->payment_status->code === 'paid' ? '#34c38f' : null }}"></i>
+                                    {{ $order->payment_method->name ?? 'Нет' }}
+                                </td>
                                 <td>{{ $order->total_price }}</td>
                             </tr>
                         @endforeach

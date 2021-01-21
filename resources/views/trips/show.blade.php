@@ -18,6 +18,33 @@
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <p class="mb-0 font-size-18">
+                            {{ $trip->car_number }} &middot; 
+                            {{ \Carbon\Carbon::parse($trip->date)->format('d.m.y') }} &middot; 
+                            <span class="badge badge-success">{{ $trip->status->name }}</span>
+                        </p>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <ul class="list-inline user-chat-nav text-right mb-0">
+                            <li class="list-inline-item">
+                                <div class="dropdown">
+                                    <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bx bx-dots-horizontal-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                     <li class="nav-item">

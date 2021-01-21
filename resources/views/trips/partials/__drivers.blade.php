@@ -15,9 +15,9 @@
                         </div>
                     @endif
                     
-                    <h5 class="font-size-15"><a href="#" class="text-dark">{{ $driver->first_name .' '. $driver->last_name }}</a></h5>
-                    <p class="text-muted mb-0">{{ $driver->email }}</p>
-                    <p class="text-muted">{{ $driver->phone_number }}</p>
+                    <h5 class="font-size-15"><a href="{{ route('admin.drivers.show', [$driver->id]) }}" class="text-dark">{{ $driver->first_name .' '. $driver->last_name }}</a></h5>
+                    <p class="text-muted mb-0"><i class="fa fa-envelope mr-2"></i> {{ $driver->email }}</p>
+                    <p class="text-muted"><i class="fa fa-phone mr-2"></i> {{ $driver->phone_number }}</p>
                 </div>
             </div>
         </div>

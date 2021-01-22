@@ -7,7 +7,7 @@ use App\Http\JsonRequests\UpdatePassengerRequest;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Passenger;
-use App\Order;
+use Illuminate\Http\Request;
 
 class PassengerService
 {
@@ -16,14 +16,17 @@ class PassengerService
      * 
      * @param int $clientId
      */
-    public function all($clientId, $name = null)
+    public function all(Request $request, $clientId)
     {
+        $name = $request->query('name');
+        $limit = $request->query('limit') ? $request->query('limit') : 10;
+
         return Passenger::where('client_id', $clientId)
             ->when($name, function($query) use ($name) {
                 $query->where('first_name', 'like', "%$name%")
                     ->orWhere('last_name', 'like', "%$name%");
             })
-            ->get();
+            ->paginate($limit);
     }
 
     /**

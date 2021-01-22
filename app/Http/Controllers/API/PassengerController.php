@@ -29,12 +29,12 @@ class PassengerController extends Controller
      */
     public function all(Request $request)
     {
-        $client = auth('client')->user();
-        $passengers = $this->passengerService->all($client->id, $request->query('name'));
+        $client = $request->authUser;
+        $data = $this->passengerService->all($request, $client->id);
 
         return response()->json([
             'success' => true,
-            'data' => $passengers
+            'data' => $data
         ]);
     }
 

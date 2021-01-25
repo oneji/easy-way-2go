@@ -335,6 +335,7 @@ class BrigadirService
                 'transports.air_conditioner',
                 'transports.tv_video',
                 'transports.wifi',
+                'transports.disabled_people_seats',
                 'trips.date',
                 'trips.time',
                 'transports.passengers_seats',

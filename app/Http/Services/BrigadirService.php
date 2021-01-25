@@ -332,6 +332,9 @@ class BrigadirService
             ->select(
                 'trips.id',
                 'transports.car_number',
+                'transports.air_conditioner',
+                'transports.tv_video',
+                'transports.wifi',
                 'trips.date',
                 'trips.time',
                 'transports.passengers_seats',
@@ -480,7 +483,8 @@ class BrigadirService
         return [
             'trip' => $trip,
             'routes' => $route,
-            'drivers' => $drivers
+            'drivers' => $drivers,
+            'car_photos' => DB::table('car_docs')->where('transport_id', $trip->transport_id)->where('doc_type', 'car_photos')->get()
         ];
     }
 

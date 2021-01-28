@@ -327,6 +327,9 @@ class BrigadirService
      */
     public function getTripById(Request $request, $id)
     {
+        $stats = null;
+        $totalPrice = 0;
+
         $trip = Trip::with('status')
             ->join('transports', 'transports.id', 'trips.transport_id')
             ->select(
@@ -351,7 +354,7 @@ class BrigadirService
             )
             ->find($id);
 
-        // // Filtering params
+        // Filtering params
         $orderId = $request->query('order_id');     // string
         $orderType = $request->query('type');       // string
         $orderStatus = $request->query('status');   // integer: order_status_id
@@ -481,11 +484,21 @@ class BrigadirService
 
         $route->unsetRelation('route_addresses');
 
+        $totalPrice = $forwardStats['total_price'] + $backStats['total_price'];
+        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
+
+        $stats = [
+            'totalPrice' => $totalPrice,
+            'expenses' => $expenses,
+            'factPrice' => Order::whereTripId($trip->id)->wherePaymentStatusId(PaymentStatus::getPaid()->id)->sum('total_price') - $expenses->sum('amount')
+        ];
+
         return [
             'trip' => $trip,
             'routes' => $route,
             'drivers' => $drivers,
-            'car_photos' => DB::table('car_docs')->where('transport_id', $trip->transport_id)->where('doc_type', 'car_photos')->get()
+            'car_photos' => DB::table('car_docs')->where('transport_id', $trip->transport_id)->where('doc_type', 'car_photos')->get(),
+            'stats' => $stats
         ];
     }
 

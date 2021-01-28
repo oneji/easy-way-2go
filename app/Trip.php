@@ -60,6 +60,14 @@ class Trip extends Model
     {
         return $this->hasMany('App\Order');
     }
+    
+    /**
+     *  Get the expenses that belong to the trip.
+     */
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense');
+    }
 
     /**
      * Get the country from that owns the trip.

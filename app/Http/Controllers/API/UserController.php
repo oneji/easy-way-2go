@@ -94,4 +94,34 @@ class UserController extends Controller
 
         return response()->json($data, $data['status']);
     }
+
+    /**
+     * Mark notification as read
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function markNotificationsAsRead(Request $request)
+    {
+        $this->userAuthService->markNotificationsAsRead($request);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Get all user's notificatons
+     *
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\Response
+     */
+    public function getNotifications(Request $request)
+    {
+        $data = $this->userAuthService->getNotifications($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

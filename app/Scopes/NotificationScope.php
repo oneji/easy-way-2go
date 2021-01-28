@@ -17,6 +17,8 @@ class NotificationScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->with('notifications');
+        $builder->with([ 'notifications' => function($query) {
+            $query->whereNull('read_at');
+        } ]);
     }
 }

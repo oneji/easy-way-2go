@@ -205,4 +205,30 @@ class UserAuthService
             'status' => 422
         ];
     }
+
+    /**
+     * Mark all notifications as read
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function markNotificationsAsRead(Request $request)
+    {
+        DB::table('notifications')
+            ->whereIn('id', $request->notifications)
+            ->update([
+                'read_at' => Carbon::now()
+            ]);
+    }
+
+    /**
+     * Get all user's notificatons
+     *
+     * @return collection
+     */
+    public function getNotifications(Request $request)
+    {
+        $user = auth($request->authUser->role)->user();
+
+        return $user->unreadNotifications;
+    }
 }

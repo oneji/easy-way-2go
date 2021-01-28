@@ -168,5 +168,9 @@ Route::namespace('API')->group(function() {
         // Email notifications
         Route::get('emailNotifications', 'EmailNotificationSettingsController@all');
         Route::post('emailNotifications', 'EmailNotificationSettingsController@update');
+
+        // User notifications
+        Route::post('notifications/markAsRead', 'UserController@markNotificationsAsRead');
+        Route::get('notifications', 'UserController@getNotifications');
     });
 });

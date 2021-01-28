@@ -6,6 +6,7 @@ use App\Expense;
 use App\Http\JsonRequests\CancelTripRequest;
 use App\Order;
 use App\OrderStatus;
+use App\PaymentStatus;
 use App\Route;
 use App\Trip;
 use Carbon\Carbon;
@@ -426,11 +427,21 @@ class TripService
 
         $route->unsetRelation('route_addresses');
 
+        $totalPrice = $forwardStats['total_price'] + $backStats['total_price'];
+        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
+
+        $stats = [
+            'totalPrice' => $totalPrice,
+            'expenses' => $expenses,
+            'factPrice' => Order::whereTripId($trip->id)->wherePaymentStatusId(PaymentStatus::getPaid()->id)->sum('total_price') - $expenses->sum('amount')
+        ];
+
         return [
             'trip' => $trip,
             'routes' => $route,
             'drivers' => $drivers,
-            'car_photos' => DB::table('car_docs')->where('transport_id', $trip->transport_id)->where('doc_type', 'car_photos')->get()
+            'car_photos' => DB::table('car_docs')->where('transport_id', $trip->transport_id)->where('doc_type', 'car_photos')->get(),
+            'stats' => $stats
         ];
     }
 

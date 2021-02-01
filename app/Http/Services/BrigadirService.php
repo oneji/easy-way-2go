@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Services;
+
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\UploadImageTrait;
 use App\Http\Requests\StoreUserRequest;
@@ -18,7 +19,6 @@ use App\Order;
 use App\OrderStatus;
 use App\PaymentStatus;
 use App\Route;
-use App\Transaction;
 use App\Transport;
 use App\Trip;
 use Carbon\Carbon;
@@ -401,7 +401,8 @@ class BrigadirService
                 'payment_method_id',
                 'passengers_count',
                 'packages_count',
-                'total_price'
+                'total_price',
+                'payment_status_id'
             ]);
 
         $otherBackOrders = Order::with([ 'payment_method' ])
@@ -431,8 +432,11 @@ class BrigadirService
                 'payment_method_id',
                 'passengers_count',
                 'packages_count',
-                'total_price'
+                'total_price',
+                'payment_status_id'
             ]);
+        
+        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
         
         $forwardStats = [
             'passengers' => 0,
@@ -444,7 +448,12 @@ class BrigadirService
             $forwardStats['passengers'] += $forwardOrder->passengers_count;
             $forwardStats['packages'] += $forwardOrder->packages_count;
             $forwardStats['total_price'] += $forwardOrder->total_price;
+            if($forwardOrder->payment_status_id === PaymentStatus::getPaid()->id) {
+                $forwardStats['fact_price'] += $forwardOrder->sum('total_price');
+            }
         }
+
+        $forwardStats['fact_price'] = $forwardStats['fact_price'] - $expenses->sum('amount');
         
         $backStats = [
             'passengers' => 0,
@@ -456,7 +465,12 @@ class BrigadirService
             $backStats['passengers'] += $backOrder->passengers_count;
             $backStats['packages'] += $backOrder->packages_count;
             $backStats['total_price'] += $backOrder->total_price;
+            if($backOrder->payment_status_id === PaymentStatus::getPaid()->id) {
+                $backStats['fact_price'] += $backOrder->sum('total_price');
+            }
         }
+
+        $backStats['fact_price'] = $backStats['fact_price'] - $expenses->sum('amount');
 
         $route['forward'] = [
             'starting' => $forwardRoutes->where('order', 0)->first(),
@@ -485,7 +499,6 @@ class BrigadirService
         $route->unsetRelation('route_addresses');
 
         $totalPrice = $forwardStats['total_price'] + $backStats['total_price'];
-        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
 
         $stats = [
             'totalPrice' => $totalPrice,

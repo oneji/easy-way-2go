@@ -383,12 +383,20 @@ class TripService
             'fact_price' => 0,
             'total_price' => 0,
         ];
+
+        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
+
         foreach ($otherForwardOrders as $forwardOrder) {
             $forwardStats['passengers'] += $forwardOrder->passengers_count;
             $forwardStats['packages'] += $forwardOrder->packages_count;
             $forwardStats['total_price'] += $forwardOrder->total_price;
+            if($forwardOrder->payment_status_id === PaymentStatus::getPaid()->id) {
+                $forwardStats['fact_price'] += $forwardOrder->sum('total_price');
+            }
         }
-        
+
+        $forwardStats['fact_price'] = $forwardStats['fact_price'] - $expenses->sum('amount');
+
         $backStats = [
             'passengers' => 0,
             'packages' => 0,
@@ -399,7 +407,12 @@ class TripService
             $backStats['passengers'] += $backOrder->passengers_count;
             $backStats['packages'] += $backOrder->packages_count;
             $backStats['total_price'] += $backOrder->total_price;
+            if($backOrder->payment_status_id === PaymentStatus::getPaid()->id) {
+                $backStats['fact_price'] += $backOrder->sum('total_price');
+            }
         }
+
+        $backStats['fact_price'] = $backStats['fact_price'] - $expenses->sum('amount');
 
         $route['forward'] = [
             'starting' => $forwardRoutes->where('order', 0)->first(),
@@ -428,7 +441,6 @@ class TripService
         $route->unsetRelation('route_addresses');
 
         $totalPrice = $forwardStats['total_price'] + $backStats['total_price'];
-        $expenses = Expense::with('photos')->whereTripId($trip->id)->get();
 
         $stats = [
             'totalPrice' => $totalPrice,

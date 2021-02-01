@@ -453,7 +453,7 @@ class BrigadirService
             }
         }
 
-        $forwardStats['fact_price'] = $forwardStats['fact_price'] - $expenses->sum('amount');
+        $forwardStats['fact_price'] = $forwardStats['fact_price'] - $expenses->where('type', 'forward')->sum('amount');
         
         $backStats = [
             'passengers' => 0,
@@ -470,7 +470,7 @@ class BrigadirService
             }
         }
 
-        $backStats['fact_price'] = $backStats['fact_price'] - $expenses->sum('amount');
+        $backStats['fact_price'] = $backStats['fact_price'] - $expenses->where('type', 'back')->sum('amount');
 
         $route['forward'] = [
             'starting' => $forwardRoutes->where('order', 0)->first(),

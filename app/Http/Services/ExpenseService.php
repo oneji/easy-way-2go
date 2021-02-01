@@ -13,11 +13,12 @@ class ExpenseService
      * @param array $expenses
      * @param int $tripId
      */
-    public function store($expenses, $tripId)
+    public function store($expenses, $trip)
     {
         foreach ($expenses as $data) {
             $expense = new Expense($data);
-            $expense->trip_id = $tripId;
+            $expense->type = $trip->type;
+            $expense->trip_id = $trip->id;
             $expense->save();
 
             if(isset($data['photos'])) {

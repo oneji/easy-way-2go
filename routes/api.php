@@ -88,7 +88,7 @@ Route::namespace('API')->group(function() {
         Route::get('clients/orders', 'ClientController@getOrders');
        
         // Brigadirs
-        Route::post('brigadirs/workAsDriver', 'BrigadirController@workAsDriver');
+        Route::post('brigadirs/asDriver', 'BrigadirController@workAsDriver');
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');

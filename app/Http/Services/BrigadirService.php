@@ -1193,7 +1193,7 @@ class BrigadirService
                 'dtp',
                 'grades',
                 'grades_expire_at',
-                'as_driver_id'
+                'as_driver_id',
             )
             ->first();
 

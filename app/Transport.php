@@ -62,23 +62,6 @@ class Transport extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'has_cmr' => 'boolean',
-        'air_conditioner' => 'boolean',
-        'wifi' => 'boolean',
-        'tv_video' => 'boolean',
-        'disabled_people_seats' => 'boolean',
-        'pallet_transportation' => 'boolean',
-        'can_pull_trailer' => 'boolean',
-        'ok_for_move' => 'boolean',
-        'has_trailer' => 'boolean'
-    ];
-
-    /**
      * Get the car docs for the car.
      */
     public function car_docs()

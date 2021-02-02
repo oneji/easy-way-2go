@@ -108,6 +108,16 @@ class DriverService
         $driver->phone_number = $request->phone_number;
         $driver->email = $request->email;
         $driver->gender = $request->gender;
+        $driver->dl_issue_place = $request->dl_issue_place;
+        $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
+        $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
+        $driver->driving_experience_id = $request->driving_experience_id;
+        $driver->conviction = isset($request->conviction) ? 1 : 0;
+        $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
+        $driver->dtp = isset($request->dtp) ? 1 : 0;
+        $driver->grades = $request->grades;
+        $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
+
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -138,17 +148,7 @@ class DriverService
         }
 
         
-        // Update driver's additional data
-        $driver->country_id = $request->country_id;
-        $driver->dl_issue_place = $request->dl_issue_place;
-        $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
-        $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
-        $driver->driving_experience_id = $request->driving_experience_id;
-        $driver->conviction = isset($request->conviction) ? 1 : 0;
-        $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
-        $driver->dtp = isset($request->dtp) ? 1 : 0;
-        $driver->grades = $request->grades;
-        $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        
 
         $driver->save();
     }

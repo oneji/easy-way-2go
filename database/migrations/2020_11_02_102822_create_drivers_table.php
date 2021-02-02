@@ -15,18 +15,18 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('first_name');
+            $table->text('first_name')->nullable();
             $table->text('last_name')->nullable();
             $table->integer('gender')->default(0);
             $table->date('birthday')->nullable();
             $table->unsignedBigInteger('nationality')->nullable();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->integer('verification_code')->nullable();
             $table->integer('verified')->default(0);
             $table->dateTime('phone_number_verified_at')->nullable();
             $table->string('photo')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('email')->unique()->nullable();
+            $table->string('password')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->text('city')->nullable();
             $table->unsignedBigInteger('dl_issue_place')->nullable();

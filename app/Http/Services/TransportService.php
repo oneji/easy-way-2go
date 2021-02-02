@@ -2,11 +2,7 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreTransportRequest;
-use App\Http\Requests\UpdateTransportRequest;
-use App\Http\Requests\BindDriverRequest;
 use App\Http\Traits\UploadCarDocsTrait;
 use App\Transport;
 use App\CarDoc;

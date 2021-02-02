@@ -241,7 +241,7 @@ class BaRequestService
             $driver->password = Hash::make($rawPassword);
             $driver->driving_license_photos = $driverData['driving_license_photos'];
             $driver->passport_photos = $driverData['passport_photos'];
-            $driver->role = 'driver';
+            $driver->role = 'head_driver';
             $driver->save();
 
             $drivers[] = $driver->id;

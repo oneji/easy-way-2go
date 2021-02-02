@@ -12,6 +12,7 @@ use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Http\Services\BrigadirService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class BrigadirController extends Controller
 {
@@ -342,6 +343,101 @@ class BrigadirController extends Controller
     public function getArchivedRoutes(Request $request)
     {
         $data = $this->brigadirService->getArchivedRoutes($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+   
+    /**
+     * Work as driver
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  \Illuminate\Http\JsonResponse
+     */
+    public function workAsDriver(Request $request)
+    {
+        $this->brigadirService->workAsDriver($request);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Save driver's data
+     */
+    public function saveDriverData(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'country_id' => 'required|integer|exists:countries,id',
+            'city' => 'required|string|max:255',
+            'dl_issue_place' => 'required|integer|exists:countries,id',
+            'dl_issued_at' => 'required|date',
+            'dl_expires_at' => 'required|date',
+            'driving_experience_id' => 'required|integer|exists:driving_experiences,id',
+            'conviction' => 'required|integer',
+            'was_kept_drunk' => 'required|integer',
+            'dtp' => 'required|integer',
+            'grades' => 'required|integer',
+            'grades_expire_at' => 'required|date',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => true,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $data = $this->brigadirService->saveDriverData($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+    
+    /**
+     * Save driver's data
+     */
+    public function saveTransportData(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'registered_on' => [ 'required' ],
+            'register_country' => [ 'required', 'exists:countries,id' ],
+            'register_city' => [ 'required' ],
+            'car_number' => [ 'required', 'string', 'max:255' ],
+            'car_brand_id' => [ 'required', 'numeric', 'exists:car_brands,id' ],
+            'car_model_id' => [ 'required', 'numeric', 'exists:car_models,id' ],
+            'year' => [ 'required' ],
+            'teh_osmotr_date_from' => [ 'required' ],
+            'teh_osmotr_date_to' => [ 'required' ],
+            'insurance_date_from' => [ 'required' ],
+            'insurance_date_to' => [ 'required' ],
+            'has_cmr' => [ 'required', 'boolean' ],
+            'passengers_seats' => [ 'required', 'numeric' ],
+            'cubo_metres_available' => [ 'required', 'numeric' ],
+            'kilos_available' => [ 'required', 'numeric' ],
+            'ok_for_move' => [ 'required', 'boolean' ],
+            'can_pull_trailer' => [ 'required', 'boolean' ],
+            'has_trailer' => [ 'required', 'boolean' ],
+            'pallet_transportation' => [ 'required', 'boolean' ],
+            'air_conditioner' => [ 'required', 'boolean' ],
+            'wifi' => [ 'required', 'boolean' ],
+            'tv_video' => [ 'required', 'boolean' ],
+            'disabled_people_seats' => [ 'required', 'boolean' ],
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => true,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $data = $this->brigadirService->saveTransportData($request);
 
         return response()->json([
             'success' => true,

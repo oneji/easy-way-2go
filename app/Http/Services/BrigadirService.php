@@ -13,6 +13,7 @@ use App\Http\JsonRequests\ChangeBrigadirPasswordRequest;
 use App\Http\JsonRequests\InviteDriverRequest;
 use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
+use App\Http\Traits\UploadCarDocsTrait;
 use App\Jobs\InviteDriverJob;
 use App\Jobs\SyncUserToMongoChatJob;
 use App\Order;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
 class BrigadirService
 {
     use UploadImageTrait;
+    use UploadCarDocsTrait;
 
     /**
      * Get all the brigadirs
@@ -1016,5 +1018,157 @@ class BrigadirService
         }
         
         return $routes;
+    }
+
+    /**
+     * Work as driver
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param int $asDriver
+     */
+    public function workAsDriver(Request $request)
+    {
+        DB::table('brigadirs')
+            ->where('id', $request->authUser->id)
+            ->update([ 'as_driver' => $request->as_driver ]);
+    }
+
+    /**
+     * Save driver's data
+     * 
+     * @param   \Illuminate\Http\Request $request
+     * @return  Driver $driver
+     */
+    public function saveDriverData(Request $request)
+    {
+        $driver = Driver::whereAsDriverId($request->authUser->id)->first();
+
+        if(!$driver) {
+            $driver = new Driver();
+        }
+
+        $driver->country_id = $request->country_id;
+        $driver->city = $request->city;
+        $driver->comment = $request->comment;
+        $driver->dl_issue_place = $request->dl_issue_place;
+        $driver->dl_issued_at = Carbon::parse($request->dl_issued_at);
+        $driver->dl_expires_at = Carbon::parse($request->dl_expires_at);
+        $driver->driving_experience_id = $request->driving_experience_id;
+        $driver->conviction = isset($request->conviction) ? 1 : 0;
+        $driver->was_kept_drunk = isset($request->was_kept_drunk) ? 1 : 0;
+        $driver->dtp = isset($request->dtp) ? 1 : 0;
+        $driver->grades = $request->grades;
+        $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
+        $driver->as_driver_id = $request->authUser->id;
+
+        // Upload driver's documents
+        $passportDocs = [];
+        $dLicenseDocs = [];
+
+        if($request->hasFile('passport_photos')) {
+            $passportDocs = UploadFileService::uploadMultiple($request->passport_photos, 'driver_docs');
+        }
+
+        if($request->hasFile('driving_license_photos')) {
+            $dLicenseDocs = UploadFileService::uploadMultiple($request->driving_license_photos, 'driver_docs');
+        }
+
+        if($driver->driving_license_photos !== null) {
+            $driver->driving_license_photos = array_merge($driver->driving_license_photos, $dLicenseDocs);
+        } else {
+            $driver->driving_license_photos = $dLicenseDocs ? $dLicenseDocs : null;
+        }
+
+        if($driver->passport_photos !== null) {
+            $driver->passport_photos = array_merge($driver->passport_photos, $dLicenseDocs);
+        } else {
+            $driver->passport_photos = $passportDocs ? $passportDocs : null;
+        }
+
+        $driver->save();
+
+        return $driver;
+    }
+
+    /**
+     * Save as driver transport data
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function saveTransportData(Request $request)
+    {
+        $transport = Transport::whereBrigadirId($request->authUser->id)->first();
+        
+        if(!$transport) {
+            $transport = new Transport();
+        }
+
+        $transport->registered_on = $request->registered_on;
+        $transport->register_country = $request->register_country;
+        $transport->register_city = $request->register_city;
+        $transport->car_number = $request->car_number;
+        $transport->car_brand_id = $request->car_brand_id;
+        $transport->car_model_id = $request->car_model_id;
+        $transport->year = $request->year;
+         // Save parsed date fields
+        $transport->teh_osmotr_date_from = Carbon::parse($request->teh_osmotr_date_from);
+        $transport->teh_osmotr_date_to = Carbon::parse($request->teh_osmotr_date_to);
+        $transport->insurance_date_from = Carbon::parse($request->insurance_date_from);
+        $transport->insurance_date_to = Carbon::parse($request->insurance_date_to);
+        // *** 
+        $transport->has_cmr = $request->has_cmr;
+        $transport->passengers_seats = $request->passengers_seats; 
+        $transport->cubo_metres_available = $request->cubo_metres_available; 
+        $transport->kilos_available = $request->kilos_available; 
+        $transport->ok_for_move = $request->ok_for_move; 
+        $transport->can_pull_trailer = $request->can_pull_trailer; 
+        $transport->has_trailer = $request->has_trailer; 
+        $transport->pallet_transportation = $request->pallet_transportation; 
+        $transport->air_conditioner = $request->air_conditioner; 
+        $transport->wifi = $request->wifi; 
+        $transport->tv_video = $request->tv_video; 
+        $transport->disabled_people_seats = $request->disabled_people_seats;
+        $transport->brigadir_id = $request->authUser->id;
+        
+        $transport->save();
+
+        // Docs
+        $this->storeCarDocs($transport, $request);
+
+        return $transport;
+    }
+
+    /**
+     * Store transport's doc files
+     * @param
+     */
+    private function storeCarDocs(Transport $transport, $request)
+    {
+        $docs = [];
+        if(isset($request->car_passport)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->car_passport, 'car_docs/passport', Transport::DOC_TYPE_PASSPORT));
+        }
+        
+        if(isset($request->teh_osmotr)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->teh_osmotr, 'car_docs/teh_osmotr', Transport::DOC_TYPE_TEH_OSMOTR));
+        }
+
+        if(isset($request->insurance)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->insurance, 'car_docs/insurance', Transport::DOC_TYPE_INSURANCE));
+        }
+
+        if(isset($request->people_license)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->people_license, 'car_docs/people_license', Transport::DOC_TYPE_PEOPLE_LICENSE));
+        }
+
+        if(isset($request->car_photos)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->car_photos, 'car_docs/car_photos', Transport::DOC_TYPE_CAR_PHOTOS));
+        }
+
+        if(isset($request->trailer_photos)) {
+            $docs = array_merge($docs, $this->uploadDocs($request->trailer_photos, 'car_docs/trailer_photos', Transport::DOC_TYPE_TRAILER_PHOTOS));
+        }
+
+        $transport->car_docs()->saveMany($docs);
     }
 }

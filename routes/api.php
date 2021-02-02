@@ -88,6 +88,7 @@ Route::namespace('API')->group(function() {
         Route::get('clients/orders', 'ClientController@getOrders');
        
         // Brigadirs
+        Route::post('brigadirs/workAsDriver', 'BrigadirController@workAsDriver');
         Route::put('brigadirs/updateCompany/{id}', 'BrigadirController@updateCompany');
         Route::put('brigadirs/changePassword', 'BrigadirController@changePassword');
         Route::post('brigadirs/{id}', 'BrigadirController@updateProfile');
@@ -113,6 +114,9 @@ Route::namespace('API')->group(function() {
 
         Route::get('brigadirs/routes', 'BrigadirController@getRoutes');
         Route::get('brigadirs/routes/archived', 'BrigadirController@getArchivedRoutes');
+
+        Route::post('brigadirs/asDriver/updateData', 'BrigadirController@saveDriverData');
+        Route::post('brigadirs/asDriver/updateTransport', 'BrigadirController@saveTransportData');
 
         // Drivers
         Route::put('drivers/changePassword', 'DriverController@changePassword');

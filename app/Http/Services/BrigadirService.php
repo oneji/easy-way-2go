@@ -1171,4 +1171,36 @@ class BrigadirService
 
         $transport->car_docs()->saveMany($docs);
     }
+
+    /**
+     * Get as driver data
+     */
+    public function getAsDriverData(Request $request)
+    {
+        $transport = Transport::whereBrigadirId($request->authUser->id)->first();
+        $driverData = DB::table('drivers')
+            ->whereAsDriverId($request->authUser->id)
+            ->select(
+                'country_id',
+                'city',
+                'comment',
+                'dl_issue_place',
+                'dl_issued_at',
+                'dl_expires_at',
+                'driving_experience_id',
+                'conviction',
+                'was_kept_drunk',
+                'dtp',
+                'grades',
+                'grades_expire_at',
+                'as_driver_id',
+            )
+            ->first();
+
+        return [
+            'driver_data' => $driverData,
+            'transport' => $transport,
+            'as_driver' => $request->authUser->as_driver
+        ];
+    }
 }

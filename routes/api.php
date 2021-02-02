@@ -117,6 +117,7 @@ Route::namespace('API')->group(function() {
 
         Route::post('brigadirs/asDriver/updateData', 'BrigadirController@saveDriverData');
         Route::post('brigadirs/asDriver/updateTransport', 'BrigadirController@saveTransportData');
+        Route::get('brigadirs/asDriver', 'BrigadirController@getAsDriverData');
 
         // Drivers
         Route::put('drivers/changePassword', 'DriverController@changePassword');

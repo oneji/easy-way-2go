@@ -444,4 +444,19 @@ class BrigadirController extends Controller
             'data' => $data
         ]);
     }
+
+    /**
+     * Get as driver data
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
+    public function getAsDriverData(Request $request)
+    {
+        $data = $this->brigadirService->getAsDriverData($request);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
 }

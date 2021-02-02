@@ -50,7 +50,8 @@ class Brigadir extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'verified' => 'boolean',
-        'allow_email_notifications' => 'boolean'
+        'allow_email_notifications' => 'boolean',
+        'as_driver' => 'boolean'
     ];
 
     /**

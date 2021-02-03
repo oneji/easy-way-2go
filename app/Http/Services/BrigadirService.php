@@ -1177,9 +1177,10 @@ class BrigadirService
      */
     public function getAsDriverData(Request $request)
     {
-        $transport = Transport::whereBrigadirId($request->authUser->id)->first();
+        $user = Brigadir::find($request->authUser->id);
+        $transport = Transport::whereBrigadirId($user->id)->first();
         $driverData = DB::table('drivers')
-            ->whereAsDriverId($request->authUser->id)
+            ->whereAsDriverId($user->id)
             ->select(
                 'country_id',
                 'city',
@@ -1200,7 +1201,7 @@ class BrigadirService
         return [
             'driver_data' => $driverData,
             'transport' => $transport,
-            'as_driver' => $request->authUser->as_driver
+            'as_driver' => $user->as_driver
         ];
     }
 }

@@ -22,7 +22,7 @@
                     <div class="col-sm-4 d-flex align-items-center">
                         <p class="mb-0 font-size-18">
                             {{ $trip->car_number }} &middot; 
-                            {{ \Carbon\Carbon::parse($trip->date)->format('d.m.y') }} &middot; 
+                            {{ \Carbon\Carbon::parse($trip->data->date)->format('d.m.y') }} &middot; 
                             <span class="badge badge-success">{{ $trip->status->name }}</span>
                         </p>
                     </div>

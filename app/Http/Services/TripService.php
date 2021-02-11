@@ -51,7 +51,7 @@ class TripService
         $to = $request->query('to');                // string
         
         // Get trips by transport id
-        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+        $trips = Trip::with('status')
             ->leftJoin('transports', 'transports.id', 'trips.transport_id')
             ->select(
                 'trips.id',
@@ -59,14 +59,8 @@ class TripService
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
-                'trips.date',
-                'trips.time',
-                'trips.from_address',
-                'trips.to_address',
                 'trips.type',
-                'trips.status_id',
-                'trips.from_country_id',
-                'trips.to_country_id'
+                'trips.status_id'
             )
             ->when($from, function($query, $from) {
                 $query->where('date', '>=', Carbon::parse($from));
@@ -80,6 +74,7 @@ class TripService
             ->get();
 
         foreach ($trips as $trip) {
+            $trip->data = $trip->getFormattedData();
             $tripType = $trip->type;
             // Collecton trip stats
             $stat = Order::selectRaw('
@@ -100,6 +95,10 @@ class TripService
                 $trip['packages'] = $stat->packages .'/'. $trip->cubo_metres_available;
                 $trip['total_price'] = $stat->total_price;
             } else {
+                $trip['passengers'] = '0/'. $trip->passengers_seats;
+                $trip['packages'] = '0/'. $trip->cubo_metres_available;
+                $trip['total_price'] = 0;
+
                 $trip['no_back'] = true;
             }
         }
@@ -259,8 +258,6 @@ class TripService
                 'transports.tv_video',
                 'transports.wifi',
                 'transports.disabled_people_seats',
-                'trips.date',
-                'trips.time',
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
@@ -273,6 +270,7 @@ class TripService
                 'trips.route_id'
             )
             ->findOrFail($id);
+        $trip->data = $trip->getFormattedData();
 
         // Filtering params
         $orderId = $request->query('order_id');     // string

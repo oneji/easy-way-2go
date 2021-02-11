@@ -33,9 +33,9 @@
                                 @foreach ($trips as $trip)
                                     <tr>
                                         <td><strong>{{ $trip->car_number }}</strong></td>
-                                        <td>{{ \Carbon\Carbon::parse($trip->date)->format('d.m.y') }} {{ $trip->time }}</td>
-                                        <td>{{ $trip->from_country->name .', '. $trip->from_address }}</td>
-                                        <td>{{ $trip->to_country->name .', '. $trip->to_address }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($trip->data->date)->format('d.m.y') }} {{ $trip->data->time }}</td>
+                                        <td>{{ $trip->data->from_country->name .', '. $trip->data->from_address }}</td>
+                                        <td>{{ $trip->data->to_country->name .', '. $trip->data->to_address }}</td>
                                         <td>{{ $trip->passengers }}</td>
                                         <td>{{ $trip->packages }}</td>
                                         <td>--</td>

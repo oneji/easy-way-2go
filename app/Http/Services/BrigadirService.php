@@ -15,6 +15,7 @@ use App\Http\JsonRequests\UpdateBrigadirCompanyRequest;
 use App\Http\JsonRequests\UpdateBrigadirRequest;
 use App\Http\Traits\UploadCarDocsTrait;
 use App\Jobs\InviteDriverJob;
+use App\Jobs\SendEmailJob;
 use App\Jobs\SyncUserToMongoChatJob;
 use App\Order;
 use App\OrderStatus;
@@ -52,6 +53,37 @@ class BrigadirService
     public function getById($id)
     {
         return Brigadir::findOrFail($id);
+    }
+
+    /**
+     * Store a newly created brigadir
+     * 
+     * @param $data
+     */
+    public function storeNew($data)
+    {
+        $brigadir = new Brigadir();
+        $brigadir->first_name = $data['first_name'];
+        $brigadir->last_name = $data['last_name'];
+        $brigadir->gender = isset($data['gender']) ? $data['gender'] : 0;
+        $brigadir->birthday = Carbon::parse($data['birthday']);
+        $brigadir->nationality = $data['nationality'];
+        $brigadir->phone_number = $data['phone_number'];
+        $brigadir->email = $data['email'];
+        $brigadir->password = Hash::make($data['password']);
+        $brigadir->company_name = $data['company_name'];
+        $brigadir->inn = $data['inn'];
+        $brigadir->role = 'brigadir';
+
+        if(isset($data['photo']) && $data['photo']) {
+            $brigadir->photo = $this->uploadImage($data['photo'], 'user_photos');
+        }
+
+        $brigadir->save();
+        
+        SyncUserToMongoChatJob::dispatch($brigadir->toArray());
+
+        return $brigadir;
     }
 
     /**

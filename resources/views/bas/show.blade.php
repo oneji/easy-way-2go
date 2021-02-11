@@ -62,7 +62,7 @@
             
                                 <div class="form-group">
                                     <label for="email">{{ __('pages.bas.firmOwner.email') }}</label>
-                                    <input type="email" name="email" placeholder="{{ __('pages.bas.firmOwner.email') }}" value="{{ $baRequest->data->email }}" class="form-control" required>
+                                    <input type="email" name="email" placeholder="{{ __('pages.bas.firmOwner.email') }}" value="{{ $baRequest->data->email }}" class="form-control" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">{{ __('pages.bas.firmOwner.password') }}</label>
@@ -78,11 +78,7 @@
                                 <button type="button" class="btn btn-info waves-effect waves-light" id="generateRandomPassBtn">
                                     <i class="bx bxs-keyboard font-size-16 align-middle mr-2"></i> {{ __('pages.bas.generateRandomPassBtn') }}
                                 </button>
-                                <a href="#"
-                                    class="btn btn-success waves-effect waves-light" 
-                                    id="approveBtn"
-                                    {{-- onclick="event.preventDefault(); document.getElementById('approveForm').submit();" --}}
-                                >
+                                <a href="#" class="btn btn-success waves-effect waves-light" id="approveBtn">
                                     <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
                                 </a>
 

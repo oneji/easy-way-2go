@@ -19,6 +19,18 @@ use App\Transport;
 
 class BaRequestService
 {
+    protected $brigadirService;
+    
+    /**
+     * Create a new instance of BaRequestService
+     * 
+     * @param \App\Http\Services\BrigadirService $brigadirService
+     */
+    public function __construct(BrigadirService $brigadirService)
+    {
+        $this->brigadirService = $brigadirService;
+    }
+
     /**
      * Get all bussiness account requests
      * 
@@ -46,7 +58,7 @@ class BaRequestService
      */
     public function getById($id)
     {
-        $baRequest = BaRequest::find($id);
+        $baRequest = BaRequest::findOrFail($id);
         
         if($baRequest->type === 'firm_owner') {
             $baRequest->data = BaFirmOwnerData::where('ba_request_id', $id)->first();
@@ -185,22 +197,11 @@ class BaRequestService
     private function createBrigadirByBaRequestId($email, $password, $id)
     {
         $firmOwnerData = BaFirmOwnerData::where('ba_request_id', $id)->first();
+        $dataToSave = $firmOwnerData->replicate();
+        $dataToSave['password'] = $password;
 
-        $brigadir = new Brigadir();
-        $brigadir->first_name = $firmOwnerData->first_name;
-        $brigadir->last_name = $firmOwnerData->last_name;
-        $brigadir->birthday = Carbon::parse($firmOwnerData['birthday']);
-        $brigadir->nationality = $firmOwnerData->nationality;
-        $brigadir->phone_number = $firmOwnerData->phone_number;
-        $brigadir->password = Hash::make($password);
-        $brigadir->email = $email;
-        $brigadir->company_name = $firmOwnerData->company_name;
-        $brigadir->inn = $firmOwnerData->inn;
-        $brigadir->role = 'brigadir';
-        
-        $brigadir->save();
+        $this->brigadirService->storeNew($dataToSave);
 
-        SyncUserToMongoChatJob::dispatch($brigadir->toArray());
         SendEmailJob::dispatch($email, $password);
     }
     

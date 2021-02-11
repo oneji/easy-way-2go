@@ -44,11 +44,9 @@ class RouteController extends Controller
      */
     public function store(StoreRouteRequest $request)
     {
-        $this->routeService->store($request);
+        $data = $this->routeService->store($request);
 
-        return response()->json([
-            'success' => true
-        ]);
+        return response()->json($data);
     }
 
     /**

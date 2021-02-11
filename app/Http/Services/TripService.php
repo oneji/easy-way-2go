@@ -289,7 +289,7 @@ class TripService
                 'trips.transport_id',
                 'trips.route_id'
             )
-            ->find($id);
+            ->findOrFail($id);
 
         // Filtering params
         $orderId = $request->query('order_id');     // string

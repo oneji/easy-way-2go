@@ -4,13 +4,27 @@ namespace App\Http\Services;
 
 use App\Http\JsonRequests\StoreRouteRequest;
 use App\Http\JsonRequests\SearchRouteRequest;
+use App\OrderStatus;
 use Carbon\Carbon;
 use App\RouteRepeat;
 use App\RouteAddress;
 use App\Route;
+use App\Trip;
 
 class RouteService
 {
+    protected $tripService;
+
+    /**
+     * Create a new intance of RouteService class
+     * 
+     * @param \App\Http\Services\TripService $tripService
+     */
+    public function __construct(TripService $tripService)
+    {
+        $this->tripService = $tripService;
+    }
+
     /**
      * Get all routes with address and repeats
      * 
@@ -72,6 +86,11 @@ class RouteService
                 'to' => Carbon::parse($repeat['to']),
             ]));
         }
+
+        return [
+            'success' => true,
+            'message' => 'You have successfully created a route'
+        ];
     }
 
     /**

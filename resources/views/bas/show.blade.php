@@ -80,7 +80,9 @@
                                 </button>
                                 <a href="#"
                                     class="btn btn-success waves-effect waves-light" 
-                                    onclick="event.preventDefault(); document.getElementById('approveForm').submit();">
+                                    id="approveBtn"
+                                    {{-- onclick="event.preventDefault(); document.getElementById('approveForm').submit();" --}}
+                                >
                                     <i class="bx bx-check-double font-size-16 align-middle mr-2"></i> {{ __('pages.bas.approveBtn') }}
                                 </a>
 
@@ -360,6 +362,16 @@
                 
                 $('#approveForm').find('input[name=password]').val(randomPassword)
                 $('#approveForm').find('input[name=password_confirmation]').val(randomPassword)
+            });
+
+            $('#approveBtn').on('click', function() {
+                console.log('...')
+                let approveBtn = $(this);
+                let approveForm = $('#approveForm');
+                
+                if(approveForm.parsley().validate()) {
+                    approveForm.submit();
+                }
             });
         })
     </script>

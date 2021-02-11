@@ -224,6 +224,8 @@ class BaRequestService
             $driver->first_name = $driverData['first_name'];
             $driver->last_name = $driverData['last_name'];
             $driver->nationality = $driverData['nationality'];
+            $driver->city = $driverData['city'];
+            $driver->comment = $driverData['comment'];
             $driver->phone_number = $driverData['phone_number'];
             $driver->email = $driverData['email'];
             $driver->birthday = $driverData['birthday'];

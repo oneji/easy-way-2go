@@ -48,7 +48,9 @@ class BaRequestController extends Controller
             return response()->json([
                 'success' => false,
                 'errors' => [
-                    'type' => [ 'Field type is required' ]
+                    'type' => [
+                        'Field type is required'
+                    ]
                 ]
             ], 422);
         }
@@ -90,7 +92,8 @@ class BaRequestController extends Controller
             'email' => 'required|email|unique:brigadirs|unique:drivers|unique:clients|unique:users',
             'nationality' => 'required|integer|exists:countries,id',
             'country_id' => 'required|integer|exists:countries,id',
-            'city' => 'required|string'
+            'city' => 'required|string',
+            'passport_photo' => 'required'
         ]);
 
         if($validator->fails()) {

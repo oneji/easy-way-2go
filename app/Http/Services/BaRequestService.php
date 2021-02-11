@@ -12,7 +12,6 @@ use App\BaTransport;
 use Carbon\Carbon;
 use App\BaRequest;
 use App\BaDriver;
-use App\Brigadir;
 use App\Driver;
 use App\Jobs\SyncUserToMongoChatJob;
 use App\Transport;
@@ -20,15 +19,18 @@ use App\Transport;
 class BaRequestService
 {
     protected $brigadirService;
+    protected $driverService;
     
     /**
      * Create a new instance of BaRequestService
      * 
      * @param \App\Http\Services\BrigadirService $brigadirService
+     * @param \App\Http\Services\DriverService $driverService
      */
-    public function __construct(BrigadirService $brigadirService)
+    public function __construct(BrigadirService $brigadirService, DriverService $driverService)
     {
         $this->brigadirService = $brigadirService;
+        $this->driverService = $driverService;
     }
 
     /**
@@ -219,33 +221,8 @@ class BaRequestService
         
         foreach ($baDrivers as $driverData) {
             $rawPassword = uniqid();
-            
-            $driver = new Driver();
-            $driver->gender = 1;
-            $driver->first_name = $driverData['first_name'];
-            $driver->last_name = $driverData['last_name'];
-            $driver->nationality = $driverData['nationality'];
-            $driver->city = $driverData['city'];
-            $driver->comment = $driverData['comment'];
-            $driver->phone_number = $driverData['phone_number'];
-            $driver->email = $driverData['email'];
-            $driver->birthday = $driverData['birthday'];
-            $driver->country_id = $driverData['country_id'];
-            $driver->dl_issue_place = $driverData['dl_issue_place'];
-            $driver->driving_experience_id = $driverData['driving_experience_id'];
-            $driver->dl_issued_at = Carbon::parse($driverData['dl_issued_at']);
-            $driver->dl_expires_at = Carbon::parse($driverData['dl_expires_at']);
-            $driver->driving_experience_id = $driverData['driving_experience_id'];
-            $driver->conviction = isset($driverData['conviction']) ? 1 : 0;
-            $driver->was_kept_drunk = isset($driverData['was_kept_drunk']) ? 1 : 0;
-            $driver->dtp = isset($driverData['dtp']) ? 1 : 0;
-            $driver->grades = $driverData['grades'];
-            $driver->grades_expire_at = Carbon::parse($driverData['grades_expire_at']);
-            $driver->password = Hash::make($rawPassword);
-            $driver->driving_license_photos = $driverData['driving_license_photos'];
-            $driver->passport_photos = $driverData['passport_photos'];
-            $driver->role = 'head_driver';
-            $driver->save();
+            $driverData['password'] = $rawPassword;
+            $driver = $this->driverService->storeNew($driverData);
 
             $drivers[] = $driver->id;
 

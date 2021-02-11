@@ -60,6 +60,55 @@ class DriverService
      * @param   \App\Http\Requests\StoreUserRequest $request
      * @return  array
      */
+    public function storeNew($data)
+    {
+        $driver = new Driver();
+        $driver->first_name = $data['first_name'];
+        $driver->last_name = $data['last_name'];
+        $driver->gender = 1;
+        $driver->nationality = $data['nationality'];
+        $driver->city = $data['city'];
+        $driver->comment = $data['comment'];
+        $driver->phone_number = $data['phone_number'];
+        $driver->email = $data['email'];
+        $driver->birthday = $data['birthday'];
+        $driver->country_id = $data['country_id'];
+        $driver->dl_issue_place = $data['dl_issue_place'];
+        $driver->driving_experience_id = $data['driving_experience_id'];
+        $driver->dl_issued_at = Carbon::parse($data['dl_issued_at']);
+        $driver->dl_expires_at = Carbon::parse($data['dl_expires_at']);
+        $driver->driving_experience_id = $data['driving_experience_id'];
+        $driver->conviction = isset($data['conviction']) ? 1 : 0;
+        $driver->was_kept_drunk = isset($data['was_kept_drunk']) ? 1 : 0;
+        $driver->dtp = isset($data['dtp']) ? 1 : 0;
+        $driver->grades = $data['grades'];
+        $driver->grades_expire_at = Carbon::parse($data['grades_expire_at']);
+        $driver->password = Hash::make($data['password']);
+        $driver->driving_license_photos = $data['driving_license_photos'];
+        $driver->role = 'head_driver';
+        $driver->save();
+
+        if(isset($data['photo']) && $data['photo']) {
+            $driver->photo = $this->uploadImage($data['photo'], 'user_photos');
+        }
+        
+        if(isset($data['driving_license_photos']) && $data['driving_license_photos']) {
+            $driver->driving_license_photos = UploadFileService::uploadMultiple($data['driving_license_photos'], 'driver_docs');
+        }
+        
+        if(isset($data['passport_photos']) && $data['passport_photos']) {
+            $driver->passport_photos = UploadFileService::uploadMultiple($data['passport_photos'], 'driver_docs');
+        }
+
+        return $driver;
+    }
+
+    /**
+     * Store a newly created driver in the db.
+     * 
+     * @param   \App\Http\Requests\StoreUserRequest $request
+     * @return  array
+     */
     public function store(StoreUserRequest $request)
     {
         $driver = new Driver($request->except('password'));
@@ -117,7 +166,6 @@ class DriverService
         $driver->dtp = isset($request->dtp) ? 1 : 0;
         $driver->grades = $request->grades;
         $driver->grades_expire_at = Carbon::parse($request->grades_expire_at);
-
         
         if($request->hasFile('photo')) {
             $driver->photo = $this->uploadImage($request->photo, 'user_photos');
@@ -146,9 +194,6 @@ class DriverService
         } else {
             $driver->passport_photos = $passportDocs ? $passportDocs : null;
         }
-
-        
-        
 
         $driver->save();
     }

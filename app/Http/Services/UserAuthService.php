@@ -40,7 +40,13 @@ class UserAuthService
 
         // Authenticate the user
         if(Hash::check($credentials['password'], $user->password)) {
-            $token = auth($user->role)->claims([ 'user' => $user ])->login($user);
+            if($user->role === 'head_driver' || $user->role === 'driver') {
+                $guard = 'driver';
+            } else {
+                $guard = $user->role;
+            }
+
+            $token = auth($guard)->claims([ 'user' => $user ])->login($user);
         } else {
             return [
                 'success' => false,
@@ -54,7 +60,7 @@ class UserAuthService
             'success' => true,
             'token' => $token,
             'user' => $user,
-            'expires_in' => auth($user->role)->factory()->getTTL() * 60,
+            'expires_in' => auth($guard)->factory()->getTTL() * 60,
         ];
     }
 
@@ -107,14 +113,19 @@ class UserAuthService
         $user->save();
 
         // Authenticate the user
-        $token = auth($user->role)->claims([ 'user' => $user ])->login($user);
+        if($user->role === 'head_driver' || $user->role === 'driver') {
+            $guard = 'driver';
+        } else {
+            $guard = $user->role;
+        }
+        $token = auth($guard)->claims([ 'user' => $user ])->login($user);
 
         return [
             'success' => true,
             'message' => 'Phone number verification is successfull.',
             'user' => $user,
             'token' => $token,
-            'expires_in' => auth($user->role)->factory()->getTTL() * 60
+            'expires_in' => auth($guard)->factory()->getTTL() * 60
         ];
     }
 
@@ -139,14 +150,26 @@ class UserAuthService
      */
     public function refreshToken(Request $request)
     {
+        if($request->authUser->role === 'head_driver' || $request->authUser->role === 'driver') {
+            $guard = 'driver';
+        } else {
+            $guard = $request->authUser->role;
+        }
+        
         try {
             // Get the user from token
             $payload = JWTAuth::parseToken()->getPayload();
 
+            if($request->authUser->role === 'head_driver' || $request->authUser->role === 'driver') {
+                $guard = 'driver';
+            } else {
+                $guard = $request->authUser->role;
+            }
+
             return [
                 'success' => true,
                 'status' => 200,
-                'token' => auth($request->role)->refresh()
+                'token' => auth($guard)->refresh()
             ];
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
@@ -159,7 +182,7 @@ class UserAuthService
                 return [
                     'success' => true,
                     'status' => 200,
-                    'token' => auth($request->role)->refresh()
+                    'token' => auth($guard)->refresh()
                 ];
             } else {
                 return [
@@ -227,7 +250,12 @@ class UserAuthService
      */
     public function getNotifications(Request $request)
     {
-        $user = auth($request->authUser->role)->user();
+        if($request->authUser->role === 'head_driver' || $request->authUser->role === 'driver') {
+            $guard = 'driver';
+        } else {
+            $guard = $request->authUser->role;
+        }
+        $user = auth($guard)->user();
 
         return $user->unreadNotifications;
     }

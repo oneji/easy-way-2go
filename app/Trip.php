@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Trip extends Model
 {
@@ -70,22 +71,6 @@ class Trip extends Model
     }
 
     /**
-     * Get the country from that owns the trip.
-     */
-    public function from_country()
-    {
-        return $this->belongsTo('App\Country', 'from_country_id', 'id');
-    }
-    
-    /**
-     * Get the country to that owns the trip.
-     */
-    public function to_country()
-    {
-        return $this->belongsTo('App\Country', 'to_country_id', 'id');
-    }
-
-    /**
      * Get the status that owns the trip.
      */
     public function status()
@@ -107,5 +92,24 @@ class Trip extends Model
     public function transactions()
     {
         return $this->hasManyThrough('App\Transaction', 'App\Order');
+    }
+
+    /**
+     * Get formatted data
+     */
+    public function getFormattedData()
+    {
+        return TripData::with([ 'from_country', 'to_country' ])
+            ->whereTripId($this->id)
+            ->whereType($this->type)
+            ->select(
+                'date',
+                'time',
+                'from_address',
+                'to_address',
+                'from_country_id',
+                'to_country_id'
+            )
+            ->first();
     }
 }

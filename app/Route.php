@@ -105,6 +105,11 @@ class Route extends Model
     public function getCitiesByType($type)
     {
         $addresses = $this->route_addresses->where('type', $type);
+
+        if($addresses->count() === 0) {
+            return null;
+        }
+
         $firstCity = $addresses->first();
         $lastCity = $addresses[$addresses->keys()->last()];
 
@@ -112,5 +117,56 @@ class Route extends Model
             'first' => $firstCity,
             'last' => $lastCity
         ];
+    }
+
+    /**
+     * Get date and time by type
+     * 
+     * @param string $type
+     */
+    public function getDateAndTimeByType($type)
+    {
+        $cities = $this->getCitiesByType($type);
+
+        if(!$cities) {
+            return null;
+        }
+
+        return [
+            'date' => Carbon::parse($cities['first']->departure_date),
+            'time' => $cities['first']->departure_time
+        ];
+    }
+
+    /**
+     * Get data for a newly created trip
+     *  
+     * @param int $tripId
+     * @return array $tripData
+     */
+    public function getDataForTrip($tripId)
+    {
+        $tripData = [];
+        $directions = [ 'forward', 'back' ];
+        
+        foreach ($directions as $direction) {
+            $dateAndTime = $this->getDateAndTimeByType($direction);
+            $cities = $this->getCitiesByType($direction);
+
+            if($cities && $dateAndTime) {
+                $tripData[] = [
+                    'trip_id' => $tripId,
+                    'date' => $dateAndTime['date'],
+                    'time' => $dateAndTime['time'],
+                    'from_address' => $cities['first']['address'],
+                    'to_address' => $cities['last']['address'],
+                    'from_country_id' => $cities['first']['country_id'],
+                    'to_country_id' => $cities['last']['country_id'],
+                    'type' => $direction,
+                ];
+            }
+        }
+
+        return $tripData;
     }
 }

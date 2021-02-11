@@ -10,6 +10,7 @@ use App\RouteRepeat;
 use App\RouteAddress;
 use App\Route;
 use App\Trip;
+use Illuminate\Support\Facades\DB;
 
 class RouteService
 {
@@ -85,6 +86,20 @@ class RouteService
                 'from' => Carbon::parse($repeat['from']),
                 'to' => Carbon::parse($repeat['to']),
             ]));
+        }
+
+        // Create a trip for the route
+        $trip = new Trip();
+        $trip->route_id = $route->id;
+        $trip->transport_id = $route->transport_id;
+        $trip->status_id = OrderStatus::getFuture()->id;
+        $trip->type = 'forward';
+        $trip->save();
+
+        $tripData = $route->getDataForTrip($trip->id);
+
+        if(count($tripData) > 0) {
+            DB::table('trip_data')->insert($tripData);
         }
 
         return [

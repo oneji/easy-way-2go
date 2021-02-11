@@ -19,6 +19,7 @@ use App\Order;
 use App\PaymentStatus;
 use App\Route;
 use App\Trip;
+use App\TripData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -344,7 +345,7 @@ class DriverService
         $transport = DB::table('driver_transport')->whereDriverId($user->id)->pluck('transport_id');
 
         // Get trips by transport id
-        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+        $trips = Trip::with('status')
             ->leftJoin('transports', 'transports.id', 'trips.transport_id')
             ->select(
                 'trips.id',
@@ -352,14 +353,8 @@ class DriverService
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
-                'trips.date',
-                'trips.time',
-                'trips.from_address',
-                'trips.to_address',
                 'trips.type',
-                'trips.status_id',
-                'trips.from_country_id',
-                'trips.to_country_id'
+                'trips.status_id'
             )
             ->when($from, function($query, $from) {
                 $query->where('date', '>=', Carbon::parse($from));
@@ -374,6 +369,7 @@ class DriverService
             ->get();
 
         foreach ($trips as $trip) {
+            $trip->data = $trip->getFormattedData();
             $tripType = $trip->type;
             // Collecton trip stats
             $stat = Order::selectRaw('

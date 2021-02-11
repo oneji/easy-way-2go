@@ -108,17 +108,7 @@ class OrderService
     public function store(StoreOrderRequest $request)
     {
         // Create a trip an attach order to it
-        $trip = $this->tripService->findOrCreate([
-            'transport_id' => $request->transport_id,
-            'route_id' => $request->route_id,
-            'status_id' => OrderStatus::getFuture()->id,
-            'date' => Carbon::parse($request->date),
-            'time' => '00:00',
-            'from_country_id' => $request->from_country,
-            'to_country_id' => $request->to_country,
-            'from_address' => $request->from_address,
-            'to_address' => $request->to_address,
-        ]);
+        $trip = $this->tripService->getByRouteId($request->route_id);
 
         $order = new Order($request->all());
         $order->date = Carbon::parse($request->date);

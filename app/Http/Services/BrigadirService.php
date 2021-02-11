@@ -295,7 +295,7 @@ class BrigadirService
             ->pluck('id');
         
         // Get trips by transport id
-        $trips = Trip::with([ 'from_country', 'to_country', 'status' ])
+        $trips = Trip::with('status')
             ->leftJoin('transports', 'transports.id', 'trips.transport_id')
             ->select(
                 'trips.id',
@@ -303,14 +303,8 @@ class BrigadirService
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
-                'trips.date',
-                'trips.time',
-                'trips.from_address',
-                'trips.to_address',
                 'trips.type',
-                'trips.status_id',
-                'trips.from_country_id',
-                'trips.to_country_id'
+                'trips.status_id'
             )
             ->when($from, function($query, $from) {
                 $query->where('date', '>=', Carbon::parse($from));
@@ -325,6 +319,7 @@ class BrigadirService
             ->get();
 
         foreach ($trips as $trip) {
+            $trip->data = $trip->getFormattedData();
             $tripType = $trip->type;
             // Collecton trip stats
             $stat = Order::selectRaw('
@@ -373,8 +368,6 @@ class BrigadirService
                 'transports.tv_video',
                 'transports.wifi',
                 'transports.disabled_people_seats',
-                'trips.date',
-                'trips.time',
                 'transports.passengers_seats',
                 'transports.cubo_metres_available',
                 'transports.kilos_available',
@@ -387,7 +380,7 @@ class BrigadirService
                 'trips.route_id'
             )
             ->find($id);
-
+            
         // Filtering params
         $orderId = $request->query('order_id');     // string
         $orderType = $request->query('type');       // string

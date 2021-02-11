@@ -28,6 +28,14 @@ class TripService
     }
 
     /**
+     * Get trip by route id (short)
+     */
+    public function getByRouteId($routeId)
+    {
+        return Trip::whereRouteId($routeId)->first();
+    }
+    
+    /**
      * Get all available trips
      * 
      * @param \Illumiante\Http\Request $request
@@ -100,31 +108,6 @@ class TripService
     }
 
     /**
-     * Store a newly created trip
-     * 
-     * @param array $tripData
-     */
-    public function findOrCreate($tripData)
-    {
-        $trip = Trip::where([
-            'transport_id' => $tripData['transport_id'],
-            'route_id' => $tripData['route_id'],
-            'date' => $tripData['date']
-        ])->first();
-
-        if($trip) return $trip;
-        
-        $route = Route::find($tripData['route_id']);
-        $trip = new Trip($tripData);
-        $trip->type = 'forward';
-        $trip->from_address = $route->getCitiesByType('forward')['first']['address'];
-        $trip->to_address = $route->getCitiesByType('forward')['last']['address'];
-        $trip->save();
-
-        return $trip;
-    }
-
-    /**
      * Set trip's drivers
      * 
      * @param int $id
@@ -192,7 +175,7 @@ class TripService
     }
 
     /**
-     * Change trips direction
+     * Change trip's direction
      * 
      * @param int $id
      * @param string $direction

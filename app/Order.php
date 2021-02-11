@@ -33,7 +33,8 @@ class Order extends Model
         'passengers_count',
         'packages_count',
         'total_weight',
-        'route_id'
+        'route_id',
+        'payment_method_id'
     ];
 
     /**

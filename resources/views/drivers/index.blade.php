@@ -66,18 +66,18 @@
                                         </td>
                                         <td>{{ $driver->phone_number }}</td>
                                         <td>{{ $driver->country ? $driver->country->name : null }}</td>
-                                        <td>{{ $driver->city }}</td>
+                                        <td>{{ $driver->city ?? '--' }}</td>
                                         <td>
-                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driving_experience ? $driver->driving_experience->name : null }}</span>
+                                            <span class="badge badge-success font-size-12"><i class="mdi mdi-star mr-1"></i> {{ $driver->driving_experience->name ?? '--' }}</span>
                                         </td>
                                         <td>
                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                 <li class="list-inline-item px-2">
                                                     <a href="{{ route('admin.drivers.edit', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                 </li>
-                                                <li class="list-inline-item px-2">
+                                                {{-- <li class="list-inline-item px-2">
                                                     <a href="{{ route('admin.drivers.show', [ $driver->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                         </td>
                                     </tr>

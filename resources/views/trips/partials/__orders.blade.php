@@ -52,7 +52,7 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td class="text-center">{{ $order->id }}</td>
-                                <td>{{ $order->date }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order->date)->format('d.m.Y') }}</td>
                                 <td>{{ $order->country_from->name .', '. $order->from_address }}</td>
                                 <td>{{ $order->country_to->name .', '. $order->to_address }}</td>
                                 <td class="text-center">{{ $order->passengers_count }}</td>

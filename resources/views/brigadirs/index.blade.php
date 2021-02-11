@@ -73,9 +73,9 @@
                                                 <li class="list-inline-item px-2">
                                                     <a href="{{ route('admin.brigadirs.edit', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.edit') }}"><i class="bx bx-pencil"></i></a>
                                                 </li>
-                                                <li class="list-inline-item px-2">
+                                                {{-- <li class="list-inline-item px-2">
                                                     <a href="{{ route('admin.brigadirs.show', [ $brigadir->id ]) }}" data-toggle="tooltip" data-placement="top" title="{{ __('form.buttons.view') }}"><i class="bx bx-user-circle"></i></a>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                         </td>
                                     </tr>

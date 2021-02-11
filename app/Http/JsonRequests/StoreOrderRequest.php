@@ -48,7 +48,8 @@ class StoreOrderRequest extends FormRequest
             'to_place_id' => 'required|string',
             'date' => 'required',
             'order_type' => 'required',
-            'total_price' => 'required|numeric'
+            'total_price' => 'required|numeric',
+            'payment_method_id' => 'required|integer|exists:payment_methods,id'
         ];
     }
 }

@@ -19,10 +19,12 @@ class EmailNotificationsMiddleware
     {
         $response = $next($request);
         
-        // Handle order notifications....
-        $order = $response->original['data'];
-        
-        NewOrderEmailNotificationJob::dispatch($order);
+        if($response->original['success']) {
+            // Handle order notifications....
+            $order = $response->original['data'];
+            
+            NewOrderEmailNotificationJob::dispatch($order);
+        }
 
         return $response;
     }

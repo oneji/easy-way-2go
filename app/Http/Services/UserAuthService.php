@@ -8,6 +8,7 @@ use App\Driver;
 use App\Client;
 use App\Brigadir;
 use App\Http\JsonRequests\VerifyCodeRequest;
+use App\Http\Services\SmsSendService;
 use App\Jobs\SyncUserToMongoChatJob;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,9 +16,20 @@ use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Exception;
 use Illuminate\Support\Facades\DB;
-
 class UserAuthService
 {
+    protected $smsSendService;
+    
+    /**
+     * UserAuthService constructor
+     * 
+     * @param \App\Http\Services\SmsSendService $smsSendService
+     */
+    public function __construct(SmsSendService $smsSendService)
+    {
+        $this->smsSendService = $smsSendService;
+    }
+
     /**
      * Authenticate the user and return jwt token.
      * 
@@ -54,6 +66,9 @@ class UserAuthService
                 'message' => 'Login or password is incorrect.'
             ];
         }
+        $user->verification_code = mt_rand(100000, 999999);
+        $user->save();
+        $this->smsSendService->sendSms($user->phone_number, $user->verification_code);
 
         return [
             'status' => 200,

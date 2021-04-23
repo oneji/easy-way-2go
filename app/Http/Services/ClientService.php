@@ -14,12 +14,24 @@ use App\Client;
 use App\Http\JsonRequests\CheckEmailRequest;
 use App\Jobs\RegisterJob;
 use App\Jobs\SyncUserToMongoChatJob;
+use App\Http\Services\SmsSendService;
 use App\Order;
 use Illuminate\Http\Request;
 
 class ClientService
 {
     use UploadImageTrait;
+    protected $smsSendService;
+
+    /**
+     * UserAuthService constructor
+     * 
+     * @param \App\Http\Services\SmsSendService $smsSendService
+     */
+    public function __construct(SmsSendService $smsSendService)
+    {
+        $this->smsSendService = $smsSendService;
+    }
 
     /**
      * Get all the clie$clients
@@ -59,9 +71,11 @@ class ClientService
         }
         
         $client->save();
+        $this->smsSendService->sendSms($client->phone_number, $client->verification_code);
+       // SyncUserToMongoChatJob::dispatch($client->toArray());
+       // RegisterJob::dispatch($client->email, $client->verification_code);        
 
-        SyncUserToMongoChatJob::dispatch($client->toArray());
-        RegisterJob::dispatch($client->email, $client->verification_code);        
+        
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 

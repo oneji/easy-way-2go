@@ -72,10 +72,8 @@ class ClientService
         
         $client->save();
         $this->smsSendService->sendSms($client->phone_number, $client->verification_code);
-       // SyncUserToMongoChatJob::dispatch($client->toArray());
-       // RegisterJob::dispatch($client->email, $client->verification_code);        
-
-        
+       SyncUserToMongoChatJob::dispatch($client->toArray());
+       // RegisterJob::dispatch($client->email, $client->verification_code);   
 
         // TODO: Connect sms endpoint and the verification code via sms.
         return [ 
